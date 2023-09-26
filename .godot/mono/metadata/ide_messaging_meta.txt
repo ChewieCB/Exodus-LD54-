@@ -1,0 +1,2 @@
+﻿42557
+/media/storage/SteamLibrary/steamapps/common/Godot Engine/godot.x11.opt.tools.64
