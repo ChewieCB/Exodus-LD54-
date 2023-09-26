@@ -2,7 +2,7 @@
 on:
   push:
     branches:
-      - integration
+      - test
 jobs:
   export_game:
     runs-on: ubuntu-latest
