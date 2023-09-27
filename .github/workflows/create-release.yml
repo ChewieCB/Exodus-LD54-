@@ -61,7 +61,7 @@ jobs:
           ITCH_USER: chewiecb
           PACKAGE: index.zip
           VERSION: ${{ steps.download-html.outputs.version }}
-   release_testing_windows:
+  release_testing_windows:
     runs-on: ubuntu-latest
     needs: export_game
     steps:
