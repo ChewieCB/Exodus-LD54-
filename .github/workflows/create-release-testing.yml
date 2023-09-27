@@ -53,7 +53,7 @@ jobs:
         with:
           version: latest
           file: index.zip
-          token: ${{ secrets.GH_CREDENTIALS }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: deploy to itch.io (HTML5)
         uses: josephbmanley/butler-publish-itchio-action@master
         env:
@@ -71,7 +71,7 @@ jobs:
         id: get-tagged-release
         uses: cardinalby/git-get-release-action@v1
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag: ${{ needs.export_game.outputs.tag }}
       - name: notify discord
