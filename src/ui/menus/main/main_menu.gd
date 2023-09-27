@@ -16,3 +16,9 @@ func _on_settings_button_pressed():
 func _on_back_button_pressed():
 	anim_player.queue("settings_out")
 	anim_player.queue("main_in")
+
+
+func _on_quit_button_pressed():
+	ScreenTransitionManager.fade_out(0.8)
+	await ScreenTransitionManager.transitioned
+	get_tree().quit()
