@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - test
+
+permissions:
+  contents: write
+
 jobs:
   export_game:
     runs-on: ubuntu-latest
