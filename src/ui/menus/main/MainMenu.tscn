@@ -1,0 +1,388 @@
+[gd_scene load_steps=11 format=3 uid="uid://cycdqhy5xadoa"]
+
+[ext_resource type="Script" path="res://src/ui/menus/main/main_menu.gd" id="1_1aer0"]
+[ext_resource type="Texture2D" uid="uid://cocjltwsh783c" path="res://assets/ui/menus/main/temp_bg.png" id="1_7hgao"]
+[ext_resource type="FontFile" uid="uid://4r5r4qviqq2k" path="res://assets/ui/fonts/Improbable.otf" id="1_svkb1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7rnd3"]
+bg_color = Color(0.815686, 0.52549, 0.262745, 0.447059)
+
+[sub_resource type="Animation" id="Animation_qck8w"]
+resource_name = "main_in"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainScreen:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MainScreen:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_yx6ei"]
+resource_name = "main_out"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainScreen:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MainScreen:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_ghp1q"]
+resource_name = "settings_in"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SettingsScreen:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SettingsScreen:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_ki0ry"]
+resource_name = "settings_out"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SettingsScreen:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SettingsScreen:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1.03526),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_wp01u"]
+resource_name = "RESET"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SettingsScreen:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MainScreen:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MainScreen:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SettingsScreen:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_187sv"]
+_data = {
+"RESET": SubResource("Animation_wp01u"),
+"main_in": SubResource("Animation_qck8w"),
+"main_out": SubResource("Animation_yx6ei"),
+"settings_in": SubResource("Animation_ghp1q"),
+"settings_out": SubResource("Animation_ki0ry")
+}
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_1aer0")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1160.0
+offset_bottom = 651.0
+mouse_filter = 2
+texture = ExtResource("1_7hgao")
+
+[node name="MainScreen" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.000207172
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainScreen"]
+layout_mode = 2
+
+[node name="TitleContainer" type="MarginContainer" parent="MainScreen/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_bottom = 80
+
+[node name="Label" type="Label" parent="MainScreen/VBoxContainer/TitleContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_svkb1")
+theme_override_font_sizes/font_size = 128
+text = "LD54"
+
+[node name="ButtonsContainer" type="MarginContainer" parent="MainScreen/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainScreen/VBoxContainer/ButtonsContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 20
+
+[node name="PlayContainer" type="MarginContainer" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_svkb1")
+theme_override_font_sizes/font_size = 48
+text = "Play"
+
+[node name="SettingsContainer" type="MarginContainer" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/SettingsContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("1_svkb1")
+theme_override_font_sizes/font_size = 48
+text = "Settings"
+
+[node name="QuitContainer" type="MarginContainer" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/QuitContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_svkb1")
+theme_override_font_sizes/font_size = 48
+text = "Quit"
+
+[node name="Tag" type="MarginContainer" parent="MainScreen/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 785
+theme_override_constants/margin_top = 120
+
+[node name="Label" type="Label" parent="MainScreen/VBoxContainer/Tag"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_svkb1")
+theme_override_font_sizes/font_size = 28
+text = "Ludum Dare 54"
+
+[node name="SettingsScreen" type="MarginContainer" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.000207172
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsScreen"]
+layout_mode = 2
+
+[node name="ButtonsContainer" type="MarginContainer" parent="SettingsScreen/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 300
+theme_override_constants/margin_top = 208
+theme_override_constants/margin_right = 300
+
+[node name="PanelContainer" type="PanelContainer" parent="SettingsScreen/VBoxContainer/ButtonsContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7rnd3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 8
+
+[node name="FullscreenContainer" type="MarginContainer" parent="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 128
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/FullscreenContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/FullscreenContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_svkb1")
+theme_override_font_sizes/font_size = 32
+text = "Fullscreen"
+
+[node name="CheckButton" type="CheckButton" parent="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/FullscreenContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="MusicLabelContainer" type="MarginContainer" parent="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = -4
+
+[node name="Label" type="Label" parent="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/MusicLabelContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_svkb1")
+theme_override_font_sizes/font_size = 32
+text = "Music"
+
+[node name="MusicSliderContainer" type="MarginContainer" parent="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = -4
+
+[node name="HSlider" type="HSlider" parent="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/MusicSliderContainer"]
+layout_mode = 2
+tick_count = 10
+
+[node name="SFXLabelContainer" type="MarginContainer" parent="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = -4
+
+[node name="Label" type="Label" parent="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/SFXLabelContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_svkb1")
+theme_override_font_sizes/font_size = 32
+text = "SFX"
+
+[node name="SFXSliderContainer" type="MarginContainer" parent="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = -4
+
+[node name="HSlider" type="HSlider" parent="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/SFXSliderContainer"]
+layout_mode = 2
+tick_count = 10
+
+[node name="BackButtonContainer" type="MarginContainer" parent="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_bottom = 28
+
+[node name="Button" type="Button" parent="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/BackButtonContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_svkb1")
+theme_override_font_sizes/font_size = 32
+text = "Back
+"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "RESET"
+libraries = {
+"": SubResource("AnimationLibrary_187sv")
+}
+
+[connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/SettingsContainer/Button" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/BackButtonContainer/Button" to="." method="_on_back_button_pressed"]
