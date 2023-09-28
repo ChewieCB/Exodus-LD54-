@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://fw4wlm6y7soi"
+path="res://.godot/imported/Binary Opposition.mp3-a33f16a8e5f225d11cfb08574ec6b7b3.mp3str"
+
+[deps]
+
+source_file="res://src/tests/test_sound_manager/sfx/Binary Opposition.mp3"
+dest_files=["res://.godot/imported/Binary Opposition.mp3-a33f16a8e5f225d11cfb08574ec6b7b3.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

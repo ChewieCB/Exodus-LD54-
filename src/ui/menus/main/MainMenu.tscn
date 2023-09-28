@@ -384,6 +384,10 @@ libraries = {
 "": SubResource("AnimationLibrary_187sv")
 }
 
+[connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/SettingsContainer/Button" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/QuitContainer/Button" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/FullscreenContainer/HBoxContainer/CheckButton" to="." method="_on_fullscreen_button_pressed"]
+[connection signal="value_changed" from="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/MusicSliderContainer/HSlider" to="." method="_on_music_volume_slider_value_changed"]
+[connection signal="value_changed" from="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/SFXSliderContainer/HSlider" to="." method="_on_sfx_volume_slider_value_changed"]
 [connection signal="pressed" from="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/BackButtonContainer/Button" to="." method="_on_back_button_pressed"]
