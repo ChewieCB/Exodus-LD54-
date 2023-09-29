@@ -239,10 +239,33 @@ theme_override_constants/separation = 20
 layout_mode = 2
 
 [node name="Button" type="Button" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer"]
+visible = false
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_svkb1")
 theme_override_font_sizes/font_size = 48
 text = "Play"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer"]
+layout_mode = 2
+theme_override_constants/separation = 13
+
+[node name="AudioTest" type="Button" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_svkb1")
+theme_override_font_sizes/font_size = 48
+text = "Audio "
+
+[node name="TilemapTest" type="Button" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_svkb1")
+theme_override_font_sizes/font_size = 48
+text = "Tilemap"
+
+[node name="DialogTest" type="Button" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_svkb1")
+theme_override_font_sizes/font_size = 48
+text = "Dialog"
 
 [node name="SettingsContainer" type="MarginContainer" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer"]
 layout_mode = 2
@@ -385,6 +408,9 @@ libraries = {
 }
 
 [connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer/HBoxContainer/AudioTest" to="." method="_on_audio_test_pressed"]
+[connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer/HBoxContainer/TilemapTest" to="." method="_on_tilemap_test_pressed"]
+[connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer/HBoxContainer/DialogTest" to="." method="_on_dialog_test_pressed"]
 [connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/SettingsContainer/Button" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/QuitContainer/Button" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/FullscreenContainer/HBoxContainer/CheckButton" to="." method="_on_fullscreen_button_pressed"]

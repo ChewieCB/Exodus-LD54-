@@ -1,6 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://b8uqe1cjdi5x8"]
+[gd_scene load_steps=21 format=3 uid="uid://b8uqe1cjdi5x8"]
 
 [ext_resource type="Texture2D" uid="uid://dk04w3k1oye8j" path="res://src/tests/test_2d_tilemaps/Tiles.png" id="1_kuho7"]
+[ext_resource type="Script" path="res://src/tests/test_2d_tilemaps/test_2d_tilemap.gd" id="1_yifia"]
 [ext_resource type="Texture2D" uid="uid://c7bwhnqnhnfyx" path="res://src/tests/test_2d_tilemaps/Props.png" id="2_pub1u"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ccj3r"]
@@ -1821,6 +1822,7 @@ sources/0 = SubResource("TileSetAtlasSource_0grco")
 sources/1 = SubResource("TileSetAtlasSource_ts6xv")
 
 [node name="Test2DTilemap" type="Node2D"]
+script = ExtResource("1_yifia")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
@@ -1866,3 +1868,30 @@ layer_3/tile_data = PackedInt32Array(393223, 0, 13, 393224, 65536, 13, 393225, 1
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(181, 148)
 zoom = Vector2(1.25, 1.25)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -43.0
+offset_top = 71.0
+offset_right = 43.0
+offset_bottom = 102.0
+grow_horizontal = 2
+
+[node name="BackButton" type="Button" parent="UI/Control/MarginContainer"]
+layout_mode = 2
+text = "Back"
+
+[connection signal="pressed" from="UI/Control/MarginContainer/BackButton" to="." method="_on_back_button_pressed"]

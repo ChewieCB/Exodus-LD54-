@@ -30,9 +30,10 @@ func _on_quit_button_pressed():
 
 
 func _on_button_pressed():
-	ScreenTransitionManager.fade_out(0.8)
-	await ScreenTransitionManager.transitioned
-	get_tree().change_scene_to_file("res://src/tests/test_sound_manager/TestSoundManager.tscn")
+	pass
+#	ScreenTransitionManager.fade_out(0.8)
+#	await ScreenTransitionManager.transitioned
+#	get_tree().change_scene_to_file("res://src/tests/test_sound_manager/TestSoundManager.tscn")
 
 
 func _on_fullscreen_button_pressed():
@@ -53,3 +54,21 @@ func _on_music_volume_slider_value_changed(value):
 
 func _on_sfx_volume_slider_value_changed(value):
 	SoundManager.set_sound_volume(value / 100)
+
+
+func _on_audio_test_pressed():
+	ScreenTransitionManager.fade_out(0.8)
+	await ScreenTransitionManager.transitioned
+	get_tree().change_scene_to_file("res://src/tests/test_sound_manager/TestSoundManager.tscn")
+
+
+func _on_tilemap_test_pressed():
+	ScreenTransitionManager.fade_out(0.8)
+	await ScreenTransitionManager.transitioned
+	get_tree().change_scene_to_file("res://src/tests/test_2d_tilemaps/Test2DTilemap.tscn")
+
+
+func _on_dialog_test_pressed():
+	ScreenTransitionManager.fade_out(0.8)
+	await ScreenTransitionManager.transitioned
+	get_tree().change_scene_to_file("res://src/tests/test_dialogic/TestDialogic.tscn")
