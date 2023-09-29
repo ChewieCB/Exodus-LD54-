@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cxsl0cn0ws446"
+path="res://.godot/imported/Retro FootStep Mud 01.wav-e5211e6d3ed4d282981a72a7b704425b.sample"
+
+[deps]
+
+source_file="res://src/tests/test_sound_manager/sfx/Retro FootStep Mud 01.wav"
+dest_files=["res://.godot/imported/Retro FootStep Mud 01.wav-e5211e6d3ed4d282981a72a7b704425b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

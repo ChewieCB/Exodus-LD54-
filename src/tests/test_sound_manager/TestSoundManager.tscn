@@ -1,0 +1,158 @@
+[gd_scene load_steps=17 format=3 uid="uid://dp2hry71u87tx"]
+
+[ext_resource type="Script" path="res://src/tests/test_sound_manager/test_sound_manager.gd" id="1_5lacj"]
+[ext_resource type="AudioStream" uid="uid://lugk748hc02r" path="res://src/tests/test_sound_manager/sfx/Retro Blop 07.wav" id="2_fw3qy"]
+[ext_resource type="AudioStream" uid="uid://fw4wlm6y7soi" path="res://src/tests/test_sound_manager/sfx/Binary Opposition.mp3" id="3_ate1g"]
+[ext_resource type="AudioStream" uid="uid://dxl1crmi2jwbq" path="res://src/tests/test_sound_manager/sfx/Menu Theme 1.2.mp3" id="3_bygv3"]
+[ext_resource type="PackedScene" uid="uid://cxhrnvsarphj5" path="res://src/sound/SoundPool.tscn" id="3_xnp5s"]
+[ext_resource type="AudioStream" uid="uid://do2htscmea8n6" path="res://src/tests/test_sound_manager/sfx/Retro FootStep 03.wav" id="4_2wm1q"]
+[ext_resource type="AudioStream" uid="uid://cssnqen6k0f4a" path="res://src/tests/test_sound_manager/sfx/Main Medley 1.2.mp3" id="4_bwa50"]
+[ext_resource type="AudioStream" uid="uid://cwhvpnja323m0" path="res://src/tests/test_sound_manager/sfx/LD52_track1_1.0.mp3" id="4_n4uww"]
+[ext_resource type="AudioStream" uid="uid://0y04e5o1uunn" path="res://src/tests/test_sound_manager/sfx/LD52_track2_1.0.mp3" id="5_88cai"]
+[ext_resource type="AudioStream" uid="uid://bjx6klnohykt3" path="res://src/tests/test_sound_manager/sfx/Retro FootStep Grass 01.wav" id="5_tpirw"]
+[ext_resource type="AudioStream" uid="uid://bwpyocmjlqhqu" path="res://src/tests/test_sound_manager/sfx/Retro FootStep Metal 01.wav" id="6_at6pu"]
+[ext_resource type="AudioStream" uid="uid://brodsjtbgp5ug" path="res://src/tests/test_sound_manager/sfx/LD52_track3_1.0.mp3" id="6_j55c3"]
+[ext_resource type="AudioStream" uid="uid://bvoekrwmkr3eb" path="res://src/tests/test_sound_manager/sfx/LD52_track4_1.0.mp3" id="7_2l5u6"]
+[ext_resource type="AudioStream" uid="uid://c7liprr1iw2uh" path="res://src/tests/test_sound_manager/sfx/Machine Made Men.mp3" id="8_hp6o0"]
+[ext_resource type="AudioStream" uid="uid://f8x4pgvwpued" path="res://src/tests/test_sound_manager/sfx/Misnomer.mp3" id="11_ukcn8"]
+[ext_resource type="Texture2D" uid="uid://bpa4pwoqsybq3" path="res://src/tests/test_sound_manager/badend2-1.png" id="12_nhrv7"]
+
+[node name="TestSoundManager" type="Node2D"]
+script = ExtResource("1_5lacj")
+sfx_stream = ExtResource("2_fw3qy")
+music_streams = Array[AudioStream]([ExtResource("3_ate1g"), ExtResource("4_n4uww"), ExtResource("5_88cai"), ExtResource("6_j55c3"), ExtResource("7_2l5u6"), ExtResource("8_hp6o0"), ExtResource("4_bwa50"), ExtResource("3_bygv3"), ExtResource("11_ukcn8")])
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_nhrv7")
+
+[node name="MarginContainer2" type="MarginContainer" parent="UI/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -13.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_bottom = 465
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/Control/MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Control/MarginContainer2/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="NowPlaying" type="Label" parent="UI/Control/MarginContainer2/PanelContainer/MarginContainer"]
+layout_mode = 2
+text = "Now Playing: [SONG TITLE]"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 4
+
+[node name="PlayMusicButton" type="Button" parent="UI/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Play Music"
+
+[node name="CenterContainer" type="CenterContainer" parent="UI/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Control/MarginContainer/VBoxContainer/CenterContainer"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="UI/Control/MarginContainer/VBoxContainer/CenterContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="PrevButton" type="Button" parent="UI/Control/MarginContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer"]
+layout_mode = 2
+text = "Prev"
+
+[node name="CenterContainer2" type="CenterContainer" parent="UI/Control/MarginContainer/VBoxContainer/CenterContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="NextButton" type="Button" parent="UI/Control/MarginContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer2"]
+layout_mode = 2
+text = "Next
+"
+
+[node name="StopMusicButton" type="Button" parent="UI/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Stop Music"
+
+[node name="PlaySFXButtom" type="Button" parent="UI/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Play SFX"
+
+[node name="PlaySFXPoolButton" type="Button" parent="UI/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Play SFX Pool"
+
+[node name="MusicVolumeLabel" type="Label" parent="UI/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Music Volume"
+
+[node name="MusicVolumeSlider" type="HSlider" parent="UI/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SFXVolumeLabel" type="Label" parent="UI/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "SFX Volume"
+
+[node name="SFXVolumeSlider" type="HSlider" parent="UI/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SoundPool" parent="." instance=ExtResource("3_xnp5s")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="SoundPool"]
+stream = ExtResource("4_2wm1q")
+bus = &"SFX"
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="SoundPool"]
+stream = ExtResource("5_tpirw")
+bus = &"SFX"
+
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="SoundPool"]
+stream = ExtResource("6_at6pu")
+bus = &"SFX"
+
+[connection signal="pressed" from="UI/Control/MarginContainer/VBoxContainer/PlayMusicButton" to="." method="_on_play_music_button_pressed"]
+[connection signal="pressed" from="UI/Control/MarginContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer/PrevButton" to="." method="_on_prev_button_pressed"]
+[connection signal="pressed" from="UI/Control/MarginContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer2/NextButton" to="." method="_on_next_button_pressed"]
+[connection signal="pressed" from="UI/Control/MarginContainer/VBoxContainer/StopMusicButton" to="." method="_on_stop_music_button_pressed"]
+[connection signal="pressed" from="UI/Control/MarginContainer/VBoxContainer/PlaySFXButtom" to="." method="_on_play_sfx_buttom_pressed"]
+[connection signal="pressed" from="UI/Control/MarginContainer/VBoxContainer/PlaySFXPoolButton" to="." method="_on_play_sfx_pool_button_pressed"]
+[connection signal="value_changed" from="UI/Control/MarginContainer/VBoxContainer/MusicVolumeSlider" to="." method="_on_music_volume_slider_value_changed"]
+[connection signal="value_changed" from="UI/Control/MarginContainer/VBoxContainer/SFXVolumeSlider" to="." method="_on_sfx_volume_slider_value_changed"]
