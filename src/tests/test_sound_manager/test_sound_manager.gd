@@ -84,3 +84,9 @@ func _on_music_volume_slider_value_changed(value):
 
 func _on_sfx_volume_slider_value_changed(value):
 	SoundManager.set_sound_volume(value / 100)
+
+
+func _on_menu_button_pressed():
+	ScreenTransitionManager.fade_out(0.8)
+	await ScreenTransitionManager.transitioned
+	get_tree().change_scene_to_file("res://src/ui/menus/main/MainMenu.tscn")
