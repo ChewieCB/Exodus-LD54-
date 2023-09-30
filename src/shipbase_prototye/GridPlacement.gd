@@ -5,6 +5,7 @@ class_name GridPlacement
 @export var grid_size: Vector2
 
 @export var hab_1: PackedScene
+@export var hab_2: PackedScene
 var building
 
 var mouse_pos: Vector2
@@ -58,7 +59,6 @@ func _physics_process(_delta):
 
 
 func is_outside_gridmap(coord: Vector2) -> bool:
-	print(tilemap.get_cell_source_id(0, coord))
 	if tilemap.get_cell_source_id(0, coord) == -1:
 		return true
 	else:
@@ -81,5 +81,11 @@ func stop_building_preview():
 
 func _on_hab_1_button_pressed():
 	building = hab_1
+	stop_building_preview()
+	get_new_building()
+
+
+func _on_hab_2_button_pressed():
+	building = hab_2
 	stop_building_preview()
 	get_new_building()
