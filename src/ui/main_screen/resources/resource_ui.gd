@@ -15,23 +15,31 @@ func _ready():
 	ResourceManager.air_changed.connect(_update_air_ui)
 
 
+func animate_bar(bar, value) -> void:
+	var tween = get_tree().create_tween()
+	tween.tween_property(
+		bar, "value", value, 0.4
+	).set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_OUT)
+#	tween.tween_callback(tween.queue_free)
+
+
 func _update_pop_ui(value):
 	population_counter.text = str(value)
 
 
 func _update_housing_ui(value):
-	housing_bar.value = value
+	animate_bar(housing_bar, value)
 
 
 func _update_food_ui(value):
-	food_bar.value = value
+	animate_bar(food_bar, value)
 
 
 func _update_water_ui(value):
-	water_bar.value = value
+	animate_bar(water_bar, value)
 
 
 func _update_air_ui(value):
-	air_bar.value = value
+	animate_bar(air_bar, value)
 
 
