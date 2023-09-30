@@ -1,0 +1,89 @@
+[gd_scene load_steps=7 format=3 uid="uid://dfcoh06nr6quv"]
+
+[ext_resource type="PackedScene" uid="uid://cmtp0boldl0us" path="res://src/tests/test_grid_placement/TestGridPlacement.tscn" id="1_8srcn"]
+[ext_resource type="Script" path="res://src/shipbase_prototye/SectorView.gd" id="1_wi46n"]
+[ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="2_dq6un"]
+[ext_resource type="PackedScene" uid="uid://dgkraln2axv2" path="res://src/shipbase_prototye/BuildingA.tscn" id="2_dr74l"]
+[ext_resource type="PackedScene" uid="uid://iksucu2x4bqt" path="res://src/shipbase_prototye/BuildingB.tscn" id="3_1dd1w"]
+[ext_resource type="PackedScene" uid="uid://duncr7v5g6vf" path="res://src/shipbase_prototye/BuildingC.tscn" id="4_af82h"]
+
+[node name="SectorView" type="Node2D"]
+script = ExtResource("1_wi46n")
+building_a = ExtResource("2_dr74l")
+building_b = ExtResource("3_1dd1w")
+building_c = ExtResource("4_af82h")
+
+[node name="GridPlacement" parent="." instance=ExtResource("1_8srcn")]
+position = Vector2(38, 42)
+scale = Vector2(0.5, 0.5)
+grid_size = Vector2(18, 10)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+self_modulate = Color(0.160784, 0.160784, 0.160784, 0.670588)
+layout_mode = 0
+offset_left = 898.0
+offset_top = 24.0
+offset_right = 1122.0
+offset_bottom = 402.0
+texture = ExtResource("2_dq6un")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/TextureRect"]
+layout_mode = 1
+offset_left = 7.0
+offset_top = 7.0
+offset_right = 213.0
+offset_bottom = 369.0
+
+[node name="Button" type="Button" parent="Control/TextureRect/VBoxContainer"]
+layout_mode = 2
+text = "Building A"
+
+[node name="Button2" type="Button" parent="Control/TextureRect/VBoxContainer"]
+layout_mode = 2
+text = "Building B"
+
+[node name="Button3" type="Button" parent="Control/TextureRect/VBoxContainer"]
+layout_mode = 2
+text = "Building C"
+
+[node name="TextureRect2" type="TextureRect" parent="Control"]
+self_modulate = Color(0.160784, 0.160784, 0.160784, 0.670588)
+layout_mode = 0
+offset_left = 815.0
+offset_top = 425.0
+offset_right = 1124.0
+offset_bottom = 593.0
+texture = ExtResource("2_dq6un")
+
+[node name="Label" type="Label" parent="Control/TextureRect2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 13.0
+offset_top = 13.0
+offset_right = -9.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Building A:
+This window display information about building A/B/C depend on what you choose."
+autowrap_mode = 2
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 242.0
+offset_top = 8.0
+offset_right = 407.0
+offset_bottom = 34.0
+text = "Use Q and E to rotate"
+
+[connection signal="pressed" from="Control/TextureRect/VBoxContainer/Button" to="." method="choose_building_a"]
+[connection signal="pressed" from="Control/TextureRect/VBoxContainer/Button2" to="." method="choose_building_b"]
+[connection signal="pressed" from="Control/TextureRect/VBoxContainer/Button3" to="." method="choose_building_c"]

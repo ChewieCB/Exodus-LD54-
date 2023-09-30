@@ -1,0 +1,52 @@
+[gd_scene load_steps=6 format=3 uid="uid://iksucu2x4bqt"]
+
+[ext_resource type="Script" path="res://src/shipbase_prototye/Building.gd" id="1_uvl1e"]
+[ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="2_tvh7h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i5ytv"]
+size = Vector2(61, 125)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sqnra"]
+size = Vector2(63, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j8cyv"]
+size = Vector2(60, 124)
+
+[node name="BuildingB" type="Node2D"]
+script = ExtResource("1_uvl1e")
+
+[node name="Sprite" type="Node2D" parent="."]
+
+[node name="Sprite2D4" type="Sprite2D" parent="Sprite"]
+self_modulate = Color(1, 0.282353, 0.223529, 1)
+position = Vector2(-32, 0)
+scale = Vector2(1, 2)
+texture = ExtResource("2_tvh7h")
+
+[node name="Sprite2D6" type="Sprite2D" parent="Sprite"]
+self_modulate = Color(1, 0.282353, 0.223529, 1)
+position = Vector2(32, -32)
+texture = ExtResource("2_tvh7h")
+
+[node name="Sprite2D7" type="Sprite2D" parent="Sprite"]
+self_modulate = Color(1, 0.282353, 0.223529, 1)
+position = Vector2(96, 0)
+scale = Vector2(1, 2)
+texture = ExtResource("2_tvh7h")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-32.5, -0.5)
+shape = SubResource("RectangleShape2D_i5ytv")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(32.5, -32)
+shape = SubResource("RectangleShape2D_sqnra")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(96, 0)
+shape = SubResource("RectangleShape2D_j8cyv")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
