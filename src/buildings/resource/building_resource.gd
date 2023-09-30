@@ -4,7 +4,7 @@ extends Resource
 @export var name: String
 @export var type: Building.TYPES
 @export var sprite: Texture2D
-@export var collision_data: Array[CollisionShape2D]
+@export var collision_data: CollisionShape2D
 @export_group("Economy")
 @export var housing_prod: int
 @export var food_prod: int

@@ -66,9 +66,9 @@ func _ready() -> void:
 	air_decay_rate = 0.1
 
 
-func _physics_process(delta):
-	if Input.is_action_just_pressed("DEBUG_add_population"):
-		population_amount += 1
+#func _physics_process(delta):
+#	if Input.is_action_just_pressed("DEBUG_add_population"):
+#		population_amount += 1
 
 
 func update_resource_tick() -> void:

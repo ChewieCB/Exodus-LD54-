@@ -1,5 +1,5 @@
 extends Node2D
-class_name Building
+class_name BuildingOLD
 
 @onready var sprite = $Sprite
 @onready var collider = $Area2D

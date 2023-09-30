@@ -1,20 +1,21 @@
 [gd_resource type="Resource" load_steps=3 format=3 uid="uid://cgd0yn1rt47y2"]
 
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_t34kl"]
-[ext_resource type="Texture2D" uid="uid://bq8fpfj6rug54" path="res://assets/buildings/test_building_1.png" id="2_dt6s0"]
+[ext_resource type="Texture2D" uid="uid://bmdqixqhs6xo5" path="res://src/tests/test_grid_placement/test_building_sprite.png" id="2_wif20"]
 
 [resource]
 script = ExtResource("1_t34kl")
 name = "TestBuilding"
-sprite = ExtResource("2_dt6s0")
-collision_data = Array[CollisionShape2D]([Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":null,"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"script":null)
-])
+type = 0
+sprite = ExtResource("2_wif20")
+collision_data = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":null,"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"script":null)
+
 housing_prod = 1
 food_prod = 0
 water_prod = 0
 air_prod = 0
 resource_cost = 0
 people_cost = 0
-construction_time = 0.0
 refund_value = 0
+construction_time = 0.0
 destruction_time = 0.0
