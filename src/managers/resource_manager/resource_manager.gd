@@ -6,6 +6,14 @@ signal food_changed(value)
 signal water_changed(value)
 signal air_changed(value)
 
+enum RESOURCE_TYPE {
+	POPULATION,
+	HOUSING,
+	FOOD,
+	WATER,
+	AIR
+}
+
 # Resources to be managed
 var population_amount: int:
 	set(value):
@@ -60,14 +68,20 @@ func _physics_process(delta):
 func update_resource_tick() -> void:
 	# When we receive a tick signal from the GameTickManager 
 	# we update our resource levels.
-	housing_amount = clamp(housing_amount - population_amount, 0, INF)
-	food_amount = calculate_resource_amount(food_amount, food_decay_rate)
-	water_amount = calculate_resource_amount(water_amount, water_decay_rate)
-	air_amount = calculate_resource_amount(air_amount, air_decay_rate)
+	housing_amount = calculate_resource_amount(housing_amount, hab_buildings, 1.0)
+	food_amount = calculate_resource_amount(food_amount, food_buildings, food_decay_rate)
+	water_amount = calculate_resource_amount(water_amount, water_buildings, water_decay_rate)
+	air_amount = calculate_resource_amount(air_amount, air_buildings, air_decay_rate)
 
 
-func calculate_resource_amount(resource, decay_rate) -> float:
-	return resource - (decay_rate * population_amount)
+func calculate_resource_amount(resource, buildings, decay_rate) -> float:
+	var production = 0
+	for building in buildings:
+		production += building.value
+	
+	var consumption = decay_rate * population_amount
+	
+	return resource + production - consumption
 
 
 func add_building(building):
