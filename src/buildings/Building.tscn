@@ -16,3 +16,16 @@ data = ExtResource("2_50h3s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_ig8i2")
+
+[node name="Debug" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -65.0
+offset_top = -115.0
+offset_right = 65.0
+offset_bottom = -63.0
+grow_horizontal = 2
+text = "DEBUG DATA
+H: 0 F: 0 W: 0 A: 0"
+horizontal_alignment = 1
