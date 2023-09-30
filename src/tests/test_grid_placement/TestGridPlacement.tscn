@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://cmtp0boldl0us"]
 
-[ext_resource type="Script" path="res://src/tests/test_grid_placement/test_tilemap_grid.gd" id="1_1cg6i"]
+[ext_resource type="Script" path="res://src/shipbase_prototye/GridPlacement.gd" id="1_1cg6i"]
 [ext_resource type="Texture2D" uid="uid://dn7d2jgqhgqxf" path="res://src/tests/test_grid_placement/building_placeholders.png" id="2_hlxpf"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_vrsuv"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://5jgltrykfhrp"]
 
-[ext_resource type="Script" path="res://src/tests/test_grid_placement/test_building.gd" id="1_l1pcn"]
+[ext_resource type="Script" path="res://src/shipbase_prototye/Building.gd" id="1_7rdtj"]
 [ext_resource type="Texture2D" uid="uid://bmdqixqhs6xo5" path="res://src/tests/test_grid_placement/test_building_sprite.png" id="2_w43d3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rt6ud"]
@@ -10,7 +10,7 @@ size = Vector2(64, 128)
 size = Vector2(64, 64)
 
 [node name="TestBuilding" type="Node2D"]
-script = ExtResource("1_l1pcn")
+script = ExtResource("1_7rdtj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_w43d3")
