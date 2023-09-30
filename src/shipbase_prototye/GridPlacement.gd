@@ -1,10 +1,11 @@
 extends Node2D
 class_name GridPlacement
 
-@onready var tilemap = $TileMap
+@export var tilemap: Node
 @export var grid_size: Vector2
 
 var building
+
 var mouse_pos: Vector2
 var placement_coord: Vector2
 var preview_pos: Vector2
@@ -13,14 +14,14 @@ var previous_rotation = 0
 
 
 func _ready():
-	pass
+	BuildingManager.building_selected.connect(_building_button_pressed)
 
 
 func get_new_building():
-	var new_building: Building = building.instantiate()
+	var new_building = building.instantiate()
 	new_building.preview = true
 	new_building.rotation = previous_rotation
-	new_building.visible = false
+	new_building.visible = true
 	add_child(new_building)
 	current_building = new_building
 
@@ -56,10 +57,10 @@ func _physics_process(_delta):
 
 
 func is_outside_gridmap(coord: Vector2) -> bool:
-	if placement_coord.x < 0 or placement_coord.y < 0 \
-		or placement_coord.x >= grid_size.x or placement_coord.y >= grid_size.y:
+	if tilemap.get_cell_source_id(0, coord) == -1:
 		return true
-	return false
+	else:
+		return false
 
 
 func place_building():
@@ -74,3 +75,9 @@ func stop_building_preview():
 		previous_rotation = current_building.rotation
 		current_building.queue_free()
 		current_building = null
+
+
+func _building_button_pressed(_building: PackedScene):
+	building = _building
+	stop_building_preview()
+	get_new_building()

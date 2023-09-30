@@ -5,6 +5,12 @@ signal housing_changed(value)
 signal food_changed(value)
 signal water_changed(value)
 signal air_changed(value)
+#
+signal population_diff(production, consumption, total)
+signal housing_diff(production, consumption,total)
+signal food_diff(production, consumption, total)
+signal water_diff(production, consumption, total)
+signal air_diff(production, consumption, total)
 
 enum RESOURCE_TYPE {
 	POPULATION,
@@ -60,56 +66,55 @@ func _ready() -> void:
 	air_decay_rate = 0.1
 
 
-func _physics_process(delta):
-	if Input.is_action_just_pressed("DEBUG_add_population"):
-		population_amount += 1
+#func _physics_process(delta):
+#	if Input.is_action_just_pressed("DEBUG_add_population"):
+#		population_amount += 1
 
 
 func update_resource_tick() -> void:
 	# When we receive a tick signal from the GameTickManager 
 	# we update our resource levels.
-	housing_amount = calculate_resource_amount(housing_amount, hab_buildings, 1.0)
-	food_amount = calculate_resource_amount(food_amount, food_buildings, food_decay_rate)
-	water_amount = calculate_resource_amount(water_amount, water_buildings, water_decay_rate)
-	air_amount = calculate_resource_amount(air_amount, air_buildings, air_decay_rate)
+	housing_amount = calculate_resource_amount(housing_amount, hab_buildings, 1.0, housing_diff)
+	food_amount = calculate_resource_amount(food_amount, food_buildings, food_decay_rate, food_diff)
+	water_amount = calculate_resource_amount(water_amount, water_buildings, water_decay_rate, water_diff)
+	air_amount = calculate_resource_amount(air_amount, air_buildings, air_decay_rate, air_diff)
 
 
-func calculate_resource_amount(resource, buildings, decay_rate) -> float:
+func calculate_resource_amount(resource, buildings, decay_rate, _signal=null) -> float:
 	var production = 0
 	for building in buildings:
 		production += building.value
 	
 	var consumption = decay_rate * population_amount
 	
+	if _signal:
+		emit_signal(_signal.get_name(), production, consumption, resource + production - consumption)
+	
 	return resource + production - consumption
 
 
 func add_building(building):
-	# TODO - implement with building resource types
-	pass
-#	match building.type:
-#		HabBuilding:
-#			hab_buildings.append(building)
-#		FoodBuilding:
-#			food_buildings.append(building)
-#		WaterBuilding:
-#			water_buildings.append(building)
-#		AirBuilding:
-#			air_buildings.append(building)
+	match building.type:
+		Building.TYPES.HabBuilding:
+			hab_buildings.append(building)
+		Building.TYPES.FoodBuilding:
+			food_buildings.append(building)
+		Building.TYPES.WaterBuilding:
+			water_buildings.append(building)
+		Building.TYPES.AirBuilding:
+			air_buildings.append(building)
 
 
 func remove_building(building):
-	# TODO - implement with building resource types
-	pass
-#	match building.type:
-#		HabBuilding:
-#			hab_buildings.erase(building)
-#		FoodBuilding:
-#			food_buildings.erase(building)
-#		WaterBuilding:
-#			water_buildings.erase(building)
-#		AirBuilding:
-#			air_buildings.erase(building)
+	match building.type:
+		Building.TYPES.HabBuilding:
+			hab_buildings.erase(building)
+		Building.TYPES.FoodBuilding:
+			food_buildings.erase(building)
+		Building.TYPES.WaterBuilding:
+			water_buildings.erase(building)
+		Building.TYPES.AirBuilding:
+			air_buildings.erase(building)
 
 
 func _on_timer_timeout():
