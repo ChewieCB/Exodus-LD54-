@@ -6,6 +6,8 @@ class_name GridPlacement
 
 @export var hab_1: PackedScene
 @export var hab_2: PackedScene
+@export var farm_2: PackedScene
+@export var water_2: PackedScene
 var building
 
 var mouse_pos: Vector2
@@ -87,5 +89,17 @@ func _on_hab_1_button_pressed():
 
 func _on_hab_2_button_pressed():
 	building = hab_2
+	stop_building_preview()
+	get_new_building()
+
+
+func _on_farm_2_button_pressed():
+	building = farm_2
+	stop_building_preview()
+	get_new_building()
+
+
+func _on_water_2_button_pressed():
+	building = water_2
 	stop_building_preview()
 	get_new_building()

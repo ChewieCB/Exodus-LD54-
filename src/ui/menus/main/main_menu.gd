@@ -9,6 +9,8 @@ extends Control
 func _ready():
 	music_volume_slider.value = SoundManager.get_music_volume() * 100
 	sfx_volume_slider.value = SoundManager.get_sound_volume() * 100
+	var music = load("res://assets/audio/music/ld54-concept1-0.0.1.mp3")
+	SoundManager.play_music(music, 0.2, "Music")
 	ScreenTransitionManager.fade_in(0.8)
 	await ScreenTransitionManager.transitioned
 
@@ -30,10 +32,9 @@ func _on_quit_button_pressed():
 
 
 func _on_button_pressed():
-	pass
-#	ScreenTransitionManager.fade_out(0.8)
-#	await ScreenTransitionManager.transitioned
-#	get_tree().change_scene_to_file("res://src/tests/test_sound_manager/TestSoundManager.tscn")
+	ScreenTransitionManager.fade_out(0.8)
+	await ScreenTransitionManager.transitioned
+	get_tree().change_scene_to_file("res://src/tests/test_building_object/TestBuildingObject.tscn")
 
 
 func _on_fullscreen_button_pressed():
