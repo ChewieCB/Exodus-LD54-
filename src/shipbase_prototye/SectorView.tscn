@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfcoh06nr6quv"]
+
+[ext_resource type="PackedScene" uid="uid://cmtp0boldl0us" path="res://src/tests/test_grid_placement/TestGridPlacement.tscn" id="1_8srcn"]
+
+[node name="SectorView" type="Node2D"]
+
+[node name="TestGridPlacement" parent="." instance=ExtResource("1_8srcn")]
+scale = Vector2(0.5, 0.5)
