@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 ScreenTransitionManager="*res://src/ui/ScreenTransitionManager.tscn"
 SoundManager="*res://addons/sound_manager/sound_manager.gd"
 Dialogic="*res://addons/dialogic/Other/DialogicGameHandler.gd"
+ResourceManager="*res://src/managers/resource_manager/ResourceManager.tscn"
 
 [debug]
 
