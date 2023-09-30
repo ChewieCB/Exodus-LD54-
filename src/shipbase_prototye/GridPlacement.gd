@@ -39,6 +39,10 @@ func _physics_process(_delta):
 		current_building.outside_gridmap = is_outside_gridmap(placement_coord)
 		current_building.visible = !current_building.outside_gridmap
 		current_building.global_position = preview_pos
+		
+		if Input.is_action_just_pressed("ui_cancel"):
+			current_building.queue_free()
+			current_building = null
 
 		if Input.is_action_just_pressed("place_building"):
 			if not current_building.collider.has_overlapping_areas():
