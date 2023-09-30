@@ -36,13 +36,13 @@ func _physics_process(_delta):
 	preview_pos = tilemap.to_global(preview_pos)
 
 	if current_building:
-		current_building.visible = true
-		current_building.outside_gridmap = check_if_outside_gridmap(placement_coord)
+		current_building.outside_gridmap = is_outside_gridmap(placement_coord)
+		current_building.visible = !current_building.outside_gridmap
 		current_building.global_position = preview_pos
 
 		if Input.is_action_just_pressed("place_building"):
 			if not current_building.collider.has_overlapping_areas():
-				if not check_if_outside_gridmap(placement_coord):
+				if not is_outside_gridmap(placement_coord):
 					place_building()
 
 		if Input.is_action_just_pressed("rotate_cw"):
@@ -51,12 +51,11 @@ func _physics_process(_delta):
 			current_building.rotation -= PI/2
 
 
-func check_if_outside_gridmap(coord: Vector2) -> bool:
+func is_outside_gridmap(coord: Vector2) -> bool:
 	if placement_coord.x < 0 or placement_coord.y < 0 \
 		or placement_coord.x >= grid_size.x or placement_coord.y >= grid_size.y:
 		return true
 	return false
-
 
 
 func place_building():
