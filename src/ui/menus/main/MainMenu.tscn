@@ -1,8 +1,8 @@
 [gd_scene load_steps=11 format=3 uid="uid://cycdqhy5xadoa"]
 
 [ext_resource type="Script" path="res://src/ui/menus/main/main_menu.gd" id="1_1aer0"]
-[ext_resource type="Texture2D" uid="uid://cocjltwsh783c" path="res://assets/ui/menus/main/temp_bg.png" id="1_7hgao"]
 [ext_resource type="FontFile" uid="uid://4r5r4qviqq2k" path="res://assets/ui/fonts/Improbable.otf" id="1_svkb1"]
+[ext_resource type="Texture2D" uid="uid://ctgsf4d6gg6gj" path="res://assets/ui/menus/main/concept_bg_1.png" id="2_sgqft"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7rnd3"]
 bg_color = Color(0.815686, 0.52549, 0.262745, 0.447059)
@@ -196,7 +196,7 @@ layout_mode = 0
 offset_right = 1160.0
 offset_bottom = 651.0
 mouse_filter = 2
-texture = ExtResource("1_7hgao")
+texture = ExtResource("2_sgqft")
 
 [node name="MainScreen" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -239,33 +239,10 @@ theme_override_constants/separation = 20
 layout_mode = 2
 
 [node name="Button" type="Button" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer"]
-visible = false
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_svkb1")
 theme_override_font_sizes/font_size = 48
 text = "Play"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer"]
-layout_mode = 2
-theme_override_constants/separation = 13
-
-[node name="AudioTest" type="Button" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_svkb1")
-theme_override_font_sizes/font_size = 48
-text = "Audio "
-
-[node name="TilemapTest" type="Button" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_svkb1")
-theme_override_font_sizes/font_size = 48
-text = "Tilemap"
-
-[node name="DialogTest" type="Button" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_svkb1")
-theme_override_font_sizes/font_size = 48
-text = "Dialog"
 
 [node name="SettingsContainer" type="MarginContainer" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer"]
 layout_mode = 2
@@ -408,9 +385,6 @@ libraries = {
 }
 
 [connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer/HBoxContainer/AudioTest" to="." method="_on_audio_test_pressed"]
-[connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer/HBoxContainer/TilemapTest" to="." method="_on_tilemap_test_pressed"]
-[connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer/HBoxContainer/DialogTest" to="." method="_on_dialog_test_pressed"]
 [connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/SettingsContainer/Button" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/QuitContainer/Button" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/FullscreenContainer/HBoxContainer/CheckButton" to="." method="_on_fullscreen_button_pressed"]

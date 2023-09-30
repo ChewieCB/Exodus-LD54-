@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://cu7ivg1u3vbhl"]
+
+[ext_resource type="PackedScene" uid="uid://bdbib8np6c616" path="res://src/ui/main_screen/resources/ResourceUI.tscn" id="1_4u51x"]
+
+[node name="MainUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ResourceUI" parent="." instance=ExtResource("1_4u51x")]
+layout_mode = 1
+offset_left = -245.0
+offset_top = -130.0
+offset_right = -245.0
+offset_bottom = -130.0
