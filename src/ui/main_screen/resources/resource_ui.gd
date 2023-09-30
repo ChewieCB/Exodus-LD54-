@@ -1,16 +1,16 @@
 extends Control
 
-@onready var population_counter = $MarginContainer2/HBoxContainer/MarginContainer5/Label
-@onready var housing_bar = $MarginContainer2/HBoxContainer/MarginContainer/HousingBar
-@onready var food_bar = $MarginContainer2/HBoxContainer/MarginContainer2/FoodBar
-@onready var water_bar = $MarginContainer2/HBoxContainer/MarginContainer3/WaterBar
-@onready var air_bar = $MarginContainer2/HBoxContainer/MarginContainer4/AirBar
+@onready var population_counter = $MarginContainer2/HBoxContainer/PopMarginContainer/MarginContainer/HBoxContainer/Label
+@onready var housing_bar = $MarginContainer2/HBoxContainer/HabMarginContainer/VBoxContainer/MarginContainer/HousingBar
+@onready var food_bar = $MarginContainer2/HBoxContainer/FoodMarginContainer/VBoxContainer/MarginContainer/FoodBar
+@onready var water_bar = $MarginContainer2/HBoxContainer/WaterMarginContainer/VBoxContainer/MarginContainer/WaterBar
+@onready var air_bar = $MarginContainer2/HBoxContainer/AirMarginContainer/VBoxContainer/MarginContainer/AirBar
 
-@onready var debug_pop = $MarginContainer/HBoxContainer/MarginContainer5/PopLabel
-@onready var debug_hab = $MarginContainer/HBoxContainer/MarginContainer/HabLabel
-@onready var debug_food = $MarginContainer/HBoxContainer/MarginContainer2/FoodLabel
-@onready var debug_water = $MarginContainer/HBoxContainer/MarginContainer3/WaterLabel
-@onready var debug_air = $MarginContainer/HBoxContainer/MarginContainer4/AirLabel
+#@onready var debug_pop = 
+#@onready var debug_hab = 
+#@onready var debug_food = 
+#@onready var debug_water = 
+#@onready var debug_air = 
 
 
 func _ready():
@@ -55,21 +55,26 @@ func _update_air_ui(value):
 
 
 func _update_debug_pop(production, consumption, total):
-	debug_pop.text = "Pop +{0}|-{1}|{2}".format([str(production), str(consumption), str(total)])
+	pass
+#	debug_pop.text = "Pop +{0}|-{1}|{2}".format([str(production), str(consumption), str(total)])
 
 
 func _update_debug_hab(production, consumption, total):
-	debug_hab.text = "Hab +{0}|-{1}|{2}".format([str(production), str(consumption), str(total)])
+	pass
+#	debug_hab.text = "Hab +{0}|-{1}|{2}".format([str(production), str(consumption), str(total)])
 
 
 func _update_debug_food(production, consumption, total):
-	debug_food.text = "Food +{0}|-{1}|{2}".format([str(production), str(consumption), str(total)])
+	pass
+#	debug_food.text = "Food +{0}|-{1}|{2}".format([str(production), str(consumption), str(total)])
 
 
 func _update_debug_water(production, consumption, total):
-	debug_water.text = "Water +{0}|-{1}|{2}".format([str(production), str(consumption), str(total)])
+	pass
+#	debug_water.text = "Water +{0}|-{1}|{2}".format([str(production), str(consumption), str(total)])
 
 
 func _update_debug_air(production, consumption, total):
-	debug_air.text = "Air +{0}|-{1}|{2}".format([str(production), str(consumption), str(total)])
+	pass
+#	debug_air.text = "Air +{0}|-{1}|{2}".format([str(production), str(consumption), str(total)])
 

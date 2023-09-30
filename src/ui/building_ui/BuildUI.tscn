@@ -1,49 +1,114 @@
-[gd_scene format=3 uid="uid://c3y8aeyqjokqp"]
+[gd_scene load_steps=6 format=3 uid="uid://sjhl1wud5upl"]
+
+[ext_resource type="Script" path="res://src/ui/building_ui/build_ui.gd" id="1_pbqqm"]
+[ext_resource type="Texture2D" uid="uid://bq8fpfj6rug54" path="res://assets/buildings/test_building_1.png" id="1_vfnjs"]
+[ext_resource type="Texture2D" uid="uid://duvob01qmjf6h" path="res://assets/buildings/hab2.png" id="2_7sv4e"]
+[ext_resource type="Texture2D" uid="uid://bnoqxoslqji4n" path="res://assets/buildings/nutrition_reclamation_plant.png" id="3_d5s11"]
+[ext_resource type="Texture2D" uid="uid://de3nykhuiwspm" path="res://assets/buildings/refiltration_center.png" id="4_3o280"]
 
 [node name="BuildingUI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -70.0
-offset_right = -70.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_pbqqm")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 0
-offset_left = 64.0
-offset_top = 64.0
-offset_right = 303.0
-offset_bottom = 576.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -168.5
+offset_top = -256.0
+offset_right = 168.5
+offset_bottom = 256.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/margin_left = 32
-theme_override_constants/margin_right = -3
+theme_override_constants/margin_right = 32
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ScrollContainer/PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 32
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 32
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Hab1Icon" type="TextureRect" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/CenterContainer"]
+layout_mode = 2
+texture = ExtResource("1_vfnjs")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_bottom = 32
 
-[node name="Hab1Button" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
+[node name="Hab1Button" type="Button" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 text = "Hab 1"
 
-[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="CenterContainer2" type="CenterContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Hab2Icon" type="TextureRect" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/CenterContainer2"]
+layout_mode = 2
+texture = ExtResource("2_7sv4e")
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_bottom = 32
 
-[node name="Hab2Button" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2"]
+[node name="Hab2Button" type="Button" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2"]
 layout_mode = 2
 text = "Hab 2"
+
+[node name="CenterContainer3" type="CenterContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Farm2Icon" type="TextureRect" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/CenterContainer3"]
+layout_mode = 2
+texture = ExtResource("3_d5s11")
+
+[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 32
+
+[node name="Farm2Button" type="Button" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+text = "Nutrition 
+Reclamation Plant"
+
+[node name="CenterContainer4" type="CenterContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Water2Icon" type="TextureRect" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/CenterContainer4"]
+layout_mode = 2
+texture = ExtResource("4_3o280")
+
+[node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 32
+
+[node name="Water2Button" type="Button" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer4"]
+layout_mode = 2
+text = "Refiltration Center"
+
+[connection signal="pressed" from="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/Hab1Button" to="." method="_on_hab_1_button_pressed"]
+[connection signal="pressed" from="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/Hab2Button" to="." method="_on_hab_2_button_pressed"]
+[connection signal="pressed" from="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer3/Farm2Button" to="." method="_on_farm_2_button_pressed"]
+[connection signal="pressed" from="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer4/Water2Button" to="." method="_on_water_2_button_pressed"]

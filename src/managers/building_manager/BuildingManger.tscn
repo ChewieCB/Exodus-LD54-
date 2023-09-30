@@ -1,0 +1,14 @@
+[gd_scene load_steps=6 format=3 uid="uid://bu87hutniaf70"]
+
+[ext_resource type="Script" path="res://src/managers/building_manager/building_manager.gd" id="1_u0lj7"]
+[ext_resource type="PackedScene" uid="uid://3slp8ujgyckn" path="res://src/buildings/hab/Hab1.tscn" id="2_q05jp"]
+[ext_resource type="PackedScene" uid="uid://ccc7bkjtmvcyj" path="res://src/buildings/hab/Hab2.tscn" id="3_o71s6"]
+[ext_resource type="PackedScene" uid="uid://uno8ymiehbgk" path="res://src/buildings/food/Farm2.tscn" id="4_5d4bo"]
+[ext_resource type="PackedScene" uid="uid://c8p2ivrx4icn3" path="res://src/buildings/water/Water2.tscn" id="5_oibqg"]
+
+[node name="BuildingManger" type="Node"]
+script = ExtResource("1_u0lj7")
+hab_1 = ExtResource("2_q05jp")
+hab_2 = ExtResource("3_o71s6")
+farm_2 = ExtResource("4_5d4bo")
+water_2 = ExtResource("5_oibqg")

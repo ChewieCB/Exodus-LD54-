@@ -4,10 +4,6 @@ class_name GridPlacement
 @export var tilemap: Node
 @export var grid_size: Vector2
 
-@export var hab_1: PackedScene
-@export var hab_2: PackedScene
-@export var farm_2: PackedScene
-@export var water_2: PackedScene
 var building
 
 var mouse_pos: Vector2
@@ -18,7 +14,7 @@ var previous_rotation = 0
 
 
 func _ready():
-	pass
+	BuildingManager.building_selected.connect(_building_button_pressed)
 
 
 func get_new_building():
@@ -81,25 +77,7 @@ func stop_building_preview():
 		current_building = null
 
 
-func _on_hab_1_button_pressed():
-	building = hab_1
-	stop_building_preview()
-	get_new_building()
-
-
-func _on_hab_2_button_pressed():
-	building = hab_2
-	stop_building_preview()
-	get_new_building()
-
-
-func _on_farm_2_button_pressed():
-	building = farm_2
-	stop_building_preview()
-	get_new_building()
-
-
-func _on_water_2_button_pressed():
-	building = water_2
+func _building_button_pressed(_building: PackedScene):
+	building = _building
 	stop_building_preview()
 	get_new_building()
