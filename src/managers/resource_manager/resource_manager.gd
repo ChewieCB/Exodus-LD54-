@@ -85,31 +85,27 @@ func calculate_resource_amount(resource, buildings, decay_rate) -> float:
 
 
 func add_building(building):
-	# TODO - implement with building resource types
-	pass
-#	match building.type:
-#		HabBuilding:
-#			hab_buildings.append(building)
-#		FoodBuilding:
-#			food_buildings.append(building)
-#		WaterBuilding:
-#			water_buildings.append(building)
-#		AirBuilding:
-#			air_buildings.append(building)
+	match building.type:
+		Building.TYPES.HabBuilding:
+			hab_buildings.append(building)
+		Building.TYPES.FoodBuilding:
+			food_buildings.append(building)
+		Building.TYPES.WaterBuilding:
+			water_buildings.append(building)
+		Building.TYPES.AirBuilding:
+			air_buildings.append(building)
 
 
 func remove_building(building):
-	# TODO - implement with building resource types
-	pass
-#	match building.type:
-#		HabBuilding:
-#			hab_buildings.erase(building)
-#		FoodBuilding:
-#			food_buildings.erase(building)
-#		WaterBuilding:
-#			water_buildings.erase(building)
-#		AirBuilding:
-#			air_buildings.erase(building)
+	match building.type:
+		Building.TYPES.HabBuilding:
+			hab_buildings.erase(building)
+		Building.TYPES.FoodBuilding:
+			food_buildings.erase(building)
+		Building.TYPES.WaterBuilding:
+			water_buildings.erase(building)
+		Building.TYPES.AirBuilding:
+			air_buildings.erase(building)
 
 
 func _on_timer_timeout():
