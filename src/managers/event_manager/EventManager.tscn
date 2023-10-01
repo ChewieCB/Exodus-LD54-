@@ -3,4 +3,5 @@
 [ext_resource type="Script" path="res://src/managers/event_manager/event_manager.gd" id="1_rqa4t"]
 
 [node name="EventManager" type="Node"]
+process_mode = 3
 script = ExtResource("1_rqa4t")

@@ -30,7 +30,7 @@ func plague_planet() -> String:
 	[background arg="res://assets/backgrounds/planet.jpg" fade="0.0"]
 	You received a signal after passed through an Earth-like planet. The signal need to be decrypted before you understand it.
 	- Decrypt it (cost 1 Energy)
-		It's a signal asking for help. Look like a spaceship crashed onto this place.__get_property_list
+		It's a signal asking for help. Look like a spaceship crashed onto this place.
 		- Send a squad to help (cost 1 Food, 1 Water)
 			Your squad successfully rescued them, but to your horror, you discovered they are infected with some kind of space plague. And your rescue squad may be already infected now, you never know.
 			- Abandon them all, not worth the risk
