@@ -33,6 +33,8 @@ func _on_build_button_pressed():
 
 
 func _on_play_dialog_pressed():
+	# TODO - refactor this with TickManager calls
+	ResourceManager.stop_ticks()
 	ship_sprite.visible = false
 	ship_grid.visible = false
 	build_show_toggle.visible = false
@@ -53,4 +55,6 @@ func _on_dialogic_signal(arg: String):
 				ship_grid.visible = true
 			else:
 				ship_grid.visible = false
+			# TODO - refactor this with TickManager calls
+			ResourceManager.start_ticks()
 
