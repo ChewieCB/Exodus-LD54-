@@ -4,9 +4,9 @@
 
 [resource]
 script = ExtResource("1_d1pcb")
-name = "Hab2"
+name = "Dormitory"
 type = 0
-housing_prod = 2
+housing_prod = 3
 food_prod = 0
 water_prod = 0
 air_prod = 0

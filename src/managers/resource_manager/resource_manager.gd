@@ -11,6 +11,56 @@ signal housing_modifier_changed(total, modifier)
 signal food_modifier_changed(total, modifier)
 signal water_modifier_changed(total, modifier)
 signal air_modifier_changed(total, modifier)
+#
+signal resource_low(resource)
+signal game_over(resource)
+
+var housing_alert_shown = false
+var food_alert_shown = false
+var water_alert_shown = false
+var air_alert_shown = false
+
+# Endgame flags, if any of these last too long its game over
+var is_starving = false:
+	set(value):
+		if value == false and is_starving == true:
+			print("No longer starving!")
+		is_starving = value
+		if not is_starving:
+			starving_time_left = starving_time
+var is_thirsty = false:
+	set(value):
+		if value == false and is_thirsty == true:
+			print("No longer thirsty!")
+		is_thirsty = value
+		if not is_thirsty:
+			thirsty_time_left = thirsty_time
+var is_suffocating = false:
+	set(value):
+		if value == false and is_suffocating == true:
+			print("No longer suffocating!")
+		is_suffocating = value
+		if not is_suffocating:
+			suffocating_time_left = suffocating_time
+# How many ticks/days/turns each endgame flag can go on for before you lose
+var starving_time: int = 10
+var starving_time_left = starving_time:
+	set(value):
+		starving_time_left = value
+		if starving_time_left == 0:
+			emit_signal("game_over", RESOURCE_TYPE.FOOD)
+var thirsty_time: int = 6
+var thirsty_time_left = thirsty_time:
+	set(value):
+		thirsty_time_left = value
+		if thirsty_time_left == 0:
+			emit_signal("game_over", RESOURCE_TYPE.WATER)
+var suffocating_time: int = 3
+var suffocating_time_left = suffocating_time:
+	set(value):
+		suffocating_time_left = value
+		if suffocating_time_left == 0:
+			emit_signal("game_over", RESOURCE_TYPE.AIR)
 
 enum RESOURCE_TYPE {
 	POPULATION,
@@ -53,6 +103,12 @@ var pop_food_cost: int = 2
 var pop_water_cost: int = 3
 var pop_air_cost: int = 1
 
+#
+var housing_low_threshold: int = 2
+var food_low_threshold: int = 2
+var water_low_threshold: int = 3
+var air_low_threshold: int = 2
+
 # 
 var buildings = []
 
@@ -63,13 +119,18 @@ func _ready() -> void:
 	# This is derived purely from the buildings we have placed
 	housing_amount = 0
 	food_amount = 20
-	water_amount = 30
-	air_amount = 15
+	water_amount = 300
+	air_amount = 150
 	#
 	pop_housing_cost = 1
 	pop_food_cost = 2
 	pop_water_cost = 3
 	pop_air_cost = 1
+	# Thresholds to alert the player to low resource
+	housing_low_threshold = 2
+	food_low_threshold = 10
+	water_low_threshold = 10
+	air_low_threshold = 10
 
 
 func _physics_process(delta):
@@ -120,10 +181,28 @@ func calculate_resource_modifier(resource_type, population) -> void:
 func update_resource_tick() -> void:
 	# When we receive a tick signal from the GameTickManager 
 	# we update our resource levels.
-	housing_amount += current_housing_modifier
-	food_amount += current_food_modifier
-	water_amount += current_water_modifier
-	air_amount += current_air_modifier
+	housing_amount = clamp(housing_amount + current_housing_modifier, 0, 999)
+	food_amount = clamp(food_amount + current_food_modifier, 0, 999)
+	water_amount = clamp(water_amount + current_water_modifier, 0, 999)
+	air_amount = clamp(air_amount + current_air_modifier, 0, 999)
+	
+	# TODO - change resource UI colours over low threshold
+	
+	# Tick down loss counters
+	if is_starving:
+		starving_time_left -= 1
+		print("Starving: " + str(starving_time_left) + " ticks left")
+	if is_thirsty:
+		thirsty_time_left -= 1
+		print("Thirsty: " + str(thirsty_time_left) + " ticks left")
+	if is_suffocating:
+		suffocating_time_left -= 1
+		print("Suffocating: " + str(suffocating_time_left) + " ticks left")
+	
+	# Reset loss counters if they've changed
+	is_starving = food_amount == 0
+	is_thirsty = water_amount == 0
+	is_suffocating = air_amount == 0
 
 
 func add_building(building):

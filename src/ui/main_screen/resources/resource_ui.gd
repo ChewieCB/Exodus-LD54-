@@ -64,7 +64,7 @@ func _update_debug_hab(total, modifier):
 	var modifier_prefix = ""
 	if modifier > 0:
 		modifier_prefix = "+" 
-	debug_hab.text = "H: {0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
+	debug_hab.text = "{0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
 
 
 func _update_debug_food(total, modifier):
@@ -72,7 +72,7 @@ func _update_debug_food(total, modifier):
 	var modifier_prefix = ""
 	if modifier > 0:
 		modifier_prefix = "+" 
-	debug_food.text = "F: {0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
+	debug_food.text = "{0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
 
 
 func _update_debug_water(total, modifier):
@@ -80,7 +80,7 @@ func _update_debug_water(total, modifier):
 	var modifier_prefix = ""
 	if modifier > 0:
 		modifier_prefix = "+" 
-	debug_water.text = "W: {0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
+	debug_water.text = "{0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
 
 
 func _update_debug_air(total, modifier):
@@ -88,5 +88,5 @@ func _update_debug_air(total, modifier):
 	var modifier_prefix = ""
 	if modifier > 0:
 		modifier_prefix = "+" 
-	debug_air.text = "A: {0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
+	debug_air.text = "{0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
 
