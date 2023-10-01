@@ -47,12 +47,11 @@ var current_food_modifier: int = 0
 var current_air_modifier: int = 0
 var current_water_modifier: int = 0
 
-
 # How many resources-per-tick does one person cost?
-var pop_housing_cost: int
-var pop_food_cost: int
-var pop_water_cost: int
-var pop_air_cost: int
+var pop_housing_cost: int = 1
+var pop_food_cost: int = 2
+var pop_water_cost: int = 3
+var pop_air_cost: int = 1
 
 # 
 var buildings = []
@@ -60,11 +59,12 @@ var buildings = []
 
 func _ready() -> void:
 	# TODO - load initial values from file for difficulty settings
-	population_amount = 5
-	housing_amount = 5
-	food_amount = 200
-	water_amount = 300
-	air_amount = 150
+	population_amount = 3
+	# This is derived purely from the buildings we have placed
+	housing_amount = 0
+	food_amount = 20
+	water_amount = 30
+	air_amount = 15
 	#
 	pop_housing_cost = 1
 	pop_food_cost = 2
@@ -73,7 +73,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta):
-	for idx in range(4):
+	for idx in range(1, 5):
 		calculate_resource_modifier(idx, population_amount)
 		match idx:
 			RESOURCE_TYPE.HOUSING:
@@ -93,33 +93,28 @@ func _physics_process(delta):
 func calculate_resource_modifier(resource_type, population) -> void:
 	var production = 0
 	var consumption = 0
-	for building in buildings:
-		match resource_type:
-			RESOURCE_TYPE.HOUSING:
-				production += building.data.housing_prod
-				consumption += population * pop_housing_cost
-			RESOURCE_TYPE.FOOD:
-				production += building.data.food_prod
-				consumption += population * pop_food_cost
-			RESOURCE_TYPE.WATER:
-				production += building.data.water_prod
-				consumption += population * pop_water_cost
-			RESOURCE_TYPE.AIR:
-				production += building.data.air_prod
-				consumption += population * pop_air_cost
-	
-	var modifier = production - consumption
-	
+	var modifier = 0
 	match resource_type:
-			RESOURCE_TYPE.HOUSING:
-				current_housing_modifier = modifier
-			RESOURCE_TYPE.FOOD:
-				current_food_modifier = modifier
-			RESOURCE_TYPE.WATER:
-				current_water_modifier = modifier
-			RESOURCE_TYPE.AIR:
-				current_air_modifier = modifier
-	
+		RESOURCE_TYPE.HOUSING:
+			for building in buildings:
+				production += building.data.housing_prod
+			consumption = population * pop_housing_cost
+			current_housing_modifier = production - consumption
+		RESOURCE_TYPE.FOOD:
+			for building in buildings:
+				production += building.data.food_prod
+			consumption = population * pop_food_cost
+			current_food_modifier = production - consumption
+		RESOURCE_TYPE.WATER:
+			for building in buildings:
+				production += building.data.water_prod
+			consumption += population * pop_water_cost
+			current_water_modifier = production - consumption
+		RESOURCE_TYPE.AIR:
+			for building in buildings:
+				production += building.data.air_prod
+			consumption += population * pop_air_cost
+			current_air_modifier = production - consumption
 
 
 func update_resource_tick() -> void:
@@ -132,11 +127,13 @@ func update_resource_tick() -> void:
 
 
 func add_building(building):
-	buildings.append(building)
+	if building not in buildings:
+		buildings.append(building)
 
 
 func remove_building(building):
-	buildings.erase(building)
+	if building in buildings:
+		buildings.erase(building)
 
 
 func _on_timer_timeout():

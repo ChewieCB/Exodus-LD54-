@@ -15,6 +15,13 @@ var previous_rotation = 0
 
 func _ready():
 	BuildingManager.building_selected.connect(_building_button_pressed)
+	assign_pre_placed_buildings()
+
+
+func assign_pre_placed_buildings() -> void:
+	for child in get_children():
+		if child is Building:
+			ResourceManager.add_building(child)
 
 
 func get_new_building():

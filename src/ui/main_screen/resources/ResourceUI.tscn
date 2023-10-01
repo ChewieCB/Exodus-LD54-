@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://bdbib8np6c616"]
+[gd_scene load_steps=6 format=3 uid="uid://bdbib8np6c616"]
 
 [ext_resource type="Script" path="res://src/ui/main_screen/resources/resource_ui.gd" id="1_tl7ra"]
-[ext_resource type="Texture2D" path="res://assets/ui/icons/32/Person.png" id="2_4yvss"]
 [ext_resource type="Texture2D" uid="uid://b2sfuwgchmmkc" path="res://assets/ui/icons/16/Home.png" id="3_75ih3"]
 [ext_resource type="Texture2D" uid="uid://dawueysu2x7ts" path="res://assets/ui/icons/food_icon.png" id="4_gr5bn"]
 [ext_resource type="Texture2D" uid="uid://beuygxqkippuq" path="res://assets/ui/icons/water_icon.png" id="5_s1c3m"]
@@ -9,28 +8,27 @@
 
 [node name="ResourceUI" type="Control"]
 layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_tl7ra")
 
 [node name="MarginContainer2" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -79.5
-offset_top = -96.0
-offset_right = 79.5
-offset_bottom = 96.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -159.0
+offset_top = -192.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 32
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2"]
 layout_mode = 2
@@ -48,7 +46,6 @@ layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer2/HBoxContainer/PopMarginContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("2_4yvss")
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="MarginContainer2/HBoxContainer/PopMarginContainer/MarginContainer/HBoxContainer"]
@@ -204,36 +201,103 @@ fill_mode = 3
 show_percentage = false
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -64.5
-offset_top = -176.0
-offset_right = 64.5
+offset_left = -222.5
+offset_top = -32.0
+offset_right = 222.5
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/margin_left = 75
-theme_override_constants/margin_top = 279
-theme_override_constants/margin_bottom = -500
+theme_override_constants/margin_bottom = 32
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="HabDebug" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
-text = "H: 00 (+10)"
+size_flags_horizontal = 3
 
-[node name="FoodDebug" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/MarginContainer"]
 layout_mode = 2
-text = "F: 00 (+10)"
 
-[node name="WaterDebug" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer"]
 layout_mode = 2
-text = "W: 00 (+10)"
 
-[node name="AirDebug" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
-text = "A: 00 (+10)"
+texture = ExtResource("3_75ih3")
+stretch_mode = 3
+
+[node name="HabDebug" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "000 (+10)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/MarginContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer2"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer2/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_gr5bn")
+stretch_mode = 3
+
+[node name="FoodDebug" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer2/HBoxContainer"]
+layout_mode = 2
+text = "000 (+10)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/MarginContainer3"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer3"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer3/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_s1c3m")
+stretch_mode = 3
+
+[node name="WaterDebug" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer3/HBoxContainer"]
+layout_mode = 2
+text = "000 (+10)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/MarginContainer4"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer4"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer4/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("6_e5nh8")
+stretch_mode = 3
+
+[node name="AirDebug" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer4/HBoxContainer"]
+layout_mode = 2
+text = "000 (+10)"
+horizontal_alignment = 1
+vertical_alignment = 1

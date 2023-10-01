@@ -7,10 +7,10 @@ extends Control
 @onready var air_bar = $MarginContainer2/HBoxContainer/AirMarginContainer/VBoxContainer/MarginContainer/AirBar
 
 #@onready var debug_pop = $MarginContainer2/HBoxContainer/PopMarginContainer/MarginContainer/HBoxContainer/Label
-@onready var debug_hab = $MarginContainer/VBoxContainer/HabDebug
-@onready var debug_food = $MarginContainer/VBoxContainer/FoodDebug
-@onready var debug_water = $MarginContainer/VBoxContainer/WaterDebug
-@onready var debug_air = $MarginContainer/VBoxContainer/AirDebug
+@onready var debug_hab = $MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/HabDebug
+@onready var debug_food = $MarginContainer/HBoxContainer/MarginContainer2/HBoxContainer/FoodDebug
+@onready var debug_water = $MarginContainer/HBoxContainer/MarginContainer3/HBoxContainer/WaterDebug
+@onready var debug_air = $MarginContainer/HBoxContainer/MarginContainer4/HBoxContainer/AirDebug
 
 
 func _ready():
