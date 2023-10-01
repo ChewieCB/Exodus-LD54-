@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dso7sspkfsbn6"]
+
+[ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_rd10i"]
+
+[resource]
+script = ExtResource("1_rd10i")
+name = "Refiltration Center"
+type = 2
+housing_prod = 0
+food_prod = 0
+water_prod = 4
+air_prod = 0
+resource_cost = 0
+people_cost = 0
+refund_value = 0
+construction_time = 0.0
+destruction_time = 0.0

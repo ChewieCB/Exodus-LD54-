@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8p2ivrx4icn3"]
+
+[ext_resource type="Script" path="res://src/buildings/building.gd" id="1_7g34e"]
+[ext_resource type="Resource" uid="uid://dso7sspkfsbn6" path="res://src/buildings/water/water2.tres" id="2_q32qi"]
+[ext_resource type="Texture2D" uid="uid://diuknkxali318" path="res://assets/buildings/refiltration_center-export.png" id="3_a0oyr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0tb0d"]
+size = Vector2(186, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h83i0"]
+size = Vector2(60, 62)
+
+[node name="Water2" type="Node2D"]
+script = ExtResource("1_7g34e")
+data = ExtResource("2_q32qi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_a0oyr")
+offset = Vector2(-96, -64)
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(-32, -32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-64, -64)
+shape = SubResource("RectangleShape2D_0tb0d")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_h83i0")
+
+[node name="Debug" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0

@@ -1,0 +1,304 @@
+[gd_scene load_steps=6 format=3 uid="uid://bdbib8np6c616"]
+
+[ext_resource type="Script" path="res://src/ui/main_screen/resources/resource_ui.gd" id="1_tl7ra"]
+[ext_resource type="Texture2D" uid="uid://b2sfuwgchmmkc" path="res://assets/ui/icons/16/Home.png" id="3_75ih3"]
+[ext_resource type="Texture2D" uid="uid://dawueysu2x7ts" path="res://assets/ui/icons/food_icon.png" id="4_gr5bn"]
+[ext_resource type="Texture2D" uid="uid://beuygxqkippuq" path="res://assets/ui/icons/water_icon.png" id="5_s1c3m"]
+[ext_resource type="Texture2D" uid="uid://b5o1m8eiwisj4" path="res://assets/ui/icons/air_icon.png" id="6_e5nh8"]
+
+[node name="ResourceUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_tl7ra")
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -159.0
+offset_top = -192.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 32
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="PopMarginContainer" type="MarginContainer" parent="MarginContainer2/HBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/HBoxContainer/PopMarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/HBoxContainer/PopMarginContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer2/HBoxContainer/PopMarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="MarginContainer2/HBoxContainer/PopMarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "10"
+
+[node name="HabMarginContainer" type="MarginContainer" parent="MarginContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(16, 192)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/HBoxContainer/HabMarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/HBoxContainer/HabMarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="DebugLabel" type="Label" parent="MarginContainer2/HBoxContainer/HabMarginContainer/VBoxContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+text = "+12"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer2/HBoxContainer/HabMarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+texture = ExtResource("3_75ih3")
+stretch_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/HBoxContainer/HabMarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+
+[node name="HousingBar" type="ProgressBar" parent="MarginContainer2/HBoxContainer/HabMarginContainer/VBoxContainer/MarginContainer"]
+modulate = Color(0.572549, 0.635294, 0.752941, 1)
+layout_mode = 2
+size_flags_vertical = 3
+value = 100.0
+fill_mode = 3
+show_percentage = false
+
+[node name="FoodMarginContainer" type="MarginContainer" parent="MarginContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(16, 192)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/HBoxContainer/FoodMarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/HBoxContainer/FoodMarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="DebugLabel" type="Label" parent="MarginContainer2/HBoxContainer/FoodMarginContainer/VBoxContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+text = "+12"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer2/HBoxContainer/FoodMarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+texture = ExtResource("4_gr5bn")
+stretch_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/HBoxContainer/FoodMarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+
+[node name="FoodBar" type="ProgressBar" parent="MarginContainer2/HBoxContainer/FoodMarginContainer/VBoxContainer/MarginContainer"]
+modulate = Color(0.686275, 0.72549, 0.360784, 1)
+layout_mode = 2
+size_flags_vertical = 3
+value = 100.0
+fill_mode = 3
+show_percentage = false
+
+[node name="WaterMarginContainer" type="MarginContainer" parent="MarginContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(16, 160)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/HBoxContainer/WaterMarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/HBoxContainer/WaterMarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="DebugLabel" type="Label" parent="MarginContainer2/HBoxContainer/WaterMarginContainer/VBoxContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+text = "+12"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer2/HBoxContainer/WaterMarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+texture = ExtResource("5_s1c3m")
+stretch_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/HBoxContainer/WaterMarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+
+[node name="WaterBar" type="ProgressBar" parent="MarginContainer2/HBoxContainer/WaterMarginContainer/VBoxContainer/MarginContainer"]
+modulate = Color(0.203922, 0.435294, 0.772549, 1)
+layout_mode = 2
+size_flags_vertical = 3
+value = 100.0
+fill_mode = 3
+show_percentage = false
+
+[node name="AirMarginContainer" type="MarginContainer" parent="MarginContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(16, 160)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/HBoxContainer/AirMarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/HBoxContainer/AirMarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="DebugLabel" type="Label" parent="MarginContainer2/HBoxContainer/AirMarginContainer/VBoxContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+text = "+12"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer2/HBoxContainer/AirMarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+texture = ExtResource("6_e5nh8")
+stretch_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/HBoxContainer/AirMarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+
+[node name="AirBar" type="ProgressBar" parent="MarginContainer2/HBoxContainer/AirMarginContainer/VBoxContainer/MarginContainer"]
+modulate = Color(0.819608, 0.258824, 0.129412, 1)
+layout_mode = 2
+size_flags_vertical = 3
+value = 100.0
+fill_mode = 3
+show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -222.5
+offset_top = -32.0
+offset_right = 222.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 32
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_75ih3")
+stretch_mode = 3
+
+[node name="HabDebug" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "000 (+10)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/MarginContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer2"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer2/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_gr5bn")
+stretch_mode = 3
+
+[node name="FoodDebug" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer2/HBoxContainer"]
+layout_mode = 2
+text = "000 (+10)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/MarginContainer3"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer3"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer3/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_s1c3m")
+stretch_mode = 3
+
+[node name="WaterDebug" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer3/HBoxContainer"]
+layout_mode = 2
+text = "000 (+10)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/MarginContainer4"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer4"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer4/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("6_e5nh8")
+stretch_mode = 3
+
+[node name="AirDebug" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer4/HBoxContainer"]
+layout_mode = 2
+text = "000 (+10)"
+horizontal_alignment = 1
+vertical_alignment = 1

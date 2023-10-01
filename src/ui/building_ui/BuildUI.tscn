@@ -1,0 +1,216 @@
+[gd_scene load_steps=12 format=3 uid="uid://sjhl1wud5upl"]
+
+[ext_resource type="Script" path="res://src/ui/building_ui/build_ui.gd" id="1_pbqqm"]
+[ext_resource type="Texture2D" uid="uid://duvob01qmjf6h" path="res://assets/buildings/hab2.png" id="2_7sv4e"]
+[ext_resource type="Texture2D" uid="uid://bkvlrsm0lwbme" path="res://assets/buildings/hab1.png" id="2_f7uax"]
+[ext_resource type="Texture2D" uid="uid://8dvkwjm8j8nn" path="res://assets/buildings/megablock.png" id="4_ogqbn"]
+[ext_resource type="Texture2D" uid="uid://bawynujrwyl1u" path="res://assets/buildings/vertical_farm.png" id="5_nbyxp"]
+[ext_resource type="Texture2D" uid="uid://cwfj12lst2m3s" path="res://assets/buildings/hydroponics_bay.png" id="6_04sk6"]
+[ext_resource type="Texture2D" uid="uid://bix0qv2bh7d56" path="res://assets/buildings/nutrition_reclamation_plant_new.png" id="7_dokhu"]
+[ext_resource type="Texture2D" uid="uid://pmgy6xmehuld" path="res://assets/buildings/vapour_cycler.png" id="8_8fwax"]
+[ext_resource type="Texture2D" uid="uid://diuknkxali318" path="res://assets/buildings/refiltration_center-export.png" id="9_8gu0x"]
+[ext_resource type="Texture2D" uid="uid://brxsacjpfhxfd" path="res://assets/buildings/co2_scrubber.png" id="10_3wrku"]
+[ext_resource type="Texture2D" uid="uid://w6dnpgfxxgwa" path="res://assets/buildings/recirculator.png" id="11_g0v0e"]
+
+[node name="BuildingUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pbqqm")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -168.5
+offset_top = -256.0
+offset_right = 168.5
+offset_bottom = 256.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_right = 32
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ScrollContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Hab1Icon" type="TextureRect" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/CenterContainer"]
+layout_mode = 2
+texture = ExtResource("2_f7uax")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 32
+
+[node name="Hab1Button" type="Button" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+text = "Hab"
+
+[node name="CenterContainer2" type="CenterContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Hab2Icon" type="TextureRect" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/CenterContainer2"]
+layout_mode = 2
+texture = ExtResource("2_7sv4e")
+
+[node name="MarginContainer6" type="MarginContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 32
+
+[node name="Hab2Button" type="Button" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer6"]
+layout_mode = 2
+text = "Dormitory"
+
+[node name="CenterContainer6" type="CenterContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Hab3Icon" type="TextureRect" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/CenterContainer6"]
+layout_mode = 2
+texture = ExtResource("4_ogqbn")
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 32
+
+[node name="Hab3Button" type="Button" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+text = "Megablock"
+
+[node name="CenterContainer3" type="CenterContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Farm1Icon" type="TextureRect" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/CenterContainer3"]
+layout_mode = 2
+texture = ExtResource("5_nbyxp")
+
+[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 32
+
+[node name="Farm1Button" type="Button" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+text = "Vertical Farm"
+
+[node name="CenterContainer7" type="CenterContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Farm2Icon" type="TextureRect" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/CenterContainer7"]
+layout_mode = 2
+texture = ExtResource("6_04sk6")
+
+[node name="MarginContainer7" type="MarginContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 32
+
+[node name="Farm2Button" type="Button" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer7"]
+layout_mode = 2
+text = "Hydroponics Bay"
+
+[node name="CenterContainer8" type="CenterContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Farm3Icon" type="TextureRect" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/CenterContainer8"]
+layout_mode = 2
+texture = ExtResource("7_dokhu")
+
+[node name="MarginContainer8" type="MarginContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 32
+
+[node name="Farm3Button" type="Button" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer8"]
+layout_mode = 2
+text = "Nutrition
+Reclamation Plant"
+
+[node name="CenterContainer9" type="CenterContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Water1Icon" type="TextureRect" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/CenterContainer9"]
+layout_mode = 2
+texture = ExtResource("8_8fwax")
+
+[node name="MarginContainer9" type="MarginContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 32
+
+[node name="Water1Button" type="Button" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer9"]
+layout_mode = 2
+text = "Vapour Cycler"
+
+[node name="CenterContainer4" type="CenterContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Water2Icon" type="TextureRect" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/CenterContainer4"]
+layout_mode = 2
+texture = ExtResource("9_8gu0x")
+
+[node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 32
+
+[node name="Water2Button" type="Button" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer4"]
+layout_mode = 2
+text = "Refiltration Center"
+
+[node name="CenterContainer5" type="CenterContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Air1Icon" type="TextureRect" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/CenterContainer5"]
+layout_mode = 2
+texture = ExtResource("10_3wrku")
+
+[node name="MarginContainer5" type="MarginContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 32
+
+[node name="Air1Button" type="Button" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer5"]
+layout_mode = 2
+text = "Co2 Scrubber"
+
+[node name="CenterContainer10" type="CenterContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Air2Icon" type="TextureRect" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/CenterContainer10"]
+layout_mode = 2
+texture = ExtResource("11_g0v0e")
+
+[node name="MarginContainer10" type="MarginContainer" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 32
+
+[node name="Air2Button" type="Button" parent="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer10"]
+layout_mode = 2
+text = "Recirculator"
+
+[connection signal="pressed" from="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/Hab1Button" to="." method="_on_hab_1_button_pressed"]
+[connection signal="pressed" from="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer6/Hab2Button" to="." method="_on_hab_2_button_pressed"]
+[connection signal="pressed" from="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/Hab3Button" to="." method="_on_hab_3_button_pressed"]
+[connection signal="pressed" from="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer3/Farm1Button" to="." method="_on_farm_1_button_pressed"]
+[connection signal="pressed" from="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer7/Farm2Button" to="." method="_on_farm_2_button_pressed"]
+[connection signal="pressed" from="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer8/Farm3Button" to="." method="_on_farm_3_button_pressed"]
+[connection signal="pressed" from="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer9/Water1Button" to="." method="_on_water_1_button_pressed"]
+[connection signal="pressed" from="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer4/Water2Button" to="." method="_on_water_2_button_pressed"]
+[connection signal="pressed" from="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer5/Air1Button" to="." method="_on_air_1_button_pressed"]
+[connection signal="pressed" from="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer10/Air2Button" to="." method="_on_air_2_button_pressed"]

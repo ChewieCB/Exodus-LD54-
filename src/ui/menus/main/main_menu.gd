@@ -4,11 +4,15 @@ extends Control
 @onready var fullscreen_toggle = $SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/FullscreenContainer/HBoxContainer/CheckButton
 @onready var music_volume_slider = $SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/MusicSliderContainer/HSlider
 @onready var sfx_volume_slider = $SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/SFXSliderContainer/HSlider
+@export var scene_after_start: PackedScene
 
+var started = false
 
 func _ready():
 	music_volume_slider.value = SoundManager.get_music_volume() * 100
 	sfx_volume_slider.value = SoundManager.get_sound_volume() * 100
+	var music = load("res://assets/audio/music/ld54-concept1-0.0.1.mp3")
+	SoundManager.play_music(music, 0.2, "Music")
 	ScreenTransitionManager.fade_in(0.8)
 	await ScreenTransitionManager.transitioned
 
@@ -29,10 +33,13 @@ func _on_quit_button_pressed():
 	get_tree().quit()
 
 
-func _on_button_pressed():
+func _on_start_button_pressed():
+	if started:
+		return
+	started = true
 	ScreenTransitionManager.fade_out(0.8)
 	await ScreenTransitionManager.transitioned
-	get_tree().change_scene_to_file("res://src/tests/test_sound_manager/TestSoundManager.tscn")
+	get_tree().change_scene_to_packed(scene_after_start)
 
 
 func _on_fullscreen_button_pressed():
