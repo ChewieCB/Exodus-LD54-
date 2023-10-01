@@ -26,6 +26,7 @@ EventManager="*res://src/managers/event_manager/EventManager.tscn"
 
 [debug]
 
+gdscript/warnings/unused_variable=0
 gdscript/warnings/unused_parameter=0
 
 [dialogic]

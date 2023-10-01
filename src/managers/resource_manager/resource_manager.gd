@@ -74,10 +74,10 @@ func _ready() -> void:
 func update_resource_tick() -> void:
 	# When we receive a tick signal from the GameTickManager 
 	# we update our resource levels.
-	housing_amount = calculate_resource_amount(housing_amount, hab_buildings, 1.0, housing_diff)
-	food_amount = calculate_resource_amount(food_amount, food_buildings, food_decay_rate, food_diff)
-	water_amount = calculate_resource_amount(water_amount, water_buildings, water_decay_rate, water_diff)
-	air_amount = calculate_resource_amount(air_amount, air_buildings, air_decay_rate, air_diff)
+	housing_amount = int(calculate_resource_amount(housing_amount, hab_buildings, 1.0, housing_diff))
+	food_amount = int(calculate_resource_amount(food_amount, food_buildings, food_decay_rate, food_diff))
+	water_amount = int(calculate_resource_amount(water_amount, water_buildings, water_decay_rate, water_diff))
+	air_amount = int(calculate_resource_amount(air_amount, air_buildings, air_decay_rate, air_diff))
 
 
 func calculate_resource_amount(resource, buildings, decay_rate, _signal=null) -> float:
