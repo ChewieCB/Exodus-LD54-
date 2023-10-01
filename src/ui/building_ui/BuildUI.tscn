@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://sjhl1wud5upl"]
+[gd_scene load_steps=23 format=3 uid="uid://sjhl1wud5upl"]
 
 [ext_resource type="Script" path="res://src/ui/building_ui/build_ui.gd" id="1_pbqqm"]
 [ext_resource type="Texture2D" uid="uid://duvob01qmjf6h" path="res://assets/buildings/hab2.png" id="2_7sv4e"]
@@ -18,6 +18,10 @@
 [ext_resource type="PackedScene" uid="uid://bclsae0sreyu5" path="res://src/buildings/food/Farm1.tscn" id="16_7mq1p"]
 [ext_resource type="PackedScene" uid="uid://uno8ymiehbgk" path="res://src/buildings/food/Farm2.tscn" id="17_hojxr"]
 [ext_resource type="PackedScene" uid="uid://c7u8fjnfs0wfs" path="res://src/buildings/food/Farm3.tscn" id="18_e2gxg"]
+[ext_resource type="PackedScene" uid="uid://d4jqtbqsxivup" path="res://src/buildings/water/Water1.tscn" id="19_v3p7n"]
+[ext_resource type="PackedScene" uid="uid://c8p2ivrx4icn3" path="res://src/buildings/water/Water2.tscn" id="20_a3s7v"]
+[ext_resource type="PackedScene" uid="uid://bx021l1be37c8" path="res://src/buildings/air/Air1.tscn" id="21_bwk41"]
+[ext_resource type="PackedScene" uid="uid://clhrx50y8oo7c" path="res://src/buildings/air/Air2.tscn" id="22_wi86k"]
 
 [node name="BuildingUI" type="Control"]
 layout_mode = 3
@@ -232,6 +236,7 @@ theme_override_constants/margin_right = 32
 layout_mode = 2
 
 [node name="Habitation" type="TabBar" parent="MarginContainer2/TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/TabContainer/Habitation"]
@@ -320,8 +325,15 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
+[node name="BuildingButton" parent="MarginContainer2/TabContainer/Water/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
+layout_mode = 2
+building_object = ExtResource("19_v3p7n")
+
+[node name="BuildingButton2" parent="MarginContainer2/TabContainer/Water/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
+layout_mode = 2
+building_object = ExtResource("20_a3s7v")
+
 [node name="Air" type="TabBar" parent="MarginContainer2/TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/TabContainer/Air"]
@@ -341,6 +353,14 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
+
+[node name="BuildingButton" parent="MarginContainer2/TabContainer/Air/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
+layout_mode = 2
+building_object = ExtResource("21_bwk41")
+
+[node name="BuildingButton2" parent="MarginContainer2/TabContainer/Air/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
+layout_mode = 2
+building_object = ExtResource("22_wi86k")
 
 [connection signal="pressed" from="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/Hab1Button/Hab1Button" to="." method="_on_hab_1_button_pressed"]
 [connection signal="pressed" from="MarginContainer/ScrollContainer/PanelContainer/MarginContainer/VBoxContainer/Hab2Button/Hab2Button" to="." method="_on_hab_2_button_pressed"]

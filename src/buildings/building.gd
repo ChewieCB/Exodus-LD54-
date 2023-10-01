@@ -6,7 +6,6 @@ class_name Building
 
 @onready var sprite = $Sprite2D
 @onready var collider = $Area2D
-@onready var debug_label = $Debug
 @onready var build_timer_ui = $BuildTimerUI
 @onready var pulse_shader = preload("res://src/buildings/shaders/pulse.gdshader")
 
@@ -33,9 +32,6 @@ func _ready():
 #	sprite.texture = data.sprite
 #	collider = data.collision_data
 	set_original_color()
-	debug_label.text = "DEBUG DATA\nH: {0}\tF: {1}\tW: {2}\tA: {3}".format(
-		[data.housing_prod, data.food_prod, data.water_prod, data.air_prod]
-	)
 	build_timer_ui.visible = false
 	TickManager.tick.connect(_on_tick)
 	

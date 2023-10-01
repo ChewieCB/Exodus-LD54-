@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://cu7ivg1u3vbhl"]
+[gd_scene load_steps=11 format=3 uid="uid://cu7ivg1u3vbhl"]
 
 [ext_resource type="PackedScene" uid="uid://bdbib8np6c616" path="res://src/ui/main_screen/resources/ResourceUI.tscn" id="1_4u51x"]
 [ext_resource type="PackedScene" uid="uid://sjhl1wud5upl" path="res://src/ui/building_ui/BuildUI.tscn" id="1_hyvdy"]
 [ext_resource type="Script" path="res://src/ui/main_screen/main_ui.gd" id="1_xagyo"]
 [ext_resource type="PackedScene" uid="uid://bfhd8krrn8mx2" path="res://src/ui/game_over/GameOver.tscn" id="2_3v6ei"]
+[ext_resource type="PackedScene" uid="uid://bsqw1bcfuxbvr" path="res://src/ui/building_ui/TimeControlUI.tscn" id="4_2kxyh"]
 [ext_resource type="Script" path="res://src/ui/main_screen/event_container.gd" id="5_ajheu"]
 
 [sub_resource type="Animation" id="Animation_3toh5"]
@@ -109,7 +110,18 @@ anchor_bottom = 0.0
 offset_right = 1088.0
 offset_bottom = 648.0
 
-[node name="GameOver" parent="." instance=ExtResource("2_3v6ei")]
+[node name="TimeControlUI" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -192.0
+offset_right = 192.0
+offset_bottom = 128.0
+grow_horizontal = 2
+mouse_filter = 1
+
+[node name="MarginContainer" parent="TimeControlUI" instance=ExtResource("4_2kxyh")]
 layout_mode = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -140,6 +152,9 @@ offset_bottom = 188.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("5_ajheu")
+
+[node name="GameOver" parent="." instance=ExtResource("2_3v6ei")]
+layout_mode = 1
 
 [connection signal="pressed" from="BuildShowToggle/Button" to="." method="_on_build_button_pressed"]
 [connection signal="pressed" from="EventButton" to="." method="_on_play_dialog_pressed"]
