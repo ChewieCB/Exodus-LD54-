@@ -22,10 +22,15 @@ SoundManager="*res://addons/sound_manager/sound_manager.gd"
 Dialogic="*res://addons/dialogic/Other/DialogicGameHandler.gd"
 ResourceManager="*res://src/managers/resource_manager/ResourceManager.tscn"
 BuildingManager="*res://src/managers/building_manager/BuildingManger.tscn"
+EventManager="*res://src/managers/event_manager/EventManager.tscn"
 
 [debug]
 
 gdscript/warnings/unused_parameter=0
+
+[dialogic]
+
+variables={}
 
 [display]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dgkraln2axv2"]
 
-[ext_resource type="Script" path="res://src/shipbase_prototye/Building.gd" id="1_8hoej"]
+[ext_resource type="Script" path="res://src/buildings/building.gd" id="1_8hoej"]
 [ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="1_tx8u7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i5ytv"]

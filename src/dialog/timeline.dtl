@@ -1,0 +1,6 @@
+[background arg="res://assets/backgrounds/image.png" fade="0.0"]
+You passed a gas planet. They look like has a lot of oxygen to harvert!
+- Haverst
+	You harvested 10 unit of O2.
+- Ignore
+	It not worth the risk you supposed. You continued on your journey.
