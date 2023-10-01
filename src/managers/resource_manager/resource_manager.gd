@@ -1,12 +1,13 @@
 extends Node
 
 signal population_changed(value)
+signal workers_changed(value)
 signal housing_changed(value)
 signal food_changed(value)
 signal water_changed(value)
 signal air_changed(value)
 #
-signal population_modifier_changed(total, modifier)
+#signal population_modifier_changed(total, modifier)
 signal housing_modifier_changed(total, modifier)
 signal food_modifier_changed(total, modifier)
 signal water_modifier_changed(total, modifier)
@@ -71,10 +72,22 @@ enum RESOURCE_TYPE {
 }
 
 # Resources to be managed
+# Pop/Worker
 var population_amount: int:
 	set(value):
+		var diff = value - population_amount
 		population_amount = value
 		emit_signal("population_changed", population_amount)
+		# We want to add new population to the worker pool, but only new pop
+		# to avoid resetting already assigned workers
+		if diff > 0:
+			worker_amount = worker_amount + diff
+		
+var worker_amount: int:
+	set(value):
+		worker_amount = value
+		emit_signal("workers_changed", worker_amount)
+# Other resources
 var housing_amount: int:
 	set(value):
 		housing_amount = value
@@ -214,6 +227,21 @@ func add_building(building):
 func remove_building(building):
 	if building in buildings:
 		buildings.erase(building)
+
+
+func assign_workers(building):
+	# TODO - we can also handle material cost here
+	var workers_needed = building.data.people_cost
+	# Check that there are {number_of_workers} free in the current worker pool
+	if workers_needed > worker_amount:
+		return 
+	# Update the worker pool
+	worker_amount -= workers_needed
+
+
+func retrieve_workers(building):
+	# Refund X workers assigned to a completed building from the building's cost data
+	worker_amount += building.data.people_cost
 
 
 func _on_tick():

@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bdbib8np6c616"]
+[gd_scene load_steps=7 format=3 uid="uid://bdbib8np6c616"]
 
 [ext_resource type="Script" path="res://src/ui/main_screen/resources/resource_ui.gd" id="1_tl7ra"]
 [ext_resource type="Texture2D" uid="uid://b2sfuwgchmmkc" path="res://assets/ui/icons/16/Home.png" id="3_75ih3"]
 [ext_resource type="Texture2D" uid="uid://dawueysu2x7ts" path="res://assets/ui/icons/food_icon.png" id="4_gr5bn"]
 [ext_resource type="Texture2D" uid="uid://beuygxqkippuq" path="res://assets/ui/icons/water_icon.png" id="5_s1c3m"]
 [ext_resource type="Texture2D" uid="uid://b5o1m8eiwisj4" path="res://assets/ui/icons/air_icon.png" id="6_e5nh8"]
+[ext_resource type="Texture2D" uid="uid://b5jpsqnt0ke86" path="res://assets/ui/icons/16/People.png" id="6_oojgu"]
 
 [node name="ResourceUI" type="Control"]
 layout_mode = 3
@@ -218,6 +219,7 @@ theme_override_constants/margin_bottom = 32
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 16
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -229,12 +231,63 @@ layout_mode = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+[node name="WorkerContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer"]
+layout_mode = 2
+
+[node name="WorkerIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("6_oojgu")
+stretch_mode = 3
+
+[node name="WorkerLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer/HBoxContainer"]
+layout_mode = 2
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="PopContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer"]
+layout_mode = 2
+
+[node name="PopIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("6_oojgu")
+stretch_mode = 3
+
+[node name="PopLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer/HBoxContainer"]
+layout_mode = 2
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer5" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 4
+
+[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/MarginContainer5"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer5"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer5/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("3_75ih3")
 stretch_mode = 3
 
-[node name="HabDebug" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+[node name="HabDebug" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer5/HBoxContainer"]
 layout_mode = 2
 text = "000 (+10)"
 horizontal_alignment = 1
@@ -302,3 +355,18 @@ layout_mode = 2
 text = "000 (+10)"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="PopWorkerContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -352.0
+offset_top = -58.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_right = 192
+theme_override_constants/margin_bottom = 32

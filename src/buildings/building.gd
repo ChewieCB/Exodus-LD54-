@@ -42,6 +42,7 @@ func _ready():
 
 
 func build_in_progress():
+	# Update the building to show it's under construction
 	var pulse_colour = Color("#ffd4a3")
 	pulse_colour.a = 0.5
 	var pulse_mat = ShaderMaterial.new()
@@ -66,11 +67,12 @@ func _on_tick():
 	if not placed:
 		return
 	if not building_complete:
-		if ticks_left_to_build == 0:
+		if ticks_left_to_build <= 1:
 			building_complete = true
 			build_timer_ui.visible = false
 			sprite.material.set_shader_parameter("mode", 0)
 			ResourceManager.add_building(self)
+			ResourceManager.retrieve_workers(self)
 		else:
 			ticks_left_to_build -= 1
 			build_timer_ui.label.text = str(ticks_left_to_build)
@@ -79,7 +81,11 @@ func _on_tick():
 func set_building_placed():
 	placed = true
 	preview = false
+	#
+	ResourceManager.assign_workers(self)
+	# Restore the building's true colour outside of preview UI
 	color_sprite(original_color.r, original_color.g, original_color.b, original_color.a)
+	# Update build timer/construction effects
 	ticks_left_to_build = data.construction_time
 	build_timer_ui.label.text = str(ticks_left_to_build)
 	build_timer_ui.visible = true
