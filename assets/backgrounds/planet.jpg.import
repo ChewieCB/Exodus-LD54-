@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk04w3k1oye8j"
-path="res://.godot/imported/Tiles.png-c82c7b725b1ec09a0fb1f038a8e2ac93.ctex"
+uid="uid://cub8fehsklbak"
+path="res://.godot/imported/planet.jpg-f3373808b9ddba01355fef2b31cfb457.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/tests/test_2d_tilemaps/Tiles.png"
-dest_files=["res://.godot/imported/Tiles.png-c82c7b725b1ec09a0fb1f038a8e2ac93.ctex"]
+source_file="res://assets/backgrounds/planet.jpg"
+dest_files=["res://.godot/imported/planet.jpg-f3373808b9ddba01355fef2b31cfb457.ctex"]
 
 [params]
 
