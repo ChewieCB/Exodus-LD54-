@@ -133,6 +133,14 @@ func _ready() -> void:
 	air_low_threshold = 10
 
 
+func start_ticks():
+	$Timer.start()
+
+
+func stop_ticks():
+	$Timer.stop()
+
+
 func _physics_process(delta):
 	for idx in range(1, 5):
 		calculate_resource_modifier(idx, population_amount)
