@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://c7u8fjnfs0wfs"]
+
+[ext_resource type="Script" path="res://src/buildings/building.gd" id="1_1wyhc"]
+[ext_resource type="Resource" uid="uid://c8scjmxctet8n" path="res://src/buildings/food/farm3.tres" id="2_e2tte"]
+[ext_resource type="Texture2D" uid="uid://bix0qv2bh7d56" path="res://assets/buildings/nutrition_reclamation_plant_new.png" id="3_61rxn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0tb0d"]
+size = Vector2(189, 122)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gdi6f"]
+size = Vector2(60, 60)
+
+[node name="Farm3" type="Node2D"]
+script = ExtResource("1_1wyhc")
+data = ExtResource("2_e2tte")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0, 1, 0.117647, 1)
+position = Vector2(0, -32)
+texture = ExtResource("3_61rxn")
+offset = Vector2(-96, -64)
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(-32, -32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-64, -96)
+shape = SubResource("RectangleShape2D_0tb0d")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_gdi6f")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-128, 0)
+shape = SubResource("RectangleShape2D_gdi6f")
+
+[node name="Debug" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2sfuwgchmmkc"
-path="res://.godot/imported/Home.png-24a8faff23eaa33d554866b0876e1791.ctex"
+uid="uid://pmgy6xmehuld"
+path="res://.godot/imported/vapour_cycler.png-6207ce2422d7dcde89ab15ff25a25fcf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/icons/16/Home.png"
-dest_files=["res://.godot/imported/Home.png-24a8faff23eaa33d554866b0876e1791.ctex"]
+source_file="res://assets/buildings/vapour_cycler.png"
+dest_files=["res://.godot/imported/vapour_cycler.png-6207ce2422d7dcde89ab15ff25a25fcf.ctex"]
 
 [params]
 

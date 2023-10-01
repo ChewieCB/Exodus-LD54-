@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2sfuwgchmmkc"
-path="res://.godot/imported/Home.png-24a8faff23eaa33d554866b0876e1791.ctex"
+uid="uid://diuknkxali318"
+path="res://.godot/imported/refiltration_center-export.png-b56f85da6bce21a7da1d26da250dead1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/icons/16/Home.png"
-dest_files=["res://.godot/imported/Home.png-24a8faff23eaa33d554866b0876e1791.ctex"]
+source_file="res://assets/buildings/refiltration_center-export.png"
+dest_files=["res://.godot/imported/refiltration_center-export.png-b56f85da6bce21a7da1d26da250dead1.ctex"]
 
 [params]
 
