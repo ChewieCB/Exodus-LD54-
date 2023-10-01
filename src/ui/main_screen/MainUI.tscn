@@ -122,13 +122,13 @@ libraries = {
 "": SubResource("AnimationLibrary_pifv8")
 }
 
-[node name="Button" type="Button" parent="."]
+[node name="EventButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 987.0
-offset_top = 42.0
-offset_right = 1080.0
-offset_bottom = 73.0
-text = "Play Dialog"
+offset_left = 930.0
+offset_top = 46.0
+offset_right = 1087.0
+offset_bottom = 77.0
+text = "Play Random Event"
 
 [connection signal="pressed" from="BuildShowToggle/Button" to="." method="_on_build_button_pressed"]
-[connection signal="pressed" from="Button" to="." method="_on_play_dialog_pressed"]
+[connection signal="pressed" from="EventButton" to="." method="_on_play_dialog_pressed"]

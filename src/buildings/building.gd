@@ -11,7 +11,6 @@ class_name Building
 # Build menu vars
 var preview = false
 var outside_gridmap = false
-var can_place = true
 var original_color: Color
 
 enum TYPES {
@@ -59,15 +58,6 @@ func color_sprite(r, g, b, a):
 		# This is a group of rectangle, used in testing only
 		for item in sprite.get_children():
 			item.self_modulate = Color(r, g, b, a)
-
-
-func _on_area_2d_area_entered(area):
-	print("ENTER")
-	can_place = false
-
-
-func _on_area_2d_area_exited(area):
-	can_place = true
 
 
 func _notification(what: int) -> void:

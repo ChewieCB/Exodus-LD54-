@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/ui/menus/main/main_menu.gd" id="1_1aer0"]
 [ext_resource type="FontFile" uid="uid://4r5r4qviqq2k" path="res://assets/ui/fonts/Improbable.otf" id="1_svkb1"]
-[ext_resource type="PackedScene" uid="uid://c6s7o88tyavpj" path="res://src/tests/test_building_object/TestBuildingObject.tscn" id="2_2q72j"]
+[ext_resource type="PackedScene" uid="uid://c6s7o88tyavpj" path="res://src/ui/ship_building/ShipBuildingView.tscn" id="2_2q72j"]
 [ext_resource type="Texture2D" uid="uid://ctgsf4d6gg6gj" path="res://assets/ui/menus/main/concept_bg_1.png" id="2_sgqft"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7rnd3"]

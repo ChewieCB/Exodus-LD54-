@@ -49,10 +49,7 @@ save/autosave_delay=60.0
 text/autopauses={}
 glossary/default_case_sensitive=true
 layout/styles={
-"Default": {},
-"Popup": {
-"inherits": ""
-}
+"Default": {}
 }
 layout/default_style="Default"
 

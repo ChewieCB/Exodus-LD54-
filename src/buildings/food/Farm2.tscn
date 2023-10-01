@@ -39,5 +39,3 @@ shape = SubResource("RectangleShape2D_gesc2")
 offset_left = 128.0
 offset_right = 168.0
 offset_bottom = 23.0
-
-[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
