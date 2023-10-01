@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c6s7o88tyavpj"]
+[gd_scene load_steps=14 format=3 uid="uid://c6s7o88tyavpj"]
 
 [ext_resource type="PackedScene" uid="uid://cu7ivg1u3vbhl" path="res://src/ui/main_screen/MainUI.tscn" id="1_21fy4"]
 [ext_resource type="Script" path="res://src/ui/ship_building/ship_building_view.gd" id="1_ae44n"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://d1hhl5deqt3yo" path="res://assets/sprite/ship.png" id="2_sj33g"]
 [ext_resource type="Texture2D" uid="uid://umfswvb0k6d6" path="res://assets/sprite/star.png" id="3_74hi2"]
 [ext_resource type="Script" path="res://src/ui/ship_building/grid_placement.gd" id="3_tehqe"]
+[ext_resource type="Texture2D" uid="uid://c723ddgavfsnp" path="res://assets/backgrounds/planet_concept_1.png" id="8_3ttdw"]
 
 [sub_resource type="Gradient" id="Gradient_5qkd4"]
 offsets = PackedFloat32Array(0, 0.264706, 0.759804, 1)
@@ -89,18 +90,29 @@ layer_0/tile_data = PackedInt32Array(-196599, 393216, 7, -131063, 393216, 7, -65
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="MainUI" parent="UI" node_paths=PackedStringArray("ship_sprite", "ship_grid", "camera", "far_view_marker", "space_background") instance=ExtResource("1_21fy4")]
+[node name="MainUI" parent="UI" node_paths=PackedStringArray("ship_sprite", "ship_grid", "camera", "mid_view_marker", "far_view_marker", "space_background", "event_image") instance=ExtResource("1_21fy4")]
 ship_sprite = NodePath("../../ShipSprite")
 ship_grid = NodePath("../../ShipGrid")
 camera = NodePath("../../Camera2D")
+mid_view_marker = NodePath("../../MidViewMarker")
 far_view_marker = NodePath("../../FarViewMarker")
 space_background = NodePath("../../Space")
+event_image = NodePath("../../PlanetTest")
 
 [node name="Event" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(5497, 61)
-zoom = Vector2(0.1, 0.1)
+position = Vector2(2336, 160)
+zoom = Vector2(0.4, 0.4)
+
+[node name="MidViewMarker" type="Marker2D" parent="."]
+position = Vector2(2336, 160)
 
 [node name="FarViewMarker" type="Marker2D" parent="."]
-position = Vector2(5499, 13)
+position = Vector2(4000, 77)
+
+[node name="PlanetTest" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(4736, -512)
+scale = Vector2(12, 12)
+texture = ExtResource("8_3ttdw")

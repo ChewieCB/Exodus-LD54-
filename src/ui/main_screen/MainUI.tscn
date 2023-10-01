@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://cu7ivg1u3vbhl"]
+[gd_scene load_steps=10 format=3 uid="uid://cu7ivg1u3vbhl"]
 
 [ext_resource type="PackedScene" uid="uid://bdbib8np6c616" path="res://src/ui/main_screen/resources/ResourceUI.tscn" id="1_4u51x"]
 [ext_resource type="PackedScene" uid="uid://sjhl1wud5upl" path="res://src/ui/building_ui/BuildUI.tscn" id="1_hyvdy"]
 [ext_resource type="Script" path="res://src/ui/main_screen/main_ui.gd" id="1_xagyo"]
 [ext_resource type="PackedScene" uid="uid://bfhd8krrn8mx2" path="res://src/ui/game_over/GameOver.tscn" id="2_3v6ei"]
+[ext_resource type="Script" path="res://src/ui/main_screen/event_container.gd" id="5_ajheu"]
 
 [sub_resource type="Animation" id="Animation_3toh5"]
 resource_name = "RESET"
@@ -124,6 +125,21 @@ offset_top = 46.0
 offset_right = 1087.0
 offset_bottom = 77.0
 text = "Play Random Event"
+
+[node name="EventContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -196.0
+offset_right = 384.0
+offset_bottom = 188.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_ajheu")
 
 [connection signal="pressed" from="BuildShowToggle/Button" to="." method="_on_build_button_pressed"]
 [connection signal="pressed" from="EventButton" to="." method="_on_play_dialog_pressed"]

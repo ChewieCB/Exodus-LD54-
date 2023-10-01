@@ -13,6 +13,7 @@ config_version=5
 config/name="LD54"
 run/main_scene="res://src/ui/menus/splash/SplashScreen.tscn"
 config/features=PackedStringArray("4.1", "GL Compatibility")
+boot_splash/show_image=false
 config/icon="res://icon.svg"
 
 [autoload]
@@ -23,6 +24,7 @@ Dialogic="*res://addons/dialogic/Other/DialogicGameHandler.gd"
 ResourceManager="*res://src/managers/resource_manager/ResourceManager.tscn"
 BuildingManager="*res://src/managers/building_manager/BuildingManger.tscn"
 EventManager="*res://src/managers/event_manager/EventManager.tscn"
+TickManager="*res://src/managers/tick_manager/TickManager.tscn"
 
 [debug]
 
@@ -49,9 +51,17 @@ save/autosave_delay=60.0
 text/autopauses={}
 glossary/default_case_sensitive=true
 layout/styles={
-"Default": {}
+"Default": {},
+"Duped Default": {
+"export_overrides": {
+"box_animation_in": "2",
+"box_animation_out": "2",
+"box_modulate": "Color(0.317647, 0.317647, 0.317647, 0.733333)",
+"name_label_box_modulate": "Color(0, 0, 0, 0.682353)"
 }
-layout/default_style="Default"
+}
+}
+layout/default_style="Duped Default"
 
 [display]
 

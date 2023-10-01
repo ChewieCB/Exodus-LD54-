@@ -20,8 +20,8 @@ extends Resource
 @export var refund_value: int
 @export var refund_resource: Node
 @export_subgroup("Timings")
-@export var construction_time: float
-@export var destruction_time: float
+@export var construction_time: int
+@export var destruction_time: int
 
 
 func _init(

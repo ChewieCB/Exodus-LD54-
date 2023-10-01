@@ -84,7 +84,6 @@ func place_building():
 	var tmp_building = current_building
 	previous_rotation = current_building.rotation
 	current_building = null
-	ResourceManager.add_building(tmp_building)
 	get_new_building()
 
 

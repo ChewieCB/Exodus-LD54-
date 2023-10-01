@@ -13,7 +13,6 @@ func test_planet_event() -> String:
 	var resource_type = get_random_element_from_array(["oxygen", "metal", "water"])
 
 	var event_source_text = """
-	[background arg="res://assets/backgrounds/planet.jpg" fade="0.0"]
 	You passed a {planet_color} planet. They look like has a lot of {resource_type} to harvert!
 	What would you do?
 	- Haverst
@@ -27,7 +26,6 @@ func test_planet_event() -> String:
 
 func plague_planet() -> String:
 	var event_source_text = """
-	[background arg="res://assets/backgrounds/planet.jpg" fade="0.0"]
 	You received a signal after passed through an Earth-like planet. The signal need to be decrypted before you understand it.
 	- Decrypt it (cost 1 Energy)
 		It's a signal asking for help. Look like a spaceship crashed onto this place.

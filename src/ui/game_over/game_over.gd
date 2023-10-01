@@ -7,13 +7,13 @@ extends Control
 func _ready():
 	ResourceManager.connect("game_over", _game_over)
 	get_tree().paused = false
-	ResourceManager.start_ticks()
+	TickManager.start_ticks()
 
 
 func _game_over(resource):
 	print("GameOver")
 	get_tree().paused = true
-	ResourceManager.stop_ticks()
+	TickManager.stop_ticks()
 	get_parent().anim_player.play("hide_build_menu")
 	anim_player.play("game_over")
 	var resource_str

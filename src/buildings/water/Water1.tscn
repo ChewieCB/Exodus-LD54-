@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://d4jqtbqsxivup"]
+[gd_scene load_steps=7 format=3 uid="uid://d4jqtbqsxivup"]
 
 [ext_resource type="Script" path="res://src/buildings/building.gd" id="1_2y0xy"]
 [ext_resource type="Resource" uid="uid://c4xijw2v8bv0p" path="res://src/buildings/water/water1.tres" id="2_gyet0"]
 [ext_resource type="Texture2D" uid="uid://pmgy6xmehuld" path="res://assets/buildings/vapour_cycler.png" id="3_n0s0t"]
+[ext_resource type="PackedScene" uid="uid://c2owud1h45ixt" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="4_m8evd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0tb0d"]
 size = Vector2(125, 60)
@@ -15,7 +16,7 @@ script = ExtResource("1_2y0xy")
 data = ExtResource("2_gyet0")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(32, 0)
+position = Vector2(96, 64)
 texture = ExtResource("3_n0s0t")
 offset = Vector2(-96, -64)
 
@@ -23,13 +24,17 @@ offset = Vector2(-96, -64)
 position = Vector2(-32, -32)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-32.5, -64)
+position = Vector2(31.5, 0)
 shape = SubResource("RectangleShape2D_0tb0d")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-64, -1)
+position = Vector2(0, 63)
 shape = SubResource("RectangleShape2D_h83i0")
 
 [node name="Debug" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="BuildTimerUI" parent="." instance=ExtResource("4_m8evd")]
+offset_left = -21.0
+offset_right = 19.0
