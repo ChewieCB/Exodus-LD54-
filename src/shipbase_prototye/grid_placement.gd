@@ -2,7 +2,7 @@ extends Node2D
 class_name GridPlacement
 
 @export var tilemap: Node
-@export var grid_size: Vector2
+# @export var grid_size: Vector2
 
 var building
 

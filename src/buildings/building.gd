@@ -38,7 +38,7 @@ func _ready():
 
 func _process(delta):
 	if preview:
-		if collider.has_overlapping_areas() or outside_gridmap:
+		if collider.has_overlapping_areas() or collider.has_overlapping_bodies() or outside_gridmap:
 			color_sprite(1, 0, 0, 0.5)
 		else:
 			color_sprite(0, 1, 0, 0.5)
@@ -63,6 +63,7 @@ func color_sprite(r, g, b, a):
 
 
 func _on_area_2d_area_entered(area):
+	print("ENTER")
 	can_place = false
 
 

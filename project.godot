@@ -100,6 +100,10 @@ remove_building={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="Building"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
