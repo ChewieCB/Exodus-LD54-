@@ -63,9 +63,8 @@ amount = 32
 process_material = SubResource("ParticleProcessMaterial_6w768")
 texture = ExtResource("3_74hi2")
 lifetime = 5.0
-preprocess = 2.0
 explosiveness = 0.3
-randomness = 0.3
+randomness = 0.5
 visibility_rect = Rect2(0, 0, 0, 0)
 
 [node name="ShipSprite" type="Sprite2D" parent="."]

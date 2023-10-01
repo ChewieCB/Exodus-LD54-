@@ -12,6 +12,8 @@ class_name Building
 var preview = false
 var outside_gridmap = false
 var original_color: Color
+var placeable = false
+var placed = false
 
 enum TYPES {
 	HabBuilding,
@@ -31,13 +33,19 @@ func _ready():
 
 
 func _process(delta):
-	if preview:
+	if not placed and preview:
 		if collider.has_overlapping_areas() or collider.has_overlapping_bodies() or outside_gridmap:
 			color_sprite(1, 0, 0, 0.5)
+			placeable = false
 		else:
 			color_sprite(0, 1, 0, 0.5)
-	else:
-		color_sprite(original_color.r, original_color.g, original_color.b, original_color.a)
+			placeable = true
+
+
+func set_building_placed():
+	placed = true
+	preview = false
+	color_sprite(original_color.r, original_color.g, original_color.b, original_color.a)
 
 
 func set_original_color():
