@@ -23,10 +23,6 @@ enum TYPES {
 }
 
 
-func _init():
-	ResourceManager.add_building(self)
-
-
 func _ready():
 #	sprite.texture = data.sprite
 #	collider = data.collision_data

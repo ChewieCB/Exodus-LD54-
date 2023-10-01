@@ -15,6 +15,13 @@ var previous_rotation = 0
 
 func _ready():
 	BuildingManager.building_selected.connect(_building_button_pressed)
+	assign_pre_placed_buildings()
+
+
+func assign_pre_placed_buildings() -> void:
+	for child in get_children():
+		if child is Building:
+			ResourceManager.add_building(child)
 
 
 func get_new_building():
@@ -45,7 +52,7 @@ func _physics_process(_delta):
 			current_building.queue_free()
 			current_building = null
 
-		if Input.is_action_just_pressed("place_building"):
+		if Input.is_action_just_released("place_building"):
 			if not current_building.collider.has_overlapping_areas():
 				if not is_outside_gridmap(placement_coord):
 					place_building()
@@ -65,8 +72,10 @@ func is_outside_gridmap(coord: Vector2) -> bool:
 
 func place_building():
 	current_building.preview = false
+	var building = current_building
 	previous_rotation = current_building.rotation
 	current_building = null
+	ResourceManager.add_building(building)
 	get_new_building()
 
 

@@ -4,11 +4,11 @@
 
 [resource]
 script = ExtResource("1_ndhch")
-name = "Nutrition Reclamation Plant"
+name = "Hydroponics Bay"
 type = 1
 housing_prod = 0
-food_prod = 6
-water_prod = 2
+food_prod = 7
+water_prod = 0
 air_prod = 0
 resource_cost = 0
 people_cost = 0
