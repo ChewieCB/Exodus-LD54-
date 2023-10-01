@@ -114,6 +114,7 @@ var buildings = []
 
 
 func _ready() -> void:
+	TickManager.tick.connect(_on_tick)
 	# TODO - load initial values from file for difficulty settings
 	population_amount = 3
 	# This is derived purely from the buildings we have placed
@@ -131,14 +132,6 @@ func _ready() -> void:
 	food_low_threshold = 10
 	water_low_threshold = 10
 	air_low_threshold = 10
-
-
-func start_ticks():
-	$Timer.start()
-
-
-func stop_ticks():
-	$Timer.stop()
 
 
 func _physics_process(delta):
@@ -223,5 +216,5 @@ func remove_building(building):
 		buildings.erase(building)
 
 
-func _on_timer_timeout():
+func _on_tick():
 	update_resource_tick()
