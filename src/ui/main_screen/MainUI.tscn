@@ -101,15 +101,12 @@ layout_mode = 2
 
 [node name="Resources" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = 3
+anchors_preset = 1
 anchor_left = 1.0
-anchor_top = 1.0
 anchor_right = 1.0
-anchor_bottom = 1.0
 offset_left = -211.0
-offset_top = -214.0
+offset_bottom = 214.0
 grow_horizontal = 0
-grow_vertical = 0
 theme_override_constants/margin_right = 64
 
 [node name="ResourceUI" parent="Resources" instance=ExtResource("1_4u51x")]
