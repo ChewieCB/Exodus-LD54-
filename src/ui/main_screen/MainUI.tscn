@@ -109,6 +109,7 @@ offset_right = 1088.0
 offset_bottom = 648.0
 
 [node name="GameOver" parent="." instance=ExtResource("2_3v6ei")]
+visible = false
 layout_mode = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
