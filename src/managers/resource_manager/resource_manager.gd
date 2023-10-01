@@ -119,9 +119,9 @@ func _ready() -> void:
 	population_amount = 3
 	# This is derived purely from the buildings we have placed
 	housing_amount = 0
-	food_amount = 20
-	water_amount = 300
-	air_amount = 150
+	food_amount = 60
+	water_amount = 90
+	air_amount = 30
 	#
 	pop_housing_cost = 1
 	pop_food_cost = 2

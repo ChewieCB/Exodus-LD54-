@@ -7,6 +7,8 @@ class_name Building
 @onready var sprite = $Sprite2D
 @onready var collider = $Area2D
 @onready var debug_label = $Debug
+@onready var build_timer_ui = $BuildTimerUI
+@onready var pulse_shader = preload("res://src/buildings/shaders/pulse_shader.tres")
 
 # Build menu vars
 var preview = false
@@ -14,6 +16,10 @@ var outside_gridmap = false
 var original_color: Color
 var placeable = false
 var placed = false
+
+# Building process vars
+var ticks_left_to_build: int
+var building_complete: bool = false
 
 enum TYPES {
 	HabBuilding,
@@ -30,6 +36,17 @@ func _ready():
 	debug_label.text = "DEBUG DATA\nH: {0}\tF: {1}\tW: {2}\tA: {3}".format(
 		[data.housing_prod, data.food_prod, data.water_prod, data.air_prod]
 	)
+	build_timer_ui.visible = false
+	TickManager.tick.connect(_on_tick)
+
+
+func build_in_progress():
+	var pulse_colour = Color("#ffd4a3")
+	pulse_colour.a = 0.5
+	sprite.material = pulse_shader
+	sprite.material.set_shader_parameter("shine_color", pulse_colour)
+	sprite.material.set_shader_parameter("full_pulse_cycle", true)
+	sprite.material.set_shader_parameter("mode", 1)
 
 
 func _process(delta):
@@ -42,10 +59,30 @@ func _process(delta):
 			placeable = true
 
 
+func _on_tick():
+	if not placed:
+		return
+	if not building_complete:
+		if ticks_left_to_build == 0:
+			building_complete = true
+			build_timer_ui.visible = false
+			print("\n{0} completed!".format([self.name]))
+			sprite.material.set_shader_parameter("mode", 0)
+		else:
+			ticks_left_to_build -= 1
+			build_timer_ui.label.text = str(ticks_left_to_build)
+			print("\n{0} has {1} ticks left to build.".format([self.name, ticks_left_to_build]))
+	
+
+
 func set_building_placed():
 	placed = true
 	preview = false
 	color_sprite(original_color.r, original_color.g, original_color.b, original_color.a)
+	ticks_left_to_build = data.construction_time
+	build_timer_ui.label.text = str(ticks_left_to_build)
+	build_timer_ui.visible = true
+	build_in_progress()
 
 
 func set_original_color():

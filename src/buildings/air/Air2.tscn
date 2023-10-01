@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://clhrx50y8oo7c"]
+[gd_scene load_steps=7 format=3 uid="uid://clhrx50y8oo7c"]
 
 [ext_resource type="Script" path="res://src/buildings/building.gd" id="1_av3lv"]
 [ext_resource type="Resource" uid="uid://cyu3befc6demc" path="res://src/buildings/air/air2.tres" id="2_g3mg0"]
 [ext_resource type="Texture2D" uid="uid://w6dnpgfxxgwa" path="res://assets/buildings/recirculator.png" id="2_hl3ik"]
+[ext_resource type="PackedScene" uid="uid://c2owud1h45ixt" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="4_mcb33"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0tb0d"]
 size = Vector2(60, 60)
@@ -16,7 +17,7 @@ data = ExtResource("2_g3mg0")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 0, 0, 1)
-position = Vector2(-64, -32)
+position = Vector2(0, 32)
 texture = ExtResource("2_hl3ik")
 offset = Vector2(-32, -32)
 
@@ -24,15 +25,15 @@ offset = Vector2(-32, -32)
 position = Vector2(-32, -32)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-64, -64)
 shape = SubResource("RectangleShape2D_0tb0d")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-64, 0)
+position = Vector2(0, 64)
 shape = SubResource("RectangleShape2D_qq2j3")
 
 [node name="Debug" type="Label" parent="."]
-offset_left = -64.0
-offset_top = -64.0
-offset_right = -24.0
-offset_bottom = -41.0
+offset_left = 97.0
+offset_right = 137.0
+offset_bottom = 23.0
+
+[node name="BuildTimerUI" parent="." instance=ExtResource("4_mcb33")]
