@@ -8,6 +8,7 @@ var building
 
 var mouse_pos: Vector2
 var placement_coord: Vector2
+var original_placement_coord: Vector2
 var preview_pos: Vector2
 var current_building: Node
 var previous_rotation = 0
@@ -35,6 +36,7 @@ func _physics_process(_delta):
 	mouse_pos = get_global_mouse_position()
 	mouse_pos = tilemap.to_local(mouse_pos)
 	placement_coord = tilemap.local_to_map(mouse_pos)
+	original_placement_coord = placement_coord
 	if rotate_counter == 1:
 		placement_coord.x -= 1
 	elif rotate_counter == 2:
@@ -45,7 +47,7 @@ func _physics_process(_delta):
 	preview_pos = tilemap.to_global(preview_pos)
 
 	if current_building:
-		current_building.outside_gridmap = is_outside_gridmap(placement_coord)
+		current_building.outside_gridmap = is_outside_gridmap(original_placement_coord)
 		current_building.visible = !current_building.outside_gridmap
 		current_building.global_position = preview_pos
 		

@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://c6s7o88tyavpj"]
 
 [ext_resource type="PackedScene" uid="uid://cu7ivg1u3vbhl" path="res://src/ui/main_screen/MainUI.tscn" id="1_21fy4"]
-[ext_resource type="Script" path="res://src/ui/ship_building/ship_grid_building.gd" id="1_aohae"]
+[ext_resource type="Script" path="res://src/ui/ship_building/ship_building_view.gd" id="1_ae44n"]
 [ext_resource type="Texture2D" uid="uid://dn7d2jgqhgqxf" path="res://src/tests/test_grid_placement/building_placeholders.png" id="2_q8rua"]
 [ext_resource type="Texture2D" uid="uid://d1hhl5deqt3yo" path="res://assets/sprite/ship.png" id="2_sj33g"]
 [ext_resource type="Script" path="res://src/shipbase_prototye/grid_placement.gd" id="4_aubhd"]
@@ -26,7 +26,7 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_4bwrg")
 
 [node name="ShipBuildingView" type="Node2D"]
-script = ExtResource("1_aohae")
+script = ExtResource("1_ae44n")
 
 [node name="ShipSprite" type="Sprite2D" parent="."]
 position = Vector2(753, 187)
