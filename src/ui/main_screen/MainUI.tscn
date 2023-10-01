@@ -122,4 +122,13 @@ libraries = {
 "": SubResource("AnimationLibrary_pifv8")
 }
 
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 987.0
+offset_top = 42.0
+offset_right = 1080.0
+offset_bottom = 73.0
+text = "Play Dialog"
+
 [connection signal="pressed" from="BuildShowToggle/Button" to="." method="_on_build_button_pressed"]
+[connection signal="pressed" from="Button" to="." method="_on_play_dialog_pressed"]

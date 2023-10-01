@@ -16,3 +16,7 @@ func _on_build_button_pressed():
 		else:
 			anim_player.play("show_build_menu")
 			build_menu_open = true
+
+
+func _on_play_dialog_pressed():
+	var dialog = Dialogic.start(EventManager.get_random_planet_event())
