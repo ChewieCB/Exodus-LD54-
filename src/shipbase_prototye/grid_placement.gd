@@ -12,6 +12,8 @@ var preview_pos: Vector2
 var current_building: Node
 var previous_rotation = 0
 
+var rotate_counter = 0
+
 
 func _ready():
 	BuildingManager.building_selected.connect(_building_button_pressed)
@@ -33,6 +35,12 @@ func _physics_process(_delta):
 	mouse_pos = get_global_mouse_position()
 	mouse_pos = tilemap.to_local(mouse_pos)
 	placement_coord = tilemap.local_to_map(mouse_pos)
+	if rotate_counter == 1:
+		placement_coord.x -= 1
+	elif rotate_counter == 2:
+		placement_coord -= Vector2(1, 1)
+	elif rotate_counter == 3:
+		placement_coord.y -= 1
 	preview_pos = tilemap.map_to_local(placement_coord) + Vector2(32, 32)
 	preview_pos = tilemap.to_global(preview_pos)
 
@@ -52,6 +60,7 @@ func _physics_process(_delta):
 
 		if Input.is_action_just_pressed("rotate_cw"):
 			current_building.rotation += PI/2
+			rotate_counter = (rotate_counter + 1) % 4
 		elif Input.is_action_just_pressed("rotate_ccw"):
 			current_building.rotation -= PI/2
 

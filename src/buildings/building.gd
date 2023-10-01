@@ -6,7 +6,6 @@ class_name Building
 
 @onready var sprite = $Sprite2D
 @onready var collider = $Area2D
-
 @onready var debug_label = $Debug
 
 # Build menu vars

@@ -28,12 +28,12 @@ sources/0 = SubResource("TileSetAtlasSource_4bwrg")
 [node name="TestBuildingObject" type="Node2D"]
 script = ExtResource("1_aohae")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="ShipSprite" type="Sprite2D" parent="."]
 position = Vector2(753, 187)
 texture = ExtResource("2_sj33g")
 
 [node name="SectorGrid" type="Node2D" parent="." node_paths=PackedStringArray("tilemap")]
-modulate = Color(1, 1, 1, 0.882353)
+modulate = Color(1, 1, 1, 0.784314)
 script = ExtResource("4_aubhd")
 tilemap = NodePath("TileMap")
 
