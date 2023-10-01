@@ -3,9 +3,10 @@
 [ext_resource type="Shader" path="res://src/buildings/shaders/pulse.gdshader" id="1_oouh8"]
 
 [resource]
+resource_local_to_scene = true
 shader = ExtResource("1_oouh8")
 shader_parameter/shine_color = Color(1, 0.831373, 0.639216, 1)
 shader_parameter/alpha_limit = 0.0
 shader_parameter/cycle_speed = 1.0
-shader_parameter/full_pulse_cycle = false
+shader_parameter/full_pulse_cycle = true
 shader_parameter/mode = 0

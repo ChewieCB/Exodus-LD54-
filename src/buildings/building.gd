@@ -8,7 +8,7 @@ class_name Building
 @onready var collider = $Area2D
 @onready var debug_label = $Debug
 @onready var build_timer_ui = $BuildTimerUI
-@onready var pulse_shader = preload("res://src/buildings/shaders/pulse_shader.tres")
+@onready var pulse_shader = preload("res://src/buildings/shaders/pulse.gdshader")
 
 # Build menu vars
 var preview = false
@@ -38,12 +38,15 @@ func _ready():
 	)
 	build_timer_ui.visible = false
 	TickManager.tick.connect(_on_tick)
+	
 
 
 func build_in_progress():
 	var pulse_colour = Color("#ffd4a3")
 	pulse_colour.a = 0.5
-	sprite.material = pulse_shader
+	var pulse_mat = ShaderMaterial.new()
+	pulse_mat.shader = pulse_shader
+	sprite.material = pulse_mat
 	sprite.material.set_shader_parameter("shine_color", pulse_colour)
 	sprite.material.set_shader_parameter("full_pulse_cycle", true)
 	sprite.material.set_shader_parameter("mode", 1)
@@ -66,13 +69,11 @@ func _on_tick():
 		if ticks_left_to_build == 0:
 			building_complete = true
 			build_timer_ui.visible = false
-			print("\n{0} completed!".format([self.name]))
 			sprite.material.set_shader_parameter("mode", 0)
+			ResourceManager.add_building(self)
 		else:
 			ticks_left_to_build -= 1
 			build_timer_ui.label.text = str(ticks_left_to_build)
-			print("\n{0} has {1} ticks left to build.".format([self.name, ticks_left_to_build]))
-	
 
 
 func set_building_placed():

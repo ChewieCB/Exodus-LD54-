@@ -29,7 +29,7 @@ func _on_build_button_pressed():
 			build_menu_open = true
 			ship_grid.visible = true
 			tween.tween_property(camera, "global_position", ship_sprite.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
-			tween.tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
+			tween.tween_property(camera, "zoom", Vector2(0.6, 0.6), 0.5).set_trans(Tween.TRANS_LINEAR)
 
 
 func _on_play_dialog_pressed():
