@@ -11,6 +11,7 @@ func _ready():
 
 
 func _game_over(resource):
+	print("GameOver")
 	get_tree().paused = true
 	ResourceManager.stop_ticks()
 	get_parent().anim_player.play("hide_build_menu")

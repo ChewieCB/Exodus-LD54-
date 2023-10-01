@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://cycdqhy5xadoa"]
+[gd_scene load_steps=12 format=3 uid="uid://cycdqhy5xadoa"]
 
 [ext_resource type="Script" path="res://src/ui/menus/main/main_menu.gd" id="1_1aer0"]
 [ext_resource type="FontFile" uid="uid://4r5r4qviqq2k" path="res://assets/ui/fonts/Improbable.otf" id="1_svkb1"]
+[ext_resource type="PackedScene" uid="uid://c6s7o88tyavpj" path="res://src/ui/ship_building/ShipBuildingView.tscn" id="2_2q72j"]
 [ext_resource type="Texture2D" uid="uid://ctgsf4d6gg6gj" path="res://assets/ui/menus/main/concept_bg_1.png" id="2_sgqft"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7rnd3"]
@@ -190,6 +191,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_1aer0")
+scene_after_start = ExtResource("2_2q72j")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
@@ -384,7 +386,7 @@ libraries = {
 "": SubResource("AnimationLibrary_187sv")
 }
 
-[connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer/Button" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/SettingsContainer/Button" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/QuitContainer/Button" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="SettingsScreen/VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/FullscreenContainer/HBoxContainer/CheckButton" to="." method="_on_fullscreen_button_pressed"]

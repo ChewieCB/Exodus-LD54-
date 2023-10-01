@@ -6,14 +6,14 @@ class_name Building
 
 @onready var sprite = $Sprite2D
 @onready var collider = $Area2D
-
 @onready var debug_label = $Debug
 
 # Build menu vars
 var preview = false
 var outside_gridmap = false
-var can_place = true
 var original_color: Color
+var placeable = false
+var placed = false
 
 enum TYPES {
 	HabBuilding,
@@ -33,13 +33,19 @@ func _ready():
 
 
 func _process(delta):
-	if preview:
-		if collider.has_overlapping_areas() or outside_gridmap:
+	if not placed and preview:
+		if collider.has_overlapping_areas() or collider.has_overlapping_bodies() or outside_gridmap:
 			color_sprite(1, 0, 0, 0.5)
+			placeable = false
 		else:
 			color_sprite(0, 1, 0, 0.5)
-	else:
-		color_sprite(original_color.r, original_color.g, original_color.b, original_color.a)
+			placeable = true
+
+
+func set_building_placed():
+	placed = true
+	preview = false
+	color_sprite(original_color.r, original_color.g, original_color.b, original_color.a)
 
 
 func set_original_color():
@@ -56,14 +62,6 @@ func color_sprite(r, g, b, a):
 		# This is a group of rectangle, used in testing only
 		for item in sprite.get_children():
 			item.self_modulate = Color(r, g, b, a)
-
-
-func _on_area_2d_area_entered(area):
-	can_place = false
-
-
-func _on_area_2d_area_exited(area):
-	can_place = true
 
 
 func _notification(what: int) -> void:
