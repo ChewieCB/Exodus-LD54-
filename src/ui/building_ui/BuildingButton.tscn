@@ -1,0 +1,156 @@
+[gd_scene load_steps=6 format=3 uid="uid://5ce2cbb55dyv"]
+
+[ext_resource type="Texture2D" uid="uid://bkvlrsm0lwbme" path="res://assets/buildings/old/hab1.png" id="1_5jg35"]
+[ext_resource type="Script" path="res://src/ui/building_ui/building_button.gd" id="1_jspa8"]
+[ext_resource type="Texture2D" uid="uid://b5jpsqnt0ke86" path="res://assets/ui/icons/16/People.png" id="2_ol8gj"]
+[ext_resource type="Texture2D" uid="uid://dawueysu2x7ts" path="res://assets/ui/icons/food_icon.png" id="3_cldon"]
+[ext_resource type="Texture2D" uid="uid://2p4jagl32fr1" path="res://assets/ui/icons/16/Clock.png" id="3_g56x5"]
+
+[node name="BuildingButton" type="MarginContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -120.0
+offset_right = 80.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_jspa8")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = -32
+
+[node name="NameCostContainer" type="VBoxContainer" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = -5
+
+[node name="NameContainer" type="MarginContainer" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer"]
+layout_mode = 2
+
+[node name="BuildingName" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/NameContainer"]
+layout_mode = 2
+text = "Building Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="RequirementsContainer" type="HBoxContainer" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="WorkersContainer" type="MarginContainer" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer/WorkersContainer"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="BuildingCost" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer/WorkersContainer/HBoxContainer"]
+layout_mode = 2
+text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WorkerIcon" type="TextureRect" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer/WorkersContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_ol8gj")
+stretch_mode = 5
+
+[node name="TimeContainer" type="MarginContainer" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer/TimeContainer"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="BuildingTime" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer/TimeContainer/HBoxContainer"]
+layout_mode = 2
+text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimeIcon" type="TextureRect" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer/TimeContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_g56x5")
+stretch_mode = 5
+
+[node name="MarginContainer3" type="MarginContainer" parent="CenterContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_bottom = -32
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 8
+
+[node name="BuildingProd" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer3/HBoxContainer"]
+layout_mode = 2
+text = "+0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer3/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_cldon")
+stretch_mode = 5
+
+[node name="BuildingProd2" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer3/HBoxContainer"]
+layout_mode = 2
+text = "per day"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="CenterContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+
+[node name="BuildingIcon" type="TextureRect" parent="CenterContainer/HBoxContainer/MarginContainer2"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture = ExtResource("1_5jg35")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 144
+
+[node name="Button" type="Button" parent="CenterContainer/MarginContainer"]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="pressed" from="CenterContainer/MarginContainer/Button" to="." method="_on_button_pressed"]

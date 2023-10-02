@@ -13,6 +13,7 @@ config_version=5
 config/name="LD54"
 run/main_scene="res://src/ui/menus/splash/SplashScreen.tscn"
 config/features=PackedStringArray("4.1", "GL Compatibility")
+boot_splash/show_image=false
 config/icon="res://icon.svg"
 
 [autoload]
@@ -23,6 +24,7 @@ Dialogic="*res://addons/dialogic/Other/DialogicGameHandler.gd"
 ResourceManager="*res://src/managers/resource_manager/ResourceManager.tscn"
 BuildingManager="*res://src/managers/building_manager/BuildingManger.tscn"
 EventManager="*res://src/managers/event_manager/EventManager.tscn"
+TickManager="*res://src/managers/tick_manager/TickManager.tscn"
 
 [debug]
 
@@ -31,7 +33,17 @@ gdscript/warnings/unused_parameter=0
 
 [dialogic]
 
-variables={}
+variables={
+"air": "0",
+"chance": "1",
+"choice1_check": "false",
+"choice2_check": "false",
+"choice3_check": "false",
+"choice4_check": "false",
+"food": "0",
+"population": "0",
+"water": "0"
+}
 settings/text_speed=0.01
 text/skippable=true
 text/skippable_delay=0.1
@@ -49,9 +61,21 @@ save/autosave_delay=60.0
 text/autopauses={}
 glossary/default_case_sensitive=true
 layout/styles={
-"Default": {}
+"Default": {},
+"Duped Default": {
+"export_overrides": {
+"box_animation_in": "2",
+"box_animation_out": "2",
+"box_modulate": "Color(0.317647, 0.317647, 0.317647, 0.733333)",
+"name_label_box_modulate": "Color(0, 0, 0, 0.682353)"
+},
+"inherits": "",
+"layout": "res://addons/dialogic/Modules/DefaultLayouts/Default/DialogicDefaultLayout.tscn"
 }
-layout/default_style="Default"
+}
+layout/default_style="Duped Default"
+choices/def_false_behaviour=1
+text/letter_speed=0.01
 
 [display]
 
@@ -91,14 +115,29 @@ place_building={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"double_click":false,"script":null)
 ]
 }
-remove_building={
+DEBUG_add_population={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194306,"key_label":0,"unicode":0,"echo":false,"script":null)
+]
+}
+cancel_place_building={
 "deadzone": 0.5,
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":2,"canceled":false,"pressed":false,"double_click":false,"script":null)
 ]
 }
-DEBUG_add_population={
+set_timescale_0={
 "deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194306,"key_label":0,"unicode":0,"echo":false,"script":null)
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":49,"key_label":0,"unicode":49,"echo":false,"script":null)
+]
+}
+set_timescale_1={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":50,"key_label":0,"unicode":50,"echo":false,"script":null)
+]
+}
+set_timescale_2={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":51,"key_label":0,"unicode":51,"echo":false,"script":null)
 ]
 }
 

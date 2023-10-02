@@ -5,8 +5,3 @@
 [node name="ResourceManager" type="Node"]
 process_mode = 1
 script = ExtResource("1_ec3vh")
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 2.0
-
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

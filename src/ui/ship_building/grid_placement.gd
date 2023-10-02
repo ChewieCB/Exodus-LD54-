@@ -12,6 +12,8 @@ var current_building: Node
 var previous_rotation = 0
 var rotate_counter = 0
 
+@onready var cant_place_sfx = preload("res://assets/audio/sfx/Cant_Place_Building_There.mp3")
+
 
 func _ready():
 	BuildingManager.building_selected.connect(_building_button_pressed)
@@ -55,7 +57,7 @@ func _physics_process(_delta):
 		current_building.visible = !current_building.outside_gridmap
 		current_building.global_position = preview_pos
 		
-		if Input.is_action_just_pressed("ui_cancel"):
+		if Input.is_action_just_pressed("cancel_place_building"):
 			current_building.queue_free()
 			current_building = null
 
@@ -64,6 +66,8 @@ func _physics_process(_delta):
 				if not is_outside_gridmap(placement_coord):
 					if current_building.placeable:
 						place_building()
+			else:
+				SoundManager.play_sound(cant_place_sfx, "SFX")
 
 		if Input.is_action_just_pressed("rotate_cw"):
 			current_building.rotation += PI/2
@@ -80,12 +84,15 @@ func is_outside_gridmap(coord: Vector2) -> bool:
 
 
 func place_building():
-	current_building.set_building_placed()
-	var tmp_building = current_building
-	previous_rotation = current_building.rotation
-	current_building = null
-	ResourceManager.add_building(tmp_building)
-	get_new_building()
+	if ResourceManager.worker_amount >= current_building.data.people_cost:
+		current_building.set_building_placed()
+		var tmp_building = current_building
+		previous_rotation = current_building.rotation
+		current_building = null
+#		get_new_building()
+	else:
+		BuildingManager.emit_signal("not_enough_workers")
+		SoundManager.play_sound(cant_place_sfx, "SFX")
 
 
 func stop_building_preview():

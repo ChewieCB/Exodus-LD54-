@@ -1,0 +1,11 @@
+set {chance} = range(0,100).pick_random()
+set {air} -= 50
+if {food} >= 5 and {population} >= 3:
+	BBB
+else:
+	AAAA
+You received a signal after passed through an Earth-like planet. The signal need to be decrypted before you understand it.
+- Decrypt it (required 5 food and 3 people) [if {choice1_check} == "true"]
+	You decrypted it
+- Ignore and move on
+	You ignored the signal and move on.

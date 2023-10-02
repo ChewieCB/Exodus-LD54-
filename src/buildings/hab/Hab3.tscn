@@ -1,28 +1,34 @@
-[gd_scene load_steps=5 format=3 uid="uid://cpyp0agt500ec"]
+[gd_scene load_steps=6 format=3 uid="uid://cpyp0agt500ec"]
 
 [ext_resource type="Script" path="res://src/buildings/building.gd" id="1_knmhu"]
-[ext_resource type="Resource" uid="uid://cp0gqu8sl1ekk" path="res://src/buildings/hab/hab2.tres" id="2_irojd"]
-[ext_resource type="Texture2D" uid="uid://8dvkwjm8j8nn" path="res://assets/buildings/megablock.png" id="3_wd5oo"]
+[ext_resource type="Resource" uid="uid://duea0wrd00fil" path="res://src/buildings/hab/hab3.tres" id="2_2y6un"]
+[ext_resource type="Texture2D" uid="uid://d1w5fvl2ohit8" path="res://assets/buildings/new/hab_3.png" id="3_aeglc"]
+[ext_resource type="PackedScene" uid="uid://c2owud1h45ixt" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="4_sbmc6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0tb0d"]
 size = Vector2(122, 124)
 
 [node name="Hab3" type="Node2D"]
 script = ExtResource("1_knmhu")
-data = ExtResource("2_irojd")
+data = ExtResource("2_2y6un")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -32)
-texture = ExtResource("3_wd5oo")
+position = Vector2(64, 32)
+texture = ExtResource("3_aeglc")
 offset = Vector2(-64, -32)
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(-32, -32)
+position = Vector2(32, 32)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(-32, -32)
 shape = SubResource("RectangleShape2D_0tb0d")
 
-[node name="Debug" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="BuildTimerUI" parent="." instance=ExtResource("4_sbmc6")]
+offset_left = -21.0
+offset_top = -18.0
+offset_right = 19.0
+offset_bottom = 22.0
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

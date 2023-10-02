@@ -1,13 +1,9 @@
 extends Control
 
-@onready var population_counter = $MarginContainer2/HBoxContainer/PopMarginContainer/MarginContainer/HBoxContainer/Label
-@onready var housing_bar = $MarginContainer2/HBoxContainer/HabMarginContainer/VBoxContainer/MarginContainer/HousingBar
-@onready var food_bar = $MarginContainer2/HBoxContainer/FoodMarginContainer/VBoxContainer/MarginContainer/FoodBar
-@onready var water_bar = $MarginContainer2/HBoxContainer/WaterMarginContainer/VBoxContainer/MarginContainer/WaterBar
-@onready var air_bar = $MarginContainer2/HBoxContainer/AirMarginContainer/VBoxContainer/MarginContainer/AirBar
+@onready var population_counter = $MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer/HBoxContainer/WorkerLabel
+@onready var worker_counter = $MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer/HBoxContainer/PopLabel
 
-#@onready var debug_pop = $MarginContainer2/HBoxContainer/PopMarginContainer/MarginContainer/HBoxContainer/Label
-@onready var debug_hab = $MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/HabDebug
+@onready var debug_hab = $MarginContainer/HBoxContainer/MarginContainer5/HBoxContainer/HabDebug
 @onready var debug_food = $MarginContainer/HBoxContainer/MarginContainer2/HBoxContainer/FoodDebug
 @onready var debug_water = $MarginContainer/HBoxContainer/MarginContainer3/HBoxContainer/WaterDebug
 @onready var debug_air = $MarginContainer/HBoxContainer/MarginContainer4/HBoxContainer/AirDebug
@@ -15,16 +11,16 @@ extends Control
 
 func _ready():
 	ResourceManager.population_changed.connect(_update_pop_ui)
+	ResourceManager.workers_changed.connect(_update_worker_ui)
 	ResourceManager.housing_changed.connect(_update_housing_ui)
-	ResourceManager.food_changed.connect(_update_food_ui)
-	ResourceManager.water_changed.connect(_update_water_ui)
-	ResourceManager.air_changed.connect(_update_air_ui)
 	#
-#	ResourceManager.population_diff.connect(_update_debug_pop)
-	ResourceManager.housing_modifier_changed.connect(_update_debug_hab)
 	ResourceManager.food_modifier_changed.connect(_update_debug_food)
 	ResourceManager.water_modifier_changed.connect(_update_debug_water)
 	ResourceManager.air_modifier_changed.connect(_update_debug_air)
+	
+	# This is fucking stupid, but it's 1AM, i'm tired, and it fixes the UI update problem
+	ResourceManager.population_amount = ResourceManager.population_amount
+	ResourceManager.worker_amount = ResourceManager.worker_amount
 
 
 func animate_bar(bar, value) -> void:
@@ -38,33 +34,12 @@ func _update_pop_ui(value):
 	population_counter.text = str(value)
 
 
-func _update_housing_ui(value):
-	animate_bar(housing_bar, value)
+func _update_worker_ui(value):
+	worker_counter.text = str(value)
 
 
-func _update_food_ui(value):
-	animate_bar(food_bar, value)
-
-
-func _update_water_ui(value):
-	animate_bar(water_bar, value)
-
-
-func _update_air_ui(value):
-	animate_bar(air_bar, value)
-
-
-#func _update_debug_pop(production, consumption, total):
-#	pass
-##	debug_pop.text = "Pop +{0}|-{1}|{2}".format([str(production), str(consumption), str(total)])
-
-
-func _update_debug_hab(total, modifier):
-	var modifier_str = str(round(modifier))
-	var modifier_prefix = ""
-	if modifier > 0:
-		modifier_prefix = "+" 
-	debug_hab.text = "{0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
+func _update_housing_ui(total, available):
+	debug_hab.text = "{0} ({1})".format([str(total), str(available)])
 
 
 func _update_debug_food(total, modifier):
@@ -90,3 +65,51 @@ func _update_debug_air(total, modifier):
 		modifier_prefix = "+" 
 	debug_air.text = "{0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
 
+
+
+func _on_worker_ui_mouse_entered():
+	ResourceManager.emit_signal("ui_hover_show", "Available Crew members")
+
+
+func _on_worker_ui_mouse_exited():
+	ResourceManager.emit_signal("ui_hover_hide")
+
+
+func _on_pop_ui_mouse_entered():
+	ResourceManager.emit_signal("ui_hover_show", "Total Population")
+
+
+func _on_pop_ui_mouse_exited():
+	ResourceManager.emit_signal("ui_hover_hide")
+
+
+func _on_hab_ui_mouse_entered():
+	ResourceManager.emit_signal("ui_hover_show", "Housing (Available Housing)")
+
+
+func _on_hab_ui_mouse_exited():
+	ResourceManager.emit_signal("ui_hover_hide")
+
+
+func _on_food_ui_mouse_entered():
+	ResourceManager.emit_signal("ui_hover_show", "Food (Food per Day)")
+
+
+func _on_food_ui_mouse_exited():
+	ResourceManager.emit_signal("ui_hover_hide")
+
+
+func _on_water_ui_mouse_entered():
+	ResourceManager.emit_signal("ui_hover_show", "Water (Water per Day)")
+
+
+func _on_water_ui_mouse_exited():
+	ResourceManager.emit_signal("ui_hover_hide")
+
+
+func _on_air_ui_mouse_entered():
+	ResourceManager.emit_signal("ui_hover_show", "Oxygen (Oxygen per Day)")
+
+
+func _on_air_ui_mouse_exited():
+	ResourceManager.emit_signal("ui_hover_hide")

@@ -1,9 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://cu7ivg1u3vbhl"]
+[gd_scene load_steps=12 format=3 uid="uid://cu7ivg1u3vbhl"]
 
 [ext_resource type="PackedScene" uid="uid://bdbib8np6c616" path="res://src/ui/main_screen/resources/ResourceUI.tscn" id="1_4u51x"]
 [ext_resource type="PackedScene" uid="uid://sjhl1wud5upl" path="res://src/ui/building_ui/BuildUI.tscn" id="1_hyvdy"]
 [ext_resource type="Script" path="res://src/ui/main_screen/main_ui.gd" id="1_xagyo"]
 [ext_resource type="PackedScene" uid="uid://bfhd8krrn8mx2" path="res://src/ui/game_over/GameOver.tscn" id="2_3v6ei"]
+[ext_resource type="PackedScene" uid="uid://bsqw1bcfuxbvr" path="res://src/ui/building_ui/TimeControlUI.tscn" id="4_2kxyh"]
+[ext_resource type="PackedScene" uid="uid://cnjv60xkxx8oq" path="res://src/ui/building_ui/NotEnoughWorkersPopup.tscn" id="4_eo2jl"]
+[ext_resource type="PackedScene" uid="uid://b2rwhkbjj7e4n" path="res://src/ui/main_screen/ResourceAlertsUI.tscn" id="7_njybl"]
 
 [sub_resource type="Animation" id="Animation_3toh5"]
 resource_name = "RESET"
@@ -18,7 +21,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [-350]
+"values": [-450]
 }
 
 [sub_resource type="Animation" id="Animation_sektw"]
@@ -34,7 +37,19 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(0.329877, 1),
 "update": 0,
-"values": [164, -350]
+"values": [164, -450]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BuildControlLabel:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(229, 17), Vector2(229, -100)]
 }
 
 [sub_resource type="Animation" id="Animation_aef8j"]
@@ -50,7 +65,19 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(0.287175, 1),
 "update": 0,
-"values": [-350, 164]
+"values": [-450, 164]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BuildControlLabel:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(229, -100), Vector2(229, 17)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pifv8"]
@@ -94,7 +121,7 @@ offset_top = -20.0
 offset_right = 40.0
 offset_bottom = 20.0
 grow_vertical = 2
-theme_override_constants/margin_left = -350
+theme_override_constants/margin_left = -450
 theme_override_constants/margin_top = 64
 
 [node name="BuildingUI" parent="BuildMenu" instance=ExtResource("1_hyvdy")]
@@ -103,12 +130,29 @@ layout_mode = 2
 [node name="ResourceUI" parent="." instance=ExtResource("1_4u51x")]
 layout_mode = 2
 anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_right = 1088.0
 offset_bottom = 648.0
 
-[node name="GameOver" parent="." instance=ExtResource("2_3v6ei")]
+[node name="MousePopup" parent="." instance=ExtResource("4_eo2jl")]
+
+[node name="TimeControlUI" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -384.0
+offset_top = -128.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 1
+
+[node name="MarginContainer" parent="TimeControlUI" instance=ExtResource("4_2kxyh")]
 layout_mode = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -118,12 +162,50 @@ libraries = {
 }
 
 [node name="EventButton" type="Button" parent="."]
+process_mode = 4
+visible = false
 layout_mode = 0
-offset_left = 930.0
-offset_top = 46.0
-offset_right = 1087.0
-offset_bottom = 77.0
+offset_left = 743.0
+offset_top = 15.0
+offset_right = 900.0
+offset_bottom = 46.0
 text = "Play Random Event"
+
+[node name="FactButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 918.0
+offset_top = 15.0
+offset_right = 1075.0
+offset_bottom = 46.0
+text = "Chat with crew"
+
+[node name="ResourceAlerts" parent="." instance=ExtResource("7_njybl")]
+layout_mode = 1
+
+[node name="GameOver" parent="." instance=ExtResource("2_3v6ei")]
+layout_mode = 1
+
+[node name="ObjectiveLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 874.0
+offset_top = 55.0
+offset_right = 1109.0
+offset_bottom = 81.0
+text = "Objective: Survive"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="BuildControlLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 229.0
+offset_top = -100.0
+offset_right = 472.0
+offset_bottom = -22.0
+text = "Q, E to rotate building.
+Left-click to Build.
+Right-click to Destroy"
+autowrap_mode = 2
 
 [connection signal="pressed" from="BuildShowToggle/Button" to="." method="_on_build_button_pressed"]
 [connection signal="pressed" from="EventButton" to="." method="_on_play_dialog_pressed"]
+[connection signal="pressed" from="FactButton" to="." method="_on_listen_fact_pressed"]
