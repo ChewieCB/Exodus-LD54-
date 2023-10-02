@@ -9,11 +9,13 @@
 
 [node name="ResourceUI" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 mouse_filter = 2
 script = ExtResource("1_tl7ra")
 
@@ -46,19 +48,19 @@ layout_mode = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="WorkerContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+[node name="PopContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer"]
 layout_mode = 2
 
-[node name="WorkerIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer/HBoxContainer"]
+[node name="WorkerIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("6_oojgu")
 stretch_mode = 3
 
-[node name="WorkerLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer/HBoxContainer"]
+[node name="WorkerLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer/HBoxContainer"]
 layout_mode = 2
 text = "00"
 horizontal_alignment = 1
@@ -67,20 +69,20 @@ vertical_alignment = 1
 [node name="VSeparator" type="VSeparator" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="PopContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+[node name="WorkerContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer"]
 layout_mode = 2
 
-[node name="PopIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer/HBoxContainer"]
+[node name="PopIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("6_oojgu")
 stretch_mode = 3
 
-[node name="PopLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer/HBoxContainer"]
+[node name="PopLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer/HBoxContainer"]
 layout_mode = 2
 text = "00"
 horizontal_alignment = 1
@@ -185,3 +187,16 @@ grow_vertical = 0
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_right = 192
 theme_override_constants/margin_bottom = 32
+
+[connection signal="mouse_entered" from="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer" to="." method="_on_pop_ui_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer" to="." method="_on_pop_ui_mouse_exited"]
+[connection signal="mouse_entered" from="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer" to="." method="_on_worker_ui_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer" to="." method="_on_worker_ui_mouse_exited"]
+[connection signal="mouse_entered" from="MarginContainer/HBoxContainer/MarginContainer5" to="." method="_on_hab_ui_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/HBoxContainer/MarginContainer5" to="." method="_on_hab_ui_mouse_exited"]
+[connection signal="mouse_entered" from="MarginContainer/HBoxContainer/MarginContainer2" to="." method="_on_food_ui_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/HBoxContainer/MarginContainer2" to="." method="_on_food_ui_mouse_exited"]
+[connection signal="mouse_entered" from="MarginContainer/HBoxContainer/MarginContainer3" to="." method="_on_water_ui_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/HBoxContainer/MarginContainer3" to="." method="_on_water_ui_mouse_exited"]
+[connection signal="mouse_entered" from="MarginContainer/HBoxContainer/MarginContainer4" to="." method="_on_air_ui_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/HBoxContainer/MarginContainer4" to="." method="_on_air_ui_mouse_exited"]

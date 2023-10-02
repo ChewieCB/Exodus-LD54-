@@ -9,8 +9,19 @@ extends MarginContainer
 
 @onready var tick_progress_bar = $VBoxContainer/PanelContainer/ProgressBar
 
+@onready var day_counter = $VBoxContainer/PanelContainer3/MarginContainer/DayLabel
+@onready var date = $VBoxContainer/PanelContainer3/MarginContainer/DateLabel
+
+var current_day = 0
+var start_date_unix = 3873826800
+# Unix timestamp works in seconds from 1970, 1 day is 86,400 seconds
+const UNIX_DAY = 86400
+const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+var current_timestamp = start_date_unix
+
 
 func _ready():
+	TickManager.tick.connect(_update_day_counter)
 	tick_progress_bar.value = 0
 	# Set buttons to normal speed configuration
 	normal_button.disabled = true
@@ -31,6 +42,15 @@ func _physics_process(delta):
 	)
 	tick_progress = clamp(tick_progress, 0, 100)
 	tick_progress_bar.value = tick_progress
+
+
+func _update_day_counter():
+	current_day += 1
+	day_counter.text = "Day {0}".format([str(current_day)])
+	current_timestamp += UNIX_DAY
+	var new_date = Time.get_date_string_from_unix_time(current_timestamp)
+	var YMD = new_date.split("-")
+	date.text = "{0} {1} {2}".format([YMD[2], MONTH_NAMES[int(YMD[1])], YMD[0]])
 
 
 func _on_pause_button_pressed():
