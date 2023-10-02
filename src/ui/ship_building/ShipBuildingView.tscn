@@ -81,6 +81,7 @@ position = Vector2(1469, 249.5)
 texture = ExtResource("2_sj33g")
 
 [node name="ShipGrid" type="Node2D" parent="." node_paths=PackedStringArray("tilemap")]
+visible = false
 modulate = Color(1, 1, 1, 0.784314)
 position = Vector2(716, 62.5)
 script = ExtResource("3_tehqe")
@@ -143,6 +144,6 @@ scale = Vector2(12, 12)
 texture = ExtResource("8_3ttdw")
 
 [node name="BackgroundScreen" type="Sprite2D" parent="."]
-position = Vector2(3118, 162)
+position = Vector2(3246, 162)
 scale = Vector2(2, 2)
 texture = ExtResource("11_k1ahy")
