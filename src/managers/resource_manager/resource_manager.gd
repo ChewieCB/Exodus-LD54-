@@ -69,7 +69,7 @@ var thirsty_time_left = thirsty_time:
 		emit_signal("dehydrated", thirsty_time_left)
 		if thirsty_time_left == 0:
 			emit_signal("game_over", RESOURCE_TYPE.WATER)
-var suffocating_time: int = 3
+var suffocating_time: int = 6
 var suffocating_time_left = suffocating_time:
 	set(value):
 		suffocating_time_left = value
@@ -96,6 +96,8 @@ var population_amount: int:
 		# to avoid resetting already assigned workers
 		if diff > 0:
 			worker_amount = worker_amount + diff
+		elif diff < 0:
+			worker_amount = worker_amount - diff
 var worker_amount: int:
 	set(value):
 		worker_amount = value
