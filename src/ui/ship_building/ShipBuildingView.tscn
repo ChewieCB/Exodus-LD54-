@@ -75,7 +75,7 @@ randomness = 0.5
 visibility_rect = Rect2(0, 0, 0, 0)
 
 [node name="ShipSprite" type="Sprite2D" parent="."]
-position = Vector2(1469, 249.5)
+position = Vector2(1473, 246)
 texture = ExtResource("2_sj33g")
 
 [node name="ShipGrid" type="Node2D" parent="." node_paths=PackedStringArray("tilemap")]

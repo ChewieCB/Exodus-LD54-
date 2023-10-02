@@ -58,7 +58,9 @@ layout/styles={
 "box_animation_out": "2",
 "box_modulate": "Color(0.317647, 0.317647, 0.317647, 0.733333)",
 "name_label_box_modulate": "Color(0, 0, 0, 0.682353)"
-}
+},
+"inherits": "",
+"layout": "res://src/custom_dialogic_layout/LD54CustomLayout.tscn"
 }
 }
 layout/default_style="Duped Default"
