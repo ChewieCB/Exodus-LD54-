@@ -12,6 +12,8 @@ extends MarginContainer
 @onready var day_counter = $VBoxContainer/PanelContainer3/MarginContainer/DayLabel
 @onready var date = $VBoxContainer/PanelContainer3/MarginContainer/DateLabel
 
+var button_click_sfx = preload("res://assets/audio/sfx/ui_click_1.mp3")
+
 var current_day = 0
 var start_date_unix = 3873826800
 # Unix timestamp works in seconds from 1970, 1 day is 86,400 seconds
@@ -33,6 +35,12 @@ func _ready():
 
 
 func _physics_process(delta):
+	if Input.is_action_just_pressed("set_timescale_0"):
+		_on_pause_button_pressed()
+	elif Input.is_action_just_pressed("set_timescale_1"):
+		_on_speed_1_button_pressed()
+	elif Input.is_action_just_pressed("set_timescale_2"): 
+		_on_speed_2_button_pressed()
 	# Inversely map the time left on tick timer to progress bar value
 	# i.e. 5 -> 0 on timer, needs to be 0 -> 100 on progress bar
 	var tick_progress = remap(
@@ -46,14 +54,15 @@ func _physics_process(delta):
 
 func _update_day_counter():
 	current_day += 1
-	day_counter.text = "Day {0}".format([str(current_day)])
+	day_counter.text = "Day {0}".format([str(current_day + 1)])
 	current_timestamp += UNIX_DAY
 	var new_date = Time.get_date_string_from_unix_time(current_timestamp)
 	var YMD = new_date.split("-")
-	date.text = "{0} {1} {2}".format([YMD[2], MONTH_NAMES[int(YMD[1])], YMD[0]])
+	date.text = "{0} {1} {2}".format([YMD[2], MONTH_NAMES[int(YMD[1]) - 1], YMD[0]])
 
 
 func _on_pause_button_pressed():
+	SoundManager.play_sound(button_click_sfx, "UI")
 	pause_button.disabled = true
 	pause_texture.modulate = Color.GRAY
 	TickManager.stop_ticks()
@@ -67,6 +76,7 @@ func _on_pause_button_pressed():
 
 
 func _on_speed_1_button_pressed():
+	SoundManager.play_sound(button_click_sfx, "UI")
 	normal_button.disabled = true
 	normal_texture.modulate = Color.WHITE
 	TickManager._set_tick_rate(TickManager.SLOW_TICK_SPEED)
@@ -81,6 +91,7 @@ func _on_speed_1_button_pressed():
 
 
 func _on_speed_2_button_pressed():
+	SoundManager.play_sound(button_click_sfx, "UI")
 	fast_button.disabled = true
 	fast_texture.modulate = Color.GRAY
 	TickManager._set_tick_rate(TickManager.FAST_TICK_SPEED)
