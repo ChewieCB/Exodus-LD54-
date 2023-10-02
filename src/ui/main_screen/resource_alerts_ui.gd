@@ -55,7 +55,7 @@ func _suffocating(ticks_left):
 		air_alert.visible = false
 
 
-func _hide_all():
+func _hide_all(resource):
 	# TODO - add animations
 	food_alert.visible = false
 	water_alert.visible = false

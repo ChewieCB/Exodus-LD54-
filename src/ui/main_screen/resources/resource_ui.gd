@@ -68,7 +68,7 @@ func _update_debug_air(total, modifier):
 
 
 func _on_worker_ui_mouse_entered():
-	ResourceManager.emit_signal("ui_hover_show", "Available Workers")
+	ResourceManager.emit_signal("ui_hover_show", "Available Crew members")
 
 
 func _on_worker_ui_mouse_exited():
@@ -84,7 +84,7 @@ func _on_pop_ui_mouse_exited():
 
 
 func _on_hab_ui_mouse_entered():
-	ResourceManager.emit_signal("ui_hover_show", "Housing (Surplus Housing)")
+	ResourceManager.emit_signal("ui_hover_show", "Housing (Available Housing)")
 
 
 func _on_hab_ui_mouse_exited():
@@ -108,7 +108,7 @@ func _on_water_ui_mouse_exited():
 
 
 func _on_air_ui_mouse_entered():
-	ResourceManager.emit_signal("ui_hover_show", "Air (Air per Day)")
+	ResourceManager.emit_signal("ui_hover_show", "Oxygen (Oxygen per Day)")
 
 
 func _on_air_ui_mouse_exited():

@@ -98,6 +98,7 @@ func _on_tick():
 			build_timer_ui.visible = false
 			ResourceManager.add_building(self)
 			ResourceManager.retrieve_workers(self)
+			EventManager.finished_building(type)
 			SoundManager.play_sound(build_finish_sfx, "SFX")
 			sprite.material.set_shader_parameter("mode", 0)
 		else:
