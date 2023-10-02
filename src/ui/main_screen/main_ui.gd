@@ -94,7 +94,7 @@ func _on_dialogic_signal(arg: String):
 			TickManager.start_ticks()
 
 			ResourceManager.check_if_all_crew_died()
-
+			EventManager.check_if_victory()
 
 func change_event_image(texture_path: String):
 	event_image.texture = load(texture_path)

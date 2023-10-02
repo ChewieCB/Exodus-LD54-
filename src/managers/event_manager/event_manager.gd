@@ -8,6 +8,9 @@ var n_air_building = 0
 var tutorial_progress = 0 # -1 = disable tutorial, 0 = enable tutorial
 var tick_since_last_event = 0
 var tick_to_event = 20
+var tick_passed_total = 0
+var tick_to_victory = 200
+var end_game = false
 
 const MIN_TICK_FOR_EVENT = 15
 const MAX_TICK_FOR_EVENT = 30
@@ -16,6 +19,7 @@ signal building_finished
 signal start_event
 signal request_change_event_image
 signal request_change_objective_label
+signal victory
 
 func _ready() -> void:
 	TickManager.tick.connect(check_tick_for_random_event)
@@ -45,7 +49,7 @@ func get_random_element_from_array(options: Array):
 
 
 func get_random_event():
-	var event_name = get_random_element_from_array(["resource_rich_planetoid", "asteroid_cluster", "distress_signal_detected", "plague_planet_event"])
+	var event_name = get_random_element_from_array(["victory_event"])
 	var event_source_text = call(event_name)
 	var events : Array = event_source_text.split('\n')
 	var timeline : DialogicTimeline = DialogicTimeline.new()
@@ -82,17 +86,44 @@ func change_objective_label(text: String):
 	emit_signal("request_change_objective_label", text)
 
 
+
 func check_tick_for_random_event():
 	tick_since_last_event += 1
+	tick_passed_total += 1
 	print("Tick left for event ", tick_to_event - tick_since_last_event)
+
+	if tick_passed_total >= tick_to_victory and not end_game:
+		end_game = true
+		play_specific_event("victory_event")
+		return
+
 	if tick_since_last_event >= tick_to_event:
 		tick_since_last_event = 0
 		tick_to_event = randi_range(MIN_TICK_FOR_EVENT, MAX_TICK_FOR_EVENT)
 		play_random_event()
 
+
 func disable_tutorial():
 	tutorial_progress = -1
 	change_objective_label("Survive")
+
+
+func check_if_victory():
+	if tick_passed_total >= tick_to_victory and end_game:
+		emit_signal("victory")
+
+
+func victory_event():
+	change_event_image("res://assets/event/Planet_1_Pixel.png")
+	var event_source_text = """
+	Join ExecutiveOfficer 0
+	ExecutiveOfficer (Normal): Captain, we have arrived at our destination. We survived. Hooray!
+	You win the game! Tada!
+	Too bad we don't have much time to implement proper victory screen.
+	Leave ExecutiveOfficer
+	[signal arg="end_event"]
+	"""
+	return event_source_text
 
 
 func asteroid_cluster():
@@ -127,6 +158,8 @@ func asteroid_cluster():
 	- Continue on our present course.
 		There'll be more opportunities in the future. Continue on our present course.
 		ExecutiveOfficer (Normal): Yes, Captain. I've passed the word onto navigation and we are holding course.
+	Leave ExecutiveOfficer
+	[signal arg="end_event"]
 	"""
 	event_source_text = event_source_text.format({"required_resource"=required_resource, "mined_resource"=mined_resource, "big_mined_resource"=big_mined_resource, "rm_food"=rm_food, "rm_water"=rm_water, "rm_air"=rm_air})
 	return event_source_text
@@ -262,7 +295,6 @@ func plague_planet_event() -> String:
 	event_source_text = event_source_text.format({"rm_population"=rm_population, "rm_food"=rm_food, "rm_water"=rm_water})
 	return event_source_text
 
-
 func tutorial1_event() -> String:
 	var event_source_text = """
 	A negation field has simultaneously surrounded the galaxy. The field is gradually creeping in and swallowing all matter. Stars, nebula, planets, asteroids, even black holes. The Negation Field emits no electromagnetic radiation or heat.
@@ -282,7 +314,6 @@ func tutorial1_event() -> String:
 	[signal arg="end_event"]
 	"""
 	return event_source_text
-
 
 func tutorial2_event() -> String:
 	var event_source_text = """
