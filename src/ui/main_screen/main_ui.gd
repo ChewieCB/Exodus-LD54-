@@ -112,7 +112,7 @@ func _on_dialogic_signal(arg: String):
 			build_show_toggle.visible = true
 			build_menu.visible = true
 
-			TickManager.start_ticks()
+			TickManager._set_tick_rate(TickManager.SLOW_TICK_SPEED)
 
 			ResourceManager.check_if_all_crew_died()
 			EventManager.check_if_victory()
@@ -129,7 +129,7 @@ func _on_dialogic_signal(arg: String):
 			build_show_toggle.visible = true
 			build_menu.visible = true
 			
-			TickManager.start_ticks()
+			TickManager._set_tick_rate(TickManager.SLOW_TICK_SPEED)
 			
 			ResourceManager.check_if_all_crew_died()
 			EventManager.check_if_victory()
