@@ -10,7 +10,7 @@ var n_food_built = 0
 func _ready():
 	# Set initial resources
 	ResourceManager.housing_amount = 0
-	ResourceManager.food_amount = 50
+	ResourceManager.food_amount = 150
 	ResourceManager.water_amount = 250
 	ResourceManager.air_amount = 200
 	#
@@ -25,7 +25,7 @@ func _ready():
 
 
 func tutorial_tracker(type: Building.TYPES):
-	if EventManager.tutorial_progress >= 2:
+	if EventManager.tutorial_progress >= 2 :
 		return
 
 	match type:
@@ -44,6 +44,7 @@ func tutorial_tracker(type: Building.TYPES):
 			EventManager.tutorial_progress = 2
 		elif EventManager.tutorial_progress == -1:
 			EventManager.play_specific_event("disabled_tutorial_event")
+			EventManager.tutorial_progress = 2
 		return
 
 func _update_star_particles(tick_speed, is_paused):

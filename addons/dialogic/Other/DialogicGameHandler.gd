@@ -50,9 +50,9 @@ func _ready() -> void:
 	rebuild_timeline_directory()
 
 	collect_subsystems()
-	
+
 	clear()
-	
+
 	timeline_ended.connect(_on_timeline_ended)
 
 
@@ -68,17 +68,17 @@ func start_timeline(timeline:Variant, label_or_idx:Variant = "") -> void:
 		#check the lookup table if it's not a full file name
 		if timeline.contains("res://"):
 			timeline = load(timeline)
-		else: 
+		else:
 			timeline = load(find_timeline(timeline))
 		if timeline == null:
 			printerr("[Dialogic] There was an error loading this timeline. Check the filename, and the timeline for errors")
 			return
 	await timeline.process()
-	
+
 	current_timeline = timeline
 	current_timeline_events = current_timeline.events
 	current_event_idx = -1
-	
+
 	if typeof(label_or_idx) == TYPE_STRING:
 		if label_or_idx:
 			if has_subsystem('Jump'):
@@ -86,7 +86,7 @@ func start_timeline(timeline:Variant, label_or_idx:Variant = "") -> void:
 	elif typeof(label_or_idx) == TYPE_INT:
 		if label_or_idx >-1:
 			current_event_idx = label_or_idx -1
-	
+
 	timeline_started.emit()
 	handle_next_event()
 
@@ -192,24 +192,24 @@ func load_full_state(state_info:Dictionary) -> void:
 func collect_subsystems() -> void:
 	# This also builds the event script cache as well
 	_event_script_cache = []
-	
+
 	for indexer in DialogicUtil.get_indexers():
-		
+
 		# build event cache
 		for event in indexer._get_events():
 			if not 'event_end_branch.gd' in event and not 'event_text.gd' in event:
 				_event_script_cache.append(load(event).new())
-		
+
 		# build the subsystems (only at runtime)
 		if !Engine.is_editor_hint():
 			for subsystem in indexer._get_subsystems():
 				add_subsytsem(subsystem.name, subsystem.script)
-	
+
 	# Events are checked in order while testing them. EndBranch needs to be first, Text needs to be last
 	_event_script_cache.push_front(DialogicEndBranchEvent.new())
 	_event_script_cache.push_back(DialogicTextEvent.new())
 	Engine.get_main_loop().set_meta("dialogic_event_cache", _event_script_cache)
-	
+
 
 func has_subsystem(_name:String) -> bool:
 	return has_node(_name)
@@ -246,7 +246,7 @@ func _set(property, value):
 #func build_directory(file_extension:String) -> Dictionary:
 #	var files :Array[String] = DialogicUtil.list_resources_of_type(file_extension)
 #
-#	# First sort by length of path, so shorter paths are first	
+#	# First sort by length of path, so shorter paths are first
 #	files.sort_custom(func(a, b): return a.count("/") < b.count("/"))
 #
 #
@@ -270,7 +270,7 @@ func rebuild_character_directory() -> void:
 		var path = characters[i].replace("res://","").replace(".dch", "")
 		if path[0] == "/":
 			path = path.right(-1)
-		shortened_paths.append(path) 
+		shortened_paths.append(path)
 
 		#split the shortened path up, and reverse it
 		var path_breakdown = path.split("/")
@@ -299,7 +299,7 @@ func rebuild_character_directory() -> void:
 			else:
 				interim_array.append(reverse_array[i])
 		depth += 1
-		reverse_array = interim_array		
+		reverse_array = interim_array
 
 	# Now finally build the database from those arrays
 	for i in characters.size():
@@ -309,7 +309,7 @@ func rebuild_character_directory() -> void:
 		entry['full_path'] = characters[i]
 		entry['unique_short_path'] = reverse_array[i]
 		character_directory[reverse_array[i]] = entry
-	
+
 	Engine.get_main_loop().set_meta("dialogic_character_directory", character_directory)
 
 
@@ -329,7 +329,7 @@ func rebuild_timeline_directory() -> void:
 		var path = characters[i].replace("res://","").replace(".dtl", "")
 		if path[0] == "/":
 			path = path.right(-1)
-		shortened_paths.append(path) 
+		shortened_paths.append(path)
 
 		#split the shortened path up, and reverse it
 		var path_breakdown = path.split("/")
@@ -358,7 +358,7 @@ func rebuild_timeline_directory() -> void:
 			else:
 				interim_array.append(reverse_array[i])
 		depth += 1
-		reverse_array = interim_array		
+		reverse_array = interim_array
 
 	# Now finally build the database from those arrays
 	for i in characters.size():
@@ -381,7 +381,7 @@ func find_timeline(path: String) -> String:
 ################################################################################
 # Method to start a timeline AND ensure that a layout scene is present.
 # For argument info, checkout start_timeline()
-# -> returns the layout node 
+# -> returns the layout node
 func start(timeline:Variant, label:Variant="") -> Node:
 	var scene :Node= null
 	if !has_active_layout_node():
@@ -397,7 +397,7 @@ func start(timeline:Variant, label:Variant="") -> Node:
 
 
 # Makes sure the layout scene is instanced and will show it if it was hidden.
-# The layout scene will always be added to the tree root. 
+# The layout scene will always be added to the tree root.
 func _add_layout_node(scene_path := "") -> Node:
 	var scene: Node = get_layout_node()
 
@@ -418,7 +418,7 @@ func _add_layout_node(scene_path := "") -> Node:
 
 		if scene_path.is_empty():
 			scene_path = ProjectSettings.get_setting(
-						'dialogic/layout/layout_scene', 
+						'dialogic/layout/layout_scene',
 						DialogicUtil.get_default_layout_scene())
 
 		scene = load(scene_path).instantiate()
@@ -426,7 +426,7 @@ func _add_layout_node(scene_path := "") -> Node:
 
 		get_parent().call_deferred("add_child", scene)
 		get_tree().set_meta('dialogic_layout_node', scene)
-	
+
 	return scene
 
 
@@ -438,7 +438,7 @@ func get_layout_node() -> Node:
 	var tree := get_tree()
 	return (
 		tree.get_meta('dialogic_layout_node')
-		if tree.has_meta('dialogic_layout_node') and 
+		if tree.has_meta('dialogic_layout_node') and
 			is_instance_valid(tree.get_meta('dialogic_layout_node'))
 		else null
 	)

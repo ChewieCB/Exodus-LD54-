@@ -84,7 +84,7 @@ func change_objective_label(text: String):
 
 func check_tick_for_random_event():
 	tick_since_last_event += 1
-	print("Tick left for event", tick_to_event - tick_since_last_event)
+	print("Tick left for event ", tick_to_event - tick_since_last_event)
 	if tick_since_last_event >= tick_to_event:
 		tick_since_last_event = 0
 		tick_to_event = randi_range(MIN_TICK_FOR_EVENT, MAX_TICK_FOR_EVENT)
