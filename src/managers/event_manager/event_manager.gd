@@ -411,6 +411,7 @@ func hab_riot() -> String:
 
 
 func planetary_customs() -> String:
+	change_event_image("res://assets/event/BigPlanet_4_Pixel.png")
 	var rm_population = ResourceManager.population_amount
 	var rm_food = ResourceManager.food_amount
 	var rm_water = ResourceManager.water_amount
@@ -451,6 +452,7 @@ func planetary_customs() -> String:
 
 
 func damaged_ship_aid() -> String:
+	change_event_image("res://assets/event/Ship_wreak_Pixel.png")
 	var rm_population = ResourceManager.population_amount
 	var rm_food = ResourceManager.food_amount
 	var rm_water = ResourceManager.water_amount
@@ -516,6 +518,7 @@ func families_seeking_passage() -> String:
 
 
 func governor_demands_passage() -> String:
+	change_event_image("res://assets/event/Ship_wreak_Pixel.png")
 	var reward_people = randi_range(1, 3)
 	var reward_food = randi_range(40, 70)
 	var reward_water = randi_range(40, 70)

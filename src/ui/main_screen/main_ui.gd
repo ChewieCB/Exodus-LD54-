@@ -107,7 +107,10 @@ func _on_dialogic_signal(arg: String):
 			EventManager.check_if_victory()
 
 func change_event_image(texture_path: String):
-	event_image.texture = load(texture_path)
+	if texture_path == "":
+		event_image.texture = null
+	else:
+		event_image.texture = load(texture_path)
 
 func change_objective_label(text: String):
 	objective_label.text = "Objective: " + text
