@@ -80,7 +80,7 @@ explosiveness = 0.3
 randomness = 0.5
 visibility_rect = Rect2(0, 0, 0, 0)
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="Space"]
+[node name="StarCPUParticles2D" type="CPUParticles2D" parent="Space"]
 position = Vector2(-7.0192, 1.15042)
 amount = 64
 lifetime = 8.0

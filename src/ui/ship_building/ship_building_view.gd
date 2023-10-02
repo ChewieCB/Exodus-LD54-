@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var star_particles = $Space/StarGPUParticles2D
+@onready var star_particles = $Space/StarCPUParticles2D
 
 # We don't use the same variable in EventManager to avoid race condition
 var n_hab_built = 0
