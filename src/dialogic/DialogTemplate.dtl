@@ -1,3 +1,4 @@
+set {chance} = range(0,100).pick_random()
 set {air} -= 50
 if {food} >= 5 and {population} >= 3:
 	BBB
