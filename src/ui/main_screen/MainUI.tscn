@@ -153,6 +153,7 @@ offset_right = 384.0
 offset_bottom = 188.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("5_ajheu")
 
 [node name="GameOver" parent="." instance=ExtResource("2_3v6ei")]

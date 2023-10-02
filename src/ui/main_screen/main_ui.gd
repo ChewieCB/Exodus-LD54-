@@ -39,14 +39,14 @@ func _on_build_button_pressed():
 
 func _on_play_dialog_pressed():
 	TickManager.stop_ticks()
-	
+
 	var tween = get_tree().create_tween()
 	if build_menu_open:
 		anim_player.play("hide_build_menu")
 		build_menu_open = false
 	tween.parallel().tween_property(camera, "zoom", Vector2(0.15, 0.15), 0.5).set_trans(Tween.TRANS_LINEAR)
 	tween.parallel().tween_property(camera, "global_position", far_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
-	
+
 #	ship_sprite.visible = false
 	ship_grid.visible = false
 	build_show_toggle.visible = false
@@ -63,11 +63,11 @@ func _on_dialogic_signal(arg: String):
 			var tween = get_tree().create_tween()
 			tween.tween_property(event_image, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
 #			await tween.finished
-			
+
 			tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
-			
+
 			build_show_toggle.visible = true
 			build_menu.visible = true
-			
+
 			TickManager.start_ticks()
