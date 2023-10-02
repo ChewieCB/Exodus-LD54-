@@ -1,13 +1,13 @@
 [gd_resource type="Resource" load_steps=3 format=3 uid="uid://dso7sspkfsbn6"]
 
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_rd10i"]
-[ext_resource type="Texture2D" uid="uid://diuknkxali318" path="res://assets/buildings/refiltration_center-export.png" id="2_gy3r8"]
+[ext_resource type="Texture2D" uid="uid://ftoh02i7rxu2" path="res://assets/buildings/new/water_2.png" id="2_umefj"]
 
 [resource]
 script = ExtResource("1_rd10i")
 name = "Refiltration Center"
 type = 2
-sprite = ExtResource("2_gy3r8")
+sprite = ExtResource("2_umefj")
 housing_prod = 0
 food_prod = 0
 water_prod = 4

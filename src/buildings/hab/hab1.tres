@@ -1,13 +1,13 @@
 [gd_resource type="Resource" load_steps=3 format=3 uid="uid://ce726vckgwu4p"]
 
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_7240g"]
-[ext_resource type="Texture2D" uid="uid://bkvlrsm0lwbme" path="res://assets/buildings/hab1.png" id="2_4766h"]
+[ext_resource type="Texture2D" uid="uid://dw4vv6brsf8a1" path="res://assets/buildings/new/hab_1.png" id="2_0spn8"]
 
 [resource]
 script = ExtResource("1_7240g")
 name = "Hab Block"
 type = 0
-sprite = ExtResource("2_4766h")
+sprite = ExtResource("2_0spn8")
 housing_prod = 1
 food_prod = 0
 water_prod = 0

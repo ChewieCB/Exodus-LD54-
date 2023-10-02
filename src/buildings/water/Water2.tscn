@@ -1,21 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://c8p2ivrx4icn3"]
+[gd_scene load_steps=7 format=3 uid="uid://dqltywede2xdg"]
 
 [ext_resource type="Script" path="res://src/buildings/building.gd" id="1_7g34e"]
 [ext_resource type="Resource" uid="uid://dso7sspkfsbn6" path="res://src/buildings/water/water2.tres" id="2_q32qi"]
-[ext_resource type="Texture2D" uid="uid://diuknkxali318" path="res://assets/buildings/refiltration_center-export.png" id="3_a0oyr"]
-[ext_resource type="Shader" path="res://src/buildings/shaders/pulse.gdshader" id="3_ei707"]
+[ext_resource type="Texture2D" uid="uid://ftoh02i7rxu2" path="res://assets/buildings/new/water_2.png" id="3_sdcuy"]
 [ext_resource type="PackedScene" uid="uid://c2owud1h45ixt" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="4_33su1"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_l6u3g"]
-shader = ExtResource("3_ei707")
-shader_parameter/shine_color = Color(0.862745, 0.862745, 0, 0.556863)
-shader_parameter/alpha_limit = 0.0
-shader_parameter/cycle_speed = 1.0
-shader_parameter/full_pulse_cycle = true
-shader_parameter/mode = 0
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0tb0d"]
-size = Vector2(186, 60)
+size = Vector2(188, 60)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h83i0"]
 size = Vector2(60, 62)
@@ -25,25 +16,26 @@ script = ExtResource("1_7g34e")
 data = ExtResource("2_q32qi")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_l6u3g")
 position = Vector2(128, 64)
-texture = ExtResource("3_a0oyr")
+texture = ExtResource("3_sdcuy")
 offset = Vector2(-96, -64)
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(-32, -32)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(64, 0)
+position = Vector2(64.5, 0)
 shape = SubResource("RectangleShape2D_0tb0d")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(128, 63)
+position = Vector2(0, 63)
 shape = SubResource("RectangleShape2D_h83i0")
 
 [node name="BuildTimerUI" parent="." instance=ExtResource("4_33su1")]
-offset_left = 11.0
-offset_right = 51.0
+offset_left = -21.0
+offset_top = -50.0
+offset_right = 19.0
+offset_bottom = -10.0
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://diuknkxali318"
-path="res://.godot/imported/refiltration_center-export.png-b56f85da6bce21a7da1d26da250dead1.ctex"
+uid="uid://c2gvwiki601v3"
+path="res://.godot/imported/display screen.png-6f5f593681a3f0d7f3f42da34171f955.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/buildings/refiltration_center-export.png"
-dest_files=["res://.godot/imported/refiltration_center-export.png-b56f85da6bce21a7da1d26da250dead1.ctex"]
+source_file="res://assets/backgrounds/display screen.png"
+dest_files=["res://.godot/imported/display screen.png-6f5f593681a3f0d7f3f42da34171f955.ctex"]
 
 [params]
 

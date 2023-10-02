@@ -1,13 +1,13 @@
 [gd_resource type="Resource" load_steps=3 format=3 uid="uid://cp0gqu8sl1ekk"]
 
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_d1pcb"]
-[ext_resource type="Texture2D" uid="uid://duvob01qmjf6h" path="res://assets/buildings/hab2.png" id="2_xm7j6"]
+[ext_resource type="Texture2D" uid="uid://b6sj6dbisqutw" path="res://assets/buildings/new/hab_2.png" id="2_7ldmi"]
 
 [resource]
 script = ExtResource("1_d1pcb")
 name = "Dormitory"
 type = 0
-sprite = ExtResource("2_xm7j6")
+sprite = ExtResource("2_7ldmi")
 housing_prod = 3
 food_prod = 0
 water_prod = 0

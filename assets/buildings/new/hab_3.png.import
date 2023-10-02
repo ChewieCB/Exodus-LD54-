@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bawynujrwyl1u"
-path="res://.godot/imported/vertical_farm.png-2774e19208adf13c3e839f25f360c145.ctex"
+uid="uid://d1w5fvl2ohit8"
+path="res://.godot/imported/hab_3.png-aa0a934ada0bfab19dd6c32d40903488.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/buildings/vertical_farm.png"
-dest_files=["res://.godot/imported/vertical_farm.png-2774e19208adf13c3e839f25f360c145.ctex"]
+source_file="res://assets/buildings/new/hab_3.png"
+dest_files=["res://.godot/imported/hab_3.png-aa0a934ada0bfab19dd6c32d40903488.ctex"]
 
 [params]
 

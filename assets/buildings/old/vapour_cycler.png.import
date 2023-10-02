@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://pmgy6xmehuld"
-path="res://.godot/imported/vapour_cycler.png-6207ce2422d7dcde89ab15ff25a25fcf.ctex"
+path="res://.godot/imported/vapour_cycler.png-686a174d6f1b1a6b08f65bb457bf2880.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/buildings/vapour_cycler.png"
-dest_files=["res://.godot/imported/vapour_cycler.png-6207ce2422d7dcde89ab15ff25a25fcf.ctex"]
+source_file="res://assets/buildings/old/vapour_cycler.png"
+dest_files=["res://.godot/imported/vapour_cycler.png-686a174d6f1b1a6b08f65bb457bf2880.ctex"]
 
 [params]
 
