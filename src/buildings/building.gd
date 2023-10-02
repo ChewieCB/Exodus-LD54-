@@ -69,6 +69,7 @@ func _on_tick():
 			sprite.material.set_shader_parameter("mode", 0)
 			ResourceManager.add_building(self)
 			ResourceManager.retrieve_workers(self)
+			EventManager.finished_building(type)
 		else:
 			ticks_left_to_build -= 1
 			build_timer_ui.label.text = str(ticks_left_to_build)

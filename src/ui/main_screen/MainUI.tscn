@@ -133,6 +133,7 @@ libraries = {
 }
 
 [node name="EventButton" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 930.0
 offset_top = 46.0

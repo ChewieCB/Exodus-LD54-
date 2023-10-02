@@ -10,14 +10,13 @@ extends Control
 
 @onready var build_show_toggle: MarginContainer = $BuildShowToggle
 @onready var build_menu: MarginContainer = $BuildMenu
-@onready var event_container = $EventContainer
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 
 var build_menu_open = false
 
-
 func _ready() -> void:
 	Dialogic.signal_event.connect(_on_dialogic_signal)
+	EventManager.start_event.connect(_on_start_event)
 
 
 func _on_build_button_pressed():
@@ -39,22 +38,38 @@ func _on_build_button_pressed():
 
 func _on_play_dialog_pressed():
 	TickManager.stop_ticks()
-
 	var tween = get_tree().create_tween()
 	if build_menu_open:
 		anim_player.play("hide_build_menu")
 		build_menu_open = false
 	tween.parallel().tween_property(camera, "zoom", Vector2(0.15, 0.15), 0.5).set_trans(Tween.TRANS_LINEAR)
 	tween.parallel().tween_property(camera, "global_position", far_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
-
-#	ship_sprite.visible = false
 	ship_grid.visible = false
 	build_show_toggle.visible = false
 	build_menu.visible = false
-#	space_background.visible = false
-
 	tween.tween_property(event_image, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
-	event_container.start_random_event()
+	EventManager.play_random_event()
+
+
+func _on_start_event(event_name: String):
+	TickManager.stop_ticks()
+	var tween = get_tree().create_tween()
+
+	if build_menu_open:
+		anim_player.play("hide_build_menu")
+		build_menu_open = false
+
+	# For some events, we dont need to zoom farside
+	if event_name in ["tutorial1_event", "tutorial2_event"]:
+		tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
+		tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
+	else:
+		tween.parallel().tween_property(camera, "zoom", Vector2(0.15, 0.15), 0.5).set_trans(Tween.TRANS_LINEAR)
+		tween.parallel().tween_property(camera, "global_position", far_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
+		tween.tween_property(event_image, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
+	ship_grid.visible = false
+	build_show_toggle.visible = false
+	build_menu.visible = false
 
 
 func _on_dialogic_signal(arg: String):

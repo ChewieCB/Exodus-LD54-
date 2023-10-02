@@ -188,12 +188,12 @@ func calculate_resource_modifier(resource_type, population) -> void:
 		RESOURCE_TYPE.WATER:
 			for building in buildings:
 				production += building.data.water_prod
-			consumption += population * pop_water_cost
+			consumption = population * pop_water_cost
 			current_water_modifier = production - consumption
 		RESOURCE_TYPE.AIR:
 			for building in buildings:
 				production += building.data.air_prod
-			consumption += population * pop_air_cost
+			consumption = population * pop_air_cost
 			current_air_modifier = production - consumption
 
 
@@ -257,3 +257,21 @@ func retrieve_workers(building):
 
 func _on_tick():
 	update_resource_tick()
+
+
+func change_resource_from_event(resource: String, amount_str: String):
+	var amount = int(amount_str)
+	match resource:
+		"food":
+			food_amount += amount
+		"water":
+			water_amount += amount
+		"air":
+			air_amount += amount
+		"population":
+			if amount > 0:
+				var empty_spot = housing_amount - population_amount
+				if amount > empty_spot:
+					population_amount += amount
+				else:
+					population_amount += empty_spot

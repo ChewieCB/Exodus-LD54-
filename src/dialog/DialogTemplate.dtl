@@ -10,3 +10,4 @@ The signal need to be decrypted before you understand it
 - Ignore
 	It not worth the risk you supposed. You continued on your journey.
 [signal arg="end_event"]
+[call_node path="AAA" method="fun" args="["water", "12"]" single_use="true"]
