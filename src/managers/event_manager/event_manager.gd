@@ -8,6 +8,9 @@ var n_air_building = 0
 var tutorial_progress = 0 # -1 = disable tutorial, 0 = enable tutorial
 var tick_since_last_event = 0
 var tick_to_event = 20
+var tick_passed_total = 0
+var tick_to_victory = 200
+var end_game = false
 
 const MIN_TICK_FOR_EVENT = 15
 const MAX_TICK_FOR_EVENT = 30
@@ -16,6 +19,7 @@ signal building_finished
 signal start_event
 signal request_change_event_image
 signal request_change_objective_label
+signal victory
 
 
 func _ready() -> void:
@@ -66,9 +70,8 @@ func get_random_element_from_array(options: Array):
 	if options[rand_index]:
 		return options[rand_index]
 
-
 func get_random_event():
-	var event_name = get_random_element_from_array(["damaged_ship_aid"])
+	var event_name = get_random_element_from_array(["asteroid_cluster", "asteroid_cluster", "resource_rich_planetoid", "distress_signal_detected", "plague_planet_event"])
 	var event_source_text = call(event_name)
 	var events : Array = event_source_text.split('\n')
 	var timeline : DialogicTimeline = DialogicTimeline.new()
@@ -110,7 +113,14 @@ func change_objective_label(text: String):
 
 func check_tick_for_random_event():
 	tick_since_last_event += 1
+	tick_passed_total += 1
 	print("Tick left for event ", tick_to_event - tick_since_last_event)
+
+	if tick_passed_total >= tick_to_victory and not end_game:
+		end_game = true
+		play_specific_event("victory_event")
+		return
+
 	if tick_since_last_event >= tick_to_event:
 		tick_since_last_event = 0
 		tick_to_event = randi_range(MIN_TICK_FOR_EVENT, MAX_TICK_FOR_EVENT)
@@ -122,208 +132,124 @@ func disable_tutorial():
 	change_objective_label("Survive")
 
 
-func science_team() -> String:
-	var rm_population = ResourceManager.population_amount
-	var rm_food = ResourceManager.food_amount
-	var rm_water = ResourceManager.water_amount
+func check_if_victory():
+	if tick_passed_total >= tick_to_victory and end_game:
+		emit_signal("victory")
 
+
+func space_fact_event():
+	var fact_pool = ["The Milky Way Galaxy, which is home to our solar system, contains over 100 billion stars.",
+	"Space is completely silent because there is no air or atmosphere to carry sound waves.",
+	"The largest volcano in the solar system is Olympus Mons, located on Mars. It is nearly 13.6 miles (22 kilometers) high, which is almost three times the height of Mount Everest.",
+	"The Great Red Spot on Jupiter is a massive storm that has been raging for at least 350 years, and it's so large that it could fit three Earths inside of it.",
+	"Astronauts experience 'space sickness', a condition similar to motion sickness, when they first enter space due to the absence of gravity.",
+	"The Hubble Space Telescope, launched in 1990, has provided stunning images and valuable data about the universe and has made over 1.4 million observations.",
+	"Saturn's rings are not solid but are made up of countless small particles of ice and rock, ranging in size from tiny grains to several meters in diameter.",
+	"Space is not completely empty; it contains extremely low-density particles and radiation, including cosmic rays and micrometeoroids.",
+	"The speed of light in a vacuum is approximately 186,282 miles per second (299,792 kilometers per second). This is the fastest speed at which information or matter can travel in the universe.",
+	"The nearest star system to our solar system is Alpha Centauri, located about 4.37 light-years away. It consists of three stars: Alpha Centauri A, Alpha Centauri B, and Proxima Centauri, the closest-known exoplanetary system to our sun.",
+	"Most of the events were coded 2 hours before the submission deadline."]
+	var random_fact = get_random_element_from_array(fact_pool)
 	var event_source_text = """
-	set {population} = {rm_population}
-	set {food} = {rm_food}
-	set {water} = {rm_water}
-	
 	Join ExecutiveOfficer 0
-	ExecutiveOfficer (Normal): Captain, we've been approached by Mona Turner, chief arcologist of a group of scientists. They heard of our mission and made all speed to reach us before we left port.
-	ExecutiveOfficer (Normal): Dr Turner's team are qualified botanists, arcologists and bioengineers. They would be useful on board.
-	ExecutiveOfficer (Normal): What are your orders?
-	
-	- Extend my compliments to Dr Turner and give her our berth details. Tell them to pack light.
-		ExecutiveOfficer (Normal): Dr Turner and her team have settled in well. They'll be a valuable addition to the crew and she passes on her thanks.
-		[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "3"]" single_use="true"]
-		Leave ExecutiveOfficer
-		You gained 3 crew.
-	
-	- We have no room for Dr Turner or her team. Extend my apologies and prepare to leave port.
-		ExecutiveOfficer (Normal): Captain, I've passed your message onto Dr Turner and we're prepared to leave port. We are away.
-	
+	ExecutiveOfficer (Normal): Hey Captain, did you know that...
+	ExecutiveOfficer (Normal): {random_fact}
+	Leave ExecutiveOfficer
 	[signal arg="end_event"]
 	"""
-	event_source_text = event_source_text.format({"rm_population"=rm_population, "rm_food"=rm_food, "rm_water"=rm_water})
+	event_source_text = event_source_text.format({"random_fact"=random_fact})
+	return event_source_text
+
+func victory_event():
+	change_event_image("res://assets/event/Planet_1_Pixel.png")
+	var event_source_text = """
+	Join ExecutiveOfficer 0
+	ExecutiveOfficer (Normal): Captain, we have arrived at our destination. We survived. Hooray!
+	You win the game! Tada!
+	Too bad we don't have much time to implement proper victory screen.
+	Leave ExecutiveOfficer
+	[signal arg="end_event"]
+	"""
 	return event_source_text
 
 
-func hab_riot() -> String:
-	change_event_image("res://assets/event/Ship_wreak_Pixel.png")
-	var reward_people = randi_range(1, 3)
-	var reward_food = randi_range(40, 70)
-	var reward_water = randi_range(40, 70)
-	var reward_air = randi_range(40, 70)
-	var max_lost_people = clamp(2, 1, ResourceManager.population_amount - 1)
-	var lost_people = randi_range(1, max_lost_people)
-	var event_source_text = """
-	Join ExecutiveOfficer 0
-	ExecutiveOfficer (Normal): Captain, a riot has broken out in one of our habitation sectors! 
-	ExecutiveOfficer (Normal): Security officers quickly responded and broke up the riot. Fortunately no one was killed and no equipment was damaged. 
-	ExecutiveOfficer (Normal): The ringleaders have been identified and await sentencing.
-	
-	- Riots don't just happen. Question the ringleaders and find out what their grievances are.
-		Perhaps we can learn something from all this?
-		The ringleaders have no issue with your command of the ship and the riot was from a buildup of stress and fear for the future. 
-		The chance to speak has given the ringleaders a new respect for your command. They have returned to work.
-	
-	- I will not tolerate mutiny on my ship, Mr Pressley. Not now, not ever.
-		ExecutiveOfficer (Normal): Captain, the ringleaders have been thrown in the ship's brig. I've found a suitable planet nearby where we can drop them off.
-		ExecutiveOfficer (Normal): They rest of the crew are grumbling but the message is clear - your command is not to be questioned.
-		[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "-2"]" single_use="true"]
-		Leave ExecutiveOfficer
-		You have lost 2 crew.
-	[signal arg="end_event"]
-	"""
-	event_source_text = event_source_text.format({"reward_people"=reward_people, "reward_food"=reward_food, "reward_water"=reward_water, "reward_air"=reward_air, "lost_people"=lost_people})
-	return event_source_text
-
-
-func planetary_customs() -> String:
-	var rm_population = ResourceManager.population_amount
+func asteroid_cluster():
+	change_event_image("res://assets/event/Planet_1_Pixel.png")
+	var required_resource = randi_range(30, 50)
+	var mined_resource = randi_range(20, 40)
+	var big_mined_resource = randi_range(80, 120)
 	var rm_food = ResourceManager.food_amount
 	var rm_water = ResourceManager.water_amount
-
+	var rm_air = ResourceManager.air_amount
 	var event_source_text = """
-	set {population} = {rm_population}
 	set {food} = {rm_food}
 	set {water} = {rm_water}
-	
+	set {air} = {rm_air}
 	Join ExecutiveOfficer 0
-	ExecutiveOfficer (Normal): Captain, planetary customs and control has found some irregularities in our docking permits. Our ship has been grounded and we are ordered to remain in port until these irregularities are resolved.
-	ExecutiveOfficer (Normal): Lucky for us, this port is badly maintained and the poorly guarded. We could gather the crew and slip out without delay.
-	ExecutiveOfficer (Normal): What are your orders?
-	
-	- Gather the crew, Pressley. We'll sneak past port control, take back our ship and leave this system for good.
+	ExecutiveOfficer (Normal): Captain, navigation charts have identified an asteroid cluster in this sector that was earmarked for mining by the Hurulis Asteroid Prospectors.
+	ExecutiveOfficer (Normal): A probe sent to the cluster has returned with samples of oxygen-rich ores and hydrogen. We can extract these minerals with little effort and synthesize them into breathable oxygen and drinkable water. What are your orders?
+	- Contact navigation and chart a safe course through the cluster
+		Contact navigation and chart a safe course through the cluster, Pressley. Those resources could be a major help.
+		set {chance} = range(1,100).pick_random()
 		# 50% chance success
 		if {chance} >= 50:
-			ExecutiveOfficer (Normal): Captain, we've escaped successfully without anyone being the wiser. 
-			ExecutiveOfficer (Normal):No doubt that pesky customs official will be surprised when he finds our empty berth.
-			Leave ExecutiveOfficer
+			ExecutiveOfficer (Normal): Our engineers have managed to extract some resources from the asteroid belt. It may not be a lot, but every bit helps.
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{mined_resource}"]" single_use="true"]
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "{mined_resource}"]" single_use="true"]
+			You gained {mined_resource} Water and Oxygen.
 		else:
-			ExecutiveOfficer (Normal): Captain, we escaped successfully, but I regret not all of the crew managed to get on board in time and were detained by port security. 
-			ExecutiveOfficer (Normal): We had to leave them behind.
-			[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "-2"]" single_use="true"]
-			Leave ExecutiveOfficer
-			Lost 2 crew.
-	
-	- It's not worth the risk. We'll wait until port control gets our documents in order and we will leave as soon as we are able.
-		ExecutiveOfficer (Normal): Captain, after a prolonged stay, port control finally have our permit documentation in order. 
-		ExecutiveOfficer (Normal): We have been granted permission to board ship and depart. 
-		ExecutiveOfficer (Normal): Let's leave this wretched planet behind.
-	
+			ExecutiveOfficer (Normal): Those prospectors knew what they were doing! These asteroids were abundant with resources. We've extracted as much as we can and have returned to our original course.
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{big_mined_resource}"]" single_use="true"]
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "{big_mined_resource}"]" single_use="true"]
+			You gained {big_mined_resource} Water and Oxygen.
+	- Continue on our present course.
+		There'll be more opportunities in the future. Continue on our present course.
+		ExecutiveOfficer (Normal): Yes, Captain. I've passed the word onto navigation and we are holding course.
+	Leave ExecutiveOfficer
 	[signal arg="end_event"]
 	"""
-	event_source_text = event_source_text.format({"rm_population"=rm_population, "rm_food"=rm_food, "rm_water"=rm_water})
+	event_source_text = event_source_text.format({"required_resource"=required_resource, "mined_resource"=mined_resource, "big_mined_resource"=big_mined_resource, "rm_food"=rm_food, "rm_water"=rm_water, "rm_air"=rm_air})
 	return event_source_text
 
-
-func damaged_ship_aid() -> String:
-	var rm_population = ResourceManager.population_amount
+func resource_rich_planetoid():
+	change_event_image("res://assets/event/Planet_2_Pixel.png")
+	var required_resource = randi_range(10, 20)
+	var mined_resource = randi_range(10, 30)
+	var big_mined_resource = randi_range(40, 80)
 	var rm_food = ResourceManager.food_amount
 	var rm_water = ResourceManager.water_amount
-
+	var rm_air = ResourceManager.air_amount
 	var event_source_text = """
-	set {population} = {rm_population}
 	set {food} = {rm_food}
 	set {water} = {rm_water}
-	
+	set {air} = {rm_air}
 	Join ExecutiveOfficer 0
-	ExecutiveOfficer (Normal): Captain, we've received a message from a nearby ship, the Intrepid. It has made an emergency landing on a planet in this system.
-	ExecutiveOfficer (Normal): The ship's hull is intact and it seems the only problem is their faulty oxygen generator. We could send some technicians down and help them with repairs.
-	ExecutiveOfficer (Normal): What are your orders?
-	
-	- We have time and crew to spare. 
-		Send a memo to engineering, ask for volunteers who willing to go planetside and help the Intrepid with repairs.
+	ExecutiveOfficer (Normal): Captain, our mid-range scanners have picked up a planetoid. Probe survey has identified large deposits of oxygen and frozen water.
+	ExecutiveOfficer (Normal): A slight course correction would have us intercept the planetoid with minimal effort, and we could mine the largest and most accessible surface deposits. What your order?
+	- Chart a course. We need those minerals (Cost {required_resource} Food, Water and Oxygen). [if {food} >= {required_resource} and {water} >= {required_resource} and {air} >= {required_resource}]
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "{required_resource}"]" single_use="true"]
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{required_resource}"]" single_use="true"]
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "{required_resource}"]" single_use="true"]
+		You lost {required_resource} Food, Water and Oxygen.
+		set {chance} = range(1,100).pick_random()
 		# 50% chance success
 		if {chance} >= 50:
-			ExecutiveOfficer (Normal): The technicians have reported back, they advise the Intrepid's oxygen generation is restored. They are on their way back now.
+			ExecutiveOfficer (Normal): The planetoid was particularly rich, Captain, and we found several accessible veins near the surface. Our supplies are looking much better.
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{big_mined_resource}"]" single_use="true"]
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "{big_mined_resource}"]" single_use="true"]
+			You gained {big_mined_resource} Water and Oxygen.
 		else:
-			ExecutiveOfficer (Normal): The technicians have returned and advise the Intrepid is fully-functional. The Intrepid made haste to leave the system, but not before her captain gave us a parting gift of excess water they harvested on the planet.
-			Leave ExecutiveOfficer
-			[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "20"]" single_use="true"]
-			Gained 20 Water
-	
-	- We can't spare the time and at least they're safe on that planet. Carry on, Mr Pressley.
-		ExecutiveOfficer (Normal): Understood Captain, we're moving on.
-	
+			ExecutiveOfficer (Normal): Our engineers know their stuff, Captain. We've managed to recover a healthy haul of resources from the planetoid.
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{mined_resource}"]" single_use="true"]
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "{mined_resource}"]" single_use="true"]
+			You gained {mined_resource} Water and Oxygen.
+	- We have no time. Continue on our present course.
+		ExecutiveOfficer (Normal): Yes, Captain. I've passed the word onto navigation and we are holding course.
+	Leave ExecutiveOfficer
 	[signal arg="end_event"]
 	"""
-	event_source_text = event_source_text.format({"rm_population"=rm_population, "rm_food"=rm_food, "rm_water"=rm_water})
+	event_source_text = event_source_text.format({"required_resource"=required_resource, "mined_resource"=mined_resource, "big_mined_resource"=big_mined_resource, "rm_food"=rm_food, "rm_water"=rm_water, "rm_air"=rm_air})
 	return event_source_text
-
-
-func families_seeking_passage() -> String:
-	change_event_image("res://assets/event/Ship_wreak_Pixel.png")
-	var reward_people = randi_range(1, 3)
-	var reward_food = randi_range(40, 70)
-	var reward_water = randi_range(40, 70)
-	var reward_air = randi_range(40, 70)
-	var max_lost_people = clamp(2, 1, ResourceManager.population_amount - 1)
-	var lost_people = randi_range(1, max_lost_people)
-	var event_source_text = """
-	Join ExecutiveOfficer 0
-	ExecutiveOfficer (Normal): Captain, we've been approached by Faroq Khan, the leader of a group of families who are seeking passage. 
-	ExecutiveOfficer (Normal): They have women and children, but they come from a hardy colony world and are no strangers to hard work. They could adapt to life on the ship.
-	ExecutiveOfficer (Normal): What should we do?
-	
-	- Pass on my complements, to Mr Khan. Tell him our berth number and advise him to make haste.
-		ExecutiveOfficer (Normal): Mr Khan and the other refugees have joined the crew. Reports from section leaders advise they are tough and willing to learn. 
-		ExecutiveOfficer (Normal): They are a fine addition to the crew.
-		Leave ExecutiveOfficer
-		[call_node path="ResourceManager" method="change_resource_from_event" args="["people", "3"]" single_use="true"]
-		Gained 3 crew.
-	
-	- Tell Mr Khan we have no room. He'll have to look for another ship.
-		ExecutiveOfficer (Normal): Captain, we have departed the planet. The refugees will have to find someone else.
-	[signal arg="end_event"]
-	"""
-	event_source_text = event_source_text.format({"reward_people"=reward_people, "reward_food"=reward_food, "reward_water"=reward_water, "reward_air"=reward_air, "lost_people"=lost_people})
-	return event_source_text
-
-
-func governor_demands_passage() -> String:
-	var reward_people = randi_range(1, 3)
-	var reward_food = randi_range(40, 70)
-	var reward_water = randi_range(40, 70)
-	var reward_air = randi_range(40, 70)
-	var max_lost_people = clamp(2, 1, ResourceManager.population_amount - 1)
-	var lost_people = randi_range(1, max_lost_people)
-	var event_source_text = """
-	Join ExecutiveOfficer 0
-	ExecutiveOfficer (Normal): Captain, riots are breaking out on the planet and martial law has been declared, but the planetary military is slowly being overwhelmed and civil authority is collapsing.
-	ExecutiveOfficer (Normal): The military governor is demanding passage on our ship. We may have space available for his excellency.
-	ExecutiveOfficer (Normal): What are your orders?
-		
-		- Extend an official invitation to His Excellency, Mr Pressley.
-			ExecutiveOfficer (Normal): Yes sir. We will prepare quarters that are appropriate for an official of his standing 
-			# 75% chance
-			if {change} >= 75:
-				ExecutiveOfficer (Normal): The governor's stateroom has taken up more than what other crew would take, but he has brought a significant complement of food from his personnel stock planetside. 
-				ExecutiveOfficer (Normal): We can siphon some of that for the rest of the crew without the governor noticing.
-				Leave ExecutiveOfficer
-				[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "20"]" single_use="true"]
-				Gained 20 Food.
-			else:
-				ExecutiveOfficer (Normal): The governor's stateroom has taken up more than what other crew would take, but he has brought a significant complement of food from his personnel stock planetside. 
-				ExecutiveOfficer (Normal): He has offered to share a considerable amount of it with the crew as thanks for granting him passage. 
-				ExecutiveOfficer (Normal): Despite the situation planetside, His Excellency's staff are competent administrators and have made suggestions on how to make our ship run more efficiently. 
-				ExecutiveOfficer (Normal): Our crew will work more effectively for the next few cycles.
-				Leave ExecutiveOfficer
-				[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "70"]" single_use="true"]
-				Gained 70 Food, Construction Time temporarily reduced.
-		
-		- Tell his Excellency he can find another ship. We are not at his beck and call.
-			ExecutiveOfficer (Normal): Captain, the governor did not take your message well, but luckily we departed before he could try and detain our ship. We are away.
-	[signal arg="end_event"]
-	"""
-	event_source_text = event_source_text.format({"reward_people"=reward_people, "reward_food"=reward_food, "reward_water"=reward_water, "reward_air"=reward_air, "lost_people"=lost_people})
-	return event_source_text
-
 
 func distress_signal_detected() -> String:
 	change_event_image("res://assets/event/Ship_wreak_Pixel.png")
@@ -349,7 +275,7 @@ func distress_signal_detected() -> String:
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{reward_water}"]" single_use="true"]
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "{reward_food}"]" single_use="true"]
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "{reward_air}"]" single_use="true"]
-			Gained {reward_people} people, {reward_food} Food, {reward_water} Water, {reward_air} Air.
+			Gained {reward_people} people, {reward_food} Food, {reward_water} Water, {reward_air} Oxygen.
 		else:
 			It was a trap! On docking with the Menelaus, pirates opened fire and tried to storm our ship! Our security team held them off before they crossed the docking tube and we are away.
 			ExecutiveOfficer (Normal): We are sending transmissions to every ship in the system to warn them about the Menelaus.
@@ -366,6 +292,7 @@ func distress_signal_detected() -> String:
 
 
 func plague_planet_event() -> String:
+	change_event_image("res://assets/event/Planet_1_Pixel.png")
 	var rm_population = ResourceManager.population_amount
 	var rm_food = ResourceManager.food_amount
 	var rm_water = ResourceManager.water_amount
@@ -416,7 +343,6 @@ func plague_planet_event() -> String:
 	event_source_text = event_source_text.format({"rm_population"=rm_population, "rm_food"=rm_food, "rm_water"=rm_water})
 	return event_source_text
 
-
 func tutorial1_event() -> String:
 	var event_source_text = """
 	A negation field has simultaneously surrounded the galaxy. The field is gradually creeping in and swallowing all matter. Stars, nebula, planets, asteroids, even black holes. The Negation Field emits no electromagnetic radiation or heat.
@@ -436,7 +362,6 @@ func tutorial1_event() -> String:
 	[signal arg="end_event"]
 	"""
 	return event_source_text
-
 
 func tutorial2_event() -> String:
 	var event_source_text = """

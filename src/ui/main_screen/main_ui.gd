@@ -45,18 +45,27 @@ func _on_build_button_pressed():
 func _on_play_dialog_pressed():
 	SoundManager.play_sound(button_click_sfx, "UI")
 	TickManager.stop_ticks()
-	var tween = get_tree().create_tween()
 	if build_menu_open:
 		anim_player.play("hide_build_menu")
 		build_menu_open = false
-	tween.parallel().tween_property(camera, "zoom", Vector2(0.15, 0.15), 0.5).set_trans(Tween.TRANS_LINEAR)
-	tween.parallel().tween_property(camera, "global_position", far_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 	ship_grid.visible = false
 	build_show_toggle.visible = false
 	build_menu.visible = false
 	tween.tween_property(event_image, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 	EventManager.get_next_event()
 #	EventManager.play_random_event()
+
+
+func _on_listen_fact_pressed():
+	SoundManager.play_sound(button_click_sfx, "UI")
+	TickManager.stop_ticks()
+	if build_menu_open:
+		anim_player.play("hide_build_menu")
+		build_menu_open = false
+	ship_grid.visible = false
+	build_show_toggle.visible = false
+	build_menu.visible = false
+	EventManager.play_specific_event("space_fact_event")
 
 
 func _on_start_event(event_name: String):
@@ -68,7 +77,7 @@ func _on_start_event(event_name: String):
 		build_menu_open = false
 
 	# For some events, we dont need to zoom farside
-	if event_name in ["tutorial1_event", "tutorial2_event"]:
+	if event_name in ["tutorial1_event", "tutorial2_event", "space_fact_event"]:
 		tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
 		tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 	else:
@@ -95,7 +104,7 @@ func _on_dialogic_signal(arg: String):
 			TickManager.start_ticks()
 
 			ResourceManager.check_if_all_crew_died()
-
+			EventManager.check_if_victory()
 
 func change_event_image(texture_path: String):
 	event_image.texture = load(texture_path)
