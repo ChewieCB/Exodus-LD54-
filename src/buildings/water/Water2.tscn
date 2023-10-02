@@ -44,3 +44,6 @@ shape = SubResource("RectangleShape2D_h83i0")
 [node name="BuildTimerUI" parent="." instance=ExtResource("4_33su1")]
 offset_left = 11.0
 offset_right = 51.0
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
