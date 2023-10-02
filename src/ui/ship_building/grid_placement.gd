@@ -87,7 +87,7 @@ func place_building():
 		current_building = null
 		get_new_building()
 	else:
-		print("Not enough workers to place " + current_building.data.name)
+		BuildingManager.emit_signal("not_enough_workers")
 
 
 func stop_building_preview():

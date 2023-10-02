@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://cu7ivg1u3vbhl"]
+[gd_scene load_steps=13 format=3 uid="uid://cu7ivg1u3vbhl"]
 
 [ext_resource type="PackedScene" uid="uid://bdbib8np6c616" path="res://src/ui/main_screen/resources/ResourceUI.tscn" id="1_4u51x"]
 [ext_resource type="PackedScene" uid="uid://sjhl1wud5upl" path="res://src/ui/building_ui/BuildUI.tscn" id="1_hyvdy"]
 [ext_resource type="Script" path="res://src/ui/main_screen/main_ui.gd" id="1_xagyo"]
 [ext_resource type="PackedScene" uid="uid://bfhd8krrn8mx2" path="res://src/ui/game_over/GameOver.tscn" id="2_3v6ei"]
 [ext_resource type="PackedScene" uid="uid://bsqw1bcfuxbvr" path="res://src/ui/building_ui/TimeControlUI.tscn" id="4_2kxyh"]
+[ext_resource type="PackedScene" uid="uid://cnjv60xkxx8oq" path="res://src/ui/building_ui/NotEnoughWorkersPopup.tscn" id="4_eo2jl"]
 [ext_resource type="Script" path="res://src/ui/main_screen/event_container.gd" id="5_ajheu"]
 [ext_resource type="PackedScene" uid="uid://b2rwhkbjj7e4n" path="res://src/ui/main_screen/ResourceAlertsUI.tscn" id="7_njybl"]
 
@@ -110,6 +111,8 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 offset_right = 1088.0
 offset_bottom = 648.0
+
+[node name="MousePopup" parent="." instance=ExtResource("4_eo2jl")]
 
 [node name="TimeControlUI" type="Control" parent="."]
 layout_mode = 1
