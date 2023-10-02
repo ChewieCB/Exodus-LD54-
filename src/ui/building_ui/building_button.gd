@@ -34,7 +34,10 @@ func _ready():
 			production = building.data.air_prod
 			prod_type_string = "air"
 	
-	production_label.text = "+{0} {1} per tick".format([production, prod_type_string])
+	if building.data.type == Building.TYPES.HabBuilding:
+		production_label.text = "+{0} {1}".format([production, prod_type_string])
+	else:
+		production_label.text = "+{0} {1} per tick".format([production, prod_type_string])
 
 
 func _update_status(available_workers):
