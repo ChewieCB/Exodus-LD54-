@@ -22,6 +22,8 @@ func _ready():
 	EventManager.building_finished.connect(tutorial_tracker)
 
 	await ScreenTransitionManager.transitioned
+	#
+	TickManager.start_ticks()
 
 
 func tutorial_tracker(type: Building.TYPES):

@@ -7,7 +7,11 @@ class_name Building
 @onready var sprite = $Sprite2D
 @onready var collider = $Area2D
 @onready var build_timer_ui = $BuildTimerUI
+
 @onready var pulse_shader = preload("res://src/buildings/shaders/pulse.gdshader")
+
+@onready var build_start_sfx = preload("res://assets/audio/sfx/Building_Start.mp3")
+@onready var build_finish_sfx = preload("res://assets/audio/sfx/Building_Finish.mp3")
 
 # Build menu vars
 var preview = false
@@ -70,6 +74,7 @@ func _on_tick():
 			ResourceManager.add_building(self)
 			ResourceManager.retrieve_workers(self)
 			EventManager.finished_building(type)
+			SoundManager.play_sound(build_finish_sfx, "SFX")
 		else:
 			ticks_left_to_build -= 1
 			build_timer_ui.label.text = str(ticks_left_to_build)
@@ -87,6 +92,7 @@ func set_building_placed():
 	build_timer_ui.label.text = str(ticks_left_to_build)
 	build_timer_ui.visible = true
 	build_in_progress()
+	SoundManager.play_sound(build_start_sfx, "SFX")
 
 
 func set_original_color():

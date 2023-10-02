@@ -15,6 +15,8 @@ extends Control
 
 var build_menu_open = false
 
+var button_click_sfx = preload("res://assets/audio/sfx/ui_click_1.mp3")
+
 func _ready() -> void:
 	Dialogic.signal_event.connect(_on_dialogic_signal)
 	EventManager.start_event.connect(_on_start_event)
@@ -24,6 +26,7 @@ func _ready() -> void:
 
 func _on_build_button_pressed():
 	if anim_player.animation_finished:
+		SoundManager.play_sound(button_click_sfx, "UI")
 		var tween = get_tree().create_tween()
 		if build_menu_open:
 			anim_player.play("hide_build_menu")
@@ -40,6 +43,7 @@ func _on_build_button_pressed():
 
 
 func _on_play_dialog_pressed():
+	SoundManager.play_sound(button_click_sfx, "UI")
 	TickManager.stop_ticks()
 	var tween = get_tree().create_tween()
 	if build_menu_open:

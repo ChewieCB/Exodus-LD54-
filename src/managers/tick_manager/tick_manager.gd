@@ -10,8 +10,8 @@ const FAST_TICK_SPEED = 1.5
 var current_tick_rate = SLOW_TICK_SPEED
 
 
-func _ready():
-	_set_tick_rate(SLOW_TICK_SPEED)
+#func _ready():
+#	_set_tick_rate(SLOW_TICK_SPEED)
 
 
 func start_ticks():
