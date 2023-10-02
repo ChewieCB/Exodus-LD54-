@@ -1,7 +1,7 @@
 extends Control
 
-@onready var population_counter = $MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer/HBoxContainer/WorkerLabel
-@onready var worker_counter = $MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer/HBoxContainer/PopLabel
+@onready var population_counter = $MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer/HBoxContainer/WorkerLabel
+@onready var worker_counter = $MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer/HBoxContainer/PopLabel
 
 @onready var debug_hab = $MarginContainer/HBoxContainer/MarginContainer5/HBoxContainer/HabDebug
 @onready var debug_food = $MarginContainer/HBoxContainer/MarginContainer2/HBoxContainer/FoodDebug
@@ -65,3 +65,51 @@ func _update_debug_air(total, modifier):
 		modifier_prefix = "+" 
 	debug_air.text = "{0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
 
+
+
+func _on_worker_ui_mouse_entered():
+	ResourceManager.emit_signal("ui_hover_show", "Available Workers")
+
+
+func _on_worker_ui_mouse_exited():
+	ResourceManager.emit_signal("ui_hover_hide")
+
+
+func _on_pop_ui_mouse_entered():
+	ResourceManager.emit_signal("ui_hover_show", "Total Population")
+
+
+func _on_pop_ui_mouse_exited():
+	ResourceManager.emit_signal("ui_hover_hide")
+
+
+func _on_hab_ui_mouse_entered():
+	ResourceManager.emit_signal("ui_hover_show", "Housing (Surplus Housing)")
+
+
+func _on_hab_ui_mouse_exited():
+	ResourceManager.emit_signal("ui_hover_hide")
+
+
+func _on_food_ui_mouse_entered():
+	ResourceManager.emit_signal("ui_hover_show", "Food (Food per Day)")
+
+
+func _on_food_ui_mouse_exited():
+	ResourceManager.emit_signal("ui_hover_hide")
+
+
+func _on_water_ui_mouse_entered():
+	ResourceManager.emit_signal("ui_hover_show", "Water (Water per Day)")
+
+
+func _on_water_ui_mouse_exited():
+	ResourceManager.emit_signal("ui_hover_hide")
+
+
+func _on_air_ui_mouse_entered():
+	ResourceManager.emit_signal("ui_hover_show", "Air (Air per Day)")
+
+
+func _on_air_ui_mouse_exited():
+	ResourceManager.emit_signal("ui_hover_hide")

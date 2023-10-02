@@ -10,9 +10,9 @@ var n_food_built = 0
 func _ready():
 	# Set initial resources
 	ResourceManager.housing_amount = 0
-	ResourceManager.food_amount = 200
-	ResourceManager.water_amount = 300
-	ResourceManager.air_amount = 300
+	ResourceManager.food_amount = 50
+	ResourceManager.water_amount = 250
+	ResourceManager.air_amount = 200
 	#
 	TickManager.tick_changed.connect(_update_star_particles)
 	#

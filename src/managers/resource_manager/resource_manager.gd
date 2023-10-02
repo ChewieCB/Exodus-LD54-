@@ -11,8 +11,18 @@ signal food_modifier_changed(total, modifier)
 signal water_modifier_changed(total, modifier)
 signal air_modifier_changed(total, modifier)
 #
+signal starving(ticks_left)
+signal dehydrated(ticks_left)
+signal suffocating(ticks_left)
+signal stopped_starving
+signal stopped_thirsty
+signal stopped_suffocating
+#
 signal resource_low(resource)
 signal game_over(resource)
+
+signal ui_hover_show(text)
+signal ui_hover_hide
 
 var housing_alert_shown = false
 var food_alert_shown = false
@@ -23,22 +33,25 @@ var air_alert_shown = false
 var is_starving = false:
 	set(value):
 		if value == false and is_starving == true:
-			print("No longer starving!")
+			emit_signal("stopped_starving")
 		is_starving = value
+		emit_signal("starving", starving_time_left)
 		if not is_starving:
 			starving_time_left = starving_time
 var is_thirsty = false:
 	set(value):
 		if value == false and is_thirsty == true:
-			print("No longer thirsty!")
+			emit_signal("stopped_thirsty")
 		is_thirsty = value
+		emit_signal("dehydrated", thirsty_time_left)
 		if not is_thirsty:
 			thirsty_time_left = thirsty_time
 var is_suffocating = false:
 	set(value):
 		if value == false and is_suffocating == true:
-			print("No longer suffocating!")
+			emit_signal("stopped_suffocating")
 		is_suffocating = value
+		emit_signal("suffocating", suffocating_time_left)
 		if not is_suffocating:
 			suffocating_time_left = suffocating_time
 # How many ticks/days/turns each endgame flag can go on for before you lose
@@ -46,18 +59,21 @@ var starving_time: int = 10
 var starving_time_left = starving_time:
 	set(value):
 		starving_time_left = value
+		emit_signal("starving", starving_time_left)
 		if starving_time_left == 0:
 			emit_signal("game_over", RESOURCE_TYPE.FOOD)
 var thirsty_time: int = 6
 var thirsty_time_left = thirsty_time:
 	set(value):
 		thirsty_time_left = value
+		emit_signal("dehydrated", thirsty_time_left)
 		if thirsty_time_left == 0:
 			emit_signal("game_over", RESOURCE_TYPE.WATER)
 var suffocating_time: int = 3
 var suffocating_time_left = suffocating_time:
 	set(value):
 		suffocating_time_left = value
+		emit_signal("suffocating", suffocating_time_left)
 		if suffocating_time_left == 0:
 			emit_signal("game_over", RESOURCE_TYPE.AIR)
 
