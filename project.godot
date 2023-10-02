@@ -60,7 +60,7 @@ layout/styles={
 "name_label_box_modulate": "Color(0, 0, 0, 0.682353)"
 },
 "inherits": "",
-"layout": "res://src/custom_dialogic_layout/LD54CustomLayout.tscn"
+"layout": "res://addons/dialogic/Modules/DefaultLayouts/Default/DialogicDefaultLayout.tscn"
 }
 }
 layout/default_style="Duped Default"
