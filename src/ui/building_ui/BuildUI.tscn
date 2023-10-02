@@ -45,6 +45,7 @@ theme_override_constants/margin_right = 32
 layout_mode = 2
 
 [node name="Habitation" type="TabBar" parent="MarginContainer2/TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/TabContainer/Habitation"]
@@ -119,7 +120,6 @@ layout_mode = 2
 building_object = ExtResource("18_e2gxg")
 
 [node name="Water" type="TabBar" parent="MarginContainer2/TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/TabContainer/Water"]
@@ -150,7 +150,6 @@ building_object = ExtResource("19_v3p7n")
 
 [node name="BuildingButton" parent="MarginContainer2/TabContainer/Water/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
 layout_mode = 2
-theme_override_constants/margin_top = 48
 building_object = ExtResource("20_a3s7v")
 
 [node name="BuildingButton2" parent="MarginContainer2/TabContainer/Water/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]

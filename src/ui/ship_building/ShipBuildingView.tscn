@@ -1,20 +1,21 @@
-[gd_scene load_steps=17 format=3 uid="uid://c6s7o88tyavpj"]
+[gd_scene load_steps=19 format=3 uid="uid://c6s7o88tyavpj"]
 
 [ext_resource type="PackedScene" uid="uid://cu7ivg1u3vbhl" path="res://src/ui/main_screen/MainUI.tscn" id="1_21fy4"]
 [ext_resource type="Script" path="res://src/ui/ship_building/ship_building_view.gd" id="1_ae44n"]
 [ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="2_jcwrl"]
 [ext_resource type="Texture2D" uid="uid://dn7d2jgqhgqxf" path="res://src/tests/test_grid_placement/building_placeholders.png" id="2_q8rua"]
-[ext_resource type="Texture2D" uid="uid://d1hhl5deqt3yo" path="res://assets/sprite/ship.png" id="2_sj33g"]
 [ext_resource type="Texture2D" uid="uid://umfswvb0k6d6" path="res://assets/sprite/star.png" id="3_74hi2"]
 [ext_resource type="Script" path="res://src/ui/ship_building/grid_placement.gd" id="3_tehqe"]
+[ext_resource type="Texture2D" uid="uid://cmbixfktrvffm" path="res://assets/sprite/ship_colored.png" id="5_gakyr"]
 [ext_resource type="PackedScene" uid="uid://3slp8ujgyckn" path="res://src/buildings/hab/Hab1.tscn" id="7_8yr63"]
 [ext_resource type="Texture2D" uid="uid://c723ddgavfsnp" path="res://assets/backgrounds/planet_concept_1.png" id="8_3ttdw"]
 [ext_resource type="Texture2D" uid="uid://p6x8qph6gl3j" path="res://assets/backgrounds/build_frame.png" id="8_fs641"]
+[ext_resource type="Texture2D" uid="uid://cygmypnooav7y" path="res://assets/event/Ship_wreak_Pixel.png" id="8_p8t6q"]
 [ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/backgrounds/display screen.png" id="11_k1ahy"]
 
 [sub_resource type="Gradient" id="Gradient_5qkd4"]
 offsets = PackedFloat32Array(0, 0.264706, 0.759804, 1)
-colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.862745, 1, 1, 1, 0.886275, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_5aixr"]
 gradient = SubResource("Gradient_5qkd4")
@@ -22,7 +23,7 @@ gradient = SubResource("Gradient_5qkd4")
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6w768"]
 lifetime_randomness = 0.3
 emission_shape = 3
-emission_box_extents = Vector3(18, 35, 1)
+emission_box_extents = Vector3(15, 15, 1)
 particle_flag_disable_z = true
 direction = Vector3(-1, 0, 0)
 spread = 0.0
@@ -33,8 +34,13 @@ angular_velocity_min = -30.0
 angular_velocity_max = 30.0
 orbit_velocity_min = 0.0
 orbit_velocity_max = 0.0
-scale_min = 0.25
+scale_min = 0.13
+scale_max = 0.5
 color_ramp = SubResource("GradientTexture1D_5aixr")
+
+[sub_resource type="Gradient" id="Gradient_isfht"]
+offsets = PackedFloat32Array(0, 0.295455, 0.736364, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.835294, 1, 1, 1, 0.862745, 1, 1, 1, 0)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4bwrg"]
 texture = ExtResource("2_q8rua")
@@ -66,6 +72,8 @@ scale = Vector2(423.125, 231.219)
 texture = ExtResource("2_jcwrl")
 
 [node name="StarGPUParticles2D" type="GPUParticles2D" parent="Space"]
+process_mode = 4
+visible = false
 position = Vector2(-7.05229, 0.155697)
 scale = Vector2(0.5, 0.5)
 amount = 171
@@ -76,9 +84,36 @@ explosiveness = 0.3
 randomness = 0.5
 visibility_rect = Rect2(0, 0, 0, 0)
 
+[node name="StarCPUParticles2D" type="CPUParticles2D" parent="Space"]
+position = Vector2(-7.0192, 1.15042)
+amount = 64
+lifetime = 8.0
+explosiveness = 0.3
+randomness = 0.3
+texture = ExtResource("3_74hi2")
+emission_shape = 3
+emission_rect_extents = Vector2(15, 10)
+direction = Vector2(-1, 0)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 0.5
+initial_velocity_max = 2.0
+angular_velocity_min = -30.0
+angular_velocity_max = 30.0
+scale_amount_min = 0.25
+color_ramp = SubResource("Gradient_isfht")
+
+[node name="EventImage" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+position = Vector2(4736, -512)
+scale = Vector2(12, 12)
+texture = ExtResource("8_p8t6q")
+
 [node name="ShipSprite" type="Sprite2D" parent="."]
-position = Vector2(1469, 249.5)
-texture = ExtResource("2_sj33g")
+position = Vector2(1430, 189)
+scale = Vector2(0.624198, 0.624198)
+texture = ExtResource("5_gakyr")
 
 [node name="ShipGrid" type="Node2D" parent="." node_paths=PackedStringArray("tilemap")]
 visible = false
@@ -115,21 +150,20 @@ texture = ExtResource("8_fs641")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="MainUI" parent="UI" node_paths=PackedStringArray("ship_sprite", "ship_build_frame", "ship_grid", "camera", "mid_view_marker", "far_view_marker", "space_background", "event_image") instance=ExtResource("1_21fy4")]
+[node name="MainUI" parent="UI" node_paths=PackedStringArray("ship_sprite", "ship_build_frame", "background_screen", "ship_grid", "camera", "mid_view_marker", "far_view_marker", "space_background", "event_image") instance=ExtResource("1_21fy4")]
 ship_sprite = NodePath("../../ShipSprite")
 ship_build_frame = NodePath("../../ShipBuildFrame")
+background_screen = NodePath("../../BackgroundScreen")
 ship_grid = NodePath("../../ShipGrid")
 camera = NodePath("../../Camera2D")
 mid_view_marker = NodePath("../../MidViewMarker")
 far_view_marker = NodePath("../../FarViewMarker")
 space_background = NodePath("../../Space")
-event_image = NodePath("../../PlanetTest")
+event_image = NodePath("../../EventImage")
 
-[node name="Event" type="Node2D" parent="."]
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(2336, 160)
-zoom = Vector2(0.4, 0.4)
+[node name="StartTutorialTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
 
 [node name="MidViewMarker" type="Marker2D" parent="."]
 position = Vector2(2336, 160)
@@ -147,3 +181,7 @@ texture = ExtResource("8_3ttdw")
 position = Vector2(3246, 162)
 scale = Vector2(2, 2)
 texture = ExtResource("11_k1ahy")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[connection signal="timeout" from="StartTutorialTimer" to="." method="_on_start_tutorial_timer_timeout"]

@@ -33,7 +33,17 @@ gdscript/warnings/unused_parameter=0
 
 [dialogic]
 
-variables={}
+variables={
+"air": "0",
+"chance": "1",
+"choice1_check": "false",
+"choice2_check": "false",
+"choice3_check": "false",
+"choice4_check": "false",
+"food": "0",
+"population": "0",
+"water": "0"
+}
 settings/text_speed=0.01
 text/skippable=true
 text/skippable_delay=0.1
@@ -58,10 +68,14 @@ layout/styles={
 "box_animation_out": "2",
 "box_modulate": "Color(0.317647, 0.317647, 0.317647, 0.733333)",
 "name_label_box_modulate": "Color(0, 0, 0, 0.682353)"
-}
+},
+"inherits": "",
+"layout": "res://addons/dialogic/Modules/DefaultLayouts/Default/DialogicDefaultLayout.tscn"
 }
 }
 layout/default_style="Duped Default"
+choices/def_false_behaviour=1
+text/letter_speed=0.01
 
 [display]
 

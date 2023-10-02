@@ -69,7 +69,7 @@ var thirsty_time_left = thirsty_time:
 		emit_signal("dehydrated", thirsty_time_left)
 		if thirsty_time_left == 0:
 			emit_signal("game_over", RESOURCE_TYPE.WATER)
-var suffocating_time: int = 3
+var suffocating_time: int = 6
 var suffocating_time_left = suffocating_time:
 	set(value):
 		suffocating_time_left = value
@@ -96,6 +96,8 @@ var population_amount: int:
 		# to avoid resetting already assigned workers
 		if diff > 0:
 			worker_amount = worker_amount + diff
+		elif diff < 0:
+			worker_amount = worker_amount - diff
 var worker_amount: int:
 	set(value):
 		worker_amount = value
@@ -204,12 +206,12 @@ func calculate_resource_modifier(resource_type, population) -> void:
 		RESOURCE_TYPE.WATER:
 			for building in buildings:
 				production += building.data.water_prod
-			consumption += population * pop_water_cost
+			consumption = population * pop_water_cost
 			current_water_modifier = production - consumption
 		RESOURCE_TYPE.AIR:
 			for building in buildings:
 				production += building.data.air_prod
-			consumption += population * pop_air_cost
+			consumption = population * pop_air_cost
 			current_air_modifier = production - consumption
 
 
@@ -273,3 +275,27 @@ func retrieve_workers(building):
 
 func _on_tick():
 	update_resource_tick()
+
+
+func check_if_all_crew_died():
+	if population_amount <= 0:
+		population_amount = 0
+		emit_signal("game_over", RESOURCE_TYPE.POPULATION)
+
+
+func change_resource_from_event(resource: String, amount_str: String):
+	var amount = int(amount_str)
+	match resource:
+		"food":
+			food_amount += amount
+		"water":
+			water_amount += amount
+		"air":
+			air_amount += amount
+		"population":
+			if amount > 0:
+				var empty_spot = housing_amount - population_amount
+				if amount <= empty_spot:
+					population_amount += amount
+			else:
+				population_amount += amount
