@@ -123,7 +123,7 @@ func check_tick_for_random_event():
 		play_specific_event("victory_event")
 		return
 
-	if tick_since_last_event >= tick_to_event:
+	if tick_since_last_event >= tick_to_event and not end_game:
 		tick_since_last_event = 0
 		tick_to_event = randi_range(MIN_TICK_FOR_EVENT, MAX_TICK_FOR_EVENT)
 		play_random_event()
