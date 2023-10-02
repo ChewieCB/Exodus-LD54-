@@ -112,6 +112,7 @@ scale = Vector2(0.624198, 0.624198)
 texture = ExtResource("5_gakyr")
 
 [node name="ShipGrid" type="Node2D" parent="." node_paths=PackedStringArray("tilemap")]
+visible = false
 modulate = Color(1, 1, 1, 0.784314)
 position = Vector2(716, 62.5)
 script = ExtResource("3_tehqe")

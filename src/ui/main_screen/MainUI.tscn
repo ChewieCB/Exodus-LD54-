@@ -39,6 +39,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [164, -450]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BuildControlLabel:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(229, 17), Vector2(229, -100)]
+}
 
 [sub_resource type="Animation" id="Animation_aef8j"]
 resource_name = "show_build_menu"
@@ -54,6 +66,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(0.287175, 1),
 "update": 0,
 "values": [-450, 164]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BuildControlLabel:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(229, -100), Vector2(229, 17)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pifv8"]
@@ -167,6 +191,17 @@ offset_right = 1109.0
 offset_bottom = 81.0
 text = "Objective: Survive"
 horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="BuildControlLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 229.0
+offset_top = -100.0
+offset_right = 472.0
+offset_bottom = -22.0
+text = "Q, E to rotate building.
+Left-click to Build.
+Right-click to Destroy"
 autowrap_mode = 2
 
 [connection signal="pressed" from="BuildShowToggle/Button" to="." method="_on_build_button_pressed"]
