@@ -4,9 +4,9 @@
 [ext_resource type="Script" path="res://src/ui/ship_building/ship_building_view.gd" id="1_ae44n"]
 [ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="2_jcwrl"]
 [ext_resource type="Texture2D" uid="uid://dn7d2jgqhgqxf" path="res://src/tests/test_grid_placement/building_placeholders.png" id="2_q8rua"]
-[ext_resource type="Texture2D" uid="uid://d1hhl5deqt3yo" path="res://assets/sprite/ship.png" id="2_sj33g"]
 [ext_resource type="Texture2D" uid="uid://umfswvb0k6d6" path="res://assets/sprite/star.png" id="3_74hi2"]
 [ext_resource type="Script" path="res://src/ui/ship_building/grid_placement.gd" id="3_tehqe"]
+[ext_resource type="Texture2D" uid="uid://cmbixfktrvffm" path="res://assets/sprite/ship_colored.png" id="5_gakyr"]
 [ext_resource type="PackedScene" uid="uid://3slp8ujgyckn" path="res://src/buildings/hab/Hab1.tscn" id="7_8yr63"]
 [ext_resource type="Texture2D" uid="uid://cygmypnooav7y" path="res://assets/event/Ship_wreak_Pixel.png" id="8_p8t6q"]
 
@@ -107,8 +107,9 @@ scale = Vector2(12, 12)
 texture = ExtResource("8_p8t6q")
 
 [node name="ShipSprite" type="Sprite2D" parent="."]
-position = Vector2(1473, 246)
-texture = ExtResource("2_sj33g")
+position = Vector2(1430, 189)
+scale = Vector2(0.624198, 0.624198)
+texture = ExtResource("5_gakyr")
 
 [node name="ShipGrid" type="Node2D" parent="." node_paths=PackedStringArray("tilemap")]
 visible = false
