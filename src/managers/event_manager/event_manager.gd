@@ -172,6 +172,9 @@ func plague_planet_event() -> String:
 
 func tutorial1_event() -> String:
 	var event_source_text = """
+	A negation field has simultaneously surrounded the galaxy. The field is gradually creeping in and swallowing all matter. Stars, nebula, planets, asteroids, even black holes. The Negation Field emits no electromagnetic radiation or heat.
+	No probe returns or transmits signals once passing the field's event horizon. Ships, outposts, colonies and settlements go dark every week.
+	Astronomic calculations have pinpointed the field is shrinking down to a single spot - a quiet backwater solar system far from most space lanes. You are the captain of a battered old supply ship who has decided to make for this system, believing it is the only hope for the future of the galaxy.
 	Join ExecutiveOfficer 0
 	ExecutiveOfficer (Normal): Welcome captain, my name is Pressley, your executive officer. My job is to assist you running your Galanthir-class hauler. It's a highly modular and adaptable ship from the shipyards at Ursa Majoris.
 	ExecutiveOfficer (Normal): The ship's crew capacity is 3. Crew can be housed in hab blocks. Crew need air, water and food. The more crew you have, the more air, water and food they need. You can modify your ship with structrues that increase air, water or food production.
@@ -181,7 +184,7 @@ func tutorial1_event() -> String:
 		Leave ExecutiveOfficer
 		Please click on the ship or the build button, navigate to Food tab, then choose the Vertical Farm.
 		The number 2 next to the building name mean it required 2 workers to build it. You will able to build bigger building after recruited more crew members.
-	- Disable tutorial.
+	- Skip tutorial.
 		[call_node path="EventManager" method="disable_tutorial" single_use="true"]
 		Leave ExecutiveOfficer
 	[signal arg="end_event"]
