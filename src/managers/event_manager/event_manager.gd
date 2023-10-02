@@ -47,7 +47,6 @@ func get_random_element_from_array(options: Array):
 	if options[rand_index]:
 		return options[rand_index]
 
-
 func get_random_event():
 	var event_name = get_random_element_from_array(["asteroid_cluster", "asteroid_cluster", "resource_rich_planetoid", "distress_signal_detected", "plague_planet_event"])
 	var event_source_text = call(event_name)
@@ -86,7 +85,6 @@ func change_objective_label(text: String):
 	emit_signal("request_change_objective_label", text)
 
 
-
 func check_tick_for_random_event():
 	tick_since_last_event += 1
 	tick_passed_total += 1
@@ -102,7 +100,6 @@ func check_tick_for_random_event():
 		tick_to_event = randi_range(MIN_TICK_FOR_EVENT, MAX_TICK_FOR_EVENT)
 		play_random_event()
 
-
 func disable_tutorial():
 	tutorial_progress = -1
 	change_objective_label("Survive")
@@ -112,6 +109,29 @@ func check_if_victory():
 	if tick_passed_total >= tick_to_victory and end_game:
 		emit_signal("victory")
 
+
+func space_fact_event():
+	var fact_pool = ["The Milky Way Galaxy, which is home to our solar system, contains over 100 billion stars.",
+	"Space is completely silent because there is no air or atmosphere to carry sound waves.",
+	"The largest volcano in the solar system is Olympus Mons, located on Mars. It is nearly 13.6 miles (22 kilometers) high, which is almost three times the height of Mount Everest.",
+	"The Great Red Spot on Jupiter is a massive storm that has been raging for at least 350 years, and it's so large that it could fit three Earths inside of it.",
+	"Astronauts experience 'space sickness', a condition similar to motion sickness, when they first enter space due to the absence of gravity.",
+	"The Hubble Space Telescope, launched in 1990, has provided stunning images and valuable data about the universe and has made over 1.4 million observations.",
+	"Saturn's rings are not solid but are made up of countless small particles of ice and rock, ranging in size from tiny grains to several meters in diameter.",
+	"Space is not completely empty; it contains extremely low-density particles and radiation, including cosmic rays and micrometeoroids.",
+	"The speed of light in a vacuum is approximately 186,282 miles per second (299,792 kilometers per second). This is the fastest speed at which information or matter can travel in the universe.",
+	"The nearest star system to our solar system is Alpha Centauri, located about 4.37 light-years away. It consists of three stars: Alpha Centauri A, Alpha Centauri B, and Proxima Centauri, the closest-known exoplanetary system to our sun.",
+	"Most of the events were coded 2 hours before the submission deadline."]
+	var random_fact = get_random_element_from_array(fact_pool)
+	var event_source_text = """
+	Join ExecutiveOfficer 0
+	ExecutiveOfficer (Normal): Hey Captain, did you know that...
+	ExecutiveOfficer (Normal): {random_fact}
+	Leave ExecutiveOfficer
+	[signal arg="end_event"]
+	"""
+	event_source_text = event_source_text.format({"random_fact"=random_fact})
+	return event_source_text
 
 func victory_event():
 	change_event_image("res://assets/event/Planet_1_Pixel.png")

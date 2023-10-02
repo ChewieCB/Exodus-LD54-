@@ -139,11 +139,19 @@ libraries = {
 
 [node name="EventButton" type="Button" parent="."]
 layout_mode = 0
+offset_left = 743.0
+offset_top = 15.0
+offset_right = 900.0
+offset_bottom = 46.0
+text = "Play Random Event"
+
+[node name="FactButton" type="Button" parent="."]
+layout_mode = 0
 offset_left = 918.0
 offset_top = 15.0
 offset_right = 1075.0
 offset_bottom = 46.0
-text = "Play Random Event"
+text = "Chat with Pressley"
 
 [node name="ResourceAlerts" parent="." instance=ExtResource("7_njybl")]
 layout_mode = 1
@@ -163,3 +171,4 @@ autowrap_mode = 2
 
 [connection signal="pressed" from="BuildShowToggle/Button" to="." method="_on_build_button_pressed"]
 [connection signal="pressed" from="EventButton" to="." method="_on_play_dialog_pressed"]
+[connection signal="pressed" from="FactButton" to="." method="_on_listen_fact_pressed"]
