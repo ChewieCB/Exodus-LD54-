@@ -554,21 +554,29 @@ func governor_demands_passage() -> String:
 
 func tutorial1_event() -> String:
 	var event_source_text = """
-	A negation field has simultaneously surrounded the galaxy. The field is gradually creeping in and swallowing all matter. Stars, nebula, planets, asteroids, even black holes. The Negation Field emits no electromagnetic radiation or heat.
-	No probe returns or transmits signals once passing the field's event horizon. Ships, outposts, colonies and settlements go dark every week.
-	Astronomic calculations have pinpointed the field is shrinking down to a single spot - a quiet backwater solar system far from most space lanes. You are the captain of a battered old supply ship who has decided to make for this system, believing it is the only hope for the future of the galaxy.
+	A negation field has simultaneously surrounded the galaxy. The field is gradually creeping in and swallowing all matter. Stars, nebula, planets, asteroids, even black holes. 
+	The Negation Field emits no electromagnetic radiation or heat. No probe returns or transmits signals once passing the field's event horizon. 
+	
+	Ships, outposts, colonies and settlements go dark every week.
+	
+	Astronomic calculations have pinpointed the field is shrinking down to a single spot - a quiet backwater solar system far from most space lanes. 
+	
+	You are the captain of a battered old supply ship who has decided to make for this system, believing it is the only hope for the future of the galaxy.
+	
 	Join ExecutiveOfficer 0
 	ExecutiveOfficer (Normal): Welcome captain, my name is Pressley, your executive officer. My job is to assist you running your Galanthir-class hauler. It's a highly modular and adaptable ship from the shipyards at Ursa Majoris.
 	ExecutiveOfficer (Normal): The ship's crew capacity is 3. Crew can be housed in hab blocks. Crew need air, water and food. The more crew you have, the more air, water and food they need. You can modify your ship with structrues that increase air, water or food production.
 	ExecutiveOfficer (Normal): We have plenty of air and water for this crew size, but our food stocks are running low. Please build two food production buildings to increase our food production.
+	
 	- Start building 2 more food production buildings.
 		[call_node path="EventManager" method="change_objective_label" args="["Build 2 Food building"]" single_use="true"]
 		Please click on the ship or the build button, navigate to Food tab, then choose the Vertical Farm.
 		The number 2 next to the building name mean it required 2 workers to build it. You will able to build bigger building after recruited more crew members.
+		[signal arg="end_event_build"]
 	- Skip tutorial.
 		[call_node path="EventManager" method="disable_tutorial" single_use="true"]
-	Leave ExecutiveOfficer
-	[signal arg="end_event"]
+		Leave ExecutiveOfficer
+		[signal arg="end_event"]
 	"""
 	return event_source_text
 
@@ -583,7 +591,7 @@ func tutorial2_event() -> String:
 		[call_node path="EventManager" method="change_objective_label" args="["Build 2 Habitation building"]" single_use="true"]
 		Leave ExecutiveOfficer
 		Similiar to the food production buildings, open the Build menu, navigate to first tab and choose either Hab Block or Dormitory.
-	[signal arg="end_event"]
+	[signal arg="end_event_build"]
 	"""
 	return event_source_text
 
