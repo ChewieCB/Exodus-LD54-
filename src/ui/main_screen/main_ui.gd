@@ -12,6 +12,8 @@ extends Control
 @onready var build_menu: MarginContainer = $BuildMenu
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 @onready var objective_label: Label = $ObjectiveLabel
+@onready var time_control_ui = $TimeControlUI/MarginContainer
+
 
 var build_menu_open = false
 
@@ -112,7 +114,7 @@ func _on_dialogic_signal(arg: String):
 			build_show_toggle.visible = true
 			build_menu.visible = true
 
-			TickManager._set_tick_rate(TickManager.SLOW_TICK_SPEED)
+			time_control_ui._on_speed_1_button_pressed()
 
 			ResourceManager.check_if_all_crew_died()
 			EventManager.check_if_victory()
@@ -126,7 +128,7 @@ func _on_dialogic_signal(arg: String):
 			build_show_toggle.visible = true
 			build_menu.visible = true
 			
-			TickManager._set_tick_rate(TickManager.SLOW_TICK_SPEED)
+			time_control_ui._on_speed_1_button_pressed()
 			
 			ResourceManager.check_if_all_crew_died()
 			EventManager.check_if_victory()
