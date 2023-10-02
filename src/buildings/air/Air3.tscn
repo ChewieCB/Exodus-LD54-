@@ -6,10 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://c2owud1h45ixt" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="4_j5j8i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0tb0d"]
-size = Vector2(60, 60)
+size = Vector2(58, 60)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qq2j3"]
-size = Vector2(188, 60)
+size = Vector2(184, 58)
 
 [node name="Air3" type="Node2D"]
 script = ExtResource("1_52nq5")
@@ -24,6 +24,7 @@ offset = Vector2(-32, -32)
 position = Vector2(-32, -32)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1, 0)
 shape = SubResource("RectangleShape2D_0tb0d")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
@@ -31,10 +32,11 @@ position = Vector2(0, 64)
 shape = SubResource("RectangleShape2D_qq2j3")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, -64)
+position = Vector2(0, -63)
 shape = SubResource("RectangleShape2D_qq2j3")
 
 [node name="BuildTimerUI" parent="." instance=ExtResource("4_j5j8i")]
+offset_left = -52.0
 offset_top = -50.0
 offset_bottom = -10.0
 
