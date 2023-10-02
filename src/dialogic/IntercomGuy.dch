@@ -9,7 +9,7 @@
 },
 "default_portrait": "Normal",
 "description": "Intercom guy",
-"display_name": "IntercomGuy",
+"display_name": "Intercom guy",
 "mirror": false,
 "nicknames": [""],
 "offset": Vector2(0, 0),
@@ -20,7 +20,7 @@
 },
 "image": "",
 "mirror": false,
-"offset": Vector2(-9, 7),
+"offset": Vector2(-17, 17),
 "scale": 0.5,
 "scene": ""
 }

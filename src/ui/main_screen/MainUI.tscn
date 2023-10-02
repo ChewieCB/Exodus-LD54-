@@ -151,7 +151,7 @@ offset_left = 918.0
 offset_top = 15.0
 offset_right = 1075.0
 offset_bottom = 46.0
-text = "Chat with Pressley"
+text = "Chat with crew"
 
 [node name="ResourceAlerts" parent="." instance=ExtResource("7_njybl")]
 layout_mode = 1

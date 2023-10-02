@@ -123,9 +123,6 @@ func _on_dialogic_signal(arg: String):
 			if event_image:
 				tween.tween_property(event_image, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
 				
-			tween.parallel().tween_property(camera, "global_position", ship_sprite.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
-			tween.parallel().tween_property(camera, "zoom", Vector2(0.6, 0.6), 0.5).set_trans(Tween.TRANS_LINEAR)
-			
 			build_show_toggle.visible = true
 			build_menu.visible = true
 			

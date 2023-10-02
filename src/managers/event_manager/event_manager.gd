@@ -150,13 +150,15 @@ func space_fact_event():
 	"Space is not completely empty; it contains extremely low-density particles and radiation, including cosmic rays and micrometeoroids.",
 	"The speed of light in a vacuum is approximately 186,282 miles per second (299,792 kilometers per second). This is the fastest speed at which information or matter can travel in the universe.",
 	"The nearest star system to our solar system is Alpha Centauri, located about 4.37 light-years away. It consists of three stars: Alpha Centauri A, Alpha Centauri B, and Proxima Centauri, the closest-known exoplanetary system to our sun.",
-	"Most of the events were coded 2 hours before the submission deadline."]
+	"Most of the events in this game were coded in 3 hours before the submission deadline."]
 	var random_fact = get_random_element_from_array(fact_pool)
 	var event_source_text = """
 	Join ExecutiveOfficer 0
 	ExecutiveOfficer (Normal): Hey Captain, did you know that...
-	ExecutiveOfficer (Normal): {random_fact}
+	Join IntercomGuy 4
+	IntercomGuy (Normal): {random_fact}
 	Leave ExecutiveOfficer
+	Leave IntercomGuy
 	[signal arg="end_event"]
 	"""
 	event_source_text = event_source_text.format({"random_fact"=random_fact})
@@ -518,7 +520,7 @@ func families_seeking_passage() -> String:
 
 
 func governor_demands_passage() -> String:
-	change_event_image("res://assets/event/Ship_wreak_Pixel.png")
+	change_event_image("res://assets/event/Planet_3_Pixel.png")
 	var reward_people = randi_range(1, 3)
 	var reward_food = randi_range(40, 70)
 	var reward_water = randi_range(40, 70)
@@ -562,11 +564,8 @@ func tutorial1_event() -> String:
 	var event_source_text = """
 	A negation field has simultaneously surrounded the galaxy. The field is gradually creeping in and swallowing all matter. Stars, nebula, planets, asteroids, even black holes. 
 	The Negation Field emits no electromagnetic radiation or heat. No probe returns or transmits signals once passing the field's event horizon. 
-	
 	Ships, outposts, colonies and settlements go dark every week.
-	
 	Astronomic calculations have pinpointed the field is shrinking down to a single spot - a quiet backwater solar system far from most space lanes. 
-	
 	You are the captain of a battered old supply ship who has decided to make for this system, believing it is the only hope for the future of the galaxy.
 	
 	Join ExecutiveOfficer 0
@@ -578,12 +577,12 @@ func tutorial1_event() -> String:
 		[call_node path="EventManager" method="change_objective_label" args="["Build 2 Food building"]" single_use="true"]
 		[signal arg="open_build_screen"]
 		Please click on the ship or the build button, navigate to Food tab, then choose the Vertical Farm.
-		The number 2 next to the building name mean it required 2 workers to build it. You will able to build bigger building after recruited more crew members.
+		The number next to the "people icon" means the amount of workers required to build it. Likewise, the number next to "clock icon" means the time it take to complete. You will able to build bigger building after recruited more crew members.
 		[signal arg="end_event_build"]
 	- Skip tutorial.
 		[call_node path="EventManager" method="disable_tutorial" single_use="true"]
-		Leave ExecutiveOfficer
 		[signal arg="end_event"]
+	Leave ExecutiveOfficer
 	"""
 	return event_source_text
 
@@ -599,7 +598,7 @@ func tutorial2_event() -> String:
 		[signal arg="open_build_screen"]
 		Leave ExecutiveOfficer
 		Similiar to the food production buildings, open the Build menu, navigate to first tab and choose either Hab Block or Dormitory.
-		[signal arg="end_event_build"]
+	[signal arg="end_event_build"]
 	"""
 	return event_source_text
 

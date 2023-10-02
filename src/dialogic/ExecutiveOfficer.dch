@@ -17,7 +17,7 @@
 "Normal": {
 "image": "res://assets/character/mc_p.png",
 "mirror": false,
-"offset": Vector2(0, 0),
+"offset": Vector2(-7, 19),
 "scale": 0.5,
 "scene": ""
 }
