@@ -6,11 +6,22 @@ var n_water_building = 0
 var n_air_building = 0
 
 var tutorial_progress = 0 # -1 = disable tutorial, 0 = enable tutorial
+var tick_since_last_event = 0
+var tick_to_event = 20
+
+const MIN_TICK_FOR_EVENT = 20
+const MAX_TICK_FOR_EVENT = 40
 
 signal building_finished
 signal start_event
 signal request_change_event_image
 signal request_change_objective_label
+
+func _ready() -> void:
+	TickManager.tick.connect(check_tick_for_random_event)
+	tick_to_event = randi_range(MIN_TICK_FOR_EVENT, MAX_TICK_FOR_EVENT)
+	if tutorial_progress == 0:
+		tick_to_event += 10
 
 func finished_building(type: Building.TYPES):
 	emit_signal("building_finished", type)
@@ -49,29 +60,55 @@ func test_planet_event() -> String:
 	event_source_text = event_source_text.format({"planet_color"=planet_color, "resource_type"=resource_type})
 	return event_source_text
 
-func plague_planet() -> String:
+func plague_planet_event() -> String:
+	var rm_population = ResourceManager.population_amount
+	var rm_food = ResourceManager.food_amount
+	var rm_water = ResourceManager.water_amount
+
 	var event_source_text = """
+	VAR {population} = {rm_population}
+	VAR {food} = {rm_food}
+	VAR {water} = {rm_water}
 	You received a signal after passed through an Earth-like planet. The signal need to be decrypted before you understand it.
-	- Decrypt it (cost 1 Energy)
+	- Decrypt it
 		It's a signal asking for help. Look like a spaceship crashed onto this place.
-		- Send a squad to help (cost 1 Food, 1 Water)
+		- Send a squad to help (Required 3 people, cost 6 Food, 6 Water) [if {population} > 3 && {food} >= 6 && {water} > 6]
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "-6"]" single_use="true"]
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "-6"]" single_use="true"]
+			VAR {food} -= 6
+			VAR {water} -= 6
+			You lost 6 Food, 6 Water.
 			Your squad successfully rescued them, but to your horror, you discovered they are infected with some kind of space plague. And your rescue squad may be already infected now, you never know.
-			- Abandon them all, not worth the risk
+			- Abandon them all, not worth the risk (Lost 3 People)
 				You ditched everyone. What a tragedy, but you cannot risk the colony.
+				[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "-3"]" single_use="true"]
+				VAR {population} -= 3
+				You lost 3 People.
 			- Abandon the refugee, let the squad back
 				Let's hope they are not infected yet.
-			- Abandon the refugee, treat the squad (Cost 2 Food, 2 Water)
-				You can just let your citizen die, you will treat them. The refugee? Nah, not worth it. The infection sample help your research department a bit, so that not too bad.
-				You lost 2 Food, 2 Water. You gained 2 Science.
-			- Try to save all of them, give everyone proper treatment (Cost 6 Food, 6 Water)
+			- Abandon the refugee, treat the squad (Cost 9 Food, 9 Water) [if {food} >= 9 && {water} > 9]
+				You can't just let your citizen die, you will treat them. The refugee? Nah, not worth it.
+				[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "-9"]" single_use="true"]
+				[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "-9"]" single_use="true"]
+				VAR {food} -= 9
+				VAR {water} -= 9
+				You lost 9 Food, 9 Water.
+			- Try to save all of them, give everyone proper treatment (Cost 21 Food, 21 Water, gain 5 people) [if {food} >= 21 && {water} > 21]
 				We are all human here. Let try to help each other.
-				You lost 6 Food, 6 Water. You gained 5 People, 2 Science.
+				[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "-21"]" single_use="true"]
+				[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "-21"]" single_use="true"]
+				[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "5"]" single_use="true"]
+				VAR {food} -= 21
+				VAR {water} -= 21
+				VAR {population} += 5
+				You lost 21 Food, 21 Water. You gained 5 People.
 		- Ignore and move on
 			The ship don't have space nor resource for more people. Let's move on.
 	- Ignore and move on
 		You ignored the signal and move on.
 	[signal arg="end_event"]
 	"""
+	event_source_text = event_source_text.format({"rm_population"=rm_population, "rm_food"=rm_food, "rm_water"=rm_water})
 	return event_source_text
 
 
@@ -114,7 +151,7 @@ func tutorial3_event() -> String:
 	ExecutiveOfficer (Normal): We now have the accommodation facilities to take on extra crew. There are no other ships in the area. We should help and accept their offer to join us, as more crew means we can make more modifications to our ship.
 	- Contact the lifeboat and welcome them into the crew.
 		[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "{n_survivor}"]" single_use="true"]
-		You recruited {n_survivor} population.
+		You recruited {n_survivor} people.
 		ExecutiveOfficer (Normal): Good work, Captain. We now have more crew, but more crew means we need to produce more oxygen, water and food. From now on, it's important we balance resource production with each increase in the number of crew. We have limited resources and limited space. Choose wisely!
 		[call_node path="EventManager" method="change_objective_label" args="["Survive"]" single_use="true"]
 	[signal arg="end_event"]
@@ -145,7 +182,7 @@ func cheat_menu_event() -> String:
 
 
 func get_random_event():
-	var event_name = get_random_element_from_array(["cheat_menu_event"])
+	var event_name = get_random_element_from_array(["plague_planet_event"])
 	var event_source_text = call(event_name)
 	var events : Array = event_source_text.split('\n')
 	var timeline : DialogicTimeline = DialogicTimeline.new()
@@ -179,3 +216,12 @@ func change_event_image(texture_path: String):
 
 func change_objective_label(text: String):
 	emit_signal("request_change_objective_label", text)
+
+
+func check_tick_for_random_event():
+	tick_since_last_event += 1
+	print("Tick left for event", tick_to_event - tick_since_last_event)
+	if tick_since_last_event >= tick_to_event:
+		tick_since_last_event = 0
+		tick_to_event = randi_range(MIN_TICK_FOR_EVENT, MAX_TICK_FOR_EVENT)
+		play_random_event()
