@@ -12,15 +12,15 @@ extends Control
 func _ready():
 	ResourceManager.population_changed.connect(_update_pop_ui)
 	ResourceManager.workers_changed.connect(_update_worker_ui)
-#	ResourceManager.housing_changed.connect(_update_housing_ui)
-#	ResourceManager.food_changed.connect(_update_food_ui)
-#	ResourceManager.water_changed.connect(_update_water_ui)
-#	ResourceManager.air_changed.connect(_update_air_ui)
+	ResourceManager.housing_changed.connect(_update_housing_ui)
 	#
-	ResourceManager.housing_modifier_changed.connect(_update_debug_hab)
 	ResourceManager.food_modifier_changed.connect(_update_debug_food)
 	ResourceManager.water_modifier_changed.connect(_update_debug_water)
 	ResourceManager.air_modifier_changed.connect(_update_debug_air)
+	
+	# This is fucking stupid, but it's 1AM, i'm tired, and it fixes the UI update problem
+	ResourceManager.population_amount = ResourceManager.population_amount
+	ResourceManager.worker_amount = ResourceManager.worker_amount
 
 
 func animate_bar(bar, value) -> void:
@@ -38,33 +38,8 @@ func _update_worker_ui(value):
 	worker_counter.text = str(value)
 
 
-#func _update_housing_ui(value):
-#	animate_bar(housing_bar, value)
-#
-#
-#func _update_food_ui(value):
-#	animate_bar(food_bar, value)
-#
-#
-#func _update_water_ui(value):
-#	animate_bar(water_bar, value)
-#
-#
-#func _update_air_ui(value):
-#	animate_bar(air_bar, value)
-
-
-#func _update_debug_pop(production, consumption, total):
-#	pass
-##	debug_pop.text = "Pop +{0}|-{1}|{2}".format([str(production), str(consumption), str(total)])
-
-
-func _update_debug_hab(total, modifier):
-	var modifier_str = str(round(modifier))
-	var modifier_prefix = ""
-	if modifier > 0:
-		modifier_prefix = "+" 
-	debug_hab.text = "{0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
+func _update_housing_ui(total, available):
+	debug_hab.text = "{0} ({1})".format([str(total), str(available)])
 
 
 func _update_debug_food(total, modifier):

@@ -112,13 +112,15 @@ offset_bottom = 648.0
 
 [node name="TimeControlUI" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -192.0
-offset_right = 192.0
-offset_bottom = 128.0
-grow_horizontal = 2
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -384.0
+offset_top = -128.0
+grow_horizontal = 0
+grow_vertical = 0
 mouse_filter = 1
 
 [node name="MarginContainer" parent="TimeControlUI" instance=ExtResource("4_2kxyh")]

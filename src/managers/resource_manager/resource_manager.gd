@@ -2,13 +2,11 @@ extends Node
 
 signal population_changed(value)
 signal workers_changed(value)
-signal housing_changed(value)
+signal housing_changed(total, available)
 signal food_changed(value)
 signal water_changed(value)
 signal air_changed(value)
 #
-#signal population_modifier_changed(total, modifier)
-signal housing_modifier_changed(total, modifier)
 signal food_modifier_changed(total, modifier)
 signal water_modifier_changed(total, modifier)
 signal air_modifier_changed(total, modifier)
@@ -82,16 +80,22 @@ var population_amount: int:
 		# to avoid resetting already assigned workers
 		if diff > 0:
 			worker_amount = worker_amount + diff
-		
 var worker_amount: int:
 	set(value):
 		worker_amount = value
 		emit_signal("workers_changed", worker_amount)
 # Other resources
+#
+#
+# HOUSING
 var housing_amount: int:
 	set(value):
 		housing_amount = value
-		emit_signal("housing_changed", housing_amount)
+		emit_signal("housing_changed", housing_amount, available_housing)
+var available_housing: int = housing_amount - population_amount
+#
+#
+#
 var food_amount: int:
 	set(value):
 		food_amount = value
@@ -105,7 +109,6 @@ var air_amount: int:
 		air_amount = value
 		emit_signal("air_changed", air_amount)
 
-var current_housing_modifier: int = 0
 var current_food_modifier: int = 0
 var current_air_modifier: int = 0
 var current_water_modifier: int = 0
@@ -115,13 +118,11 @@ var pop_housing_cost: int = 1
 var pop_food_cost: int = 2
 var pop_water_cost: int = 3
 var pop_air_cost: int = 1
-
 #
 var housing_low_threshold: int = 2
 var food_low_threshold: int = 2
 var water_low_threshold: int = 3
 var air_low_threshold: int = 2
-
 # 
 var buildings = []
 
@@ -130,29 +131,26 @@ func _ready() -> void:
 	TickManager.tick.connect(_on_tick)
 	# TODO - load initial values from file for difficulty settings
 	population_amount = 3
-	# This is derived purely from the buildings we have placed
-	housing_amount = 0
-	food_amount = 60
-	water_amount = 90
-	air_amount = 30
 	#
 	pop_housing_cost = 1
 	pop_food_cost = 2
 	pop_water_cost = 3
 	pop_air_cost = 1
 	# Thresholds to alert the player to low resource
-	housing_low_threshold = 2
+	housing_low_threshold = 0
 	food_low_threshold = 10
 	water_low_threshold = 10
 	air_low_threshold = 10
 
 
 func _physics_process(delta):
-	for idx in range(1, 5):
+	for idx in range(0, 5):
 		calculate_resource_modifier(idx, population_amount)
 		match idx:
+			RESOURCE_TYPE.POPULATION:
+				pass
 			RESOURCE_TYPE.HOUSING:
-				emit_signal("housing_modifier_changed", housing_amount, current_housing_modifier)
+				pass
 			RESOURCE_TYPE.FOOD:
 				emit_signal("food_modifier_changed", food_amount, current_food_modifier)
 			RESOURCE_TYPE.WATER:
@@ -162,7 +160,10 @@ func _physics_process(delta):
 	
 	# TODO - add UI update here but NOT total recalculation
 	if Input.is_action_just_pressed("DEBUG_add_population"):
-		population_amount += 1
+		if can_add_population(1):
+			population_amount += 1
+		else:
+			print("Can't add {0} population, not enough housing!".format(["1"]))
 
 
 func calculate_resource_modifier(resource_type, population) -> void:
@@ -171,10 +172,14 @@ func calculate_resource_modifier(resource_type, population) -> void:
 	var modifier = 0
 	match resource_type:
 		RESOURCE_TYPE.HOUSING:
+			# Housing is an outlier, we don't update per turn we just keep track
+			# of used and avaialble housing
 			for building in buildings:
 				production += building.data.housing_prod
-			consumption = population * pop_housing_cost
-			current_housing_modifier = production - consumption
+			consumption = population_amount
+			#
+			housing_amount = production
+			available_housing = production - consumption
 		RESOURCE_TYPE.FOOD:
 			for building in buildings:
 				production += building.data.food_prod
@@ -195,7 +200,6 @@ func calculate_resource_modifier(resource_type, population) -> void:
 func update_resource_tick() -> void:
 	# When we receive a tick signal from the GameTickManager 
 	# we update our resource levels.
-	housing_amount = clamp(housing_amount + current_housing_modifier, 0, 999)
 	food_amount = clamp(food_amount + current_food_modifier, 0, 999)
 	water_amount = clamp(water_amount + current_water_modifier, 0, 999)
 	air_amount = clamp(air_amount + current_air_modifier, 0, 999)
@@ -218,6 +222,13 @@ func update_resource_tick() -> void:
 	is_thirsty = water_amount == 0
 	is_suffocating = air_amount == 0
 
+
+func can_add_population(value) -> bool:
+	# We can only add population if we have enough housing for it
+	if population_amount + value < housing_amount:
+		return true
+	else:
+		return false
 
 func add_building(building):
 	if building not in buildings:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c6s7o88tyavpj"]
+[gd_scene load_steps=15 format=3 uid="uid://c6s7o88tyavpj"]
 
 [ext_resource type="PackedScene" uid="uid://cu7ivg1u3vbhl" path="res://src/ui/main_screen/MainUI.tscn" id="1_21fy4"]
 [ext_resource type="Script" path="res://src/ui/ship_building/ship_building_view.gd" id="1_ae44n"]
@@ -9,9 +9,6 @@
 [ext_resource type="Script" path="res://src/ui/ship_building/grid_placement.gd" id="3_tehqe"]
 [ext_resource type="PackedScene" uid="uid://3slp8ujgyckn" path="res://src/buildings/hab/Hab1.tscn" id="7_8yr63"]
 [ext_resource type="Texture2D" uid="uid://c723ddgavfsnp" path="res://assets/backgrounds/planet_concept_1.png" id="8_3ttdw"]
-[ext_resource type="PackedScene" uid="uid://bclsae0sreyu5" path="res://src/buildings/food/Farm1.tscn" id="8_dr01j"]
-[ext_resource type="PackedScene" uid="uid://bx021l1be37c8" path="res://src/buildings/air/Air1.tscn" id="9_fi03c"]
-[ext_resource type="PackedScene" uid="uid://d4jqtbqsxivup" path="res://src/buildings/water/Water1.tscn" id="10_radr3"]
 
 [sub_resource type="Gradient" id="Gradient_5qkd4"]
 offsets = PackedFloat32Array(0, 0.264706, 0.759804, 1)
@@ -34,8 +31,7 @@ angular_velocity_min = -30.0
 angular_velocity_max = 30.0
 orbit_velocity_min = 0.0
 orbit_velocity_max = 0.0
-scale_min = 0.5
-scale_max = 2.0
+scale_min = 0.25
 color_ramp = SubResource("GradientTexture1D_5aixr")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4bwrg"]
@@ -68,7 +64,8 @@ texture = ExtResource("2_jcwrl")
 
 [node name="StarGPUParticles2D" type="GPUParticles2D" parent="Space"]
 position = Vector2(-7.05229, 0.155697)
-amount = 64
+scale = Vector2(0.5, 0.5)
+amount = 171
 process_material = SubResource("ParticleProcessMaterial_6w768")
 texture = ExtResource("3_74hi2")
 lifetime = 8.0
@@ -100,18 +97,6 @@ position = Vector2(960, 448.5)
 
 [node name="Hab3" parent="ShipGrid" instance=ExtResource("7_8yr63")]
 position = Vector2(896, 384.5)
-
-[node name="Farm1" parent="ShipGrid" instance=ExtResource("8_dr01j")]
-position = Vector2(896, 128)
-
-[node name="Farm2" parent="ShipGrid" instance=ExtResource("8_dr01j")]
-position = Vector2(960, 128)
-
-[node name="Air1" parent="ShipGrid" instance=ExtResource("9_fi03c")]
-position = Vector2(768, 0)
-
-[node name="Water1" parent="ShipGrid" instance=ExtResource("10_radr3")]
-position = Vector2(704, -64)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
