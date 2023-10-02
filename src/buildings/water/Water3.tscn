@@ -15,7 +15,7 @@ shader_parameter/full_pulse_cycle = true
 shader_parameter/mode = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0tb0d"]
-size = Vector2(320, 60)
+size = Vector2(312, 56)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h83i0"]
 size = Vector2(60, 62)

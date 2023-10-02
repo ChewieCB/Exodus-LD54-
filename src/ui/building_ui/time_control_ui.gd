@@ -9,8 +9,8 @@ extends MarginContainer
 
 @onready var tick_progress_bar = $VBoxContainer/PanelContainer/ProgressBar
 
-@onready var day_counter = $VBoxContainer/PanelContainer3/MarginContainer/DayLabel
-@onready var date = $VBoxContainer/PanelContainer3/MarginContainer/DateLabel
+@onready var day_counter = $VBoxContainer/PanelContainer3/MarginContainer/HBoxContainer/MarginContainer/DayLabel
+@onready var date = $VBoxContainer/PanelContainer3/MarginContainer/HBoxContainer/MarginContainer2/DateLabel
 
 var button_click_sfx = preload("res://assets/audio/sfx/ui_click_1.mp3")
 
