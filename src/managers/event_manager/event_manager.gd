@@ -411,6 +411,7 @@ func hab_riot() -> String:
 
 
 func planetary_customs() -> String:
+	change_event_image("res://assets/event/BigPlanet_4_Pixel.png")
 	var rm_population = ResourceManager.population_amount
 	var rm_food = ResourceManager.food_amount
 	var rm_water = ResourceManager.water_amount
@@ -426,6 +427,7 @@ func planetary_customs() -> String:
 	ExecutiveOfficer (Normal): What are your orders?
 	
 	- Gather the crew, Pressley. We'll sneak past port control, take back our ship and leave this system for good.
+		set {chance} = range(1,100).pick_random()
 		# 50% chance success
 		if {chance} >= 50:
 			ExecutiveOfficer (Normal): Captain, we've escaped successfully without anyone being the wiser. 
@@ -450,6 +452,7 @@ func planetary_customs() -> String:
 
 
 func damaged_ship_aid() -> String:
+	change_event_image("res://assets/event/Ship_wreak_Pixel.png")
 	var rm_population = ResourceManager.population_amount
 	var rm_food = ResourceManager.food_amount
 	var rm_water = ResourceManager.water_amount
@@ -466,6 +469,7 @@ func damaged_ship_aid() -> String:
 	
 	- We have time and crew to spare. 
 		Send a memo to engineering, ask for volunteers who willing to go planetside and help the Intrepid with repairs.
+		set {chance} = range(1,100).pick_random()
 		# 50% chance success
 		if {chance} >= 50:
 			ExecutiveOfficer (Normal): The technicians have reported back, they advise the Intrepid's oxygen generation is restored. They are on their way back now.
@@ -514,6 +518,7 @@ func families_seeking_passage() -> String:
 
 
 func governor_demands_passage() -> String:
+	change_event_image("res://assets/event/Ship_wreak_Pixel.png")
 	var reward_people = randi_range(1, 3)
 	var reward_food = randi_range(40, 70)
 	var reward_water = randi_range(40, 70)
@@ -528,8 +533,9 @@ func governor_demands_passage() -> String:
 		
 		- Extend an official invitation to His Excellency, Mr Pressley.
 			ExecutiveOfficer (Normal): Yes sir. We will prepare quarters that are appropriate for an official of his standing 
+			set {chance} = range(1,100).pick_random()
 			# 75% chance
-			if {change} >= 75:
+			if {chance} >= 25:
 				ExecutiveOfficer (Normal): The governor's stateroom has taken up more than what other crew would take, but he has brought a significant complement of food from his personnel stock planetside. 
 				ExecutiveOfficer (Normal): We can siphon some of that for the rest of the crew without the governor noticing.
 				Leave ExecutiveOfficer
