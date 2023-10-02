@@ -75,6 +75,7 @@ layout/styles={
 }
 layout/default_style="Duped Default"
 choices/def_false_behaviour=1
+text/letter_speed=0.01
 
 [display]
 

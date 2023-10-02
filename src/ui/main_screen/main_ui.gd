@@ -51,7 +51,6 @@ func _on_play_dialog_pressed():
 	ship_grid.visible = false
 	build_show_toggle.visible = false
 	build_menu.visible = false
-	tween.tween_property(event_image, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 	EventManager.get_next_event()
 #	EventManager.play_random_event()
 
@@ -93,7 +92,8 @@ func _on_dialogic_signal(arg: String):
 	match arg:
 		"end_event":
 			var tween = get_tree().create_tween()
-			tween.tween_property(event_image, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
+			if event_image:
+				tween.tween_property(event_image, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
 
 			tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
