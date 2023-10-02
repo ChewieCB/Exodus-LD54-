@@ -183,3 +183,5 @@ building_object = ExtResource("21_bwk41")
 [node name="BuildingButton2" parent="MarginContainer2/TabContainer/Air/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
 layout_mode = 2
 building_object = ExtResource("22_wi86k")
+
+[connection signal="tab_clicked" from="MarginContainer2/TabContainer" to="." method="_on_tab_container_tab_clicked"]

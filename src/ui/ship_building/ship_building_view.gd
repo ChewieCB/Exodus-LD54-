@@ -14,6 +14,8 @@ func _ready():
 	#
 	ScreenTransitionManager.fade_in(1.5)
 	await ScreenTransitionManager.transitioned
+	#
+	TickManager.start_ticks()
 
 
 func _update_star_particles(tick_speed, is_paused):

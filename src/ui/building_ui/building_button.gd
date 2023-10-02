@@ -13,6 +13,8 @@ extends MarginContainer
 
 var building_cost
 
+var button_click_sfx = preload("res://assets/audio/sfx/ui_click_1.mp3")
+
 
 func _ready():
 	var building = building_object.instantiate()
@@ -61,6 +63,7 @@ func _update_status(available_workers):
 
 
 func _on_button_pressed():
+	SoundManager.play_sound(button_click_sfx, "UI")
 	BuildingManager._build(building_object)
 	button.release_focus()
 		
