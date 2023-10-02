@@ -31,6 +31,7 @@ func _on_restart_button_pressed():
 	ScreenTransitionManager.fade_out(0.7)
 	await ScreenTransitionManager.transitioned
 	await get_tree().create_timer(0.6).timeout
+	TickManager._set_tick_rate(TickManager.SLOW_TICK_SPEED)
 	get_tree().reload_current_scene()
 
 
