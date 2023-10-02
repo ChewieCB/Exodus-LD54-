@@ -45,7 +45,7 @@ func get_random_element_from_array(options: Array):
 
 
 func get_random_event():
-	var event_name = get_random_element_from_array(["distress_signal_detected"])
+	var event_name = get_random_element_from_array(["plague_planet_event"])
 	var event_source_text = call(event_name)
 	var events : Array = event_source_text.split('\n')
 	var timeline : DialogicTimeline = DialogicTimeline.new()
@@ -95,16 +95,6 @@ func disable_tutorial():
 	change_objective_label("Survive")
 
 
-func check_required_resource(population, food, water, air):
-	if ResourceManager.population_amount > population and \
-		ResourceManager.food_amount >= food and \
-		ResourceManager.water_amount >= water and \
-		ResourceManager.air_amount >= air:
-			Dialogic.VAR.passed_check = "true"
-	else:
-		Dialogic.VAR.passed_check = "false"
-
-
 func distress_signal_detected() -> String:
 	change_event_image("res://assets/event/Ship_wreak_Pixel.png")
 	var reward_people = randi_range(1, 3)
@@ -121,7 +111,7 @@ func distress_signal_detected() -> String:
 	- Help them
 		We're here, who knows how long it'll be before another ship comes along.
 		Set a course for the Menelaus and scramble medical and engineering teams.
-		VAR {chance} = range(1,100).pick_random()
+		set {chance} = range(1,100).pick_random()
 		# 75% chance success
 		if {chance} >= 25:
 			The crew of the Menelaus are grateful for aid, but the ship is beyond repair. They strip the Menelaus for parts and join your crew.
@@ -150,55 +140,41 @@ func plague_planet_event() -> String:
 	var rm_water = ResourceManager.water_amount
 
 	var event_source_text = """
-	VAR {population} = {rm_population}
-	VAR {food} = {rm_food}
-	VAR {water} = {rm_water}
+	set {population} = {rm_population}
+	set {food} = {rm_food}
+	set {water} = {rm_water}
 	You received a signal after passed through an Earth-like planet. The signal need to be decrypted before you understand it.
 	- Decrypt it
-		VAR {choice1_check} = "false"
-		if {population} >= 3:
-			if {food} >= 6:
-				if {water} >= 6:
-					VAR {choice1_check} = "true"
 		It's a signal asking for help. Look like a spaceship crashed onto this place.
-		- Send a squad to help (Required 3 people, cost 6 Food, 6 Water) [if {choice1_check} == "true"]
+		- Send a squad to help (Required 3 people, cost 6 Food, 6 Water) [if {population} >= 3 and {food} >= 6 and {water} >= 6]
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "-6"]" single_use="true"]
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "-6"]" single_use="true"]
-			VAR {food} -= 6
-			VAR {water} -= 6
+			set {food} -= 6
+			set {water} -= 6
 			You lost 6 Food, 6 Water.
-
-			VAR {choice3_check} = "false"
-			if {food} >= 9:
-				if {water} >= 9:
-					VAR {choice3_check} = "true"
-			VAR {choice4_check} = "false"
-			if {food} >= 21:
-				if {water} >= 21:
-					VAR {choice4_check} = "true"
 			Your squad successfully rescued them, but to your horror, you discovered they are infected with some kind of space plague. And your rescue squad may be already infected now, you never know.
-			- Abandon them all, not worth the risk (Lost 3 People)
+			- Abandon them all, not worth the risk (Lost 2 People)
 				You ditched everyone. What a tragedy, but you cannot risk the colony.
 				[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "-3"]" single_use="true"]
-				VAR {population} -= 3
-				You lost 3 People.
+				set {population} -= 2
+				You lost 2 People.
 			- Abandon the refugee, let the squad back
 				Let's hope they are not infected yet.
-			- Abandon the refugee, treat the squad (Cost 9 Food, 9 Water) [if {choice3_check} == "true"]
+			- Abandon the refugee, treat the squad (Cost 9 Food, 9 Water) [if {food} >= 9 and {water} >= 9]
 				You can't just let your crew die, you will treat them. The refugee? Nah, not worth it.
 				[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "-9"]" single_use="true"]
 				[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "-9"]" single_use="true"]
-				VAR {food} -= 9
-				VAR {water} -= 9
+				set {food} -= 9
+				set {water} -= 9
 				You lost 9 Food, 9 Water.
-			- Try to save all of them, give everyone proper treatment (Cost 21 Food, 21 Water, gain 5 people) [if {choice4_check} == "true"]
+			- Try to save all of them, give everyone proper treatment (Cost 21 Food, 21 Water, gain 5 people) [if {food} >= 21 and {water} >= 21]
 				We are all human here. Let try to help each other.
 				[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "-21"]" single_use="true"]
 				[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "-21"]" single_use="true"]
 				[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "5"]" single_use="true"]
-				VAR {food} -= 21
-				VAR {water} -= 21
-				VAR {population} += 5
+				set {food} -= 21
+				set {water} -= 21
+				set {population} += 5
 				You lost 21 Food, 21 Water. You gained 5 People.
 		- Ignore and move on
 			The ship don't have space nor resource for more people. Let's move on.

@@ -1,11 +1,6 @@
-VAR {population} = 3
-VAR {water} = 5
-VAR {food} = range(1,10).pick_random()
-VAR {choice1_check} = "false"
-# 60%
-if {food} >= 5:
-	if {population} > 3:
-		VAR {choice1_check} = "true"
+set {air} -= 50
+if {food} >= 5 and {population} >= 3:
+	BBB
 else:
 	AAAA
 You received a signal after passed through an Earth-like planet. The signal need to be decrypted before you understand it.

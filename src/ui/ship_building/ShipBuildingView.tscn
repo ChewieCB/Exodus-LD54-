@@ -75,6 +75,7 @@ randomness = 0.5
 visibility_rect = Rect2(0, 0, 0, 0)
 
 [node name="EventImage" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
 texture_filter = 1
 position = Vector2(4736, -512)
 scale = Vector2(12, 12)
