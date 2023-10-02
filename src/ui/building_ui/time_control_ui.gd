@@ -54,7 +54,7 @@ func _physics_process(delta):
 
 func _update_day_counter():
 	current_day += 1
-	day_counter.text = "Day {0}".format([str(current_day)])
+	day_counter.text = "Day {0}".format([str(current_day + 1)])
 	current_timestamp += UNIX_DAY
 	var new_date = Time.get_date_string_from_unix_time(current_timestamp)
 	var YMD = new_date.split("-")
