@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/buildings/building.gd" id="1_346ag"]
 [ext_resource type="Resource" uid="uid://ce726vckgwu4p" path="res://src/buildings/hab/hab1.tres" id="2_fp8i5"]
-[ext_resource type="Texture2D" uid="uid://bkvlrsm0lwbme" path="res://assets/buildings/hab1.png" id="3_b2s02"]
+[ext_resource type="Texture2D" uid="uid://dw4vv6brsf8a1" path="res://assets/buildings/new/hab_1.png" id="3_1onqk"]
 [ext_resource type="PackedScene" uid="uid://c2owud1h45ixt" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="4_oyx1y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0tb0d"]
@@ -13,7 +13,7 @@ script = ExtResource("1_346ag")
 data = ExtResource("2_fp8i5")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("3_b2s02")
+texture = ExtResource("3_1onqk")
 offset = Vector2(-32, -32)
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -23,6 +23,8 @@ position = Vector2(-32, -32)
 shape = SubResource("RectangleShape2D_0tb0d")
 
 [node name="BuildTimerUI" parent="." instance=ExtResource("4_oyx1y")]
+offset_top = -50.0
+offset_bottom = -10.0
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

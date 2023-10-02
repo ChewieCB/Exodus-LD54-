@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwfj12lst2m3s"
-path="res://.godot/imported/hydroponics_bay.png-954d946bc529e9bc7a4a8c4f2e0d4fd2.ctex"
+uid="uid://brxsacjpfhxfd"
+path="res://.godot/imported/co2_scrubber.png-d9d3f6d88889dba91777261e434369c1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/buildings/hydroponics_bay.png"
-dest_files=["res://.godot/imported/hydroponics_bay.png-954d946bc529e9bc7a4a8c4f2e0d4fd2.ctex"]
+source_file="res://assets/buildings/old/co2_scrubber.png"
+dest_files=["res://.godot/imported/co2_scrubber.png-d9d3f6d88889dba91777261e434369c1.ctex"]
 
 [params]
 

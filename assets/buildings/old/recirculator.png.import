@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8dvkwjm8j8nn"
-path="res://.godot/imported/megablock.png-6405295f0d39478f28bcb1f40ae6a01c.ctex"
+uid="uid://w6dnpgfxxgwa"
+path="res://.godot/imported/recirculator.png-ca6263594c9e406b6f3c82df85dc795a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/buildings/megablock.png"
-dest_files=["res://.godot/imported/megablock.png-6405295f0d39478f28bcb1f40ae6a01c.ctex"]
+source_file="res://assets/buildings/old/recirculator.png"
+dest_files=["res://.godot/imported/recirculator.png-ca6263594c9e406b6f3c82df85dc795a.ctex"]
 
 [params]
 

@@ -1,13 +1,13 @@
 [gd_resource type="Resource" load_steps=3 format=3 uid="uid://duea0wrd00fil"]
 
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_erjft"]
-[ext_resource type="Texture2D" uid="uid://8dvkwjm8j8nn" path="res://assets/buildings/megablock.png" id="2_8d02m"]
+[ext_resource type="Texture2D" uid="uid://d1w5fvl2ohit8" path="res://assets/buildings/new/hab_3.png" id="2_7xb5t"]
 
 [resource]
 script = ExtResource("1_erjft")
 name = "Megablock"
 type = 0
-sprite = ExtResource("2_8d02m")
+sprite = ExtResource("2_7xb5t")
 housing_prod = 6
 food_prod = 0
 water_prod = 0

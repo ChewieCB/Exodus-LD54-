@@ -1,0 +1,19 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://18c3v3njvlxg"]
+
+[ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_4t3np"]
+[ext_resource type="Texture2D" uid="uid://fpjlep711shg" path="res://assets/buildings/new/water_3.png" id="2_wogo1"]
+
+[resource]
+script = ExtResource("1_4t3np")
+name = "DesalinationPlant"
+type = 2
+sprite = ExtResource("2_wogo1")
+housing_prod = 0
+food_prod = 0
+water_prod = 10
+air_prod = 0
+resource_cost = 6
+people_cost = 7
+refund_value = 0
+construction_time = 8
+destruction_time = 0

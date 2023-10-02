@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://w6dnpgfxxgwa"
-path="res://.godot/imported/recirculator.png-ee5827a51b8722f33b754db9c33a50ad.ctex"
+uid="uid://duvob01qmjf6h"
+path="res://.godot/imported/hab2.png-92851a71c954ce2d84c653b71ef8a724.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/buildings/recirculator.png"
-dest_files=["res://.godot/imported/recirculator.png-ee5827a51b8722f33b754db9c33a50ad.ctex"]
+source_file="res://assets/buildings/old/hab2.png"
+dest_files=["res://.godot/imported/hab2.png-92851a71c954ce2d84c653b71ef8a724.ctex"]
 
 [params]
 

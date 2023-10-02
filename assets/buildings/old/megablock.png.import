@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://diuknkxali318"
-path="res://.godot/imported/refiltration_center-export.png-b56f85da6bce21a7da1d26da250dead1.ctex"
+uid="uid://8dvkwjm8j8nn"
+path="res://.godot/imported/megablock.png-477f91af1721a40557c50a71ba44e59c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/buildings/refiltration_center-export.png"
-dest_files=["res://.godot/imported/refiltration_center-export.png-b56f85da6bce21a7da1d26da250dead1.ctex"]
+source_file="res://assets/buildings/old/megablock.png"
+dest_files=["res://.godot/imported/megablock.png-477f91af1721a40557c50a71ba44e59c.ctex"]
 
 [params]
 

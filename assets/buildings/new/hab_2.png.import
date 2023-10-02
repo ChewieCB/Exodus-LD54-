@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brxsacjpfhxfd"
-path="res://.godot/imported/co2_scrubber.png-de179f81af377249519c182fd90fe8de.ctex"
+uid="uid://b6sj6dbisqutw"
+path="res://.godot/imported/hab_2.png-33818f50f85a8cebbe97349b32994e88.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/buildings/co2_scrubber.png"
-dest_files=["res://.godot/imported/co2_scrubber.png-de179f81af377249519c182fd90fe8de.ctex"]
+source_file="res://assets/buildings/new/hab_2.png"
+dest_files=["res://.godot/imported/hab_2.png-33818f50f85a8cebbe97349b32994e88.ctex"]
 
 [params]
 
