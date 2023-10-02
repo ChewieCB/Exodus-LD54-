@@ -131,7 +131,7 @@ func check_tick_for_random_event():
 
 func disable_tutorial():
 	tutorial_progress = -1
-	change_objective_label("Survive")
+	change_objective_label("Survive until day 200")
 
 
 func check_if_victory():
@@ -169,10 +169,10 @@ func victory_event():
 	change_event_image("res://assets/event/Planet_1_Pixel.png")
 	var event_source_text = """
 	Join ExecutiveOfficer 0
-	ExecutiveOfficer (Normal): Captain, we have arrived at our destination. We survived. Hooray!
-	You win the game! Tada!
-	Too bad we don't have much time to implement proper victory screen.
-	Leave ExecutiveOfficer
+	ExecutiveOfficer (Normal): Captain, we've reached the portal system! We're safe!
+	ExecutiveOfficer (Normal): The crew stand ready for intergalactic transit.
+	- It was an honour and a privilege, Pressley. Set course for the portal. Our new home awaits!
+		Leave ExecutiveOfficer
 	[signal arg="end_event"]
 	"""
 	return event_source_text
@@ -562,11 +562,10 @@ func governor_demands_passage() -> String:
 
 func tutorial1_event() -> String:
 	var event_source_text = """
-	A negation field has simultaneously surrounded the galaxy. The field is gradually creeping in and swallowing all matter. Stars, nebula, planets, asteroids, even black holes. 
-	The Negation Field emits no electromagnetic radiation or heat. No probe returns or transmits signals once passing the field's event horizon. 
-	Ships, outposts, colonies and settlements go dark every week.
-	Astronomic calculations have pinpointed the field is shrinking down to a single spot - a quiet backwater solar system far from most space lanes. 
-	You are the captain of a battered old supply ship who has decided to make for this system, believing it is the only hope for the future of the galaxy.
+	A negation field has simultaneously surrounded the galaxy. The field is gradually creeping in and swallowing all matter. Stars, nebula, planets, asteroids, even black holes. The Negation Field emits no electromagnetic radiation or heat.
+	No probe returns or transmits signals once passing the field's event horizon. Ships, outposts, colonies and settlements go dark every week. 
+	Astronomic calculations have pinpointed the field is shrinking down to a single spot - a quiet backwater solar system far from most space lanes. The galaxy's greatest scientists have constructed a portal that will take us to another galaxy, beyond the negation field's reach. 
+	You are the captain of an old supply ship who has decided to make for this portal system and save yourself from certain destruction...
 	
 	Join ExecutiveOfficer 0
 	ExecutiveOfficer (Normal): Welcome captain, my name is Pressley, your executive officer. My job is to assist you running your Galanthir-class hauler. It's a highly modular and adaptable ship from the shipyards at Ursa Majoris.
@@ -613,11 +612,15 @@ func tutorial3_event() -> String:
 	- Contact the lifeboat and welcome them into the crew.
 		[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "{n_survivor}"]" single_use="true"]
 		You recruited {n_survivor} people.
-		ExecutiveOfficer (Normal): Good work, Captain. We now have more crew, but more crew means we need to produce more oxygen, water and food. From now on, it's important that we balance resource production with each increase in the number of crew. We have limited resources and limited space. Choose wisely!
-		ExecutiveOfficer (Normal): Also, Captain, take note that you can ONLY take in the survivors if they are equal or less than available housing. If not enough housing, we can't take anyone at all. For example, if you have 5 survivors and 4 available housing, we will unable to recruit anyone, not 4 of them.
-		ExecutiveOfficer (Normal): Therefore, it's alway a good idea to build some extra habitant building to be safe.
-		[call_node path="EventManager" method="change_objective_label" args="["Survive"]" single_use="true"]
+		ExecutiveOfficer (Normal): Good work, Captain. We now have more crew, but more crew means we need to produce more oxygen, water and food to support them. From now on, it's important we balance resource production with each increase in the number of crew.
+		ExecutiveOfficer (Normal): We have limited resources and limited space on our journey, and there'll likely be other folk in need of our assitance on the way. Use your best judgement Captain, but watch those resource levels. 
+		ExecutiveOfficer (Normal): Navigation has calculated our journey will be 200 days. We are in your hands, Captain.
+		Join IntercomGuy 4
+		IntercomGuy (Normal): Also, Captain, take note that you can ONLY take in the survivors if they are equal or less than available housing. If not enough housing, we can't take anyone at all. For example, if you have 5 survivors and 4 available housing, we will unable to recruit anyone, not 4 of them.
+		IntercomGuy (Normal): Therefore, it's alway a good idea to build some extra habitant building to be safe.
+		[call_node path="EventManager" method="change_objective_label" args="["Survive until day 200"]" single_use="true"]
 		Leave ExecutiveOfficer
+		Leave IntercomGuy
 	[signal arg="end_event"]
 	"""
 	event_source_text = event_source_text.format({"n_survivor"=n_survivor})
@@ -628,12 +631,10 @@ func disabled_tutorial_event():
 	var n_survivor = 2
 	var event_source_text = """
 	Join ExecutiveOfficer 0
-	[call_node path="EventManager" method="change_objective_label" args="["Survive"]" single_use="true"]
 	ExecutiveOfficer (Normal): Greetings, captain. We have picked up a distress signal from a lifeboat. The lifeboat has {n_survivor} people on board and is running low on oxygen. The distress signal says they'll join the crew of any ship who saves them.
 	- Contact the lifeboat and welcome them into the crew.
 		[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "{n_survivor}"]" single_use="true"]
 		You recruited {n_survivor} people.
-		[call_node path="EventManager" method="change_objective_label" args="["Survive"]" single_use="true"]
 	Leave ExecutiveOfficer
 	[signal arg="end_event"]
 	"""
