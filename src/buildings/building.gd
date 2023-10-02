@@ -12,17 +12,24 @@ class_name Building
 
 @onready var build_start_sfx = preload("res://assets/audio/sfx/Building_Start.mp3")
 @onready var build_finish_sfx = preload("res://assets/audio/sfx/Building_Finish.mp3")
+@onready var cant_place_sfx = preload("res://assets/audio/sfx/Cant_Place_Building_There.mp3")
 
 # Build menu vars
 var preview = false
 var outside_gridmap = false
 var original_color: Color
 var placeable = false
-var placed = false
+@export var placed = false
 
 # Building process vars
 var ticks_left_to_build: int
-var building_complete: bool = false
+@export var building_complete: bool = false
+
+# Deletion
+var is_selected: bool = false
+var can_delete: bool = true
+var is_deconstructing: bool = false
+var ticks_left_to_delete: int
 
 enum TYPES {
 	HabBuilding,
@@ -38,7 +45,6 @@ func _ready():
 	set_original_color()
 	build_timer_ui.visible = false
 	TickManager.tick.connect(_on_tick)
-	
 
 
 func build_in_progress():
@@ -52,6 +58,26 @@ func build_in_progress():
 	sprite.material.set_shader_parameter("full_pulse_cycle", true)
 	sprite.material.set_shader_parameter("mode", 1)
 
+
+func deconstruct_in_progress():
+	var deconstruct_colour: Color = Color("#853519")
+	deconstruct_colour.a = 0.5
+	var deconstruct_mat = ShaderMaterial.new()
+	deconstruct_mat.shader = pulse_shader
+	sprite.material = deconstruct_mat
+	sprite.material.set_shader_parameter("shine_color", deconstruct_colour)
+	sprite.material.set_shader_parameter("full_pulse_cycle", true)
+	sprite.material.set_shader_parameter("mode", 1)
+
+
+func _physics_process(delta):
+	if Input.is_action_just_pressed("cancel_place_building"):
+		if is_selected and can_delete and not preview:
+			if is_deconstructing:
+				cancel_building_remove()
+			else:
+				set_building_remove()
+			
 
 func _process(delta):
 	if not placed and preview:
@@ -70,13 +96,22 @@ func _on_tick():
 		if ticks_left_to_build <= 1:
 			building_complete = true
 			build_timer_ui.visible = false
-			sprite.material.set_shader_parameter("mode", 0)
 			ResourceManager.add_building(self)
 			ResourceManager.retrieve_workers(self)
 			SoundManager.play_sound(build_finish_sfx, "SFX")
+			sprite.material.set_shader_parameter("mode", 0)
 		else:
 			ticks_left_to_build -= 1
 			build_timer_ui.label.text = str(ticks_left_to_build)
+	elif is_deconstructing:
+		if ticks_left_to_delete <= 1:
+			build_timer_ui.visible = false
+			ResourceManager.retrieve_workers(self)
+			SoundManager.play_sound(build_finish_sfx, "SFX")
+			self.queue_free()
+		else:
+			ticks_left_to_delete -= 1
+			build_timer_ui.label.text = str(ticks_left_to_delete)
 
 
 func set_building_placed():
@@ -92,6 +127,30 @@ func set_building_placed():
 	build_timer_ui.visible = true
 	build_in_progress()
 	SoundManager.play_sound(build_start_sfx, "SFX")
+
+
+func set_building_remove():
+	if ResourceManager.worker_amount >= data.people_cost:
+		is_deconstructing = true
+		# Costs workers to deconstruct
+		ResourceManager.assign_workers(self)
+		# Update build timer/construction effects
+		ticks_left_to_delete = data.destruction_time
+		build_timer_ui.label.text = str(ticks_left_to_delete)
+		build_timer_ui.visible = true
+		deconstruct_in_progress()
+		SoundManager.play_sound(build_start_sfx, "SFX")
+	else:
+		BuildingManager.emit_signal("not_enough_workers")
+		SoundManager.play_sound(cant_place_sfx, "SFX")
+
+
+func cancel_building_remove():
+	is_deconstructing = false
+	build_timer_ui.visible = false
+	ResourceManager.retrieve_workers(self)
+	SoundManager.play_sound(build_finish_sfx, "SFX")
+	sprite.material.set_shader_parameter("mode", 0)
 
 
 func set_original_color():
@@ -118,4 +177,15 @@ func _notification(what: int) -> void:
 
 func on_predelete() -> void:
 	ResourceManager.remove_building(self)
+
+
+func _on_area_2d_mouse_entered():
+	# TODO add popup or highlight
+	is_selected = true
+	print(self.data.name + " selected")
+
+
+func _on_area_2d_mouse_exited():
+	is_selected = false
+	print(self.data.name + " deselected")
 

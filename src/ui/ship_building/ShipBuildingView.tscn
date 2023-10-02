@@ -78,7 +78,6 @@ position = Vector2(1469, 249.5)
 texture = ExtResource("2_sj33g")
 
 [node name="ShipGrid" type="Node2D" parent="." node_paths=PackedStringArray("tilemap")]
-visible = false
 modulate = Color(1, 1, 1, 0.784314)
 position = Vector2(716, 62.5)
 script = ExtResource("3_tehqe")
@@ -91,12 +90,18 @@ layer_0/tile_data = PackedInt32Array(-196599, 393216, 7, -131063, 393216, 7, -65
 
 [node name="Hab1" parent="ShipGrid" instance=ExtResource("7_8yr63")]
 position = Vector2(897, 256.5)
+placed = true
+building_complete = true
 
 [node name="Hab2" parent="ShipGrid" instance=ExtResource("7_8yr63")]
 position = Vector2(960, 448.5)
+placed = true
+building_complete = true
 
 [node name="Hab3" parent="ShipGrid" instance=ExtResource("7_8yr63")]
 position = Vector2(896, 384.5)
+placed = true
+building_complete = true
 
 [node name="UI" type="CanvasLayer" parent="."]
 
