@@ -73,9 +73,9 @@ func get_random_element_from_array(options: Array):
 func get_random_event():
 	var event_name = get_random_element_from_array(["asteroid_cluster", "asteroid_cluster", "resource_rich_planetoid", "distress_signal_detected", "plague_planet_event"])
 	var event_source_text = call(event_name)
-	var events : Array = event_source_text.split('\n')
+	var _events : Array = event_source_text.split('\n')
 	var timeline : DialogicTimeline = DialogicTimeline.new()
-	timeline.events = events
+	timeline.events = _events
 	return [timeline, event_name]
 
 
@@ -90,9 +90,9 @@ func play_random_event() -> Node:
 
 func get_specific_event(event_name: String) -> DialogicTimeline:
 	var event_source_text = call(event_name)
-	var events : Array = event_source_text.split('\n')
+	var _events : Array = event_source_text.split('\n')
 	var timeline : DialogicTimeline = DialogicTimeline.new()
-	timeline.events = events
+	timeline.events = _events
 	return timeline
 
 

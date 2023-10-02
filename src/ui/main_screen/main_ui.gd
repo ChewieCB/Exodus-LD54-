@@ -51,7 +51,6 @@ func _on_play_dialog_pressed():
 	ship_grid.visible = false
 	build_show_toggle.visible = false
 	build_menu.visible = false
-	tween.tween_property(event_image, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 	EventManager.get_next_event()
 #	EventManager.play_random_event()
 
