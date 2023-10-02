@@ -49,7 +49,7 @@ func get_random_element_from_array(options: Array):
 
 
 func get_random_event():
-	var event_name = get_random_element_from_array(["victory_event"])
+	var event_name = get_random_element_from_array(["asteroid_cluster", "asteroid_cluster", "resource_rich_planetoid", "distress_signal_detected", "plague_planet_event"])
 	var event_source_text = call(event_name)
 	var events : Array = event_source_text.split('\n')
 	var timeline : DialogicTimeline = DialogicTimeline.new()
