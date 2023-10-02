@@ -227,7 +227,7 @@ theme_override_constants/margin_bottom = 80
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_svkb1")
 theme_override_font_sizes/font_size = 128
-text = "LD54"
+text = "Exodus"
 
 [node name="ButtonsContainer" type="MarginContainer" parent="MainScreen/VBoxContainer"]
 layout_mode = 2
