@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://5ce2cbb55dyv"]
+
+[ext_resource type="Texture2D" uid="uid://bkvlrsm0lwbme" path="res://assets/buildings/hab1.png" id="1_5jg35"]
+[ext_resource type="Script" path="res://src/ui/building_ui/building_button.gd" id="1_jspa8"]
+
+[node name="BuildingButton" type="CenterContainer"]
+script = ExtResource("1_jspa8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 16
+
+[node name="BuildingName" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Building Name (Cost)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BuildingIcon" type="TextureRect" parent="VBoxContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture = ExtResource("1_5jg35")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BuildingProd" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "+0 Prod"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

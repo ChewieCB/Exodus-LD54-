@@ -1,5 +1,14 @@
 extends Control
 
+@onready var hab_buttons_container = $MarginContainer2/TabContainer/Habitation/MarginContainer/ScrollContainer/VBoxContainer
+@onready var farm_buttons_container = $MarginContainer2/TabContainer/Food/MarginContainer/ScrollContainer/VBoxContainer
+@onready var water_butttons_container = $MarginContainer2/TabContainer/Water/MarginContainer/ScrollContainer/VBoxContainer
+@onready var air_buttons_container = $MarginContainer2/TabContainer/Air/MarginContainer/ScrollContainer/VBoxContainer
+
+
+func update_available_buildings():
+	pass
+
 
 func _on_hab_1_button_pressed():
 	BuildingManager._build_hab_1()

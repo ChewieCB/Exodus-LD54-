@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c6s7o88tyavpj"]
+[gd_scene load_steps=15 format=3 uid="uid://c6s7o88tyavpj"]
 
 [ext_resource type="PackedScene" uid="uid://cu7ivg1u3vbhl" path="res://src/ui/main_screen/MainUI.tscn" id="1_21fy4"]
 [ext_resource type="Script" path="res://src/ui/ship_building/ship_building_view.gd" id="1_ae44n"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://d1hhl5deqt3yo" path="res://assets/sprite/ship.png" id="2_sj33g"]
 [ext_resource type="Texture2D" uid="uid://umfswvb0k6d6" path="res://assets/sprite/star.png" id="3_74hi2"]
 [ext_resource type="Script" path="res://src/ui/ship_building/grid_placement.gd" id="3_tehqe"]
+[ext_resource type="PackedScene" uid="uid://3slp8ujgyckn" path="res://src/buildings/hab/Hab1.tscn" id="7_8yr63"]
 [ext_resource type="Texture2D" uid="uid://c723ddgavfsnp" path="res://assets/backgrounds/planet_concept_1.png" id="8_3ttdw"]
 
 [sub_resource type="Gradient" id="Gradient_5qkd4"]
@@ -30,8 +31,7 @@ angular_velocity_min = -30.0
 angular_velocity_max = 30.0
 orbit_velocity_min = 0.0
 orbit_velocity_max = 0.0
-scale_min = 0.5
-scale_max = 2.0
+scale_min = 0.25
 color_ramp = SubResource("GradientTexture1D_5aixr")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4bwrg"]
@@ -64,7 +64,8 @@ texture = ExtResource("2_jcwrl")
 
 [node name="StarGPUParticles2D" type="GPUParticles2D" parent="Space"]
 position = Vector2(-7.05229, 0.155697)
-amount = 64
+scale = Vector2(0.5, 0.5)
+amount = 171
 process_material = SubResource("ParticleProcessMaterial_6w768")
 texture = ExtResource("3_74hi2")
 lifetime = 8.0
@@ -87,6 +88,15 @@ tilemap = NodePath("TileMap")
 tile_set = SubResource("TileSet_5qrf4")
 format = 2
 layer_0/tile_data = PackedInt32Array(-196599, 393216, 7, -131063, 393216, 7, -65527, 393216, 7, 9, 393216, 7, 65545, 393216, 7, 131081, 393216, 7, 196617, 393216, 7, 262153, 393216, 7, 327689, 393216, 7, 393225, 393216, 7, 458761, 393216, 7, 524297, 393216, 7, -262134, 393216, 7, -196598, 393216, 7, -131062, 393216, 7, -65526, 393216, 7, 10, 393216, 7, 65546, 393216, 7, 131082, 393216, 7, 196618, 393216, 7, 262154, 393216, 7, 327690, 393216, 7, 393226, 393216, 7, 458762, 393216, 7, 524298, 393216, 7, 589834, 393216, 7, -262133, 393216, 7, -196597, 393216, 7, -131061, 393216, 7, -65525, 393216, 7, 11, 131072, 7, 65547, 131072, 7, 131083, 131072, 7, 196619, 131072, 7, 262155, 131072, 7, 327691, 131072, 7, 393227, 393216, 7, 458763, 393216, 7, 524299, 393216, 7, 589835, 393216, 7, -262132, 393216, 7, -196596, 393216, 7, -131060, 393216, 7, -65524, 393216, 7, 12, 393216, 7, 65548, 131072, 7, 131084, 131072, 7, 196620, 131072, 7, 262156, 131072, 7, 327692, 393216, 7, 393228, 393216, 7, 458764, 393216, 7, 524300, 393216, 7, 589836, 393216, 7, -262131, 393216, 7, -196595, 393216, 7, -131059, 393216, 7, -65523, 393216, 7, 13, 393216, 7, 65549, 393216, 7, 131085, 393216, 7, 196621, 393216, 7, 262157, 393216, 7, 327693, 393216, 7, 393229, 393216, 7, 458765, 393216, 7, 524301, 393216, 7, 589837, 393216, 7, -131058, 393216, 7, -65522, 393216, 7, 14, 393216, 7, 65550, 393216, 7, 131086, 393216, 7, 196622, 393216, 7, 262158, 393216, 7, 327694, 393216, 7, 393230, 393216, 7, 458766, 393216, 7, -131064, 393216, 7, 458760, 393216, 7, 458759, 131072, 7, 524296, 131072, 7, 589833, 131072, 7, 655370, 131072, 7, 655371, 131072, 7, 655372, 131072, 7, 655373, 131072, 7, 589838, 131072, 7, 524302, 131072, 7, 458767, 131072, 7, 393231, 131072, 7, 327695, 131072, 7, 262159, 131072, 7, 196623, 131072, 7, 131087, 131072, 7, 65551, 131072, 7, 15, 131072, 7, -65521, 131072, 7, -131057, 131072, 7, -196594, 131072, 7, -262130, 131072, 7, -327667, 131072, 7, -327668, 131072, 7, -327669, 131072, 7, -327670, 131072, 7, -262135, 131072, 7, -196600, 131072, 7, -131065, 131072, 7, -65528, 131072, 7, 8, 131072, 7, 65544, 131072, 7, 131080, 131072, 7, 196616, 131072, 7, 262152, 131072, 7, 327688, 131072, 7, 393224, 131072, 7)
+
+[node name="Hab1" parent="ShipGrid" instance=ExtResource("7_8yr63")]
+position = Vector2(897, 256.5)
+
+[node name="Hab2" parent="ShipGrid" instance=ExtResource("7_8yr63")]
+position = Vector2(960, 448.5)
+
+[node name="Hab3" parent="ShipGrid" instance=ExtResource("7_8yr63")]
+position = Vector2(896, 384.5)
 
 [node name="UI" type="CanvasLayer" parent="."]
 

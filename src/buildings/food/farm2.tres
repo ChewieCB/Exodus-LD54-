@@ -1,17 +1,19 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bfedsax4b6dse"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bfedsax4b6dse"]
 
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_ndhch"]
+[ext_resource type="Texture2D" uid="uid://cwfj12lst2m3s" path="res://assets/buildings/hydroponics_bay.png" id="2_jlhwk"]
 
 [resource]
 script = ExtResource("1_ndhch")
 name = "Hydroponics Bay"
 type = 1
+sprite = ExtResource("2_jlhwk")
 housing_prod = 0
 food_prod = 7
 water_prod = 0
 air_prod = 0
-resource_cost = 0
-people_cost = 0
+resource_cost = 4
+people_cost = 4
 refund_value = 0
 construction_time = 5.0
-destruction_time = 0.0
+destruction_time = 0

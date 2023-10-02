@@ -25,11 +25,6 @@ position = Vector2(32, -32)
 position = Vector2(32, 0)
 shape = SubResource("RectangleShape2D_0tb0d")
 
-[node name="Debug" type="Label" parent="."]
-offset_left = 64.0
-offset_right = 104.0
-offset_bottom = 23.0
-
 [node name="BuildTimerUI" parent="." instance=ExtResource("4_lpufm")]
 offset_left = 43.0
 offset_right = 83.0

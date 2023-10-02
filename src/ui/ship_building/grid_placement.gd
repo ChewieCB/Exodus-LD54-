@@ -80,11 +80,14 @@ func is_outside_gridmap(coord: Vector2) -> bool:
 
 
 func place_building():
-	current_building.set_building_placed()
-	var tmp_building = current_building
-	previous_rotation = current_building.rotation
-	current_building = null
-	get_new_building()
+	if ResourceManager.worker_amount >= current_building.data.people_cost:
+		current_building.set_building_placed()
+		var tmp_building = current_building
+		previous_rotation = current_building.rotation
+		current_building = null
+		get_new_building()
+	else:
+		print("Not enough workers to place " + current_building.data.name)
 
 
 func stop_building_preview():
