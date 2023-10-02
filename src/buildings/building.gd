@@ -73,7 +73,10 @@ func deconstruct_in_progress():
 func _physics_process(delta):
 	if Input.is_action_just_pressed("cancel_place_building"):
 		if is_selected and can_delete and not preview:
-			set_building_remove()
+			if is_deconstructing:
+				cancel_building_remove()
+			else:
+				set_building_remove()
 			
 
 func _process(delta):
@@ -140,6 +143,14 @@ func set_building_remove():
 	else:
 		BuildingManager.emit_signal("not_enough_workers")
 		SoundManager.play_sound(cant_place_sfx, "SFX")
+
+
+func cancel_building_remove():
+	is_deconstructing = false
+	build_timer_ui.visible = false
+	ResourceManager.retrieve_workers(self)
+	SoundManager.play_sound(build_finish_sfx, "SFX")
+	sprite.material.set_shader_parameter("mode", 0)
 
 
 func set_original_color():
