@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c6s7o88tyavpj"]
+[gd_scene load_steps=16 format=3 uid="uid://c6s7o88tyavpj"]
 
 [ext_resource type="PackedScene" uid="uid://cu7ivg1u3vbhl" path="res://src/ui/main_screen/MainUI.tscn" id="1_21fy4"]
 [ext_resource type="Script" path="res://src/ui/ship_building/ship_building_view.gd" id="1_ae44n"]
@@ -35,6 +35,10 @@ scale_min = 0.13
 scale_max = 0.5
 color_ramp = SubResource("GradientTexture1D_5aixr")
 
+[sub_resource type="Gradient" id="Gradient_isfht"]
+offsets = PackedFloat32Array(0, 0.295455, 0.736364, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.835294, 1, 1, 1, 0.862745, 1, 1, 1, 0)
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4bwrg"]
 texture = ExtResource("2_q8rua")
 texture_region_size = Vector2i(64, 64)
@@ -64,6 +68,8 @@ scale = Vector2(423.125, 231.219)
 texture = ExtResource("2_jcwrl")
 
 [node name="StarGPUParticles2D" type="GPUParticles2D" parent="Space"]
+process_mode = 4
+visible = false
 position = Vector2(-7.05229, 0.155697)
 scale = Vector2(0.5, 0.5)
 amount = 171
@@ -73,6 +79,25 @@ lifetime = 8.0
 explosiveness = 0.3
 randomness = 0.5
 visibility_rect = Rect2(0, 0, 0, 0)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Space"]
+position = Vector2(-7.0192, 1.15042)
+amount = 64
+lifetime = 8.0
+explosiveness = 0.3
+randomness = 0.3
+texture = ExtResource("3_74hi2")
+emission_shape = 3
+emission_rect_extents = Vector2(15, 10)
+direction = Vector2(-1, 0)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 0.5
+initial_velocity_max = 2.0
+angular_velocity_min = -30.0
+angular_velocity_max = 30.0
+scale_amount_min = 0.25
+color_ramp = SubResource("Gradient_isfht")
 
 [node name="EventImage" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0)
