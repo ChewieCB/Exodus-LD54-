@@ -12,7 +12,7 @@ func _ready():
 	ResourceManager.housing_amount = 0
 	ResourceManager.food_amount = 200
 	ResourceManager.water_amount = 300
-	ResourceManager.air_amount = 150
+	ResourceManager.air_amount = 300
 	#
 	TickManager.tick_changed.connect(_update_star_particles)
 	#
@@ -38,9 +38,12 @@ func tutorial_tracker(type: Building.TYPES):
 		EventManager.play_specific_event("tutorial2_event")
 		EventManager.tutorial_progress = 1
 		return
-	if n_hab_built >= 2 and EventManager.tutorial_progress == 1:
-		EventManager.play_specific_event("tutorial3_event")
-		EventManager.tutorial_progress = 2
+	if n_hab_built >= 2:
+		if EventManager.tutorial_progress == 1:
+			EventManager.play_specific_event("tutorial3_event")
+			EventManager.tutorial_progress = 2
+		elif EventManager.tutorial_progress == -1:
+			EventManager.play_specific_event("disabled_tutorial_event")
 		return
 
 func _update_star_particles(tick_speed, is_paused):

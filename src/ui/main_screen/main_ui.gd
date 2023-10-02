@@ -91,4 +91,4 @@ func _on_dialogic_signal(arg: String):
 
 
 func change_objective_label(text: String):
-	objective_label.text = "Object: " + text
+	objective_label.text = "Objective: " + text

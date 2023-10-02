@@ -34,10 +34,14 @@ gdscript/warnings/unused_parameter=0
 [dialogic]
 
 variables={
-"air": "",
-"food": "",
-"population": "",
-"water": ""
+"air": "0",
+"choice1_check": "false",
+"choice2_check": "false",
+"choice3_check": "false",
+"choice4_check": "false",
+"food": "0",
+"population": "0",
+"water": "0"
 }
 settings/text_speed=0.01
 text/skippable=true
@@ -69,6 +73,7 @@ layout/styles={
 }
 }
 layout/default_style="Duped Default"
+choices/def_false_behaviour=1
 
 [display]
 

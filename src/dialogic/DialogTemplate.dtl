@@ -1,21 +1,12 @@
-VAR {population} -= 3
+VAR {population} = 3
+VAR {water} = 5
+VAR {food} = 5
+VAR {choice1_check} = "false"
+if {food} >= 5:
+	if {population} > 3:
+		VAR {choice1_check} = "true"
 You received a signal after passed through an Earth-like planet. The signal need to be decrypted before you understand it.
-- Decrypt it
-	It's a signal asking for help. Look like a spaceship crashed onto this place.
-	- Send a squad to help (Required 3 people, cost 1 Food, 1 Water) [if {population} > 3 && ]
-		Your squad successfully rescued them, but to your horror, you discovered they are infected with some kind of space plague. And your rescue squad may be already infected now, you never know.
-		- Abandon them all, not worth the risk (Lost 2 people)
-			You ditched everyone. What a tragedy, but you cannot risk the colony.
-			You lost 2 people.
-		- Abandon the refugee, let the squad back
-			Let's hope they are not infected yet.
-		- Abandon the refugee, treat the squad (Cost 2 Food, 2 Water)
-			You can't just let your citizen die, you will treat them. The refugee? Nah, not worth it.
-			You lost 2 Food, 2 Water.
-		- Try to save all of them, give everyone proper treatment (Cost 6 Food, 6 Water, gain 5 people)
-			We are all human here. Let try to help each other.
-			You lost 6 Food, 6 Water. You gained 5 People.
-	- Ignore and move on
-		The ship don't have space nor resource for more people. Let's move on.
+- Decrypt it (required 5 food and 3 people) [if {choice1_check} == "true"]
+	You decrypted it
 - Ignore and move on
 	You ignored the signal and move on.

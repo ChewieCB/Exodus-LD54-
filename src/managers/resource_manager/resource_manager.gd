@@ -134,7 +134,7 @@ func _ready() -> void:
 	#
 	pop_housing_cost = 1
 	pop_food_cost = 2
-	pop_water_cost = 3
+	pop_water_cost = 2
 	pop_air_cost = 1
 	# Thresholds to alert the player to low resource
 	housing_low_threshold = 0
