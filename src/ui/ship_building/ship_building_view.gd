@@ -7,7 +7,7 @@ func _ready():
 	# Set initial resources
 	ResourceManager.housing_amount = 0
 	ResourceManager.food_amount = 50
-	ResourceManager.water_amount = 140
+	ResourceManager.water_amount = 250
 	ResourceManager.air_amount = 200
 	#
 	TickManager.tick_changed.connect(_update_star_particles)
