@@ -17,7 +17,7 @@ func _ready():
 	ui_sfx_volume_slider.value = db_to_linear(
 		AudioServer.get_bus_volume_db(AudioServer.get_bus_index("UI"))
 	) * 100
-	var music = load("res://assets/audio/music/ld54-concept1-0.0.1.mp3")
+	var music = load("res://assets/audio/music/ld54-bgm-medley-no-alarms-1.1.mp3")
 	SoundManager.play_music(music, 0.2, "Music")
 	ScreenTransitionManager.fade_in(0.8)
 	await ScreenTransitionManager.transitioned
