@@ -62,4 +62,5 @@ func _update_status(available_workers):
 
 func _on_button_pressed():
 	BuildingManager._build(building_object)
+	button.release_focus()
 		
