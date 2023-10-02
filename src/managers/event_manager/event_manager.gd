@@ -45,7 +45,7 @@ func get_random_element_from_array(options: Array):
 
 
 func get_random_event():
-	var event_name = get_random_element_from_array(["plague_planet_event"])
+	var event_name = get_random_element_from_array(["resource_rich_planetoid"])
 	var event_source_text = call(event_name)
 	var events : Array = event_source_text.split('\n')
 	var timeline : DialogicTimeline = DialogicTimeline.new()
@@ -94,6 +94,44 @@ func disable_tutorial():
 	tutorial_progress = -1
 	change_objective_label("Survive")
 
+func resource_rich_planetoid():
+	var required_resource = randi_range(10, 20)
+	var mined_resource = randi_range(10, 30)
+	var big_mined_resource = randi_range(40, 80)
+	var rm_food = ResourceManager.food_amount
+	var rm_water = ResourceManager.water_amount
+	var rm_air = ResourceManager.air_amount
+	var event_source_text = """
+	set {food} = {rm_food}
+	set {water} = {rm_water}
+	set {air} = {rm_air}
+	Join ExecutiveOfficer 0
+	ExecutiveOfficer (Normal): Captain, our mid-range scanners have picked up a planetoid. Probe survey has identified large deposits of oxygen and frozen water.
+	A slight course correction would have us intercept the planetoid with minimal effort, and we could mine the largest and most accessible surface deposits. What your order?
+	- Chart a course. We need those minerals (Cost {required_resource} Food, Water and Air). [if {food} >= {required_resource} and {water} >= {required_resource} and {air} >= {required_resource}]
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "{required_resource}"]" single_use="true"]
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{required_resource}"]" single_use="true"]
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "{required_resource}"]" single_use="true"]
+		You lost {required_resource} Food, Water and Air.
+		set {chance} = range(1,100).pick_random()
+		# 50% chance success
+		if {chance} >= 50:
+			ExecutiveOfficer (Normal): The planetoid was particularly rich, Captain, and we found several accessible veins near the surface. Our supplies are looking much better.
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{big_mined_resource}"]" single_use="true"]
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "{big_mined_resource}"]" single_use="true"]
+			You gained {big_mined_resource} Water and Air.
+		else:
+			ExecutiveOfficer (Normal): Our engineers know their stuff, Captain. We've managed to recover a healthy haul of resources from the planetoid. 
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{mined_resource}"]" single_use="true"]
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "{mined_resource}"]" single_use="true"]
+			You gained {mined_resource} Water and Air.
+	- We have no time. Continue on our present course.
+		ExecutiveOfficer (Normal): Yes, Captain. I've passed the word onto navigation and we are holding course.
+	Leave ExecutiveOfficer
+	[signal arg="end_event"]
+	"""
+	event_source_text = event_source_text.format({"required_resource"=required_resource, "mined_resource"=mined_resource, "big_mined_resource"=big_mined_resource, "rm_food"=rm_food, "rm_water"=rm_water, "rm_air"=rm_air})
+	return event_source_text
 
 func distress_signal_detected() -> String:
 	change_event_image("res://assets/event/Ship_wreak_Pixel.png")
