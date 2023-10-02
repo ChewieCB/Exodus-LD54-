@@ -1,20 +1,24 @@
 @tool
-extends CenterContainer
+extends MarginContainer
 
 @export var building_object: PackedScene
 
-@onready var name_label = $VBoxContainer/BuildingName
-@onready var icon = $VBoxContainer/BuildingIcon
-@onready var production_label = $VBoxContainer/HBoxContainer/BuildingProd
-@onready var production_icon = $VBoxContainer/HBoxContainer/TextureRect
-@onready var button = $Button
+@onready var name_label = $CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/NameContainer/BuildingName
+@onready var worker_cost_label = $CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer/WorkersContainer/HBoxContainer/BuildingCost
+@onready var time_cost_label = $CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer/TimeContainer/HBoxContainer/BuildingTime
+@onready var icon = $CenterContainer/HBoxContainer/MarginContainer2/BuildingIcon
+@onready var production_label = $CenterContainer/HBoxContainer/VBoxContainer/MarginContainer3/HBoxContainer/BuildingProd
+@onready var production_icon = $CenterContainer/HBoxContainer/VBoxContainer/MarginContainer3/HBoxContainer/TextureRect
+@onready var button = $CenterContainer/MarginContainer/Button
 
 var building_cost
 
 
 func _ready():
 	var building = building_object.instantiate()
-	name_label.text = "{0} ({1})".format([building.data.name, building.data.people_cost])
+	name_label.text = str(building.data.name)
+	worker_cost_label.text = str(building.data.people_cost)
+	time_cost_label.text = str(building.data.construction_time)
 	icon.texture = building.data.sprite
 	
 	ResourceManager.workers_changed.connect(_update_status)

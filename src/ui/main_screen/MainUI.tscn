@@ -22,7 +22,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [-350]
+"values": [-450]
 }
 
 [sub_resource type="Animation" id="Animation_sektw"]
@@ -38,7 +38,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(0.329877, 1),
 "update": 0,
-"values": [164, -350]
+"values": [164, -450]
 }
 
 [sub_resource type="Animation" id="Animation_aef8j"]
@@ -54,7 +54,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(0.287175, 1),
 "update": 0,
-"values": [-350, 164]
+"values": [-450, 164]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pifv8"]
