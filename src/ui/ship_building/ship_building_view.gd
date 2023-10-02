@@ -49,6 +49,7 @@ func tutorial_tracker(type: Building.TYPES):
 			EventManager.tutorial_progress = 2
 		return
 
+
 func _update_star_particles(tick_speed, is_paused):
 	var tween = get_tree().create_tween()
 	if is_paused:

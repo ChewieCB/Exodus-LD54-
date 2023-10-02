@@ -88,6 +88,17 @@ func _on_start_event(event_name: String):
 	build_menu.visible = false
 
 
+func _open_build_menu():
+	build_show_toggle.visible = true
+	build_menu.visible = true
+	anim_player.play("show_build_menu")
+	build_menu_open = true
+	ship_grid.visible = true
+	var tween = get_tree().create_tween()
+	tween.parallel().tween_property(camera, "global_position", ship_sprite.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
+	tween.parallel().tween_property(camera, "zoom", Vector2(0.6, 0.6), 0.5).set_trans(Tween.TRANS_LINEAR)
+
+
 func _on_dialogic_signal(arg: String):
 	match arg:
 		"end_event":
@@ -101,10 +112,30 @@ func _on_dialogic_signal(arg: String):
 			build_show_toggle.visible = true
 			build_menu.visible = true
 
-			TickManager.start_ticks()
+			TickManager._set_tick_rate(TickManager.SLOW_TICK_SPEED)
 
 			ResourceManager.check_if_all_crew_died()
 			EventManager.check_if_victory()
+		
+		# Hack to end an event with the build menu open for tutorials and such
+		"end_event_build":
+			var tween = get_tree().create_tween()
+			if event_image:
+				tween.tween_property(event_image, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
+				
+			tween.parallel().tween_property(camera, "global_position", ship_sprite.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
+			tween.parallel().tween_property(camera, "zoom", Vector2(0.6, 0.6), 0.5).set_trans(Tween.TRANS_LINEAR)
+			
+			build_show_toggle.visible = true
+			build_menu.visible = true
+			
+			TickManager._set_tick_rate(TickManager.SLOW_TICK_SPEED)
+			
+			ResourceManager.check_if_all_crew_died()
+			EventManager.check_if_victory()
+		
+		"open_build_screen":
+			_open_build_menu()
 
 func change_event_image(texture_path: String):
 	if texture_path == "":
