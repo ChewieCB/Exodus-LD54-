@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cnjv60xkxx8oq"]
+[gd_scene load_steps=7 format=3 uid="uid://cnjv60xkxx8oq"]
 
 [ext_resource type="Script" path="res://src/ui/building_ui/mouse_popup.gd" id="1_1alqn"]
 
@@ -34,10 +34,44 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_igsgf"]
+resource_name = "show_popup_hold"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Margin/MarginContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.406, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_he4xp"]
+resource_name = "popup_hide"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Margin/MarginContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(2.14355, 0.406),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_d2w2k"]
 _data = {
 "RESET": SubResource("Animation_h7ahr"),
-"show_popup": SubResource("Animation_cwxhu")
+"popup_hide": SubResource("Animation_he4xp"),
+"show_popup": SubResource("Animation_cwxhu"),
+"show_popup_hold": SubResource("Animation_igsgf")
 }
 
 [node name="MousePopup" type="Node2D"]

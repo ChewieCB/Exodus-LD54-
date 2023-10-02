@@ -21,6 +21,9 @@ signal stopped_suffocating
 signal resource_low(resource)
 signal game_over(resource)
 
+signal ui_hover_show(text)
+signal ui_hover_hide
+
 var housing_alert_shown = false
 var food_alert_shown = false
 var water_alert_shown = false
