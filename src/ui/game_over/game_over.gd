@@ -26,6 +26,9 @@ func _game_over(resource):
 			resource_str = "air"
 	flavour_text.text = "You ran out of {0}.".format([resource_str])
 
+	if resource == ResourceManager.RESOURCE_TYPE.POPULATION:
+		flavour_text.text = "All of your crew died."
+
 
 func _on_restart_button_pressed():
 	ScreenTransitionManager.fade_out(0.7)

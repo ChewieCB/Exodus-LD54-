@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://umfswvb0k6d6" path="res://assets/sprite/star.png" id="3_74hi2"]
 [ext_resource type="Script" path="res://src/ui/ship_building/grid_placement.gd" id="3_tehqe"]
 [ext_resource type="PackedScene" uid="uid://3slp8ujgyckn" path="res://src/buildings/hab/Hab1.tscn" id="7_8yr63"]
-[ext_resource type="Texture2D" uid="uid://c723ddgavfsnp" path="res://assets/backgrounds/planet_concept_1.png" id="8_3ttdw"]
+[ext_resource type="Texture2D" uid="uid://cygmypnooav7y" path="res://assets/event/Ship_wreak_Pixel.png" id="8_p8t6q"]
 
 [sub_resource type="Gradient" id="Gradient_5qkd4"]
 offsets = PackedFloat32Array(0, 0.264706, 0.759804, 1)
@@ -74,6 +74,12 @@ explosiveness = 0.3
 randomness = 0.5
 visibility_rect = Rect2(0, 0, 0, 0)
 
+[node name="EventImage" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(4736, -512)
+scale = Vector2(12, 12)
+texture = ExtResource("8_p8t6q")
+
 [node name="ShipSprite" type="Sprite2D" parent="."]
 position = Vector2(1473, 246)
 texture = ExtResource("2_sj33g")
@@ -108,12 +114,6 @@ position = Vector2(2336, 160)
 
 [node name="FarViewMarker" type="Marker2D" parent="."]
 position = Vector2(4000, 77)
-
-[node name="EventImage" type="Sprite2D" parent="."]
-modulate = Color(1, 1, 1, 0)
-position = Vector2(4736, -512)
-scale = Vector2(12, 12)
-texture = ExtResource("8_3ttdw")
 
 [node name="UI" type="CanvasLayer" parent="."]
 

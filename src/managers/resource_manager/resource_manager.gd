@@ -275,6 +275,12 @@ func _on_tick():
 	update_resource_tick()
 
 
+func check_if_all_crew_died():
+	if population_amount <= 0:
+		population_amount = 0
+		emit_signal("game_over", RESOURCE_TYPE.POPULATION)
+
+
 func change_resource_from_event(resource: String, amount_str: String):
 	var amount = int(amount_str)
 	match resource:
@@ -287,7 +293,7 @@ func change_resource_from_event(resource: String, amount_str: String):
 		"population":
 			if amount > 0:
 				var empty_spot = housing_amount - population_amount
-				if amount > empty_spot:
+				if amount <= empty_spot:
 					population_amount += amount
-				else:
-					population_amount += empty_spot
+			else:
+				population_amount += amount

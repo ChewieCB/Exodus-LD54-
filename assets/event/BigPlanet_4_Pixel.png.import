@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c7jiijivxnhaj"
-path="res://.godot/imported/Planet_4_Pixel.png-9a9e1c040f7153ee6fb646143c0620c2.ctex"
+path="res://.godot/imported/BigPlanet_4_Pixel.png-96788a047dd1cbd8da461c280469e103.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/event/Planet_4_Pixel.png"
-dest_files=["res://.godot/imported/Planet_4_Pixel.png-9a9e1c040f7153ee6fb646143c0620c2.ctex"]
+source_file="res://assets/event/BigPlanet_4_Pixel.png"
+dest_files=["res://.godot/imported/BigPlanet_4_Pixel.png-96788a047dd1cbd8da461c280469e103.ctex"]
 
 [params]
 
