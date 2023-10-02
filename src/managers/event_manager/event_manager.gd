@@ -570,6 +570,7 @@ func tutorial1_event() -> String:
 	
 	- Start building 2 more food production buildings.
 		[call_node path="EventManager" method="change_objective_label" args="["Build 2 Food building"]" single_use="true"]
+		[signal arg="open_build_screen"]
 		Please click on the ship or the build button, navigate to Food tab, then choose the Vertical Farm.
 		The number 2 next to the building name mean it required 2 workers to build it. You will able to build bigger building after recruited more crew members.
 		[signal arg="end_event_build"]
@@ -589,9 +590,10 @@ func tutorial2_event() -> String:
 	ExecutiveOfficer (Normal): Please build two more habitation blocks so we can take on more crew.
 	- Start building 2 more habitation buildings.
 		[call_node path="EventManager" method="change_objective_label" args="["Build 2 Habitation building"]" single_use="true"]
+		[signal arg="open_build_screen"]
 		Leave ExecutiveOfficer
 		Similiar to the food production buildings, open the Build menu, navigate to first tab and choose either Hab Block or Dormitory.
-	[signal arg="end_event_build"]
+		[signal arg="end_event_build"]
 	"""
 	return event_source_text
 
