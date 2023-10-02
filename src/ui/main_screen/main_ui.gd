@@ -11,12 +11,14 @@ extends Control
 @onready var build_show_toggle: MarginContainer = $BuildShowToggle
 @onready var build_menu: MarginContainer = $BuildMenu
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
+@onready var objective_label: Label = $ObjectiveLabel
 
 var build_menu_open = false
 
 func _ready() -> void:
 	Dialogic.signal_event.connect(_on_dialogic_signal)
 	EventManager.start_event.connect(_on_start_event)
+	EventManager.request_change_objective_label.connect(change_objective_label)
 
 
 func _on_build_button_pressed():
@@ -86,3 +88,7 @@ func _on_dialogic_signal(arg: String):
 			build_menu.visible = true
 
 			TickManager.start_ticks()
+
+
+func change_objective_label(text: String):
+	objective_label.text = "Object: " + text

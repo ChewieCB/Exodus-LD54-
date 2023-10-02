@@ -10,6 +10,7 @@ var tutorial_progress = 0 # -1 = disable tutorial, 0 = enable tutorial
 signal building_finished
 signal start_event
 signal request_change_event_image
+signal request_change_objective_label
 
 func finished_building(type: Building.TYPES):
 	emit_signal("building_finished", type)
@@ -80,6 +81,7 @@ func tutorial1_event() -> String:
 	The ship's crew capacity is 3. Crew can be housed in hab blocks. Crew need air, water and food. The more crew you have, the more air, water and food they need. You can modify your ship with structrues that increase air, water or food production.
 	We have plenty of air and water for this crew size, but our food stocks are running low. Build two food production buildings to increase our food production.
 	- Start building 2 more food production buildings.
+		[call_node path="EventManager" method="change_objective_label" args="["Build 2 Food building"]" single_use="true"]
 		Please click on the ship or the build button, navigate to Food tab, then choose the Vertical Farm.
 		The number 2 next to the building name mean it required 2 workers to build it. You will able to build bigger building after recruited more crew members.
 	[signal arg="end_event"]
@@ -89,9 +91,11 @@ func tutorial1_event() -> String:
 
 func tutorial2_event() -> String:
 	var event_source_text = """
+	[call_node path="EventManager" method="change_objective_label" args="["Survive"]" single_use="true"]
 	Greetings, captain. Our food production is going smoothly, but we need more crew to make bigger modifications to the ship. We need more crew quarters to increase our crew numbers.
 	Build two more habitation blocks so we can take on more crew.
 	- Start building 2 more habitation buildings.
+		[call_node path="EventManager" method="change_objective_label" args="["Build 2 Habitation building"]" single_use="true"]
 		Similiar to the food production buildings, open the Build menu, navigate to first tab and choose either Hab Block or Dormitory.
 	[signal arg="end_event"]
 	"""
@@ -100,12 +104,14 @@ func tutorial2_event() -> String:
 func tutorial3_event() -> String:
 	var n_survivor = randi_range(1, 4)
 	var event_source_text = """
+	[call_node path="EventManager" method="change_objective_label" args="["Survive"]" single_use="true"]
 	Greetings, captain. We have picked up a distress signal from a lifeboat. The lifeboat has {n_survivor} people on board and is running low on oxygen. The distress signal says they'll join the crew of any ship who saves them.
 	We now have the accommodation facilities to take on extra crew. There are no other ships in the area. We should help and accept their offer to join us, as more crew means we can make more modifications to our ship.
 	- Contact the lifeboat and welcome them into the crew.
-		Good work, Captain. We now have more crew, but more crew means we need to produce more oxygen, water and food.
-		From now on, it's important we balance resource production with each increase in the number of crew. We have limited resources and limited space. Choose wisely!
 		[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "{n_survivor}"]" single_use="true"]
+		You recruited {n_survivor} population.
+		Good work, Captain. We now have more crew, but more crew means we need to produce more oxygen, water and food. From now on, it's important we balance resource production with each increase in the number of crew. We have limited resources and limited space. Choose wisely!
+		[call_node path="EventManager" method="change_objective_label" args="["Survive"]" single_use="true"]
 	[signal arg="end_event"]
 	"""
 	event_source_text = event_source_text.format({"n_survivor"=n_survivor})
@@ -163,5 +169,8 @@ func play_specific_event(event_name: String) -> Node:
 	return dialog
 
 
-func replace_event_image(texture_path: String):
+func change_event_image(texture_path: String):
 	emit_signal("request_change_event_image", texture_path)
+
+func change_objective_label(text: String):
+	emit_signal("request_change_objective_label", text)
