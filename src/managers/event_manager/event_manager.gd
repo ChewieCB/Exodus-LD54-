@@ -503,14 +503,12 @@ func families_seeking_passage() -> String:
 	ExecutiveOfficer (Normal): Captain, we've been approached by Faroq Khan, the leader of a group of families who are seeking passage. 
 	ExecutiveOfficer (Normal): They have women and children, but they come from a hardy colony world and are no strangers to hard work. They could adapt to life on the ship.
 	ExecutiveOfficer (Normal): What should we do?
-	
 	- Pass on my complements, to Mr Khan. Tell him our berth number and advise him to make haste.
 		ExecutiveOfficer (Normal): Mr Khan and the other refugees have joined the crew. Reports from section leaders advise they are tough and willing to learn. 
 		ExecutiveOfficer (Normal): They are a fine addition to the crew.
 		Leave ExecutiveOfficer
 		[call_node path="ResourceManager" method="change_resource_from_event" args="["people", "3"]" single_use="true"]
 		Gained 3 crew.
-	
 	- Tell Mr Khan we have no room. He'll have to look for another ship.
 		ExecutiveOfficer (Normal): Captain, we have departed the planet. The refugees will have to find someone else.
 	[signal arg="end_event"]

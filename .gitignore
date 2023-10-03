@@ -3,7 +3,7 @@
 .import/
 dist/
 .godot/
-
+build_html/
 
 # Mono-specific ignores
 .mono/
