@@ -45,7 +45,6 @@ theme_override_constants/margin_right = 32
 layout_mode = 2
 
 [node name="Habitation" type="TabBar" parent="MarginContainer2/TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/TabContainer/Habitation"]
@@ -120,6 +119,7 @@ layout_mode = 2
 building_object = ExtResource("18_e2gxg")
 
 [node name="Water" type="TabBar" parent="MarginContainer2/TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/TabContainer/Water"]

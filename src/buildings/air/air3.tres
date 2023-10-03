@@ -5,15 +5,15 @@
 
 [resource]
 script = ExtResource("1_hysrt")
-name = "Recirculator"
+name = "Oxygen Synthesiser"
 type = 3
 sprite = ExtResource("2_og6ot")
 housing_prod = 0
 food_prod = 0
 water_prod = 0
-air_prod = 4
-resource_cost = 5
-people_cost = 5
+air_prod = 10
+resource_cost = 12
+people_cost = 12
 refund_value = 0
-construction_time = 5.0
+construction_time = 11
 destruction_time = 0

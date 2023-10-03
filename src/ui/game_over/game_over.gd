@@ -42,7 +42,7 @@ func _victory():
 	anim_player.play("game_over")
 	var resource_str
 	game_over_label.text = "Victory"
-	flavour_text.text = "You survived. Congratulation"
+	flavour_text.text = "You survived. Congratulations"
 
 
 func _on_restart_button_pressed():

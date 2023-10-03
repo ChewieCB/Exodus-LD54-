@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/ld54-bgm-medley-no-alarms-1.1.mp3-89552124d0e
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0
