@@ -36,7 +36,19 @@ enum TYPE {
 	set(value):
 		alert_text = value
 		label.text = alert_text
-@export var has_countdown: bool = false
+@export var has_countdown: bool = false:
+	set(value):
+		has_countdown = value
+		if has_countdown:
+			countdown_sep.visible = true
+			countdown.visible = true
+		else:
+			countdown_sep.visible = false
+			countdown.visible = false
+@export var countdown_value: int = 10:
+	set(value):
+		countdown_value = value
+		countdown_text.text = str(countdown_value)
 
 
 func _ready():

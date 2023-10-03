@@ -170,14 +170,6 @@ offset_right = 900.0
 offset_bottom = 46.0
 text = "Play Random Event"
 
-[node name="EventButton2" type="Button" parent="."]
-layout_mode = 0
-offset_left = 743.0
-offset_top = 15.0
-offset_right = 900.0
-offset_bottom = 46.0
-text = "Play Random Event"
-
 [node name="FactButton" type="Button" parent="."]
 layout_mode = 0
 offset_left = 918.0
@@ -218,5 +210,4 @@ autowrap_mode = 2
 
 [connection signal="pressed" from="BuildShowToggle/Button" to="." method="_on_build_button_pressed"]
 [connection signal="pressed" from="EventButton" to="." method="_on_play_dialog_pressed"]
-[connection signal="pressed" from="EventButton2" to="." method="_on_play_dialog_pressed"]
 [connection signal="pressed" from="FactButton" to="." method="_on_listen_fact_pressed"]

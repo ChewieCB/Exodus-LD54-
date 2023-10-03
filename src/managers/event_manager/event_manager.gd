@@ -60,7 +60,7 @@ var events = [
 
 func get_next_event():
 #	var event = events[current_event_idx]
-	play_specific_event("hab_riot")
+	play_specific_event("cheat_menu_event")
 #	if current_event_idx < 9:
 #		current_event_idx += 1
 	
