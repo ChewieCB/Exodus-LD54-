@@ -250,6 +250,7 @@ expand_margin_right = 5.0
 expand_margin_bottom = 5.0
 
 [node name="DefaultDialogNode" type="CanvasLayer"]
+layer = 2
 script = ExtResource("1")
 box_animation_in = 1
 box_animation_out = 1
@@ -261,7 +262,7 @@ layer = -1
 script = ExtResource("5_uvb2c")
 
 [node name="Portraits" type="CanvasLayer" parent="."]
-layer = 0
+layer = 2
 
 [node name="Portraits" type="Control" parent="Portraits"]
 unique_name_in_owner = true

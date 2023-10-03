@@ -22,6 +22,7 @@ var placeable = false
 @export var placed = false
 
 # Building process vars
+var is_constructing: bool = false
 var ticks_left_to_build: int
 @export var building_complete: bool = false
 
@@ -57,6 +58,8 @@ func build_in_progress():
 	sprite.material.set_shader_parameter("shine_color", pulse_colour)
 	sprite.material.set_shader_parameter("full_pulse_cycle", true)
 	sprite.material.set_shader_parameter("mode", 1)
+	#
+	BuildingManager.construction_queue.push_front(self)
 
 
 func deconstruct_in_progress():
@@ -68,6 +71,8 @@ func deconstruct_in_progress():
 	sprite.material.set_shader_parameter("shine_color", deconstruct_colour)
 	sprite.material.set_shader_parameter("full_pulse_cycle", true)
 	sprite.material.set_shader_parameter("mode", 1)
+	#
+	BuildingManager.construction_queue.push_front(self)
 
 
 func _physics_process(delta):
@@ -92,12 +97,13 @@ func _process(delta):
 func _on_tick():
 	if not placed:
 		return
-	if not building_complete:
+	if not building_complete and is_constructing:
 		if ticks_left_to_build <= 1:
 			building_complete = true
 			build_timer_ui.visible = false
 			ResourceManager.add_building(self)
 			ResourceManager.retrieve_workers(self)
+			BuildingManager.construction_queue.erase(self)
 			EventManager.finished_building(type)
 			SoundManager.play_sound(build_finish_sfx, "SFX")
 			sprite.material.set_shader_parameter("mode", 0)
@@ -108,6 +114,7 @@ func _on_tick():
 		if ticks_left_to_delete <= 1:
 			build_timer_ui.visible = false
 			ResourceManager.retrieve_workers(self)
+			BuildingManager.construction_queue.erase(self)
 			SoundManager.play_sound(build_finish_sfx, "SFX")
 			self.queue_free()
 		else:
@@ -116,6 +123,7 @@ func _on_tick():
 
 
 func set_building_placed():
+	is_constructing = true
 	placed = true
 	preview = false
 	#
@@ -146,10 +154,21 @@ func set_building_remove():
 		SoundManager.play_sound(cant_place_sfx, "SFX")
 
 
-func cancel_building_remove():
+func cancel_building(no_refund=false):
+	is_constructing = false
+	build_timer_ui.visible = false
+	if not no_refund:
+		ResourceManager.retrieve_workers(self)
+	BuildingManager.construction_queue.erase(self)
+	SoundManager.play_sound(build_finish_sfx, "SFX")
+	self.queue_free()
+
+
+func cancel_building_remove(no_refund=false):
 	is_deconstructing = false
 	build_timer_ui.visible = false
-	ResourceManager.retrieve_workers(self)
+	if not no_refund:
+		ResourceManager.retrieve_workers(self)
 	SoundManager.play_sound(build_finish_sfx, "SFX")
 	sprite.material.set_shader_parameter("mode", 0)
 

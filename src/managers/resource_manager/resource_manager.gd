@@ -24,6 +24,8 @@ signal game_over(resource)
 signal ui_hover_show(text)
 signal ui_hover_hide
 
+signal construction_cancelled_lack_of_workers(building_name)
+
 var housing_alert_shown = false
 var food_alert_shown = false
 var water_alert_shown = false
@@ -92,14 +94,34 @@ var population_amount: int:
 		var diff = value - population_amount
 		population_amount = value
 		emit_signal("population_changed", population_amount)
-		# We want to add new population to the worker pool, but only new pop
-		# to avoid resetting already assigned workers
-		if diff > 0:
-			worker_amount = worker_amount + diff
-		elif diff < 0:
-			worker_amount = worker_amount - diff
+		# FIXME - This is probably gonna cause a negative worker number if
+		# we lose pop mid-construction
+		worker_amount += diff
+		available_housing += diff
+
 var worker_amount: int:
 	set(value):
+		# If the value will take us less than 0, we've got workers assigned
+		# to buildings - so cancel the most recent buildings under construction,
+		# and refund the workers until we're at 0 or above.
+		if value < 0:
+			var worker_refund = 0
+			while value + worker_refund < 0:
+				var current_refund = 0
+				var most_recent_building = BuildingManager.construction_queue.pop_front()
+				print(most_recent_building)
+				current_refund = most_recent_building.data.people_cost
+				worker_refund += current_refund
+				# 
+				if most_recent_building.is_constructing:
+					emit_signal("construction_cancelled_lack_of_workers", most_recent_building.data.name)
+					most_recent_building.cancel_building(true)
+				elif most_recent_building.is_deconstructing:
+					emit_signal("construction_cancelled_lack_of_workers", most_recent_building.data.name)
+					most_recent_building.cancel_building_remove(true)
+			# Assign the new value
+			value += worker_refund
+			
 		worker_amount = value
 		emit_signal("workers_changed", worker_amount)
 # Other resources
@@ -243,7 +265,7 @@ func update_resource_tick() -> void:
 
 func can_add_population(value) -> bool:
 	# We can only add population if we have enough housing for it
-	if population_amount + value < housing_amount:
+	if value <= available_housing:
 		return true
 	else:
 		return false

@@ -66,6 +66,7 @@ sources/0 = SubResource("TileSetAtlasSource_4bwrg")
 
 [node name="ShipBuildingView" type="Node2D"]
 script = ExtResource("1_ae44n")
+tutorial_disabled = true
 
 [node name="Space" type="Sprite2D" parent="."]
 self_modulate = Color(0, 0, 0, 1)

@@ -61,7 +61,9 @@ save/autosave_delay=60.0
 text/autopauses={}
 glossary/default_case_sensitive=true
 layout/styles={
-"Default": {},
+"Default": {
+"inherits": ""
+},
 "Duped Default": {
 "export_overrides": {
 "box_animation_in": "2",
