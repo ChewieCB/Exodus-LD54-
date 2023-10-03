@@ -1,7 +1,6 @@
 extends Control
 
-@onready var icon = $CenterContainer/BuildTimerUI/CenterContainer/HBoxContainer/TextureRect
-@onready var label = $CenterContainer/BuildTimerUI/CenterContainer/HBoxContainer/Label
+@onready var label = $CenterContainer/BuildTimerUI/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/Label
 
 
 func _ready():

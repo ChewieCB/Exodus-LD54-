@@ -1,9 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://bp6x36xyoxhh2"]
+[gd_scene load_steps=5 format=3 uid="uid://bp6x36xyoxhh2"]
 
 [ext_resource type="Script" path="res://src/ui/building_ui/build_timer.gd" id="1_gxkl0"]
 [ext_resource type="Texture2D" uid="uid://2p4jagl32fr1" path="res://assets/ui/icons/16/Clock.png" id="1_rdy05"]
+[ext_resource type="FontFile" uid="uid://4r5r4qviqq2k" path="res://assets/ui/fonts/Improbable.otf" id="3_tv1ep"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5snk0"]
+bg_color = Color(0.192157, 0.192157, 0.192157, 0.792157)
 
 [node name="BuildTimerUI" type="Control"]
+z_index = 1
 layout_mode = 3
 anchors_preset = 0
 offset_left = -64.0
@@ -43,15 +48,33 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/BuildTimerUI/CenterContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer/BuildTimerUI/CenterContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5snk0")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/BuildTimerUI/CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/BuildTimerUI/CenterContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="CenterContainer/BuildTimerUI/CenterContainer/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/BuildTimerUI/CenterContainer/PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 texture = ExtResource("1_rdy05")
-stretch_mode = 3
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Label" type="Label" parent="CenterContainer/BuildTimerUI/CenterContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="CenterContainer/BuildTimerUI/CenterContainer/PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("3_tv1ep")
+theme_override_font_sizes/font_size = 32
 text = "0"
+horizontal_alignment = 1
 vertical_alignment = 1
