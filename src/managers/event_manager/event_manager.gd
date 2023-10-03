@@ -59,10 +59,10 @@ var events = [
 
 
 func get_next_event():
-	var event = events[current_event_idx]
-	play_specific_event(event)
-	if current_event_idx < 9:
-		current_event_idx += 1
+#	var event = events[current_event_idx]
+	play_specific_event("hab_riot")
+#	if current_event_idx < 9:
+#		current_event_idx += 1
 	
 
 func get_random_element_from_array(options: Array):

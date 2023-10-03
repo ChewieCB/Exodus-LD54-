@@ -6,6 +6,8 @@ extends Node2D
 var n_hab_built = 0
 var n_food_built = 0
 
+@export var tutorial_disabled: bool = false
+
 
 func _ready():
 	# Set initial resources
