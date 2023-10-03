@@ -191,7 +191,7 @@ func asteroid_cluster():
 	set {water} = {rm_water}
 	set {air} = {rm_air}
 	Join ExecutiveOfficer 0
-	ExecutiveOfficer (Normal): Captain, navigation charts have identified an asteroid cluster in this sector that was earmarked for mining by the Hurulis Asteroid Prospectors.
+	ExecutiveOfficer (Normal): Aye Captain, navigation charts have identified an asteroid cluster in this sector that was earmarked for mining by the Hurulis Asteroid Prospectors.
 	ExecutiveOfficer (Normal): A probe sent to the cluster has returned with samples of oxygen-rich ores and hydrogen. We can extract these minerals with little effort and synthesize them into breathable oxygen and drinkable water. What are your orders?
 	- Contact navigation and chart a safe course through the cluster
 		Contact navigation and chart a safe course through the cluster, Pressley. Those resources could be a major help.
