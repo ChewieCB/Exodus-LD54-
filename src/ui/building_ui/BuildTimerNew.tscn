@@ -1,16 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://bp6x36xyoxhh2"]
+[gd_scene load_steps=3 format=3 uid="uid://bi7vvpdjcpf8"]
 
-[ext_resource type="Script" path="res://src/ui/building_ui/build_timer.gd" id="1_gxkl0"]
-[ext_resource type="Texture2D" uid="uid://2p4jagl32fr1" path="res://assets/ui/icons/16/Clock.png" id="1_rdy05"]
+[ext_resource type="Script" path="res://src/ui/building_ui/build_timer.gd" id="1_pmelg"]
+[ext_resource type="Texture2D" uid="uid://2p4jagl32fr1" path="res://assets/ui/icons/16/Clock.png" id="2_vy7a8"]
 
-[node name="BuildTimerUI" type="Control"]
+[node name="BuildingUI" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -64.0
 offset_top = -64.0
 offset_right = 64.0
 offset_bottom = 64.0
-script = ExtResource("1_gxkl0")
+script = ExtResource("1_pmelg")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -48,7 +48,7 @@ layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="CenterContainer/BuildTimerUI/CenterContainer/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("1_rdy05")
+texture = ExtResource("2_vy7a8")
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="CenterContainer/BuildTimerUI/CenterContainer/HBoxContainer"]
