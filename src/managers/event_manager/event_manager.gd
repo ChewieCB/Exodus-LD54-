@@ -569,7 +569,7 @@ func tutorial1_event() -> String:
 	
 	Join ExecutiveOfficer 0
 	ExecutiveOfficer (Normal): Welcome captain, my name is Pressley, your executive officer. My job is to assist you running your Galanthir-class hauler. It's a highly modular and adaptable ship from the shipyards at Ursa Majoris.
-	ExecutiveOfficer (Normal): The ship's crew capacity is 3. Crew can be housed in hab blocks. Crew need air, water and food. The more crew you have, the more air, water and food they need. You can modify your ship with structrues that increase air, water or food production.
+	ExecutiveOfficer (Normal): The ship's crew capacity is 3. Crew can be housed in hab blocks. Crew need oxygen, water and food. The more crew you have, the more oxygen, water and food they need. You can modify your ship with structures that increase air, water or food production.
 	ExecutiveOfficer (Normal): We have plenty of air and water for this crew size, but our food stocks are running low. Please build two food production buildings to increase our food production.
 	
 	- Start building 2 more food production buildings.
