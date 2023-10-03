@@ -197,13 +197,6 @@ func _physics_process(delta):
 				emit_signal("water_modifier_changed", water_amount, current_water_modifier)
 			RESOURCE_TYPE.AIR:
 				emit_signal("air_modifier_changed", air_amount, current_air_modifier)
-	
-	# TODO - add UI update here but NOT total recalculation
-	if Input.is_action_just_pressed("DEBUG_add_population"):
-		if can_add_population(1):
-			population_amount += 1
-		else:
-			print("Can't add {0} population, not enough housing!".format(["1"]))
 
 
 func calculate_resource_modifier(resource_type, population) -> void:
