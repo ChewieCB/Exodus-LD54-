@@ -3,7 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://cu7ivg1u3vbhl" path="res://src/ui/main_screen/MainUI.tscn" id="1_21fy4"]
 [ext_resource type="Script" path="res://src/ui/ship_building/ship_building_view.gd" id="1_ae44n"]
 [ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="2_jcwrl"]
-[ext_resource type="Texture2D" uid="uid://dn7d2jgqhgqxf" path="res://src/tests/test_grid_placement/building_placeholders.png" id="2_q8rua"]
 [ext_resource type="Texture2D" uid="uid://umfswvb0k6d6" path="res://assets/sprite/star.png" id="3_74hi2"]
 [ext_resource type="Script" path="res://src/ui/ship_building/grid_placement.gd" id="3_tehqe"]
 [ext_resource type="Texture2D" uid="uid://cmbixfktrvffm" path="res://assets/sprite/ship_colored.png" id="5_gakyr"]
@@ -42,8 +41,11 @@ color_ramp = SubResource("GradientTexture1D_5aixr")
 offsets = PackedFloat32Array(0, 0.295455, 0.736364, 1)
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.835294, 1, 1, 1, 0.862745, 1, 1, 1, 0)
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_jwpig"]
+load_path = "res://.godot/imported/building_placeholders.png-33558c4de24e09b1532856f45371e807.ctex"
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4bwrg"]
-texture = ExtResource("2_q8rua")
+texture = SubResource("CompressedTexture2D_jwpig")
 texture_region_size = Vector2i(64, 64)
 6:7/0 = 0
 6:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)

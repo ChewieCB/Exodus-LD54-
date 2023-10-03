@@ -503,14 +503,12 @@ func families_seeking_passage() -> String:
 	ExecutiveOfficer (Normal): Captain, we've been approached by Faroq Khan, the leader of a group of families who are seeking passage. 
 	ExecutiveOfficer (Normal): They have women and children, but they come from a hardy colony world and are no strangers to hard work. They could adapt to life on the ship.
 	ExecutiveOfficer (Normal): What should we do?
-	
 	- Pass on my complements, to Mr Khan. Tell him our berth number and advise him to make haste.
 		ExecutiveOfficer (Normal): Mr Khan and the other refugees have joined the crew. Reports from section leaders advise they are tough and willing to learn. 
 		ExecutiveOfficer (Normal): They are a fine addition to the crew.
 		Leave ExecutiveOfficer
 		[call_node path="ResourceManager" method="change_resource_from_event" args="["people", "3"]" single_use="true"]
 		Gained 3 crew.
-	
 	- Tell Mr Khan we have no room. He'll have to look for another ship.
 		ExecutiveOfficer (Normal): Captain, we have departed the planet. The refugees will have to find someone else.
 	[signal arg="end_event"]
@@ -569,7 +567,7 @@ func tutorial1_event() -> String:
 	
 	Join ExecutiveOfficer 0
 	ExecutiveOfficer (Normal): Welcome captain, my name is Pressley, your executive officer. My job is to assist you running your Galanthir-class hauler. It's a highly modular and adaptable ship from the shipyards at Ursa Majoris.
-	ExecutiveOfficer (Normal): The ship's crew capacity is 3. Crew can be housed in hab blocks. Crew need air, water and food. The more crew you have, the more air, water and food they need. You can modify your ship with structrues that increase air, water or food production.
+	ExecutiveOfficer (Normal): The ship's crew capacity is 3. Crew can be housed in hab blocks. Crew need oxygen, water and food. The more crew you have, the more oxygen, water and food they need. You can modify your ship with structures that increase air, water or food production.
 	ExecutiveOfficer (Normal): We have plenty of air and water for this crew size, but our food stocks are running low. Please build two food production buildings to increase our food production.
 	
 	- Start building 2 more food production buildings.

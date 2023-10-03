@@ -10,6 +10,7 @@ extends MarginContainer
 @onready var production_label = $CenterContainer/HBoxContainer/VBoxContainer/MarginContainer3/HBoxContainer/BuildingProd
 @onready var production_icon = $CenterContainer/HBoxContainer/VBoxContainer/MarginContainer3/HBoxContainer/TextureRect
 @onready var button = $CenterContainer/MarginContainer/Button
+@onready var production_label_2 = $CenterContainer/HBoxContainer/VBoxContainer/MarginContainer3/HBoxContainer/BuildingProd2
 
 var building_cost
 
@@ -33,6 +34,7 @@ func _ready():
 			production = building.data.housing_prod
 			prod_type_string = "housing"
 			prod_type_icon = load("res://assets/ui/icons/16/Home.png")
+			production_label_2.text = ""
 		Building.TYPES.FoodBuilding:
 			production = building.data.food_prod
 			prod_type_string = "food"
