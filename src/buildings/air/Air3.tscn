@@ -16,7 +16,6 @@ script = ExtResource("1_52nq5")
 data = ExtResource("2_8w2jf")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(1, 0, 0, 1)
 texture = ExtResource("3_p7b8n")
 offset = Vector2(-32, -32)
 
