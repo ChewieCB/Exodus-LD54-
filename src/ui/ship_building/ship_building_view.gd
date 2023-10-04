@@ -19,6 +19,9 @@ func _ready():
 
 	await ScreenTransitionManager.transitioned
 	#
+	if tutorial_disabled:
+		EventManager.tutorial_progress = -1
+	
 	TickManager.start_ticks()
 
 
@@ -65,5 +68,5 @@ func _update_star_particles(tick_speed, is_paused):
 
 
 func _on_start_tutorial_timer_timeout() -> void:
-	if EventManager.tutorial_progress == 0:
+	if EventManager.tutorial_progress == 0 and not tutorial_disabled:
 		EventManager.play_specific_event("tutorial1_event")

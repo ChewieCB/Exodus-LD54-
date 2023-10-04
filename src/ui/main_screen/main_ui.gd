@@ -158,3 +158,7 @@ func change_event_image(texture_path: String):
 
 func change_objective_label(text: String):
 	objective_label.text = "Objective: " + text
+
+
+func _on_events_option_item_selected(index):
+	pass # Replace with function body.
