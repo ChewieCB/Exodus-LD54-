@@ -131,7 +131,8 @@ func _suffocating(ticks_left):
 
 func _hide_all(resource):
 	for _alert in [food_alert, water_alert, air_alert]:
-		_alert.anim_player.play("alert_out")
-		await _alert.anim_player.animation_finished
-		_alert.queue_free()
+		if is_instance_valid(_alert):
+			_alert.anim_player.play("alert_out")
+			await _alert.anim_player.animation_finished
+			_alert.queue_free()
 
