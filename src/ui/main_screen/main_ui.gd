@@ -118,7 +118,7 @@ func _on_dialogic_signal(arg: String):
 			tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(background_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
-			
+
 			build_show_toggle.visible = true
 			build_menu.visible = true
 
@@ -126,22 +126,22 @@ func _on_dialogic_signal(arg: String):
 
 			ResourceManager.check_if_all_crew_died()
 			EventManager.check_if_victory()
-		
+
 		# Hack to end an event with the build menu open for tutorials and such
 		"end_event_build":
 			var tween = get_tree().create_tween()
 			tween.tween_property(background_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 			if event_image:
 				tween.tween_property(event_image, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
-				
+
 			build_show_toggle.visible = true
 			build_menu.visible = true
-			
+
 			time_control_ui._on_speed_1_button_pressed()
-			
+
 			ResourceManager.check_if_all_crew_died()
 			EventManager.check_if_victory()
-		
+
 		"open_build_screen":
 			_open_build_menu()
 

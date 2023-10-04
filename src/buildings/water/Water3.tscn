@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://18c3v3njvlxg" path="res://src/buildings/water/water3.tres" id="2_ltpv4"]
 [ext_resource type="Shader" path="res://src/buildings/shaders/pulse.gdshader" id="3_wi74b"]
 [ext_resource type="Texture2D" uid="uid://fpjlep711shg" path="res://assets/buildings/new/water_3.png" id="4_akyeg"]
-[ext_resource type="PackedScene" uid="uid://c2owud1h45ixt" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="5_pu5q4"]
+[ext_resource type="PackedScene" uid="uid://bp6x36xyoxhh2" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="5_pu5q4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l6u3g"]
 shader = ExtResource("3_wi74b")
@@ -49,8 +49,8 @@ position = Vector2(-128, 63)
 shape = SubResource("RectangleShape2D_h83i0")
 
 [node name="BuildTimerUI" parent="." instance=ExtResource("5_pu5q4")]
-offset_top = -50.0
-offset_bottom = -10.0
+offset_left = -192.0
+offset_right = 128.0
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

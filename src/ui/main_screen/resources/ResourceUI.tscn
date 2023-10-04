@@ -56,12 +56,12 @@ theme_override_constants/margin_left = 8
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer"]
 layout_mode = 2
 
-[node name="WorkerIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer/HBoxContainer"]
+[node name="PopIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("2_l7p2u")
+texture = ExtResource("3_i4mfg")
 stretch_mode = 3
 
-[node name="WorkerLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer/HBoxContainer"]
+[node name="PopLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer/HBoxContainer"]
 layout_mode = 2
 text = "00"
 horizontal_alignment = 1
@@ -78,12 +78,12 @@ theme_override_constants/margin_right = 8
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer"]
 layout_mode = 2
 
-[node name="PopIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer/HBoxContainer"]
+[node name="WorkerIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("3_i4mfg")
+texture = ExtResource("2_l7p2u")
 stretch_mode = 3
 
-[node name="PopLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer/HBoxContainer"]
+[node name="WorkerLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer/HBoxContainer"]
 layout_mode = 2
 text = "00"
 horizontal_alignment = 1

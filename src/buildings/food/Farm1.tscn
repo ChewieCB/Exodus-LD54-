@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://src/buildings/building.gd" id="1_5st8w"]
 [ext_resource type="Resource" uid="uid://banpkrk7n5jfa" path="res://src/buildings/food/farm1.tres" id="2_3e881"]
 [ext_resource type="Texture2D" uid="uid://bawynujrwyl1u" path="res://assets/buildings/old/vertical_farm.png" id="3_ebufv"]
-[ext_resource type="PackedScene" uid="uid://c2owud1h45ixt" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="4_76cnj"]
+[ext_resource type="PackedScene" uid="uid://bp6x36xyoxhh2" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="4_76cnj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0tb0d"]
 size = Vector2(60, 124)
@@ -13,7 +13,6 @@ script = ExtResource("1_5st8w")
 data = ExtResource("2_3e881")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0, 1, 0.117647, 1)
 position = Vector2(64, 64)
 texture = ExtResource("3_ebufv")
 offset = Vector2(-96, -64)
@@ -26,6 +25,8 @@ position = Vector2(0, 32)
 shape = SubResource("RectangleShape2D_0tb0d")
 
 [node name="BuildTimerUI" parent="." instance=ExtResource("4_76cnj")]
+offset_right = 0.0
+pivot_offset = Vector2(32, 64)
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

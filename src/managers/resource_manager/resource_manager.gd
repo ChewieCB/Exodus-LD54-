@@ -24,58 +24,62 @@ signal game_over(resource)
 signal ui_hover_show(text)
 signal ui_hover_hide
 
+signal construction_cancelled_lack_of_workers(building_name)
+
 var housing_alert_shown = false
 var food_alert_shown = false
 var water_alert_shown = false
 var air_alert_shown = false
 
-# Endgame flags, if any of these last too long its game over
-var is_starving = false:
-	set(value):
-		if value == false and is_starving == true:
-			emit_signal("stopped_starving")
-		is_starving = value
-		emit_signal("starving", starving_time_left)
-		if not is_starving:
-			starving_time_left = starving_time
-var is_thirsty = false:
-	set(value):
-		if value == false and is_thirsty == true:
-			emit_signal("stopped_thirsty")
-		is_thirsty = value
-		emit_signal("dehydrated", thirsty_time_left)
-		if not is_thirsty:
-			thirsty_time_left = thirsty_time
-var is_suffocating = false:
-	set(value):
-		if value == false and is_suffocating == true:
-			emit_signal("stopped_suffocating")
-		is_suffocating = value
-		emit_signal("suffocating", suffocating_time_left)
-		if not is_suffocating:
-			suffocating_time_left = suffocating_time
 # How many ticks/days/turns each endgame flag can go on for before you lose
 var starving_time: int = 10
 var starving_time_left = starving_time:
 	set(value):
 		starving_time_left = value
-		emit_signal("starving", starving_time_left)
-		if starving_time_left == 0:
-			emit_signal("game_over", RESOURCE_TYPE.FOOD)
+		if is_starving:
+			emit_signal("starving", starving_time_left)
+			if starving_time_left == 0:
+				emit_signal("game_over", RESOURCE_TYPE.FOOD)
 var thirsty_time: int = 6
 var thirsty_time_left = thirsty_time:
 	set(value):
 		thirsty_time_left = value
-		emit_signal("dehydrated", thirsty_time_left)
-		if thirsty_time_left == 0:
-			emit_signal("game_over", RESOURCE_TYPE.WATER)
+		if is_thirsty:
+			emit_signal("dehydrated", thirsty_time_left)
+			if thirsty_time_left == 0:
+				emit_signal("game_over", RESOURCE_TYPE.WATER)
 var suffocating_time: int = 6
 var suffocating_time_left = suffocating_time:
 	set(value):
 		suffocating_time_left = value
-		emit_signal("suffocating", suffocating_time_left)
-		if suffocating_time_left == 0:
-			emit_signal("game_over", RESOURCE_TYPE.AIR)
+		if is_suffocating:
+			emit_signal("suffocating", suffocating_time_left)
+			if suffocating_time_left == 0:
+				emit_signal("game_over", RESOURCE_TYPE.AIR)
+
+# Endgame flags, if any of these last too long its game over
+var is_starving = false:
+	set(value):
+		if value == false and is_starving == true:
+			emit_signal("stopped_starving", starving_time)
+		if value == true and is_starving == false:
+			emit_signal("starving", starving_time)
+		is_starving = value
+var is_thirsty = false:
+	set(value):
+		if value == false and is_thirsty == true:
+			emit_signal("stopped_thirsty", thirsty_time)
+		if value == true and is_thirsty == false:
+			emit_signal("dehydrated", thirsty_time)
+		is_thirsty = value
+var is_suffocating = false:
+	set(value):
+		if value == false and is_suffocating == true:
+			emit_signal("stopped_suffocating", suffocating_time)
+		if value == true and is_suffocating == false:
+			emit_signal("suffocating", suffocating_time)
+		is_suffocating = value
+
 
 enum RESOURCE_TYPE {
 	POPULATION,
@@ -92,14 +96,34 @@ var population_amount: int:
 		var diff = value - population_amount
 		population_amount = value
 		emit_signal("population_changed", population_amount)
-		# We want to add new population to the worker pool, but only new pop
-		# to avoid resetting already assigned workers
-		if diff > 0:
-			worker_amount = worker_amount + diff
-		elif diff < 0:
-			worker_amount = worker_amount - diff
+		# FIXME - This is probably gonna cause a negative worker number if
+		# we lose pop mid-construction
+		worker_amount += diff
+		available_housing += diff
+
 var worker_amount: int:
 	set(value):
+		# If the value will take us less than 0, we've got workers assigned
+		# to buildings - so cancel the most recent buildings under construction,
+		# and refund the workers until we're at 0 or above.
+		if value < 0:
+			var worker_refund = 0
+			while value + worker_refund < 0:
+				var current_refund = 0
+				var most_recent_building = BuildingManager.construction_queue.pop_front()
+				print(most_recent_building)
+				current_refund = most_recent_building.data.people_cost
+				worker_refund += current_refund
+				# 
+				if most_recent_building.is_constructing:
+					emit_signal("construction_cancelled_lack_of_workers", most_recent_building.data.name)
+					most_recent_building.cancel_building(true)
+				elif most_recent_building.is_deconstructing:
+					emit_signal("construction_cancelled_lack_of_workers", most_recent_building.data.name)
+					most_recent_building.cancel_building_remove(true)
+			# Assign the new value
+			value += worker_refund
+			
 		worker_amount = value
 		emit_signal("workers_changed", worker_amount)
 # Other resources
@@ -147,13 +171,14 @@ var buildings = []
 
 func _ready() -> void:
 	TickManager.tick.connect(_on_tick)
-	# TODO - load initial values from file for difficulty settings
-	population_amount = 3
-	#
+
+	reset_state()
+
 	pop_housing_cost = 1
 	pop_food_cost = 2
 	pop_water_cost = 2
 	pop_air_cost = 1
+
 	# Thresholds to alert the player to low resource
 	housing_low_threshold = 0
 	food_low_threshold = 10
@@ -175,13 +200,6 @@ func _physics_process(delta):
 				emit_signal("water_modifier_changed", water_amount, current_water_modifier)
 			RESOURCE_TYPE.AIR:
 				emit_signal("air_modifier_changed", air_amount, current_air_modifier)
-	
-	# TODO - add UI update here but NOT total recalculation
-	if Input.is_action_just_pressed("DEBUG_add_population"):
-		if can_add_population(1):
-			population_amount += 1
-		else:
-			print("Can't add {0} population, not enough housing!".format(["1"]))
 
 
 func calculate_resource_modifier(resource_type, population) -> void:
@@ -243,7 +261,7 @@ func update_resource_tick() -> void:
 
 func can_add_population(value) -> bool:
 	# We can only add population if we have enough housing for it
-	if population_amount + value < housing_amount:
+	if value <= available_housing:
 		return true
 	else:
 		return false
@@ -299,3 +317,23 @@ func change_resource_from_event(resource: String, amount_str: String):
 					population_amount += amount
 			else:
 				population_amount += amount
+
+
+func reset_state():
+	# TODO - load initial values from file for difficulty settings
+	population_amount = 3
+
+	housing_alert_shown = false
+	food_alert_shown = false
+	water_alert_shown = false
+	air_alert_shown = false
+	is_starving = false
+	is_thirsty = false
+	is_suffocating = false
+	starving_time_left = starving_time
+	thirsty_time_left = thirsty_time
+	suffocating_time_left = suffocating_time
+	current_food_modifier = 0
+	current_air_modifier = 0
+	current_water_modifier = 0
+	buildings = []

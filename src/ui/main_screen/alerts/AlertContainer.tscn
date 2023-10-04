@@ -1,0 +1,200 @@
+[gd_scene load_steps=8 format=3 uid="uid://cybouprxmhsri"]
+
+[ext_resource type="StyleBox" uid="uid://b7f0mxot53ter" path="res://src/ui/main_screen/resources/AlertPanelTheme.tres" id="1_h15nq"]
+[ext_resource type="Script" path="res://src/ui/main_screen/alerts/alert_container.gd" id="1_spy10"]
+[ext_resource type="Texture2D" uid="uid://8paydokn6heu" path="res://assets/ui/icons/final_icons/worker_icon.png" id="3_c8e76"]
+
+[sub_resource type="Animation" id="Animation_frx4b"]
+resource_name = "alert_in"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:theme_override_constants/margin_left")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(0.170755, 1),
+"update": 0,
+"values": [-350, 0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_6f1df"]
+resource_name = "alert_out"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:theme_override_constants/margin_left")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(2.46229, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:theme_override_constants/margin_top")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(2.46229, 1),
+"update": 0,
+"values": [0, 30]
+}
+
+[sub_resource type="Animation" id="Animation_dgghc"]
+resource_name = "RESET"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:theme_override_constants/margin_left")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-350]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(2.46229),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:theme_override_constants/margin_top")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(2.46229),
+"update": 0,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ddfn3"]
+_data = {
+"RESET": SubResource("Animation_dgghc"),
+"alert_in": SubResource("Animation_frx4b"),
+"alert_out": SubResource("Animation_6f1df")
+}
+
+[node name="AlertContainer" type="MarginContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 16)
+theme_override_constants/margin_left = -350
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 32
+script = ExtResource("1_spy10")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(16, 48)
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("1_h15nq")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="IconContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+theme_override_constants/margin_left = 8
+
+[node name="Icon" type="TextureRect" parent="VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/IconContainer"]
+layout_mode = 2
+texture = ExtResource("3_c8e76")
+stretch_mode = 5
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="DescContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(192, 16)
+layout_mode = 2
+
+[node name="Description" type="Label" parent="VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/DescContainer"]
+layout_mode = 2
+text = "{building_name} failed
+ due to lack of workers"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator2" type="VSeparator" parent="VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="CountdownContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+theme_override_constants/margin_right = 8
+
+[node name="Panel" type="Panel" parent="VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/CountdownContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Countdown" type="Label" parent="VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/CountdownContainer"]
+layout_mode = 2
+text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ddfn3")
+}

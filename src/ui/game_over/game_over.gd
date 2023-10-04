@@ -51,6 +51,12 @@ func _on_restart_button_pressed():
 	await ScreenTransitionManager.transitioned
 	await get_tree().create_timer(0.6).timeout
 	TickManager._set_tick_rate(TickManager.SLOW_TICK_SPEED)
+
+	# Reset game state
+	ResourceManager.reset_state()
+	EventManager.reset_state()
+	BuildingManager.construction_queue = []
+
 	get_tree().reload_current_scene()
 
 

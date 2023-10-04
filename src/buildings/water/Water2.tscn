@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://src/buildings/building.gd" id="1_7g34e"]
 [ext_resource type="Resource" uid="uid://dso7sspkfsbn6" path="res://src/buildings/water/water2.tres" id="2_q32qi"]
 [ext_resource type="Texture2D" uid="uid://ftoh02i7rxu2" path="res://assets/buildings/new/water_2.png" id="3_sdcuy"]
-[ext_resource type="PackedScene" uid="uid://c2owud1h45ixt" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="4_33su1"]
+[ext_resource type="PackedScene" uid="uid://bp6x36xyoxhh2" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="4_33su1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0tb0d"]
 size = Vector2(188, 60)
@@ -32,10 +32,8 @@ position = Vector2(0, 63)
 shape = SubResource("RectangleShape2D_h83i0")
 
 [node name="BuildTimerUI" parent="." instance=ExtResource("4_33su1")]
-offset_left = -21.0
-offset_top = -50.0
-offset_right = 19.0
-offset_bottom = -10.0
+offset_right = 128.0
+offset_bottom = 0.0
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
