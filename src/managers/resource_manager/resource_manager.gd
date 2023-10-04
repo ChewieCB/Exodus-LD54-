@@ -240,20 +240,20 @@ func update_resource_tick() -> void:
 	# TODO - change resource UI colours over low threshold
 	
 	# Tick down loss counters
-	if is_starving:
+	if is_starving and current_food_modifier < 0 :
 		starving_time_left -= 1
 		print("Starving: " + str(starving_time_left) + " ticks left")
-	if is_thirsty:
+	if is_thirsty and current_water_modifier < 0:
 		thirsty_time_left -= 1
 		print("Thirsty: " + str(thirsty_time_left) + " ticks left")
-	if is_suffocating:
+	if is_suffocating and current_air_modifier < 0:
 		suffocating_time_left -= 1
 		print("Suffocating: " + str(suffocating_time_left) + " ticks left")
 	
 	# Reset loss counters if they've changed
-	is_starving = food_amount == 0
-	is_thirsty = water_amount == 0
-	is_suffocating = air_amount == 0
+	is_starving = food_amount == 0 and current_food_modifier < 0
+	is_thirsty = water_amount == 0 and current_water_modifier < 0
+	is_suffocating = air_amount == 0 and current_air_modifier < 0
 
 
 func can_add_population(value) -> bool:
@@ -319,6 +319,10 @@ func change_resource_from_event(resource: String, amount_str: String):
 func reset_state():
 	# TODO - load initial values from file for difficulty settings
 	population_amount = 3
+	ResourceManager.housing_amount = 0
+	ResourceManager.food_amount = 150
+	ResourceManager.water_amount = 250
+	ResourceManager.air_amount = 200
 
 	housing_alert_shown = false
 	food_alert_shown = false
