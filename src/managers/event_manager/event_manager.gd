@@ -145,7 +145,7 @@ func reset_state():
 	n_water_building = 0
 	n_air_building = 0
 	
-	tutorial_progress = 0
+	tutorial_progress = -1
 	tick_since_last_event = 0
 	tick_passed_total = 0
 	end_game = false
