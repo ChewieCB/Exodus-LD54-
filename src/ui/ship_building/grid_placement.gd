@@ -1,7 +1,7 @@
 extends Node2D
 class_name GridPlacement
 
-@export var tilemap: Node
+@export var tilemap: TileMap
 
 var building_prefab: PackedScene
 var mouse_pos: Vector2
@@ -63,7 +63,7 @@ func _physics_process(_delta):
 
 		if Input.is_action_just_released("place_building"):
 			if not current_building.collider.has_overlapping_areas():
-				if not is_outside_gridmap(placement_coord):
+				if not is_in_blocked_tile(placement_coord):
 					if current_building.placeable:
 						place_building()
 			else:
@@ -82,6 +82,13 @@ func is_outside_gridmap(coord: Vector2) -> bool:
 	else:
 		return false
 
+
+func is_in_blocked_tile(coord: Vector2) -> bool:
+	if tilemap.get_cell_atlas_coords(0, coord) == Vector2i(4, 7) or \
+		tilemap.get_cell_atlas_coords(0, coord) == Vector2i(-1, -1):
+		return true
+	else:
+		return false
 
 func place_building():
 	if ResourceManager.worker_amount >= current_building.data.people_cost:

@@ -202,10 +202,10 @@ func on_predelete() -> void:
 func _on_area_2d_mouse_entered():
 	# TODO add popup or highlight
 	is_selected = true
-	print(self.data.name + " selected")
+	# print(self.data.name + " selected")
 
 
 func _on_area_2d_mouse_exited():
 	is_selected = false
-	print(self.data.name + " deselected")
+	# print(self.data.name + " deselected")
 
