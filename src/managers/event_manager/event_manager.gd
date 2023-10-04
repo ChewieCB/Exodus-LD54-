@@ -150,7 +150,8 @@ func space_fact_event():
 	"Space is not completely empty; it contains extremely low-density particles and radiation, including cosmic rays and micrometeoroids.",
 	"The speed of light in a vacuum is approximately 186,282 miles per second (299,792 kilometers per second). This is the fastest speed at which information or matter can travel in the universe.",
 	"The nearest star system to our solar system is Alpha Centauri, located about 4.37 light-years away. It consists of three stars: Alpha Centauri A, Alpha Centauri B, and Proxima Centauri, the closest-known exoplanetary system to our sun.",
-	"Most of the events in this game were coded in 3 hours before the submission deadline."]
+	"Most of the events in this game were coded in 3 hours before the submission deadline.",
+	"The dialogue writer for this game is a published novelist. You should go buy his book, it's called The Helios Incident."]
 	var random_fact = get_random_element_from_array(fact_pool)
 	var event_source_text = """
 	Join ExecutiveOfficer 0
@@ -170,8 +171,8 @@ func victory_event():
 	var event_source_text = """
 	Join ExecutiveOfficer 0
 	ExecutiveOfficer (Normal): Captain, we've reached the portal system! We're safe!
-	ExecutiveOfficer (Normal): The crew stand ready for intergalactic transit.
-	- It was an honour and a privilege, Pressley. Set course for the portal. Our new home awaits!
+	ExecutiveOfficer (Normal): The crew stand ready for intergalactic transit. We await your orders.
+	- It was an honour and a privilege, Mr Pressley. Set course for the portal. Our new home awaits!
 		Leave ExecutiveOfficer
 	[signal arg="end_event"]
 	"""
@@ -191,25 +192,25 @@ func asteroid_cluster():
 	set {water} = {rm_water}
 	set {air} = {rm_air}
 	Join ExecutiveOfficer 0
-	ExecutiveOfficer (Normal): Aye Captain, navigation charts have identified an asteroid cluster in this sector that was earmarked for mining by the Hurulis Asteroid Prospectors.
-	ExecutiveOfficer (Normal): A probe sent to the cluster has returned with samples of oxygen-rich ores and hydrogen. We can extract these minerals with little effort and synthesize them into breathable oxygen and drinkable water. What are your orders?
-	- Contact navigation and chart a safe course through the cluster
-		Contact navigation and chart a safe course through the cluster, Pressley. Those resources could be a major help.
+	ExecutiveOfficer (Normal): Captain, message from navigation! Sector charts show a nearby asteroid cluster that was surveyed by Hurulis Asteroid Prospectors.
+	ExecutiveOfficer (Normal): A probe sent to the cluster returned with samples of oxygen-rich ores and hydrogen. We can extract them for breathable oxygen and drinkable water. What are your orders?
+	- Contact navigation and set a course to the cluster.
+		Contact navigation and set a course to the cluster, Pressley. Those resources would help.
 		set {chance} = range(1,100).pick_random()
 		# 50% chance success
 		if {chance} >= 50:
-			ExecutiveOfficer (Normal): Our engineers have managed to extract some resources from the asteroid belt. It may not be a lot, but every bit helps.
+			ExecutiveOfficer (Normal): Our engineers extracted some resources from the asteroid cluster. It's not a lot, but every bit helps.
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{mined_resource}"]" single_use="true"]
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "{mined_resource}"]" single_use="true"]
 			You gained {mined_resource} Water and Oxygen.
 		else:
-			ExecutiveOfficer (Normal): Those prospectors knew what they were doing! These asteroids were abundant with resources. We've extracted as much as we can and have returned to our original course.
+			ExecutiveOfficer (Normal): Those prospectors knew their stuff! These asteroids were flush with minerals. We've extracted what we can and have returned to our original course.
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{big_mined_resource}"]" single_use="true"]
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "{big_mined_resource}"]" single_use="true"]
 			You gained {big_mined_resource} Water and Oxygen.
 	- Continue on our present course.
 		There'll be more opportunities in the future. Continue on our present course.
-		ExecutiveOfficer (Normal): Yes, Captain. I've passed the word onto navigation and we are holding course.
+		ExecutiveOfficer (Normal): Aye, Captain. I've passed your orders to navigation. We are holding course.
 	Leave ExecutiveOfficer
 	[signal arg="end_event"]
 	"""
@@ -230,9 +231,9 @@ func resource_rich_planetoid():
 	set {water} = {rm_water}
 	set {air} = {rm_air}
 	Join ExecutiveOfficer 0
-	ExecutiveOfficer (Normal): Captain, our mid-range scanners have picked up a planetoid. Probe survey has identified large deposits of oxygen and frozen water.
-	ExecutiveOfficer (Normal): A slight course correction would have us intercept the planetoid with minimal effort, and we could mine the largest and most accessible surface deposits. What your order?
-	- Chart a course. We need those minerals (Cost {required_resource} Food, Water and Oxygen). [if {food} >= {required_resource} and {water} >= {required_resource} and {air} >= {required_resource}]
+	ExecutiveOfficer (Normal): Captain, our scanners have picked up a planetoid. Probe survey has identified large deposits of oxygen and frozen water.
+	ExecutiveOfficer (Normal): A slight course correction would have us intercept the planetoid, and we could mine the largest and most accessible surface deposits. What your order?
+	- Chart a course, Pressley. We need those minerals. (Cost {required_resource} Food, Water and Oxygen). [if {food} >= {required_resource} and {water} >= {required_resource} and {air} >= {required_resource}]
 		[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "{required_resource}"]" single_use="true"]
 		[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{required_resource}"]" single_use="true"]
 		[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "{required_resource}"]" single_use="true"]
@@ -240,7 +241,7 @@ func resource_rich_planetoid():
 		set {chance} = range(1,100).pick_random()
 		# 50% chance success
 		if {chance} >= 50:
-			ExecutiveOfficer (Normal): The planetoid was particularly rich, Captain, and we found several accessible veins near the surface. Our supplies are looking much better.
+			ExecutiveOfficer (Normal): The planetoid was particularly rich, Captain. We found several high-density veins near the surface.
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{big_mined_resource}"]" single_use="true"]
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "{big_mined_resource}"]" single_use="true"]
 			You gained {big_mined_resource} Water and Oxygen.
@@ -269,28 +270,28 @@ func distress_signal_detected() -> String:
 	var event_source_text = """
 	Join ExecutiveOfficer 0
 	ExecutiveOfficer (Normal): Captain, shortly after arriving in this sector we received a distress signal coming from a marooned ship, the Menelaus.
-	ExecutiveOfficer (Normal): According to the signal, the ship was damaged in a micro-meteorite storm. The ship's engines are disabled and oxygen is running low. They are a short jump from our position.
-	ExecutiveOfficer (Normal): Should we help the marooned ship or trust that someone else will come along?
-	- Help them
-		We're here, who knows how long it'll be before another ship comes along.
-		Set a course for the Menelaus and scramble medical and engineering teams.
+	ExecutiveOfficer (Normal): According to their signal, the ship was damaged in a micro-meteorite storm. Its engines are disabled and oxygen is running low. They are a short jump from our position.
+	ExecutiveOfficer (Normal): Should we help?
+	- Prepare a boarding party to help the Menelaus.
+		We're here, Pressley. Who knows how long it'll be before another ship comes along.
+		Set a course for the Menelaus and scramble engineering.
 		set {chance} = range(1,100).pick_random()
 		# 75% chance success
 		if {chance} >= 25:
-			The crew of the Menelaus are grateful for aid, but the ship is beyond repair. They strip the Menelaus for parts and join your crew.
+			The crew of the Menelaus are grateful for aid, but the ship is beyond repair. They strip the Menelaus for any useful parts and join your crew.
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "{reward_people}"]" single_use="true"]
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{reward_water}"]" single_use="true"]
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "{reward_food}"]" single_use="true"]
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "{reward_air}"]" single_use="true"]
-			Gained {reward_people} people, {reward_food} Food, {reward_water} Water, {reward_air} Oxygen.
+			Gained {reward_people} Crew, {reward_food} Food, {reward_water} Water, {reward_air} Oxygen.
 		else:
 			It was a trap! On docking with the Menelaus, pirates opened fire and tried to storm our ship! Our security team held them off before they crossed the docking tube and we are away.
 			ExecutiveOfficer (Normal): We are sending transmissions to every ship in the system to warn them about the Menelaus.
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "-{lost_people}"]" single_use="true"]
-			Lost {lost_people} People.
-	- Don't help them
+			You lost {lost_people} Crew.
+	- Leave the Menelaus to her fate.
 		Someone else wil come along, Mr Pressley. We'll rebroadcast the message in the hope that others will hear it.
-		ExecutiveOfficer (Normal): I understand, Captain. I've ordered our comms officer to retransmit the distress signal and send it in every direction. I hope that someone else will hear it.
+		ExecutiveOfficer (Normal): I understand, Captain. I've ordered communications to retransmit the distress signal and send it in every direction. Hopefully someone will hear it.
 	Leave ExecutiveOfficer
 	[signal arg="end_event"]
 	"""
@@ -308,43 +309,43 @@ func plague_planet_event() -> String:
 	set {population} = {rm_population}
 	set {food} = {rm_food}
 	set {water} = {rm_water}
-	You received a signal after passed through an Earth-like planet. The signal need to be decrypted before you understand it.
-	- Decrypt it
-		It's a signal asking for help. Look like a spaceship crashed onto this place.
-		- Send a squad to help (Required 3 people, cost 6 Food, 6 Water) [if {population} >= 3 and {food} >= 6 and {water} >= 6]
+	You received an encrypted signal from a nearby planet.
+	- Decrypt the signal.
+		It's a distress signal. It seems a spaceship had to make a crash landing on this planet. The survivors are asking for aid.
+		- Send a landing party with supplies to help (Requires 3 Crew, 6 Food and 6 Water). [if {population} >= 3 and {food} >= 6 and {water} >= 6]
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "-6"]" single_use="true"]
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "-6"]" single_use="true"]
 			set {food} -= 6
 			set {water} -= 6
 			You lost 6 Food, 6 Water.
-			Your squad successfully rescued them, but to your horror, you discovered they are infected with some kind of space plague. And your rescue squad may be already infected now, you never know.
-			- Abandon them all, not worth the risk (Lost 2 People)
-				You ditched everyone. What a tragedy, but you cannot risk the colony.
+			Your landing party made contact with the survivors, but report they are infected with a horrible disease! Your landing party has also been exposed.
+			- Abandon them all, we cannot risk the safety of the ship (Lose 2 Crew).
+				You abandoned the survivors and landing party. Unfortunate, but we cannot risk the ship.
 				[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "-3"]" single_use="true"]
 				set {population} -= 2
-				You lost 2 People.
-			- Abandon the refugee, let the squad back
+				You lost 2 Crew.
+			- Abandon the survivors, but recall the landing party.
 				Let's hope they are not infected yet.
-			- Abandon the refugee, treat the squad (Cost 9 Food, 9 Water) [if {food} >= 9 and {water} >= 9]
-				You can't just let your crew die, you will treat them. The refugee? Nah, not worth it.
+			- Abandon the survivors, treat the landing party (Cost 9 Food, 9 Water). [if {food} >= 9 and {water} >= 9]
+				Quarantine and treat the landing party, Pressley. The other survivors will have to fend for themselves.
 				[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "-9"]" single_use="true"]
 				[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "-9"]" single_use="true"]
 				set {food} -= 9
 				set {water} -= 9
 				You lost 9 Food, 9 Water.
-			- Try to save all of them, give everyone proper treatment (Cost 21 Food, 21 Water, gain 5 people) [if {food} >= 21 and {water} >= 21]
-				We are all human here. Let try to help each other.
+			- Quarantine and treat everyone (Lose 21 Food, 21 Water, Gain 5 Crew). [if {food} >= 21 and {water} >= 21]
+				Our galaxy is dying, we must help everyone we can.
 				[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "-21"]" single_use="true"]
 				[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "-21"]" single_use="true"]
 				[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "5"]" single_use="true"]
 				set {food} -= 21
 				set {water} -= 21
 				set {population} += 5
-				You lost 21 Food, 21 Water. You gained 5 People.
+				You lost 21 Food, 21 Water. You gained 5 Crew.
 		- Ignore and move on
-			The ship don't have space nor resource for more people. Let's move on.
+			The ship doesn't have space or the supplies for more crew, Pressley. Let's move on.
 	- Ignore and move on
-		You ignored the signal and move on.
+		You ignore the signal and maintain course.
 	[signal arg="end_event"]
 	"""
 	event_source_text = event_source_text.format({"rm_population"=rm_population, "rm_food"=rm_food, "rm_water"=rm_water})
@@ -362,17 +363,17 @@ func science_team() -> String:
 	set {water} = {rm_water}
 	
 	Join ExecutiveOfficer 0
-	ExecutiveOfficer (Normal): Captain, we've been approached by Mona Turner, chief arcologist of a group of scientists. They heard of our mission and made all speed to reach us before we left port.
-	ExecutiveOfficer (Normal): Dr Turner's team are qualified botanists, arcologists and bioengineers. They would be useful on board.
+	ExecutiveOfficer (Normal): Captain, we've been approached by Dr Mona Turner. She heard of our mission and made all speed to reach us before we left the sector.
+	ExecutiveOfficer (Normal): Dr Turner leads a team of scientists and engineers fleeing the Negation Field, but their ship is not suited for a long journey. They are asking to come aboard and join our crew.
 	ExecutiveOfficer (Normal): What are your orders?
 	
-	- Extend my compliments to Dr Turner and give her our berth details. Tell them to pack light.
-		ExecutiveOfficer (Normal): Dr Turner and her team have settled in well. They'll be a valuable addition to the crew and she passes on her thanks.
+	- Extend my compliments to Dr Turner and open a docking tube. Tell them to pack light.
+		ExecutiveOfficer (Normal): Dr Turner and her team have settled in well. She and her team extend their thanks.
 		[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "3"]" single_use="true"]
 		Leave ExecutiveOfficer
-		You gained 3 crew.
+		You gained 3 Crew.
 	
-	- We have no room for Dr Turner or her team. Extend my apologies and prepare to leave port.
+	- We have no room for Dr Turner or her team. Extend my apologies and prepare to leave the sector.
 		ExecutiveOfficer (Normal): Captain, I've passed your message onto Dr Turner and we're prepared to leave port. We are away.
 	
 	[signal arg="end_event"]
@@ -391,21 +392,20 @@ func hab_riot() -> String:
 	var lost_people = randi_range(1, max_lost_people)
 	var event_source_text = """
 	Join ExecutiveOfficer 0
-	ExecutiveOfficer (Normal): Captain, a riot has broken out in one of our habitation sectors! 
-	ExecutiveOfficer (Normal): Security officers quickly responded and broke up the riot. Fortunately no one was killed and no equipment was damaged. 
+	ExecutiveOfficer (Normal): Captain, a brawl has broken out among the crew! 
+	ExecutiveOfficer (Normal): Security officers quickly responded and broke up the brawl. Fortunately no one was killed and no equipment was damaged. 
 	ExecutiveOfficer (Normal): The ringleaders have been identified and await sentencing.
 	
-	- Riots don't just happen. Question the ringleaders and find out what their grievances are.
-		Perhaps we can learn something from all this?
-		The ringleaders have no issue with your command of the ship and the riot was from a buildup of stress and fear for the future. 
+	- Brawls don't just happen. Question the ringleaders and find out what their grievances are.
+		The ringleaders have no issue with your command of the ship and the brawl was from a buildup of stress and fear. 
 		The chance to speak has given the ringleaders a new respect for your command. They have returned to work.
 	
-	- I will not tolerate mutiny on my ship, Mr Pressley. Not now, not ever.
-		ExecutiveOfficer (Normal): Captain, the ringleaders have been thrown in the ship's brig. I've found a suitable planet nearby where we can drop them off.
+	- I will not tolerate brawling on my ship, Mr Pressley. Not now, not ever.
+		ExecutiveOfficer (Normal): Captain, the ringleaders have been thrown in the ship's brig. We can leave them on a nearby planet.
 		ExecutiveOfficer (Normal): They rest of the crew are grumbling but the message is clear - your command is not to be questioned.
 		[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "-2"]" single_use="true"]
 		Leave ExecutiveOfficer
-		You have lost 2 crew.
+		You lost 2 Crew.
 	[signal arg="end_event"]
 	"""
 	event_source_text = event_source_text.format({"reward_people"=reward_people, "reward_food"=reward_food, "reward_water"=reward_water, "reward_air"=reward_air, "lost_people"=lost_people})
@@ -425,7 +425,7 @@ func planetary_customs() -> String:
 	
 	Join ExecutiveOfficer 0
 	ExecutiveOfficer (Normal): Captain, planetary customs and control has found some irregularities in our docking permits. Our ship has been grounded and we are ordered to remain in port until these irregularities are resolved.
-	ExecutiveOfficer (Normal): Lucky for us, this port is badly maintained and the poorly guarded. We could gather the crew and slip out without delay.
+	ExecutiveOfficer (Normal): Lucky for us, this port is badly maintained and poorly guarded. We could gather the crew and slip out without delay.
 	ExecutiveOfficer (Normal): What are your orders?
 	
 	- Gather the crew, Pressley. We'll sneak past port control, take back our ship and leave this system for good.
@@ -440,7 +440,7 @@ func planetary_customs() -> String:
 			ExecutiveOfficer (Normal): We had to leave them behind.
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "-2"]" single_use="true"]
 			Leave ExecutiveOfficer
-			Lost 2 crew.
+			You lost 2 Crew.
 	
 	- It's not worth the risk. We'll wait until port control gets our documents in order and we will leave as soon as we are able.
 		ExecutiveOfficer (Normal): Captain, after a prolonged stay, port control finally have our permit documentation in order. 
@@ -501,16 +501,15 @@ func families_seeking_passage() -> String:
 	var event_source_text = """
 	Join ExecutiveOfficer 0
 	ExecutiveOfficer (Normal): Captain, we've been approached by Faroq Khan, the leader of a group of families who are seeking passage. 
-	ExecutiveOfficer (Normal): They have women and children, but they come from a hardy colony world and are no strangers to hard work. They could adapt to life on the ship.
+	ExecutiveOfficer (Normal): They come from a border colony world that was destroyed by the Negation Field.
 	ExecutiveOfficer (Normal): What should we do?
-	- Pass on my complements, to Mr Khan. Tell him our berth number and advise him to make haste.
+	- Pass on my complements to Mr Khan. Give him our coordinates and prepare a docking tube.
 		ExecutiveOfficer (Normal): Mr Khan and the other refugees have joined the crew. Reports from section leaders advise they are tough and willing to learn. 
-		ExecutiveOfficer (Normal): They are a fine addition to the crew.
 		Leave ExecutiveOfficer
 		[call_node path="ResourceManager" method="change_resource_from_event" args="["people", "3"]" single_use="true"]
-		Gained 3 crew.
+		You gained 3 Crew.
 	- Tell Mr Khan we have no room. He'll have to look for another ship.
-		ExecutiveOfficer (Normal): Captain, we have departed the planet. The refugees will have to find someone else.
+		ExecutiveOfficer (Normal): Aye, Captain. We have departed the sector. The refugees will have to find someone else.
 	[signal arg="end_event"]
 	"""
 	event_source_text = event_source_text.format({"reward_people"=reward_people, "reward_food"=reward_food, "reward_water"=reward_water, "reward_air"=reward_air, "lost_people"=lost_people})
@@ -527,31 +526,31 @@ func governor_demands_passage() -> String:
 	var lost_people = randi_range(1, max_lost_people)
 	var event_source_text = """
 	Join ExecutiveOfficer 0
-	ExecutiveOfficer (Normal): Captain, riots are breaking out on the planet and martial law has been declared, but the planetary military is slowly being overwhelmed and civil authority is collapsing.
-	ExecutiveOfficer (Normal): The military governor is demanding passage on our ship. We may have space available for his excellency.
+	ExecutiveOfficer (Normal): Captain, the Negation Field is approaching the planet Atrokan IV and riots are breaking out. Martial law has been declared, but military forces are nearly overwhelmed and civil authority is collapsing.
+	ExecutiveOfficer (Normal): The Atrokani governor is demanding passage on our ship. We have some space available.
 	ExecutiveOfficer (Normal): What are your orders?
 		
-		- Extend an official invitation to His Excellency, Mr Pressley.
-			ExecutiveOfficer (Normal): Yes sir. We will prepare quarters that are appropriate for an official of his standing 
+		- Extend an official invitation to His Excellency, Mr Pressley, and prepare suitable quarters.
+			ExecutiveOfficer (Normal): Yes sir. I will prepare quarters that are appropriate for an official of His Excellency's standing. 
 			set {chance} = range(1,100).pick_random()
 			# 75% chance
 			if {chance} >= 25:
-				ExecutiveOfficer (Normal): The governor's stateroom has taken up more than what other crew would take, but he has brought a significant complement of food from his personnel stock planetside. 
+				ExecutiveOfficer (Normal): The Atrokani governor has brought a large amount of food from his personal stock planetside. 
 				ExecutiveOfficer (Normal): We can siphon some of that for the rest of the crew without the governor noticing.
 				Leave ExecutiveOfficer
 				[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "20"]" single_use="true"]
 				Gained 20 Food.
 			else:
-				ExecutiveOfficer (Normal): The governor's stateroom has taken up more than what other crew would take, but he has brought a significant complement of food from his personnel stock planetside. 
-				ExecutiveOfficer (Normal): He has offered to share a considerable amount of it with the crew as thanks for granting him passage. 
-				ExecutiveOfficer (Normal): Despite the situation planetside, His Excellency's staff are competent administrators and have made suggestions on how to make our ship run more efficiently. 
+				ExecutiveOfficer (Normal): The Atrokani governor has brought a large quantity of food from his personal stock planetside. 
+				ExecutiveOfficer (Normal): He has offered to share it with us as thanks for granting him passage. 
+				ExecutiveOfficer (Normal): His Excellency is a competent administrator and has made some improvements to our ship's work procedures. 
 				ExecutiveOfficer (Normal): Our crew will work more effectively for the next few cycles.
 				Leave ExecutiveOfficer
 				[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "70"]" single_use="true"]
 				Gained 70 Food, Construction Time temporarily reduced.
 		
-		- Tell his Excellency he can find another ship. We are not at his beck and call.
-			ExecutiveOfficer (Normal): Captain, the governor did not take your message well, but luckily we departed before he could try and detain our ship. We are away.
+		- Tell His Excellency he can find another ship. We are not at his beck and call.
+			ExecutiveOfficer (Normal): Captain, the Atrokani governor did not take your message well, but we departed before he could detain our ship. We are away.
 	[signal arg="end_event"]
 	"""
 	event_source_text = event_source_text.format({"reward_people"=reward_people, "reward_food"=reward_food, "reward_water"=reward_water, "reward_air"=reward_air, "lost_people"=lost_people})
@@ -560,21 +559,21 @@ func governor_demands_passage() -> String:
 
 func tutorial1_event() -> String:
 	var event_source_text = """
-	A negation field has simultaneously surrounded the galaxy. The field is gradually creeping in and swallowing all matter. Stars, nebula, planets, asteroids, even black holes. The Negation Field emits no electromagnetic radiation or heat.
-	No probe returns or transmits signals once passing the field's event horizon. Ships, outposts, colonies and settlements go dark every week. 
-	Astronomic calculations have pinpointed the field is shrinking down to a single spot - a quiet backwater solar system far from most space lanes. The galaxy's greatest scientists have constructed a portal that will take us to another galaxy, beyond the negation field's reach. 
-	You are the captain of an old supply ship who has decided to make for this portal system and save yourself from certain destruction...
+	A Negation Field has simultaneously surrounded the galaxy. The field is creeping in and swallowing asteroids, nebula, planets, stars and even black holes. 
+	No probe returns or transmits once it passes the field's event horizon. Ships, space stations and entire systems go dark every week. 
+	Astronomic calculations have pinpointed the field is shrinking down to a single spot - a backwater system far from most space lanes. The galaxy's greatest scientists have constructed a portal that will take us to another galaxy, beyond the Negation Field's reach. 
+	You are the captain of an old supply ship making a run for the portal system, hoping to save yourself and your crew from certain death...
 	
 	Join ExecutiveOfficer 0
 	ExecutiveOfficer (Normal): Welcome captain, my name is Pressley, your executive officer. My job is to assist you running your Galanthir-class hauler. It's a highly modular and adaptable ship from the shipyards at Ursa Majoris.
-	ExecutiveOfficer (Normal): The ship's crew capacity is 3. Crew can be housed in hab blocks. Crew need oxygen, water and food. The more crew you have, the more oxygen, water and food they need. You can modify your ship with structures that increase air, water or food production.
-	ExecutiveOfficer (Normal): We have plenty of air and water for this crew size, but our food stocks are running low. Please build two food production buildings to increase our food production.
+	ExecutiveOfficer (Normal): The ship's crew capacity is three. Crew can be housed in habitation blocks. Crew need oxygen, water and food. The more crew you have, the more oxygen, water and food they need. You can modify your ship with structures that increase oxygen, water or food production.
+	ExecutiveOfficer (Normal): We have plenty of oxygen and water for our current crew, but our food stocks are running low. Build two vertical farms to increase our food production.
 	
-	- Start building 2 more food production buildings.
+	- Build two vertical farms.
 		[call_node path="EventManager" method="change_objective_label" args="["Build 2 Food building"]" single_use="true"]
 		[signal arg="open_build_screen"]
-		Please click on the ship or the build button, navigate to Food tab, then choose the Vertical Farm.
-		The number next to the "people icon" means the amount of workers required to build it. Likewise, the number next to "clock icon" means the time it take to complete. You will able to build bigger building after recruited more crew members.
+		Click on the ship or the build button, navigate to Food tab, then choose the Vertical Farm.
+		The number next to the crew icon shows the amount of crew needed to build it. The number next to clock icon shows how many days to finish the building. You can build bigger building when you have more crew.
 		[signal arg="end_event_build"]
 	- Skip tutorial.
 		[call_node path="EventManager" method="disable_tutorial" single_use="true"]
@@ -588,9 +587,9 @@ func tutorial2_event() -> String:
 	var event_source_text = """
 	Join ExecutiveOfficer 0
 	[call_node path="EventManager" method="change_objective_label" args="["Survive"]" single_use="true"]
-	ExecutiveOfficer (Normal): Greetings, captain. Our food production is going smoothly, but we need more crew to make bigger modifications to the ship. We need more crew quarters to increase our crew numbers.
-	ExecutiveOfficer (Normal): Please build two more habitation blocks so we can take on more crew.
-	- Start building 2 more habitation buildings.
+	ExecutiveOfficer (Normal): Greetings, Captain. Our food production is much improved, but we need more crew to make bigger upgrades to the ship. We need more crew habitation blocks.
+	ExecutiveOfficer (Normal): Build two more habitation blocks so we can take on more crew.
+	- Built two more crew habitation blocks.
 		[call_node path="EventManager" method="change_objective_label" args="["Build 2 Habitation building"]" single_use="true"]
 		[signal arg="open_build_screen"]
 		Leave ExecutiveOfficer
@@ -605,17 +604,17 @@ func tutorial3_event() -> String:
 	var event_source_text = """
 	Join ExecutiveOfficer 0
 	[call_node path="EventManager" method="change_objective_label" args="["Survive"]" single_use="true"]
-	ExecutiveOfficer (Normal): Greetings, captain. We have picked up a distress signal from a lifeboat. The lifeboat has {n_survivor} people on board and is running low on oxygen. The distress signal says they'll join the crew of any ship who saves them.
+	ExecutiveOfficer (Normal): Greetings, captain. We have picked up a distress signal from a lifepod. The lifepod has {n_survivor} crew on board and is running low on oxygen. The distress signal says they'll join the crew of any ship who saves them.
 	ExecutiveOfficer (Normal): We now have the accommodation facilities to take on extra crew. There are no other ships in the area. We should help and accept their offer to join us, as more crew means we can make more modifications to our ship.
-	- Contact the lifeboat and welcome them into the crew.
+	- Contact the lifepod and welcome them into the crew.
 		[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "{n_survivor}"]" single_use="true"]
-		You recruited {n_survivor} people.
-		ExecutiveOfficer (Normal): Good work, Captain. We now have more crew, but more crew means we need to produce more oxygen, water and food to support them. From now on, it's important we balance resource production with each increase in the number of crew.
-		ExecutiveOfficer (Normal): We have limited resources and limited space on our journey, and there'll likely be other folk in need of our assitance on the way. Use your best judgement Captain, but watch those resource levels. 
-		ExecutiveOfficer (Normal): Navigation has calculated our journey will be 200 days. We are in your hands, Captain.
+		You gained {n_survivor} Crew.
+		ExecutiveOfficer (Normal): Good work, Captain. We now have more crew, but more crew means we need to produce more oxygen, water and food. From now on, it's important we balance resources with each increase in the number of crew.
+		ExecutiveOfficer (Normal): We have limited resources and limited space on our journey, and there'll be others who need help. Use your best judgement, Captain, but watch those resource levels. 
+		ExecutiveOfficer (Normal): Navigation has calculated our journey to the portal system will take 200 days. We are in your hands, Captain.
 		Join IntercomGuy 4
-		IntercomGuy (Normal): Also, Captain, take note that you can ONLY take in the survivors if they are equal or less than available housing. If not enough housing, we can't take anyone at all. For example, if you have 5 survivors and 4 available housing, we will unable to recruit anyone, not 4 of them.
-		IntercomGuy (Normal): Therefore, it's alway a good idea to build some extra habitant building to be safe.
+		IntercomGuy (Normal): Remember, we can only take on extra crew if they are equal to or less than the ship's available housing. For example, if we find five survivors and have four available housing, we cannot recruit any of them. 
+		IntercomGuy (Normal): Make sure you always have some free crew habitats.
 		[call_node path="EventManager" method="change_objective_label" args="["Survive until day 200"]" single_use="true"]
 		Leave ExecutiveOfficer
 		Leave IntercomGuy
@@ -629,10 +628,10 @@ func disabled_tutorial_event():
 	var n_survivor = 2
 	var event_source_text = """
 	Join ExecutiveOfficer 0
-	ExecutiveOfficer (Normal): Greetings, captain. We have picked up a distress signal from a lifeboat. The lifeboat has {n_survivor} people on board and is running low on oxygen. The distress signal says they'll join the crew of any ship who saves them.
-	- Contact the lifeboat and welcome them into the crew.
+	ExecutiveOfficer (Normal): Greetings, captain. We have picked up a distress signal from a lifepod. The lifepod has {n_survivor} crew on board and is running low on oxygen. The distress signal says they'll join the crew of any ship who saves them.
+	- Contact the lifepod and welcome them into the crew.
 		[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "{n_survivor}"]" single_use="true"]
-		You recruited {n_survivor} people.
+		You gained {n_survivor} Crew.
 	Leave ExecutiveOfficer
 	[signal arg="end_event"]
 	"""
