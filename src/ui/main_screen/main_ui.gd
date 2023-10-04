@@ -27,6 +27,11 @@ func _ready() -> void:
 	EventManager.request_change_objective_label.connect(change_objective_label)
 	EventManager.request_change_event_image.connect(change_event_image)
 
+	if EventManager.tutorial_progress == -1:
+		var tween = get_tree().create_tween()
+		tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
+		tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
+		tween.parallel().tween_property(background_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 
 func _on_build_button_pressed():
 	if anim_player.animation_finished:
