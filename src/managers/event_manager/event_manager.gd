@@ -139,6 +139,19 @@ func check_if_victory():
 		emit_signal("victory")
 
 
+func reset_state():
+	n_hab_building = 0
+	n_food_building = 0
+	n_water_building = 0
+	n_air_building = 0
+	
+	tutorial_progress = 0
+	tick_since_last_event = 0
+	tick_passed_total = 0
+	end_game = false
+	tick_to_event = randi_range(MIN_TICK_FOR_EVENT, MAX_TICK_FOR_EVENT) + 5
+
+
 func space_fact_event():
 	var fact_pool = ["The Milky Way Galaxy, which is home to our solar system, contains over 100 billion stars.",
 	"Space is completely silent because there is no air or atmosphere to carry sound waves.",
@@ -653,8 +666,16 @@ func cheat_menu_event() -> String:
 		You get {n_amount} water
 		[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{n_amount}"]" single_use="true"]
 	- Get 1-100 air
-		You get {n_amount} air
+		You get {n_amount} oxygen
 		[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "{n_amount}"]" single_use="true"]
+	- Loss 100 each resource
+		You lost 100 oxygen, water, food
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "-100"]" single_use="true"]
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "-100"]" single_use="true"]
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "-100"]" single_use="true"]
+	- Loss 1 crew member
+		You lost 1 crew member
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "-1"]" single_use="true"]
 	[signal arg="end_event"]
 	"""
 	event_source_text = event_source_text.format({"n_amount"=n_amount})

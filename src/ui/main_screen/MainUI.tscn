@@ -166,13 +166,12 @@ libraries = {
 }
 
 [node name="EventButton" type="Button" parent="."]
-visible = false
 layout_mode = 0
 offset_left = 743.0
 offset_top = 15.0
 offset_right = 900.0
 offset_bottom = 46.0
-text = "Play Random Event"
+text = "Play Debug Event"
 
 [node name="FactButton" type="Button" parent="."]
 layout_mode = 0
