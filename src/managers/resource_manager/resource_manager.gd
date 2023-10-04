@@ -60,25 +60,22 @@ var suffocating_time_left = suffocating_time:
 # Endgame flags, if any of these last too long its game over
 var is_starving = false:
 	set(value):
-		if value == false and is_starving == true:
-			emit_signal("stopped_starving", starving_time)
-		if value == true and is_starving == false:
-			emit_signal("starving", starving_time)
+		if value == is_starving:
+			return
 		is_starving = value
+		emit_signal("starving", starving_time)
 var is_thirsty = false:
 	set(value):
-		if value == false and is_thirsty == true:
-			emit_signal("stopped_thirsty", thirsty_time)
-		if value == true and is_thirsty == false:
-			emit_signal("dehydrated", thirsty_time)
+		if value == is_thirsty:
+			return
 		is_thirsty = value
+		emit_signal("dehydrated", thirsty_time)
 var is_suffocating = false:
 	set(value):
-		if value == false and is_suffocating == true:
-			emit_signal("stopped_suffocating", suffocating_time)
-		if value == true and is_suffocating == false:
-			emit_signal("suffocating", suffocating_time)
+		if value == is_suffocating:
+			return
 		is_suffocating = value
+		emit_signal("suffocating", suffocating_time)
 
 
 enum RESOURCE_TYPE {

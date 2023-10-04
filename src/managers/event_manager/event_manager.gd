@@ -9,7 +9,7 @@ var tutorial_progress = 0 # -1 = disable tutorial, 0 = enable tutorial
 var tick_since_last_event = 0
 var tick_to_event = 20
 var tick_passed_total = 0
-var tick_to_victory = 200
+var tick_to_victory = 199
 var end_game = false
 
 const MIN_TICK_FOR_EVENT = 15
