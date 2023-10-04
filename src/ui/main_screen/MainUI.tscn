@@ -123,6 +123,9 @@ anchor_bottom = 0.0
 offset_right = 1088.0
 offset_bottom = 648.0
 
+[node name="BuildingAlerts" parent="." instance=ExtResource("7_r6nxt")]
+layout_mode = 1
+
 [node name="BuildMenu" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 4
@@ -180,9 +183,6 @@ offset_bottom = 46.0
 text = "Chat with crew"
 
 [node name="ResourceAlerts" parent="." instance=ExtResource("7_njybl")]
-layout_mode = 1
-
-[node name="BuildingAlerts" parent="." instance=ExtResource("7_r6nxt")]
 layout_mode = 1
 
 [node name="GameOver" parent="." instance=ExtResource("2_3v6ei")]
