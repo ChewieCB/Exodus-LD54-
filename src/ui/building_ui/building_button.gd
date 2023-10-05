@@ -9,7 +9,7 @@ extends MarginContainer
 @onready var icon = $CenterContainer/HBoxContainer/MarginContainer2/BuildingIcon
 @onready var production_label = $CenterContainer/HBoxContainer/VBoxContainer/MarginContainer3/HBoxContainer/BuildingProd
 @onready var production_icon = $CenterContainer/HBoxContainer/VBoxContainer/MarginContainer3/HBoxContainer/TextureRect
-@onready var button = $CenterContainer/MarginContainer/Button
+@onready var button = $CenterContainer/HBoxContainer/MarginContainer2/Button
 @onready var production_label_2 = $CenterContainer/HBoxContainer/VBoxContainer/MarginContainer3/HBoxContainer/BuildingProd2
 
 var building_cost
