@@ -5,8 +5,8 @@ class_name GridPlacement
 
 var building_prefab: PackedScene
 var mouse_pos: Vector2
-var placement_coord: Vector2
-var original_placement_coord: Vector2
+var placement_coord: Vector2 # Will be modified to make preview fit better
+var original_placement_coord: Vector2 # Actual tile the mouse pointer is on
 var preview_pos: Vector2
 var current_building: Node
 var previous_rotation = 0
@@ -63,7 +63,7 @@ func _physics_process(_delta):
 
 		if Input.is_action_just_released("place_building"):
 			if not current_building.collider.has_overlapping_areas():
-				if not is_in_blocked_tile(placement_coord):
+				if not is_in_blocked_tile(original_placement_coord):
 					if current_building.placeable:
 						place_building()
 			else:
