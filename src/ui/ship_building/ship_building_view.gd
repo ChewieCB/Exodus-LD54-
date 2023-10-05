@@ -31,7 +31,7 @@ func _ready():
 
 
 func tutorial_tracker(type: Building.TYPES):
-	if EventManager.tutorial_progress >= 2 :
+	if EventManager.tutorial_progress >= 2 or EventManager.tutorial_progress <= -1 :
 		return
 
 	match type:

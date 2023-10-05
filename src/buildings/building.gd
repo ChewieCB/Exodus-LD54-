@@ -78,7 +78,9 @@ func deconstruct_in_progress():
 func _physics_process(delta):
 	if Input.is_action_just_pressed("cancel_place_building"):
 		if is_selected and can_delete and not preview:
-			if is_deconstructing:
+			if is_constructing and not is_deconstructing:
+				cancel_building()
+			elif building_complete and is_deconstructing:
 				cancel_building_remove()
 			else:
 				set_building_remove()
@@ -100,6 +102,8 @@ func _on_tick():
 	if not building_complete and is_constructing:
 		if ticks_left_to_build <= 1:
 			building_complete = true
+			is_constructing = false
+			is_deconstructing = false
 			build_timer_ui.visible = false
 			ResourceManager.add_building(self)
 			ResourceManager.retrieve_workers(self)
