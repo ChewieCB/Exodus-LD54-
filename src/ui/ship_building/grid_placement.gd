@@ -56,7 +56,7 @@ func _physics_process(_delta):
 		current_building.outside_gridmap = is_outside_gridmap(original_placement_coord)
 		current_building.visible = !current_building.outside_gridmap
 		current_building.global_position = preview_pos
-		
+
 		if Input.is_action_just_pressed("cancel_place_building"):
 			current_building.queue_free()
 			current_building = null
@@ -95,6 +95,7 @@ func place_building():
 		current_building.set_building_placed()
 		var tmp_building = current_building
 		previous_rotation = current_building.rotation
+		current_building.build_timer_ui.update_rotation()
 		current_building = null
 #		get_new_building()
 	else:

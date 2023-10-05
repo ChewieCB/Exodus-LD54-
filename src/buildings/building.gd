@@ -9,7 +9,6 @@ class_name Building
 @onready var build_timer_ui = $BuildTimerUI
 
 @onready var pulse_shader = preload("res://src/buildings/shaders/pulse.gdshader")
-
 @onready var build_start_sfx = preload("res://assets/audio/sfx/Building_Start.mp3")
 @onready var build_finish_sfx = preload("res://assets/audio/sfx/Building_Finish.mp3")
 @onready var cant_place_sfx = preload("res://assets/audio/sfx/Cant_Place_Building_There.mp3")
@@ -212,4 +211,10 @@ func _on_area_2d_mouse_entered():
 func _on_area_2d_mouse_exited():
 	is_selected = false
 	# print(self.data.name + " deselected")
+
+func rotate_cw():
+	rotation += PI/2
+
+func rotate_ccw():
+	rotation -= PI/2
 
