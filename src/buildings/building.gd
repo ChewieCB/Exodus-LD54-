@@ -9,7 +9,6 @@ class_name Building
 @onready var build_timer_ui = $BuildTimerUI
 
 @onready var pulse_shader = preload("res://src/buildings/shaders/pulse.gdshader")
-
 @onready var build_start_sfx = preload("res://assets/audio/sfx/Building_Start.mp3")
 @onready var build_finish_sfx = preload("res://assets/audio/sfx/Building_Finish.mp3")
 @onready var cant_place_sfx = preload("res://assets/audio/sfx/Cant_Place_Building_There.mp3")
@@ -78,7 +77,9 @@ func deconstruct_in_progress():
 func _physics_process(delta):
 	if Input.is_action_just_pressed("cancel_place_building"):
 		if is_selected and can_delete and not preview:
-			if is_deconstructing:
+			if is_constructing and not is_deconstructing:
+				cancel_building()
+			elif building_complete and is_deconstructing:
 				cancel_building_remove()
 			else:
 				set_building_remove()
@@ -100,6 +101,8 @@ func _on_tick():
 	if not building_complete and is_constructing:
 		if ticks_left_to_build <= 1:
 			building_complete = true
+			is_constructing = false
+			is_deconstructing = false
 			build_timer_ui.visible = false
 			ResourceManager.add_building(self)
 			ResourceManager.retrieve_workers(self)
@@ -208,4 +211,10 @@ func _on_area_2d_mouse_entered():
 func _on_area_2d_mouse_exited():
 	is_selected = false
 	# print(self.data.name + " deselected")
+
+func rotate_cw():
+	rotation += PI/2
+
+func rotate_ccw():
+	rotation -= PI/2
 
