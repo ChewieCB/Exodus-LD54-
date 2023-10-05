@@ -23,9 +23,9 @@ func _ready():
 	worker_cost_label.text = str(building.data.people_cost)
 	time_cost_label.text = str(building.data.construction_time)
 	icon.texture = building.data.sprite
-	
+
 	ResourceManager.workers_changed.connect(_update_status)
-	
+
 	var production
 	var prod_type_string
 	var prod_type_icon
@@ -47,7 +47,7 @@ func _ready():
 			production = building.data.air_prod
 			prod_type_string = "air"
 			prod_type_icon = load("res://assets/ui/icons/air_icon.png")
-	
+
 	production_label.text = "+{0}".format([production])
 	production_icon.texture = prod_type_icon
 
@@ -61,11 +61,11 @@ func _update_status(available_workers):
 	else:
 		button.disabled = false
 		self.modulate = Color(1, 1, 1)
-		
+
 
 
 func _on_button_pressed():
 	SoundManager.play_sound(button_click_sfx, "UI")
 	BuildingManager._build(building_object)
 	button.release_focus()
-		
+
