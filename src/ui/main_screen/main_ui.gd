@@ -133,6 +133,8 @@ func _on_dialogic_signal(arg: String):
 
 			ResourceManager.check_if_all_crew_died()
 			EventManager.check_if_victory()
+			TickManager.start_ticks()
+
 
 		# Hack to end an event with the build menu open for tutorials and such
 		"end_event_build":
@@ -148,6 +150,7 @@ func _on_dialogic_signal(arg: String):
 
 			ResourceManager.check_if_all_crew_died()
 			EventManager.check_if_victory()
+			TickManager.start_ticks()
 
 		"open_build_screen":
 			_open_build_menu()
