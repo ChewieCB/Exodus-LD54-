@@ -9,7 +9,7 @@ var tutorial_progress = 0 # -1 = disable tutorial, 0 = enable tutorial
 var tick_since_last_event = 0
 var tick_to_event = 20
 var tick_passed_total = 0
-var tick_to_victory = 200
+var tick_to_victory = 199
 var end_game = false
 
 const MIN_TICK_FOR_EVENT = 15
@@ -145,7 +145,7 @@ func reset_state():
 	n_water_building = 0
 	n_air_building = 0
 	
-	tutorial_progress = 0
+	tutorial_progress = -1
 	tick_since_last_event = 0
 	tick_passed_total = 0
 	end_game = false
@@ -367,24 +367,29 @@ func plague_planet_event() -> String:
 
 func science_team() -> String:
 	var rm_population = ResourceManager.population_amount
+	var rm_available_housing = ResourceManager.available_housing
 	var rm_food = ResourceManager.food_amount
 	var rm_water = ResourceManager.water_amount
+	
+	var rm_population_reward = 3
 
 	var event_source_text = """
 	set {population} = {rm_population}
+	set {available_housing} = {rm_available_housing}
 	set {food} = {rm_food}
 	set {water} = {rm_water}
+	set {population_reward} = rm_population_reward
 	
 	Join ExecutiveOfficer 0
 	ExecutiveOfficer (Normal): Captain, we've been approached by Dr Mona Turner. She heard of our mission and made all speed to reach us before we left the sector.
 	ExecutiveOfficer (Normal): Dr Turner leads a team of scientists and engineers fleeing the Negation Field, but their ship is not suited for a long journey. They are asking to come aboard and join our crew.
 	ExecutiveOfficer (Normal): What are your orders?
 	
-	- Extend my compliments to Dr Turner and open a docking tube. Tell them to pack light.
+	- Extend my compliments to Dr Turner and open a docking tube. Tell them to pack light. [if {population_reward} <= {available_housing}]
 		ExecutiveOfficer (Normal): Dr Turner and her team have settled in well. She and her team extend their thanks.
-		[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "3"]" single_use="true"]
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["population", {population_reward}]" single_use="true"]
 		Leave ExecutiveOfficer
-		You gained 3 Crew.
+		You gained {population_reward} Crew.
 	
 	- We have no room for Dr Turner or her team. Extend my apologies and prepare to leave the sector.
 		ExecutiveOfficer (Normal): Captain, I've passed your message onto Dr Turner and we're prepared to leave port. We are away.
@@ -511,15 +516,21 @@ func families_seeking_passage() -> String:
 	var reward_air = randi_range(40, 70)
 	var max_lost_people = clamp(2, 1, ResourceManager.population_amount - 1)
 	var lost_people = randi_range(1, max_lost_people)
+	
+	var rm_available_housing = ResourceManager.available_housing
+	var rm_population = ResourceManager.population_amount
+	Dialogic.VAR.available_housing = rm_available_housing
+	
 	var event_source_text = """
+	Available Housing = {available_housing}
 	Join ExecutiveOfficer 0
 	ExecutiveOfficer (Normal): Captain, we've been approached by Faroq Khan, the leader of a group of families who are seeking passage. 
 	ExecutiveOfficer (Normal): They come from a border colony world that was destroyed by the Negation Field.
 	ExecutiveOfficer (Normal): What should we do?
-	- Pass on my complements to Mr Khan. Give him our coordinates and prepare a docking tube.
+	- Pass on my complements to Mr Khan. Give him our coordinates and prepare a docking tube. [if {available_housing} >= 3]
 		ExecutiveOfficer (Normal): Mr Khan and the other refugees have joined the crew. Reports from section leaders advise they are tough and willing to learn. 
 		Leave ExecutiveOfficer
-		[call_node path="ResourceManager" method="change_resource_from_event" args="["people", "3"]" single_use="true"]
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "3"]" single_use="true"]
 		You gained 3 Crew.
 	- Tell Mr Khan we have no room. He'll have to look for another ship.
 		ExecutiveOfficer (Normal): Aye, Captain. We have departed the sector. The refugees will have to find someone else.

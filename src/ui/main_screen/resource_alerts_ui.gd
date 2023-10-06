@@ -20,10 +20,6 @@ func _ready():
 	ResourceManager.dehydrated.connect(_dehydrated)
 	ResourceManager.suffocating.connect(_suffocating)
 	#
-	ResourceManager.stopped_starving.connect(_starving)
-	ResourceManager.stopped_thirsty.connect(_dehydrated)
-	ResourceManager.stopped_suffocating.connect(_suffocating)
-	#
 	ResourceManager.game_over.connect(_hide_all)
 
 

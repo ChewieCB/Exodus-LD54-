@@ -86,9 +86,8 @@ layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/TabContainer/Food"]
 layout_mode = 0
-offset_top = 31.0
 offset_right = 328.0
-offset_bottom = 512.0
+offset_bottom = 481.0
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 8
@@ -124,9 +123,8 @@ layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/TabContainer/Water"]
 layout_mode = 0
-offset_top = 31.0
 offset_right = 328.0
-offset_bottom = 512.0
+offset_bottom = 481.0
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 8
@@ -162,9 +160,8 @@ layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/TabContainer/Air"]
 layout_mode = 0
-offset_top = 31.0
 offset_right = 328.0
-offset_bottom = 512.0
+offset_bottom = 481.0
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 8

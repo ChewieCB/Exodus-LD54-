@@ -13,12 +13,12 @@ script = ExtResource("1_u8ic5")
 data = ExtResource("2_rkm1t")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(64, 0)
+position = Vector2(64, -65)
 texture = ExtResource("3_pynll")
 offset = Vector2(-64, 0)
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(32, 32)
+position = Vector2(32, -33)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, -64)
@@ -29,6 +29,8 @@ position = Vector2(-64, 0)
 shape = SubResource("RectangleShape2D_0tb0d")
 
 [node name="BuildTimerUI" parent="." instance=ExtResource("4_r3orp")]
+offset_top = -129.0
+offset_bottom = -1.0
 pivot_offset = Vector2(64, 64)
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]

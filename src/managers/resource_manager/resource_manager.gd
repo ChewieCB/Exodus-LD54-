@@ -60,25 +60,22 @@ var suffocating_time_left = suffocating_time:
 # Endgame flags, if any of these last too long its game over
 var is_starving = false:
 	set(value):
-		if value == false and is_starving == true:
-			emit_signal("stopped_starving", starving_time)
-		if value == true and is_starving == false:
-			emit_signal("starving", starving_time)
+		if value == is_starving:
+			return
 		is_starving = value
+		emit_signal("starving", starving_time)
 var is_thirsty = false:
 	set(value):
-		if value == false and is_thirsty == true:
-			emit_signal("stopped_thirsty", thirsty_time)
-		if value == true and is_thirsty == false:
-			emit_signal("dehydrated", thirsty_time)
+		if value == is_thirsty:
+			return
 		is_thirsty = value
+		emit_signal("dehydrated", thirsty_time)
 var is_suffocating = false:
 	set(value):
-		if value == false and is_suffocating == true:
-			emit_signal("stopped_suffocating", suffocating_time)
-		if value == true and is_suffocating == false:
-			emit_signal("suffocating", suffocating_time)
+		if value == is_suffocating:
+			return
 		is_suffocating = value
+		emit_signal("suffocating", suffocating_time)
 
 
 enum RESOURCE_TYPE {
@@ -243,20 +240,20 @@ func update_resource_tick() -> void:
 	# TODO - change resource UI colours over low threshold
 	
 	# Tick down loss counters
-	if is_starving:
+	if is_starving and current_food_modifier < 0 :
 		starving_time_left -= 1
 		print("Starving: " + str(starving_time_left) + " ticks left")
-	if is_thirsty:
+	if is_thirsty and current_water_modifier < 0:
 		thirsty_time_left -= 1
 		print("Thirsty: " + str(thirsty_time_left) + " ticks left")
-	if is_suffocating:
+	if is_suffocating and current_air_modifier < 0:
 		suffocating_time_left -= 1
 		print("Suffocating: " + str(suffocating_time_left) + " ticks left")
 	
 	# Reset loss counters if they've changed
-	is_starving = food_amount == 0
-	is_thirsty = water_amount == 0
-	is_suffocating = air_amount == 0
+	is_starving = food_amount == 0 and current_food_modifier < 0
+	is_thirsty = water_amount == 0 and current_water_modifier < 0
+	is_suffocating = air_amount == 0 and current_air_modifier < 0
 
 
 func can_add_population(value) -> bool:
@@ -322,6 +319,10 @@ func change_resource_from_event(resource: String, amount_str: String):
 func reset_state():
 	# TODO - load initial values from file for difficulty settings
 	population_amount = 3
+	ResourceManager.housing_amount = 0
+	ResourceManager.food_amount = 150
+	ResourceManager.water_amount = 250
+	ResourceManager.air_amount = 200
 
 	housing_alert_shown = false
 	food_alert_shown = false

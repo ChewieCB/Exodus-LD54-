@@ -27,6 +27,11 @@ func _ready() -> void:
 	EventManager.request_change_objective_label.connect(change_objective_label)
 	EventManager.request_change_event_image.connect(change_event_image)
 
+	if EventManager.tutorial_progress == -1:
+		var tween = get_tree().create_tween()
+		tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
+		tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
+		tween.parallel().tween_property(background_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 
 func _on_build_button_pressed():
 	if anim_player.animation_finished:
@@ -35,17 +40,19 @@ func _on_build_button_pressed():
 		if build_menu_open:
 			anim_player.play("hide_build_menu")
 			build_menu_open = false
-			ship_grid.visible = false
-			ship_build_frame.visible = false
-			tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
-			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
+			if ship_grid != null:
+				ship_grid.visible = false
+				ship_build_frame.visible = false
+				tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
+				tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 		else:
 			anim_player.play("show_build_menu")
 			build_menu_open = true
-			ship_grid.visible = true
-			ship_build_frame.visible = true
-			tween.parallel().tween_property(camera, "global_position", ship_sprite.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
-			tween.parallel().tween_property(camera, "zoom", Vector2(0.5, 0.5), 0.5).set_trans(Tween.TRANS_LINEAR)
+			if ship_grid != null:
+				ship_grid.visible = true
+				ship_build_frame.visible = true
+				tween.parallel().tween_property(camera, "global_position", ship_sprite.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
+				tween.parallel().tween_property(camera, "zoom", Vector2(0.5, 0.5), 0.5).set_trans(Tween.TRANS_LINEAR)
 
 
 func _on_play_dialog_pressed():
@@ -113,7 +120,7 @@ func _on_dialogic_signal(arg: String):
 		"end_event":
 			var tween = get_tree().create_tween()
 			if event_image:
-				tween.tween_property(event_image, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
+				tween.tween_property(event_image, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
 
 			tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
@@ -126,6 +133,8 @@ func _on_dialogic_signal(arg: String):
 
 			ResourceManager.check_if_all_crew_died()
 			EventManager.check_if_victory()
+			TickManager.start_ticks()
+
 
 		# Hack to end an event with the build menu open for tutorials and such
 		"end_event_build":
@@ -141,6 +150,7 @@ func _on_dialogic_signal(arg: String):
 
 			ResourceManager.check_if_all_crew_died()
 			EventManager.check_if_victory()
+			TickManager.start_ticks()
 
 		"open_build_screen":
 			_open_build_menu()
@@ -153,3 +163,7 @@ func change_event_image(texture_path: String):
 
 func change_objective_label(text: String):
 	objective_label.text = "Objective: " + text
+
+
+func _on_events_option_item_selected(index):
+	pass # Replace with function body.
