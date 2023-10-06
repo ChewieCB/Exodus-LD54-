@@ -1,7 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://dvsjsr4ybusi6"]
+[gd_scene load_steps=3 format=3 uid="uid://dvsjsr4ybusi6"]
 
 [ext_resource type="Script" path="res://src/managers/event_manager/event_manager.gd" id="1_rqa4t"]
+[ext_resource type="Resource" uid="uid://brhax8cbmue2v" path="res://src/events/planet/PlagueEvent.tres" id="2_mfwd0"]
 
 [node name="EventManager" type="Node"]
 process_mode = 3
 script = ExtResource("1_rqa4t")
+event_resources = Array[Resource("res://src/events/resource/event_resource.gd")]([ExtResource("2_mfwd0")])

@@ -35,7 +35,7 @@ gdscript/warnings/unused_parameter=0
 
 variables={
 "air": "0",
-"available_housing": "0",
+"available_housing": "",
 "chance": "1",
 "choice1_check": "false",
 "choice2_check": "false",
@@ -43,7 +43,6 @@ variables={
 "choice4_check": "false",
 "food": "0",
 "population": "0",
-"population_reward": "0",
 "water": "0"
 }
 settings/text_speed=0.01

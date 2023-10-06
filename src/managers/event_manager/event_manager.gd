@@ -5,7 +5,7 @@ var n_food_building = 0
 var n_water_building = 0
 var n_air_building = 0
 
-var tutorial_progress = 0 # -1 = disable tutorial, 0 = enable tutorial
+var tutorial_progress = -1 # -1 = disable tutorial, 0 = enable tutorial
 var tick_since_last_event = 0
 var tick_to_event = 20
 var tick_passed_total = 0
@@ -20,6 +20,8 @@ signal start_event
 signal request_change_event_image
 signal request_change_objective_label
 signal victory
+
+@export var event_resources: Array[Event]
 
 
 func _ready() -> void:
@@ -60,9 +62,10 @@ var events = [
 
 func get_next_event():
 #	var event = events[current_event_idx]
-	play_specific_event("cheat_menu_event")
+#	play_specific_event("cheat_menu_event")
 #	if current_event_idx < 9:
 #		current_event_idx += 1
+	play_specific_event_resource(event_resources[0])
 	
 
 func get_random_element_from_array(options: Array):
@@ -101,6 +104,13 @@ func get_specific_event(event_name: String) -> DialogicTimeline:
 func play_specific_event(event_name: String) -> Node:
 	var timeline = get_specific_event(event_name)
 	emit_signal("start_event", event_name)
+	var dialog = Dialogic.start(timeline)
+	return dialog
+
+
+func play_specific_event_resource(event_resource: Event) -> Node:
+	var timeline = event_resource.build_dialogic_timeline()
+	emit_signal("start_event", event_resource.name)
 	var dialog = Dialogic.start(timeline)
 	return dialog
 
