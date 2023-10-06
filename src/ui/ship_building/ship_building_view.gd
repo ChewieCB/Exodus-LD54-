@@ -13,18 +13,13 @@ var bgm_music
 
 func _ready():
 	TickManager.tick_changed.connect(_update_star_particles)
-	#
-	ScreenTransitionManager.fade_in(1.5)
-
-	# For tutorial only
 	EventManager.building_finished.connect(tutorial_tracker)
-
-	await ScreenTransitionManager.transitioned
-	#
 	if tutorial_disabled:
 		EventManager.tutorial_progress = -1
+
+	ScreenTransitionManager.fade_in(1.5)
+	await ScreenTransitionManager.transitioned
 	
-	TickManager.start_ticks()
 	bgm_music = load("res://assets/audio/music/ld54-bgm-medley-no-alarms-1.1.mp3")
 	bgm_audio_player = SoundManager.play_music(bgm_music, 0.2, "Music")
 	bgm_audio_player.finished.connect(play_bgm_again)
@@ -48,10 +43,6 @@ func tutorial_tracker(type: Building.TYPES):
 		if EventManager.tutorial_progress == 1:
 			EventManager.play_specific_event("tutorial3_event")
 			EventManager.tutorial_progress = 2
-		elif EventManager.tutorial_progress == -1:
-			EventManager.play_specific_event("disabled_tutorial_event")
-			EventManager.tutorial_progress = 2
-		return
 
 
 func _update_star_particles(tick_speed, is_paused):

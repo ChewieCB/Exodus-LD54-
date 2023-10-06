@@ -20,7 +20,7 @@ var start_date_unix = 3873826800
 const UNIX_DAY = 86400
 const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 var current_timestamp = start_date_unix
-
+var saved_progress = 0
 
 func _ready():
 	TickManager.tick.connect(_update_day_counter)
@@ -32,6 +32,7 @@ func _ready():
 	pause_texture.modulate = Color.GRAY
 	fast_button.disabled = false
 	fast_texture.modulate = Color.WHITE
+	TickManager.time_control_ui = self
 
 
 func _physics_process(delta):
@@ -46,10 +47,10 @@ func _physics_process(delta):
 	var tick_progress = remap(
 		TickManager.tick_timer.time_left, 
 		TickManager.tick_timer.wait_time, 0, 
-		0, 100
+		0, 100 - saved_progress
 	)
 	tick_progress = clamp(tick_progress, 0, 100)
-	tick_progress_bar.value = tick_progress
+	tick_progress_bar.value = saved_progress + tick_progress
 
 
 func _update_day_counter():

@@ -10,8 +10,6 @@ var button_click_sfx = preload("res://assets/audio/sfx/ui_click_1.mp3")
 func _ready():
 	ResourceManager.connect("game_over", _game_over)
 	EventManager.connect("victory", _victory)
-	get_tree().paused = false
-	TickManager.start_ticks()
 
 
 func _game_over(resource):
@@ -50,7 +48,7 @@ func _on_restart_button_pressed():
 	ScreenTransitionManager.fade_out(0.7)
 	await ScreenTransitionManager.transitioned
 	await get_tree().create_timer(0.6).timeout
-	TickManager._set_tick_rate(TickManager.SLOW_TICK_SPEED)
+	TickManager.reset_state()
 
 	# Reset game state
 	ResourceManager.reset_state()
