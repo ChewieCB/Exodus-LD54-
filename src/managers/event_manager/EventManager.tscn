@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dvsjsr4ybusi6"]
+[gd_scene load_steps=22 format=3 uid="uid://dvsjsr4ybusi6"]
 
 [ext_resource type="Script" path="res://src/managers/event_manager/event_manager.gd" id="1_rqa4t"]
 [ext_resource type="Resource" uid="uid://ccl7foxs8yr7p" path="res://src/events/planet/damaged_ship_aid/DamagedShipAid.tres" id="2_c6g67"]
@@ -16,6 +16,11 @@
 [ext_resource type="Resource" uid="uid://0b1o3q1crong" path="res://src/events/game_state/tutorial/tutorial_1/Tutorial1Event.tres" id="14_hox73"]
 [ext_resource type="Resource" uid="uid://b5j3oya8oyl14" path="res://src/events/game_state/tutorial/tutorial_2/Tutorial2Event.tres" id="15_rx1av"]
 [ext_resource type="Resource" uid="uid://x8g6r4wwijnc" path="res://src/events/game_state/victory/VictoryEvent.tres" id="16_31xan"]
+[ext_resource type="Texture2D" uid="uid://4fytxdwdouii" path="res://assets/event/Planet_1_Pixel.png" id="17_74cip"]
+[ext_resource type="Texture2D" uid="uid://c4rxgw4telfsu" path="res://assets/event/Planet_2_Pixel.png" id="18_olhp3"]
+[ext_resource type="Texture2D" uid="uid://cucahpuvdvpm5" path="res://assets/event/Planet_3_Pixel.png" id="19_dwxb1"]
+[ext_resource type="Texture2D" uid="uid://c7jiijivxnhaj" path="res://assets/event/BigPlanet_4_Pixel.png" id="20_m6gxp"]
+[ext_resource type="Texture2D" uid="uid://cygmypnooav7y" path="res://assets/event/Ship_wreak_Pixel.png" id="21_8v0ud"]
 
 [node name="EventManager" type="Node"]
 process_mode = 3
@@ -23,3 +28,6 @@ script = ExtResource("1_rqa4t")
 event_resources = Array[Resource("res://src/events/resource/event_resource.gd")]([ExtResource("12_itrw7"), ExtResource("2_c6g67"), ExtResource("3_br7fd"), ExtResource("4_yu5gg"), ExtResource("5_faeok"), ExtResource("6_m8sff"), ExtResource("7_r1ttf"), ExtResource("8_4tsau"), ExtResource("9_tdotb"), ExtResource("10_b4gop"), ExtResource("11_b6ek5")])
 tutorial_events = Array[Resource("res://src/events/resource/event_resource.gd")]([ExtResource("13_a3im1"), ExtResource("14_hox73"), ExtResource("15_rx1av")])
 victory_event = ExtResource("16_31xan")
+planet_backgrounds = Array[Texture2D]([ExtResource("17_74cip"), ExtResource("18_olhp3"), ExtResource("19_dwxb1"), ExtResource("20_m6gxp")])
+ship_backgrounds = Array[Texture2D]([ExtResource("21_8v0ud")])
+space_backgrounds = Array[Texture2D]([ExtResource("21_8v0ud")])

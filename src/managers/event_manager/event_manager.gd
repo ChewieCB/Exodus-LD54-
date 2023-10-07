@@ -25,6 +25,11 @@ signal victory
 @export var tutorial_events: Array[Event]
 @export var victory_event: Event
 #
+@export var planet_backgrounds: Array[Texture2D]
+@export var ship_backgrounds: Array[Texture2D]
+@export var space_backgrounds: Array[Texture2D]
+var previous_background: Texture2D = null
+#
 @onready var available_events: Array[Event] = event_resources.duplicate()
 var completed_events: Array[Event]
 
@@ -62,15 +67,43 @@ func get_random_event():
 	return event
 
 
+func get_random_background(type):
+	var background_array
+	match type:
+		Event.EVENT_TYPES.PLANET:
+			background_array = planet_backgrounds
+		Event.EVENT_TYPES.SHIP:
+			background_array = ship_backgrounds
+		_:
+			background_array = space_backgrounds
+	
+	randomize()
+	var rand_index = randi() % background_array.size()
+	var background = background_array[rand_index]
+	# Prevent showing the same background twice in a row
+	if previous_background:
+		while background == previous_background:
+			rand_index = randi() % background_array.size()
+			background = background_array[rand_index]
+	
+	previous_background = background
+	
+	return background
+
+
 func play_event(event: Event) -> Node:
+	if event.background:
+		change_event_image(event.background)
+	else:
+		change_event_image(get_random_background(event.type))
 	var timeline = event.build_dialogic_timeline()
 	emit_signal("start_event", event.name)
 	var dialog = Dialogic.start(timeline)
 	return dialog
 
 
-func change_event_image(texture_path: String):
-	emit_signal("request_change_event_image", texture_path)
+func change_event_image(_texture: Texture2D):
+	emit_signal("request_change_event_image", _texture)
 
 
 func change_objective_label(text: String):

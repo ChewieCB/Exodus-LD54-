@@ -158,11 +158,11 @@ func _on_dialogic_signal(arg: String):
 			_open_build_menu()
 
 
-func change_event_image(texture_path: String):
-	if texture_path == "":
-		event_image.texture = null
+func change_event_image(_texture: Texture2D):
+	if _texture:
+		event_image.texture = _texture
 	else:
-		event_image.texture = load(texture_path)
+		event_image.texture = null
 
 
 func change_objective_label(text: String):
