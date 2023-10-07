@@ -14,11 +14,11 @@ extends Control
 @onready var build_menu: MarginContainer = $BuildMenu
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 @onready var objective_label: Label = $ObjectiveLabel
-@onready var time_control_ui = $TimeControlUI/MarginContainer
+@onready var time_control_ui: TimeControlUI = $TimeControlUI/MarginContainer
+@onready var chat_crew_button: Button = $ChatCrewButton
 
 
 var build_menu_open = false
-
 var button_click_sfx = preload("res://assets/audio/sfx/ui_click_1.mp3")
 
 func _ready() -> void:
@@ -68,7 +68,7 @@ func _on_play_dialog_pressed():
 #	EventManager.play_random_event()
 
 
-func _on_listen_fact_pressed():
+func _on_chat_crew_pressed():
 	SoundManager.play_sound(button_click_sfx, "UI")
 	TickManager.stop_ticks()
 	if build_menu_open:
@@ -78,6 +78,17 @@ func _on_listen_fact_pressed():
 	build_show_toggle.visible = false
 	build_menu.visible = false
 	EventManager.play_specific_event("space_fact_event")
+
+func _open_build_menu():
+	build_show_toggle.visible = true
+	build_menu.visible = true
+	anim_player.play("show_build_menu")
+	build_menu_open = true
+	ship_grid.visible = true
+	ship_build_frame.visible = true
+	var tween = get_tree().create_tween()
+	tween.parallel().tween_property(camera, "global_position", ship_sprite.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
+	tween.parallel().tween_property(camera, "zoom", Vector2(0.5, 0.5), 0.5).set_trans(Tween.TRANS_LINEAR)
 
 
 func _on_start_event(event_name: String):
@@ -102,17 +113,8 @@ func _on_start_event(event_name: String):
 	build_show_toggle.visible = false
 	build_menu.visible = false
 
-
-func _open_build_menu():
-	build_show_toggle.visible = true
-	build_menu.visible = true
-	anim_player.play("show_build_menu")
-	build_menu_open = true
-	ship_grid.visible = true
-	ship_build_frame.visible = true
-	var tween = get_tree().create_tween()
-	tween.parallel().tween_property(camera, "global_position", ship_sprite.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
-	tween.parallel().tween_property(camera, "zoom", Vector2(0.5, 0.5), 0.5).set_trans(Tween.TRANS_LINEAR)
+	chat_crew_button.disabled = true
+	time_control_ui.disabled_buttons()
 
 
 func _on_finish_event(arg: String):
@@ -130,6 +132,7 @@ func _on_finish_event(arg: String):
 			build_menu.visible = true
 
 			time_control_ui._on_speed_1_button_pressed()
+			chat_crew_button.disabled = false
 
 			ResourceManager.check_if_all_crew_died()
 			EventManager.check_if_victory()
@@ -147,6 +150,7 @@ func _on_finish_event(arg: String):
 			build_menu.visible = true
 
 			time_control_ui._on_speed_1_button_pressed()
+			chat_crew_button.disabled = false
 
 			ResourceManager.check_if_all_crew_died()
 			EventManager.check_if_victory()
