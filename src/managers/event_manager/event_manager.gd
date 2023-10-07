@@ -12,8 +12,8 @@ var tick_passed_total = 0
 var tick_to_victory = 199
 var end_game = false
 
-const MIN_TICK_FOR_EVENT = 15
-const MAX_TICK_FOR_EVENT = 30
+const MIN_TICK_FOR_EVENT = 6
+const MAX_TICK_FOR_EVENT = 20
 
 signal building_finished
 signal start_event
@@ -24,8 +24,7 @@ signal victory
 @export var event_resources: Array[Event]
 @export var tutorial_events: Array[Event]
 @export var victory_event: Event
-# Combined events array for debug menu purposes
-@onready var events = event_resources + tutorial_events + [victory_event]
+#
 @onready var available_events: Array[Event] = event_resources.duplicate()
 var completed_events: Array[Event]
 
@@ -33,6 +32,9 @@ var completed_events: Array[Event]
 func _ready() -> void:
 	TickManager.tick.connect(check_tick_for_random_event)
 	tick_to_event = randi_range(MIN_TICK_FOR_EVENT, MAX_TICK_FOR_EVENT)
+	
+	# Remove the debug event from the available array
+	available_events.pop_front()
 	
 	if tutorial_progress == 0:
 		tick_to_event += 5
