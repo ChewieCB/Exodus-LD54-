@@ -32,7 +32,7 @@ var water_alert_shown = false
 var air_alert_shown = false
 
 # How many ticks/days/turns each endgame flag can go on for before you lose
-var starving_time: int = 10
+var starving_time: int = 9
 var starving_time_left = starving_time:
 	set(value):
 		starving_time_left = value
@@ -48,7 +48,7 @@ var thirsty_time_left = thirsty_time:
 			emit_signal("dehydrated", thirsty_time_left)
 			if thirsty_time_left == 0:
 				emit_signal("game_over", RESOURCE_TYPE.WATER)
-var suffocating_time: int = 6
+var suffocating_time: int = 3
 var suffocating_time_left = suffocating_time:
 	set(value):
 		suffocating_time_left = value
@@ -319,10 +319,10 @@ func change_resource_from_event(resource: String, amount_str: String):
 func reset_state():
 	# TODO - load initial values from file for difficulty settings
 	population_amount = 3
-	ResourceManager.housing_amount = 0
-	ResourceManager.food_amount = 150
-	ResourceManager.water_amount = 250
-	ResourceManager.air_amount = 200
+	housing_amount = 0
+	food_amount = 150
+	water_amount = 250
+	air_amount = 200
 
 	housing_alert_shown = false
 	food_alert_shown = false

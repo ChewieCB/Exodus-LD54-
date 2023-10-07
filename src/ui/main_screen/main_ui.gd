@@ -17,7 +17,6 @@ extends Control
 @onready var time_control_ui: TimeControlUI = $TimeControlUI/MarginContainer
 @onready var chat_crew_button: Button = $ChatCrewButton
 
-
 var build_menu_open = false
 var button_click_sfx = preload("res://assets/audio/sfx/ui_click_1.mp3")
 
@@ -26,12 +25,12 @@ func _ready() -> void:
 	EventManager.finish_event.connect(_on_finish_event)
 	EventManager.request_change_objective_label.connect(change_objective_label)
 	EventManager.request_change_event_image.connect(change_event_image)
-
-	if EventManager.tutorial_progress == -1:
-		var tween = get_tree().create_tween()
-		tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
-		tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
-		tween.parallel().tween_property(background_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
+	# if EventManager.tutorial_progress == -1:
+	# 	print("LMAO2")
+	# 	var tween = get_tree().create_tween()
+	# 	tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
+	# 	tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
+	# 	tween.parallel().tween_property(background_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 
 func _on_build_button_pressed():
 	if anim_player.animation_finished:
@@ -100,7 +99,7 @@ func _on_start_event(event_name: String):
 		build_menu_open = false
 
 	# For some events, we dont need to zoom farside
-	if event_name in ["tutorial1_event", "tutorial2_event", "space_fact_event"]:
+	if event_name in ["tutorial1_event", "tutorial2_event", "space_fact_event", "start_game_without_tutorial"]:
 		tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
 		tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 	else:

@@ -652,6 +652,16 @@ func tutorial3_event() -> String:
 	return event_source_text
 
 
+func start_game_without_tutorial() -> String:
+	var event_source_text = """
+	Join ExecutiveOfficer 0
+	ExecutiveOfficer (Normal): Welcome back, Captain.
+	Leave ExecutiveOfficer
+	[signal arg="end_event"]
+	"""
+	return event_source_text
+
+
 func disabled_tutorial_event():
 	var n_survivor = 2
 	var event_source_text = """
