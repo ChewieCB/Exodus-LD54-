@@ -6,7 +6,7 @@
 script = ExtResource("1_hotn2")
 name = "Planetary Plague"
 type = 0
-event_text_file = "res://src/events/planet/plague.txt"
+event_text_file = "res://src/events/planet/plague_quarantine/plague_quarantine.txt"
 pop_reward_1 = 0
 food_reward_1 = 0
 water_reward_1 = 0
@@ -15,7 +15,7 @@ pop_reward_2 = 0
 food_reward_2 = 0
 water_reward_2 = 0
 air_reward_2 = 0
-pop_reward_3 = 5
+pop_reward_3 = 7
 food_reward_3 = 0
 water_reward_3 = 0
 air_reward_3 = 0

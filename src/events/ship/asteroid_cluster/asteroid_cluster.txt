@@ -1,0 +1,22 @@
+Join ExecutiveOfficer 0
+ExecutiveOfficer (Normal): Captain, message from navigation! Sector charts show a nearby asteroid cluster that was surveyed by Hurulis Asteroid Prospectors.
+ExecutiveOfficer (Normal): A probe sent to the cluster returned with samples of oxygen-rich ores and hydrogen. We can extract them for breathable oxygen and drinkable water. What are your orders?
+- Contact navigation and set a course to the cluster.
+	Contact navigation and set a course to the cluster, Pressley. Those resources would help.
+	set {chance} = range(1,100).pick_random()
+	# 50% chance success
+	if {chance} >= 50:
+		ExecutiveOfficer (Normal): Our engineers extracted some resources from the asteroid cluster. It's not a lot, but every bit helps.
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{water_reward_1}"]" single_use="true"]
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "{air_reward_1}"]" single_use="true"]
+		You gained {water_reward_1} Water and {air_reward_1} Oxygen.
+	else:
+		ExecutiveOfficer (Normal): Those prospectors knew their stuff! These asteroids were flush with minerals. We've extracted what we can and have returned to our original course.
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{water_reward_2}"]" single_use="true"]
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "{air_reward_2}"]" single_use="true"]
+		You gained {water_reward_2} Water and {air_reward_2} Oxygen.
+- Continue on our present course.
+	There'll be more opportunities in the future. Continue on our present course.
+	ExecutiveOfficer (Normal): Aye, Captain. I've passed your orders to navigation. We are holding course.
+Leave ExecutiveOfficer
+[signal arg="end_event"]

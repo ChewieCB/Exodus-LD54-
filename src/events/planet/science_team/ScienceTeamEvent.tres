@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="Event" load_steps=2 format=3 uid="uid://d286wfkbdajeu"]
+[gd_resource type="Resource" script_class="Event" load_steps=2 format=3 uid="uid://7lfgm0asmag8"]
 
-[ext_resource type="Script" path="res://src/events/resource/event_resource.gd" id="1_7uvsq"]
+[ext_resource type="Script" path="res://src/events/resource/event_resource.gd" id="1_64y13"]
 
 [resource]
-script = ExtResource("1_7uvsq")
-name = ""
+script = ExtResource("1_64y13")
+name = "Science Team"
 type = 0
-event_text = null
-pop_reward_1 = 0
+event_text_file = "res://src/events/planet/science_team/science_team.txt"
+pop_reward_1 = 5
 food_reward_1 = 0
 water_reward_1 = 0
 air_reward_1 = 0

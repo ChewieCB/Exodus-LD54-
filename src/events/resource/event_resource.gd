@@ -4,7 +4,8 @@ class_name Event
 enum EVENT_TYPES {
 	PLANET,
 	SHIP,
-	SPACE
+	SPACE,
+	DEBUG
 }
 
 @export var name: String
@@ -12,6 +13,7 @@ enum EVENT_TYPES {
 @export var background: Texture2D
 @export_file("*.txt") var event_text_file
 var event_text = ""
+
 
 @export_group("Rewards")
 @export_subgroup("1")

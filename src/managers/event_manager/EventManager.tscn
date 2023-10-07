@@ -1,9 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://dvsjsr4ybusi6"]
+[gd_scene load_steps=13 format=3 uid="uid://dvsjsr4ybusi6"]
 
 [ext_resource type="Script" path="res://src/managers/event_manager/event_manager.gd" id="1_rqa4t"]
-[ext_resource type="Resource" uid="uid://brhax8cbmue2v" path="res://src/events/planet/PlagueEvent.tres" id="2_mfwd0"]
+[ext_resource type="Resource" uid="uid://ccl7foxs8yr7p" path="res://src/events/planet/damaged_ship_aid/DamagedShipAid.tres" id="2_c6g67"]
+[ext_resource type="Resource" uid="uid://bn1v4lhssxlnw" path="res://src/events/planet/families_seeking_passage/FamiliesSeekingPassageEvent.tres" id="3_br7fd"]
+[ext_resource type="Resource" uid="uid://yx5xsd5mk6gm" path="res://src/events/planet/governor_demands_passage/GovernerDemandsPassage.tres" id="4_yu5gg"]
+[ext_resource type="Resource" uid="uid://brhax8cbmue2v" path="res://src/events/planet/plague_quarantine/PlagueQuarantineEvent.tres" id="5_faeok"]
+[ext_resource type="Resource" uid="uid://c3gfqewuxdhg6" path="res://src/events/planet/planetary_customs/PlanetaryCustomsEvent.tres" id="6_m8sff"]
+[ext_resource type="Resource" uid="uid://7lfgm0asmag8" path="res://src/events/planet/science_team/ScienceTeamEvent.tres" id="7_r1ttf"]
+[ext_resource type="Resource" uid="uid://bj5cbfhucemij" path="res://src/events/ship/asteroid_cluster/AsteroidClusterEvent.tres" id="8_4tsau"]
+[ext_resource type="Resource" uid="uid://u5r2ypm555n4" path="res://src/events/ship/distress_signal/DistressSignalEvent.tres" id="9_tdotb"]
+[ext_resource type="Resource" uid="uid://cwh07aayanmqd" path="res://src/events/ship/hab_riot/HabRiotEvent.tres" id="10_b4gop"]
+[ext_resource type="Resource" uid="uid://cityiounuv3qd" path="res://src/events/ship/rich_planetoid/RichPlanetoidEvent.tres" id="11_b6ek5"]
+[ext_resource type="Resource" uid="uid://dyxlgp4cb5bao" path="res://src/events/debug/change_resources/ChangeResourcesEvent.tres" id="12_itrw7"]
 
 [node name="EventManager" type="Node"]
 process_mode = 3
 script = ExtResource("1_rqa4t")
-event_resources = Array[Resource("res://src/events/resource/event_resource.gd")]([ExtResource("2_mfwd0")])
+event_resources = Array[Resource("res://src/events/resource/event_resource.gd")]([ExtResource("12_itrw7"), ExtResource("2_c6g67"), ExtResource("3_br7fd"), ExtResource("4_yu5gg"), ExtResource("5_faeok"), ExtResource("6_m8sff"), ExtResource("7_r1ttf"), ExtResource("8_4tsau"), ExtResource("9_tdotb"), ExtResource("10_b4gop"), ExtResource("11_b6ek5")])

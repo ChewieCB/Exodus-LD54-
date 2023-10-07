@@ -16,6 +16,8 @@ extends Control
 @onready var objective_label: Label = $ObjectiveLabel
 @onready var time_control_ui = $TimeControlUI/MarginContainer
 
+@onready var debug_event_dropdown = $DebugEventsMenu/MarginContainer/PanelContainer/VBoxContainer/OptionButton
+
 
 var build_menu_open = false
 
@@ -155,15 +157,23 @@ func _on_dialogic_signal(arg: String):
 		"open_build_screen":
 			_open_build_menu()
 
+
 func change_event_image(texture_path: String):
 	if texture_path == "":
 		event_image.texture = null
 	else:
 		event_image.texture = load(texture_path)
 
+
 func change_objective_label(text: String):
 	objective_label.text = "Objective: " + text
 
 
-func _on_events_option_item_selected(index):
-	pass # Replace with function body.
+func _on_debug_event_menu_button_item_selected(index):
+	# Adjust for separator items
+	var id = debug_event_dropdown.get_item_id(index)
+	EventManager.play_specific_event_resource(
+		EventManager.event_resources[id]
+	)
+	debug_event_dropdown.select(-1)
+

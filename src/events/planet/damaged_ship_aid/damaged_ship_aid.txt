@@ -1,0 +1,21 @@
+Join ExecutiveOfficer 0
+ExecutiveOfficer (Normal): Captain, we've received a message from a nearby ship, the Intrepid. It has made an emergency landing on a planet in this system.
+ExecutiveOfficer (Normal): The ship's hull is intact and it seems the only problem is their faulty oxygen generator. We could send some technicians down and help them with repairs.
+ExecutiveOfficer (Normal): What are your orders?
+
+- We have time and crew to spare. 
+	Send a memo to engineering, ask for volunteers who willing to go planetside and help the Intrepid with repairs.
+	set {chance} = range(1,100).pick_random()
+	# 50% chance success
+	if {chance} >= 50:
+		ExecutiveOfficer (Normal): The technicians have reported back, they advise the Intrepid's oxygen generation is restored. They are on their way back now.
+	else:
+		ExecutiveOfficer (Normal): The technicians have returned and advise the Intrepid is fully-functional. The Intrepid made haste to leave the system, but not before her captain gave us a parting gift of excess water they harvested on the planet.
+		Leave ExecutiveOfficer
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{water_reward_1}"]" single_use="true"]
+		Gained {water_reward_1} Water
+
+- We can't spare the time and at least they're safe on that planet. Carry on, Mr Pressley.
+	ExecutiveOfficer (Normal): Understood Captain, we're moving on.
+
+[signal arg="end_event"]

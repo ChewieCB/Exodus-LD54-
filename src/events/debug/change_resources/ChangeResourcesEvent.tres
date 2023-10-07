@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="Event" load_steps=2 format=3 uid="uid://dyxlgp4cb5bao"]
+
+[ext_resource type="Script" path="res://src/events/resource/event_resource.gd" id="1_bg66w"]
+
+[resource]
+script = ExtResource("1_bg66w")
+name = "Change Resources"
+type = 3
+event_text_file = "res://src/events/debug/change_resources/change_resources.txt"
+pop_reward_1 = 1
+food_reward_1 = 25
+water_reward_1 = 25
+air_reward_1 = 25
+pop_reward_2 = 5
+food_reward_2 = 50
+water_reward_2 = 50
+air_reward_2 = 50
+pop_reward_3 = 10
+food_reward_3 = 100
+water_reward_3 = 100
+air_reward_3 = 100
+pop_reward_4 = 15
+food_reward_4 = 200
+water_reward_4 = 200
+air_reward_4 = 200
+pop_cost_1 = 1
+food_cost_1 = 25
+water_cost_1 = 25
+air_cost_1 = 25
+pop_cost_2 = 5
+food_cost_2 = 50
+water_cost_2 = 50
+air_cost_2 = 50
+pop_cost_3 = 10
+food_cost_3 = 100
+water_cost_3 = 100
+air_cost_3 = 100
+pop_cost_4 = 15
+food_cost_4 = 200
+water_cost_4 = 200
+air_cost_4 = 200
+is_chain_event = false
