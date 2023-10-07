@@ -11,7 +11,6 @@ func _ready():
 	ResourceManager.connect("game_over", _game_over)
 	EventManager.connect("victory", _victory)
 
-
 func _game_over(resource):
 	print("GameOver")
 	get_tree().paused = true
@@ -48,9 +47,8 @@ func _on_restart_button_pressed():
 	ScreenTransitionManager.fade_out(0.7)
 	await ScreenTransitionManager.transitioned
 	await get_tree().create_timer(0.6).timeout
-	TickManager.reset_state()
 
-	# Reset game state
+	TickManager.reset_state()
 	ResourceManager.reset_state()
 	EventManager.reset_state()
 	BuildingManager.construction_queue = []

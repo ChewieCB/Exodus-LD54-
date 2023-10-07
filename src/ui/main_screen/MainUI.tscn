@@ -175,7 +175,7 @@ offset_right = 900.0
 offset_bottom = 46.0
 text = "Play Debug Event"
 
-[node name="FactButton" type="Button" parent="."]
+[node name="ChatCrewButton" type="Button" parent="."]
 layout_mode = 0
 offset_left = 918.0
 offset_top = 15.0
@@ -242,5 +242,5 @@ script = ExtResource("9_e81ol")
 
 [connection signal="pressed" from="BuildShowToggle/Button" to="." method="_on_build_button_pressed"]
 [connection signal="pressed" from="EventButton" to="." method="_on_play_dialog_pressed"]
-[connection signal="pressed" from="FactButton" to="." method="_on_listen_fact_pressed"]
+[connection signal="pressed" from="ChatCrewButton" to="." method="_on_chat_crew_pressed"]
 [connection signal="item_selected" from="DEBUGEventsTrigger/VBoxContainer/EventsOption" to="DEBUGEventsTrigger/VBoxContainer/EventsOption" method="_on_item_selected"]

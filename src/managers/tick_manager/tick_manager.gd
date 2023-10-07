@@ -6,7 +6,7 @@ signal tick_changed(tick_speed, is_paused)
 @onready var tick_timer = $Timer
 
 const SLOW_TICK_SPEED = 5.0
-const FAST_TICK_SPEED = 2.5
+const FAST_TICK_SPEED = 1.25
 var current_tick_rate = SLOW_TICK_SPEED
 var time_control_ui = null
 
@@ -30,7 +30,8 @@ func _set_tick_rate(new_tick_rate: float):
 		return
 
 	tick_timer.set_paused(true)
-	time_control_ui.saved_progress = time_control_ui.tick_progress_bar.value
+	if time_control_ui != null:
+		time_control_ui.saved_progress = time_control_ui.tick_progress_bar.value
 	# Remap the progress on one timescale to another
 	var remapped_time_left = remap(
 		tick_timer.time_left,
@@ -47,6 +48,13 @@ func _set_tick_rate(new_tick_rate: float):
 func _on_timer_timeout():
 	print("tick")
 	emit_signal("tick")
-	time_control_ui.saved_progress = 0
+	if time_control_ui != null:
+		time_control_ui.saved_progress = 0
 	if not tick_timer.wait_time == current_tick_rate:
 		tick_timer.start(current_tick_rate)
+
+
+func reset_state():
+	current_tick_rate = SLOW_TICK_SPEED
+	tick_timer.start(SLOW_TICK_SPEED)
+	tick_timer.set_paused(true)
