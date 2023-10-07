@@ -1,0 +1,6 @@
+Join ExecutiveOfficer 0
+ExecutiveOfficer (Normal): Captain, we've reached the portal system! We're safe!
+ExecutiveOfficer (Normal): The crew stand ready for intergalactic transit. We await your orders.
+- It was an honour and a privilege, Mr Pressley. Set course for the portal. Our new home awaits!
+	Leave ExecutiveOfficer
+[signal arg="end_event"]

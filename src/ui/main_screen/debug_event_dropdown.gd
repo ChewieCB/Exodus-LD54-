@@ -7,7 +7,11 @@ func _ready() -> void:
 	var planetary_events = []
 	var space_events = []
 	var debug_events = []
-	
+	#
+	for _event in EventManager.tutorial_events:
+		debug_events.append(_event)
+	debug_events.append(EventManager.victory_event)
+	#
 	for _event in events:
 		if _event.type == Event.EVENT_TYPES.PLANET:
 			planetary_events.append(_event)

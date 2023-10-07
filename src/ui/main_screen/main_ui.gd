@@ -172,8 +172,18 @@ func change_objective_label(text: String):
 func _on_debug_event_menu_button_item_selected(index):
 	# Adjust for separator items
 	var id = debug_event_dropdown.get_item_id(index)
-	EventManager.play_specific_event_resource(
-		EventManager.event_resources[id]
-	)
+	var event_name = debug_event_dropdown.get_item_text(index)
+	if "Tutorial" in event_name:
+		EventManager.play_event(
+			EventManager.tutorial_events[id]
+		)
+	elif "Victory" in event_name:
+		EventManager.play_event(
+			EventManager.victory_event
+		)
+	else:
+		EventManager.play_event(
+			EventManager.event_resources[id-4]
+		)
 	debug_event_dropdown.select(-1)
 

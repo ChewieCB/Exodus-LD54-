@@ -10,7 +10,6 @@ var bgm_audio_player: AudioStreamPlayer
 var bgm_music
 
 
-
 func _ready():
 	TickManager.tick_changed.connect(_update_star_particles)
 	EventManager.building_finished.connect(tutorial_tracker)
@@ -33,15 +32,15 @@ func tutorial_tracker(type: Building.TYPES):
 		Building.TYPES.HabBuilding:
 			n_hab_built += 1
 		Building.TYPES.FoodBuilding:
-			n_food_built += 1	
+			n_food_built += 1
 
 	if n_food_built >= 2 and EventManager.tutorial_progress == 0:
-		EventManager.play_specific_event("tutorial2_event")
+		EventManager.play_event(EventManager.tutorial_events[1])
 		EventManager.tutorial_progress = 1
 		return
 	if n_hab_built >= 2:
 		if EventManager.tutorial_progress == 1:
-			EventManager.play_specific_event("tutorial3_event")
+			EventManager.play_event(EventManager.tutorial_events[2])
 			EventManager.tutorial_progress = 2
 
 
@@ -65,8 +64,9 @@ func _update_star_particles(tick_speed, is_paused):
 
 func _on_start_tutorial_timer_timeout() -> void:
 	if EventManager.tutorial_progress == 0 and not tutorial_disabled:
-		EventManager.play_specific_event("tutorial1_event")
+		EventManager.play_event(EventManager.tutorial_events[0])
 
 
 func play_bgm_again():
 	bgm_audio_player = SoundManager.play_music(bgm_music, 0.2, "Music")
+
