@@ -17,12 +17,14 @@ const MAX_TICK_FOR_EVENT = 30
 
 signal building_finished
 signal start_event
+signal finish_event
 signal request_change_event_image
 signal request_change_objective_label
 signal victory
 
 
 func _ready() -> void:
+	Dialogic.signal_event.connect(_on_dialogic_signal)
 	TickManager.tick.connect(check_tick_for_random_event)
 	tick_to_event = randi_range(MIN_TICK_FOR_EVENT, MAX_TICK_FOR_EVENT)
 	if tutorial_progress == 0:
@@ -63,7 +65,9 @@ func get_next_event():
 	play_specific_event("cheat_menu_event")
 #	if current_event_idx < 9:
 #		current_event_idx += 1
-	
+
+func _on_dialogic_signal(arg: String):
+	emit_signal("finish_event", arg)
 
 func get_random_element_from_array(options: Array):
 	randomize()

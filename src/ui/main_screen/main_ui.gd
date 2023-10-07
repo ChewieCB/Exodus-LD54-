@@ -22,8 +22,8 @@ var build_menu_open = false
 var button_click_sfx = preload("res://assets/audio/sfx/ui_click_1.mp3")
 
 func _ready() -> void:
-	Dialogic.signal_event.connect(_on_dialogic_signal)
 	EventManager.start_event.connect(_on_start_event)
+	EventManager.finish_event.connect(_on_finish_event)
 	EventManager.request_change_objective_label.connect(change_objective_label)
 	EventManager.request_change_event_image.connect(change_event_image)
 
@@ -115,7 +115,7 @@ func _open_build_menu():
 	tween.parallel().tween_property(camera, "zoom", Vector2(0.5, 0.5), 0.5).set_trans(Tween.TRANS_LINEAR)
 
 
-func _on_dialogic_signal(arg: String):
+func _on_finish_event(arg: String):
 	match arg:
 		"end_event":
 			var tween = get_tree().create_tween()
