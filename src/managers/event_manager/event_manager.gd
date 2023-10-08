@@ -12,6 +12,15 @@ var tick_passed_total = 0
 var tick_to_victory = 199
 var end_game = false
 
+enum TRAVEL_PATH_TYPE {
+	DEFAULT_PATH,
+	INTERGALATIC_ROUTE,
+	ASTEROID_FIELD,
+	VOID_FIELD
+}
+
+var chosen_path: TRAVEL_PATH_TYPE = TRAVEL_PATH_TYPE.DEFAULT_PATH
+
 const MIN_TICK_FOR_EVENT = 15
 const MAX_TICK_FOR_EVENT = 30
 
