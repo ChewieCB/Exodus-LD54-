@@ -2,7 +2,7 @@ extends Control
 
 @export var ship_sprite: Sprite2D
 @export var ship_build_frame: Sprite2D
-@export var background_screen: Sprite2D
+@export var travel_screen: TravelScreen
 @export var ship_grid: Node2D
 @export var camera: Camera2D
 @export var mid_view_marker: Marker2D
@@ -30,7 +30,7 @@ func _ready() -> void:
 	# 	var tween = get_tree().create_tween()
 	# 	tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
 	# 	tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
-	# 	tween.parallel().tween_property(background_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
+	# 	tween.parallel().tween_property(travel_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 
 func _on_build_button_pressed():
 	if anim_player.animation_finished:
@@ -47,6 +47,7 @@ func _on_build_button_pressed():
 		else:
 			anim_player.play("show_build_menu")
 			build_menu_open = true
+			travel_screen.hide_screen()
 			if ship_grid != null:
 				ship_grid.visible = true
 				ship_build_frame.visible = true
@@ -88,6 +89,7 @@ func _open_build_menu():
 	var tween = get_tree().create_tween()
 	tween.parallel().tween_property(camera, "global_position", ship_sprite.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 	tween.parallel().tween_property(camera, "zoom", Vector2(0.5, 0.5), 0.5).set_trans(Tween.TRANS_LINEAR)
+	travel_screen.hide_screen()
 
 
 func _on_start_event(event_name: String):
@@ -106,7 +108,7 @@ func _on_start_event(event_name: String):
 		tween.parallel().tween_property(camera, "zoom", Vector2(0.15, 0.15), 0.5).set_trans(Tween.TRANS_LINEAR)
 		tween.parallel().tween_property(camera, "global_position", far_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 		tween.parallel().tween_property(event_image, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
-		tween.parallel().tween_property(background_screen, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
+		tween.parallel().tween_property(travel_screen, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
 	ship_grid.visible = false
 	ship_build_frame.visible = false
 	build_show_toggle.visible = false
@@ -125,7 +127,7 @@ func _on_finish_event(arg: String):
 
 			tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
-			tween.parallel().tween_property(background_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
+			tween.parallel().tween_property(travel_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 
 			build_show_toggle.visible = true
 			build_menu.visible = true
@@ -141,7 +143,7 @@ func _on_finish_event(arg: String):
 		# Hack to end an event with the build menu open for tutorials and such
 		"end_event_build":
 			var tween = get_tree().create_tween()
-			tween.tween_property(background_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
+			tween.tween_property(travel_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 			if event_image:
 				tween.tween_property(event_image, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
 
