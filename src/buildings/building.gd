@@ -206,11 +206,19 @@ func _on_area_2d_mouse_entered():
 	# TODO add popup or highlight
 	is_selected = true
 	# print(self.data.name + " selected")
+	var pulse_colour = Color("#ffffff")
+	pulse_colour.a = 0.5
+	var pulse_mat = ShaderMaterial.new()
+	pulse_mat.shader = pulse_shader
+	sprite.material = pulse_mat
+	sprite.material.set_shader_parameter("shine_color", pulse_colour)
+	sprite.material.set_shader_parameter("full_pulse_cycle", true)
+	sprite.material.set_shader_parameter("mode", 1)
 
 
 func _on_area_2d_mouse_exited():
 	is_selected = false
-	# print(self.data.name + " deselected")
+	sprite.material.set_shader_parameter("mode", 0)
 
 func rotate_cw():
 	rotation += PI/2
