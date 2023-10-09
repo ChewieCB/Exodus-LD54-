@@ -71,9 +71,9 @@ func _on_start_tutorial_timer_timeout() -> void:
 	if EventManager.tutorial_progress == 0 and not tutorial_disabled:
 		EventManager.play_event(EventManager.tutorial_events[0])
 	else:
-    # TODO - replace this with the Resource object version
+	# TODO - replace this with the Resource object version
 		# EventManager.play_specific_event("start_game_without_tutorial")
-    pass
+		pass
 
 
 func play_bgm_again():

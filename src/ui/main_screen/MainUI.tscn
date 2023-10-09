@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cu7ivg1u3vbhl"]
+[gd_scene load_steps=17 format=3 uid="uid://cu7ivg1u3vbhl"]
 
 [ext_resource type="PackedScene" uid="uid://bdbib8np6c616" path="res://src/ui/main_screen/resources/ResourceUI.tscn" id="1_4u51x"]
 [ext_resource type="PackedScene" uid="uid://sjhl1wud5upl" path="res://src/ui/building_ui/BuildUI.tscn" id="1_hyvdy"]
@@ -6,8 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://bfhd8krrn8mx2" path="res://src/ui/game_over/GameOver.tscn" id="2_3v6ei"]
 [ext_resource type="PackedScene" uid="uid://bsqw1bcfuxbvr" path="res://src/ui/building_ui/TimeControlUI.tscn" id="4_2kxyh"]
 [ext_resource type="PackedScene" uid="uid://cnjv60xkxx8oq" path="res://src/ui/building_ui/NotEnoughWorkersPopup.tscn" id="4_eo2jl"]
-[ext_resource type="Script" path="res://src/ui/main_screen/debug_event_dropdown.gd" id="7_my6e0"]
 [ext_resource type="PackedScene" uid="uid://b1xmgw2jwmunk" path="res://src/ui/travel_screen/TravelScreen.tscn" id="6_hbhke"]
+[ext_resource type="Script" path="res://src/ui/main_screen/debug_event_dropdown.gd" id="7_my6e0"]
 [ext_resource type="PackedScene" uid="uid://b2rwhkbjj7e4n" path="res://src/ui/main_screen/ResourceAlertsUI.tscn" id="7_njybl"]
 [ext_resource type="PackedScene" uid="uid://d2r3r36bru83h" path="res://src/ui/main_screen/BuildingAlert.tscn" id="7_r6nxt"]
 [ext_resource type="Script" path="res://src/ui/main_screen/events_debug/events_debug_menu.gd" id="9_e81ol"]
@@ -288,5 +288,4 @@ libraries = {
 [connection signal="pressed" from="BuildShowToggle/Button" to="." method="_on_build_button_pressed"]
 [connection signal="pressed" from="EventButton" to="." method="_on_play_dialog_pressed"]
 [connection signal="item_selected" from="DebugEventsMenu/MarginContainer/PanelContainer/VBoxContainer/OptionButton" to="." method="_on_debug_event_menu_button_item_selected"]
-[connection signal="pressed" from="FactButton" to="." method="_on_listen_fact_pressed"]
 [connection signal="item_selected" from="DEBUGEventsTrigger/VBoxContainer/EventsOption" to="DEBUGEventsTrigger/VBoxContainer/EventsOption" method="_on_item_selected"]

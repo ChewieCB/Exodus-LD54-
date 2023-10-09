@@ -40,6 +40,9 @@ var previous_background: Texture2D = null
 @onready var available_events: Array[Event] = event_resources.duplicate()
 var completed_events: Array[Event]
 
+const MIN_TICK_FOR_EVENT = 6
+const MAX_TICK_FOR_EVENT = 20
+
 
 func _ready() -> void:
 	Dialogic.signal_event.connect(_on_dialogic_signal)
@@ -89,6 +92,8 @@ func get_random_background(type):
 			background_array = planet_backgrounds
 		Event.EVENT_TYPES.SHIP:
 			background_array = ship_backgrounds
+		Event.EVENT_TYPES.DEBUG:
+			return null
 		_:
 			background_array = space_backgrounds
 	
@@ -118,7 +123,8 @@ func play_event(event: Event) -> Node:
 
 
 func change_event_image(_texture: Texture2D):
-	emit_signal("request_change_event_image", _texture)
+	if _texture:
+		emit_signal("request_change_event_image", _texture)
 
 
 func change_objective_label(text: String):

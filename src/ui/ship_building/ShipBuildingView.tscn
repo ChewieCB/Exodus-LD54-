@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c6s7o88tyavpj"]
+[gd_scene load_steps=18 format=3 uid="uid://c6s7o88tyavpj"]
 
 [ext_resource type="PackedScene" uid="uid://cu7ivg1u3vbhl" path="res://src/ui/main_screen/MainUI.tscn" id="1_21fy4"]
 [ext_resource type="Script" path="res://src/ui/ship_building/ship_building_view.gd" id="1_ae44n"]
@@ -11,7 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://c723ddgavfsnp" path="res://assets/backgrounds/planet_concept_1.png" id="8_3ttdw"]
 [ext_resource type="Texture2D" uid="uid://p6x8qph6gl3j" path="res://assets/backgrounds/build_frame.png" id="8_fs641"]
 [ext_resource type="Texture2D" uid="uid://cygmypnooav7y" path="res://assets/event/Ship_wreak_Pixel.png" id="8_p8t6q"]
-[ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/backgrounds/display screen.png" id="11_k1ahy"]
 
 [sub_resource type="Gradient" id="Gradient_5qkd4"]
 offsets = PackedFloat32Array(0, 0.264706, 0.759804, 1)
@@ -175,12 +174,6 @@ modulate = Color(1, 1, 1, 0)
 position = Vector2(4736, -512)
 scale = Vector2(12, 12)
 texture = ExtResource("8_3ttdw")
-
-[node name="BackgroundScreen" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(3246, 162)
-scale = Vector2(2, 2)
-texture = ExtResource("11_k1ahy")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
