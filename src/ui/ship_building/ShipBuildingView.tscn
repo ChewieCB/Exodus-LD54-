@@ -11,8 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://c723ddgavfsnp" path="res://assets/backgrounds/planet_concept_1.png" id="8_3ttdw"]
 [ext_resource type="Texture2D" uid="uid://p6x8qph6gl3j" path="res://assets/backgrounds/build_frame.png" id="8_fs641"]
 [ext_resource type="Texture2D" uid="uid://cygmypnooav7y" path="res://assets/event/Ship_wreak_Pixel.png" id="8_p8t6q"]
-[ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/backgrounds/display screen.png" id="11_k1ahy"]
 [ext_resource type="PackedScene" uid="uid://cymcngb74n5dp" path="res://src/ui/menus/main/SettingMenu.tscn" id="11_t4hll"]
+[ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="13_vvqwf"]
 
 [sub_resource type="Gradient" id="Gradient_5qkd4"]
 offsets = PackedFloat32Array(0, 0.264706, 0.759804, 1)
@@ -186,7 +186,7 @@ texture = ExtResource("8_3ttdw")
 visible = false
 position = Vector2(3246, 162)
 scale = Vector2(2, 2)
-texture = ExtResource("11_k1ahy")
+texture = ExtResource("13_vvqwf")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

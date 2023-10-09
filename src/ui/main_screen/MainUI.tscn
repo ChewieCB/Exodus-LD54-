@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bfhd8krrn8mx2" path="res://src/ui/game_over/GameOver.tscn" id="2_3v6ei"]
 [ext_resource type="PackedScene" uid="uid://bsqw1bcfuxbvr" path="res://src/ui/building_ui/TimeControlUI.tscn" id="4_2kxyh"]
 [ext_resource type="PackedScene" uid="uid://cnjv60xkxx8oq" path="res://src/ui/building_ui/NotEnoughWorkersPopup.tscn" id="4_eo2jl"]
-[ext_resource type="PackedScene" uid="uid://b1xmgw2jwmunk" path="res://src/ui/travel_screen/TravelScreen.tscn" id="6_hbhke"]
+[ext_resource type="PackedScene" uid="uid://b1xmgw2jwmunk" path="res://src/ui/travel_screen/CommandScreen.tscn" id="6_hbhke"]
 [ext_resource type="PackedScene" uid="uid://b2rwhkbjj7e4n" path="res://src/ui/main_screen/ResourceAlertsUI.tscn" id="7_njybl"]
 [ext_resource type="PackedScene" uid="uid://d2r3r36bru83h" path="res://src/ui/main_screen/BuildingAlert.tscn" id="7_r6nxt"]
 [ext_resource type="Script" path="res://src/ui/main_screen/events_debug/events_debug_menu.gd" id="9_e81ol"]
@@ -104,7 +104,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_xagyo")
-travel_screen = NodePath("TravelScreen")
+travel_screen = NodePath("CommandScreen")
 
 [node name="BuildShowToggle" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -153,7 +153,7 @@ layout_mode = 2
 
 [node name="MousePopup" parent="." instance=ExtResource("4_eo2jl")]
 
-[node name="TravelScreen" parent="." instance=ExtResource("6_hbhke")]
+[node name="CommandScreen" parent="." instance=ExtResource("6_hbhke")]
 
 [node name="TimeControlUI" type="Control" parent="."]
 layout_mode = 1
