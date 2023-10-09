@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cu7ivg1u3vbhl"]
+[gd_scene load_steps=16 format=3 uid="uid://cu7ivg1u3vbhl"]
 
 [ext_resource type="PackedScene" uid="uid://bdbib8np6c616" path="res://src/ui/main_screen/resources/ResourceUI.tscn" id="1_4u51x"]
 [ext_resource type="PackedScene" uid="uid://sjhl1wud5upl" path="res://src/ui/building_ui/BuildUI.tscn" id="1_hyvdy"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bsqw1bcfuxbvr" path="res://src/ui/building_ui/TimeControlUI.tscn" id="4_2kxyh"]
 [ext_resource type="PackedScene" uid="uid://cnjv60xkxx8oq" path="res://src/ui/building_ui/NotEnoughWorkersPopup.tscn" id="4_eo2jl"]
 [ext_resource type="Script" path="res://src/ui/main_screen/debug_event_dropdown.gd" id="7_my6e0"]
+[ext_resource type="PackedScene" uid="uid://b1xmgw2jwmunk" path="res://src/ui/travel_screen/TravelScreen.tscn" id="6_hbhke"]
 [ext_resource type="PackedScene" uid="uid://b2rwhkbjj7e4n" path="res://src/ui/main_screen/ResourceAlertsUI.tscn" id="7_njybl"]
 [ext_resource type="PackedScene" uid="uid://d2r3r36bru83h" path="res://src/ui/main_screen/BuildingAlert.tscn" id="7_r6nxt"]
 [ext_resource type="Script" path="res://src/ui/main_screen/events_debug/events_debug_menu.gd" id="9_e81ol"]
@@ -55,6 +56,10 @@ tracks/1/keys = {
 "values": [Vector2(229, 17), Vector2(229, -100)]
 }
 
+[sub_resource type="Animation" id="Animation_18c0j"]
+resource_name = "hide_travel_screen"
+length = 0.4
+
 [sub_resource type="Animation" id="Animation_aef8j"]
 resource_name = "show_build_menu"
 length = 0.4
@@ -87,10 +92,11 @@ tracks/1/keys = {
 _data = {
 "RESET": SubResource("Animation_3toh5"),
 "hide_build_menu": SubResource("Animation_sektw"),
+"hide_travel_screen": SubResource("Animation_18c0j"),
 "show_build_menu": SubResource("Animation_aef8j")
 }
 
-[node name="MainUI" type="Control"]
+[node name="MainUI" type="Control" node_paths=PackedStringArray("travel_screen")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -99,6 +105,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_xagyo")
+travel_screen = NodePath("TravelScreen")
 
 [node name="BuildShowToggle" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -116,17 +123,19 @@ toggle_mode = true
 text = "Build Menu"
 
 [node name="ResourceUI" parent="." instance=ExtResource("1_4u51x")]
-layout_mode = 2
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_right = 1088.0
-offset_bottom = 648.0
+layout_mode = 1
+offset_left = -299.5
+offset_top = -72.0
+offset_right = 299.5
 
 [node name="BuildingAlerts" parent="." instance=ExtResource("7_r6nxt")]
 layout_mode = 1
+mouse_filter = 1
+
+[node name="ResourceAlerts" parent="." instance=ExtResource("7_njybl")]
+layout_mode = 1
+offset_left = -54.0
+offset_right = -14.0
 
 [node name="BuildMenu" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -145,6 +154,8 @@ layout_mode = 2
 
 [node name="MousePopup" parent="." instance=ExtResource("4_eo2jl")]
 
+[node name="TravelScreen" parent="." instance=ExtResource("6_hbhke")]
+
 [node name="TimeControlUI" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 3
@@ -160,12 +171,6 @@ mouse_filter = 1
 
 [node name="MarginContainer" parent="TimeControlUI" instance=ExtResource("4_2kxyh")]
 layout_mode = 1
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "RESET"
-libraries = {
-"": SubResource("AnimationLibrary_pifv8")
-}
 
 [node name="EventButton" type="Button" parent="."]
 visible = false
@@ -212,16 +217,13 @@ vertical_alignment = 1
 layout_mode = 2
 script = ExtResource("7_my6e0")
 
-[node name="FactButton" type="Button" parent="."]
+[node name="ChatCrewButton" type="Button" parent="."]
 layout_mode = 0
 offset_left = 918.0
 offset_top = 15.0
 offset_right = 1075.0
 offset_bottom = 46.0
 text = "Chat with crew"
-
-[node name="ResourceAlerts" parent="." instance=ExtResource("7_njybl")]
-layout_mode = 1
 
 [node name="GameOver" parent="." instance=ExtResource("2_3v6ei")]
 layout_mode = 1
@@ -276,6 +278,12 @@ item_count = 1
 popup/item_0/text = "Mr Khan"
 popup/item_0/id = 0
 script = ExtResource("9_e81ol")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "RESET"
+libraries = {
+"": SubResource("AnimationLibrary_pifv8")
+}
 
 [connection signal="pressed" from="BuildShowToggle/Button" to="." method="_on_build_button_pressed"]
 [connection signal="pressed" from="EventButton" to="." method="_on_play_dialog_pressed"]

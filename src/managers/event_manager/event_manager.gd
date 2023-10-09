@@ -12,11 +12,18 @@ var tick_passed_total = 0
 var tick_to_victory = 199
 var end_game = false
 
-const MIN_TICK_FOR_EVENT = 6
-const MAX_TICK_FOR_EVENT = 20
+enum TRAVEL_PATH_TYPE {
+	DEFAULT_PATH,
+	INTERGALATIC_ROUTE,
+	ASTEROID_FIELD,
+	VOID_FIELD
+}
+
+var chosen_path: TRAVEL_PATH_TYPE = TRAVEL_PATH_TYPE.DEFAULT_PATH
 
 signal building_finished
 signal start_event
+signal finish_event
 signal request_change_event_image
 signal request_change_objective_label
 signal victory
@@ -35,6 +42,7 @@ var completed_events: Array[Event]
 
 
 func _ready() -> void:
+	Dialogic.signal_event.connect(_on_dialogic_signal)
 	TickManager.tick.connect(check_tick_for_random_event)
 	tick_to_event = randi_range(MIN_TICK_FOR_EVENT, MAX_TICK_FOR_EVENT)
 	
@@ -56,6 +64,10 @@ func finished_building(type: Building.TYPES):
 			n_water_building += 1
 		Building.TYPES.AirBuilding:
 			n_air_building += 1
+
+
+func _on_dialogic_signal(arg: String):
+	emit_signal("finish_event", arg)
 
 
 func get_random_event():
@@ -188,3 +200,16 @@ func space_fact_event():
 	"""
 	event_source_text = event_source_text.format({"random_fact"=random_fact})
 	return event_source_text
+
+# TODO - refactor this into an Event Resource Object
+
+func start_game_without_tutorial() -> String:
+	var event_source_text = """
+	Join ExecutiveOfficer 0
+	ExecutiveOfficer (Normal): Welcome back, Captain.
+	Leave ExecutiveOfficer
+	[signal arg="end_event"]
+	"""
+	return event_source_text
+
+

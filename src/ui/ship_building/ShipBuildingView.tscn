@@ -150,10 +150,9 @@ texture = ExtResource("8_fs641")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="MainUI" parent="UI" node_paths=PackedStringArray("ship_sprite", "ship_build_frame", "background_screen", "ship_grid", "camera", "mid_view_marker", "far_view_marker", "space_background", "event_image") instance=ExtResource("1_21fy4")]
+[node name="MainUI" parent="UI" node_paths=PackedStringArray("ship_sprite", "ship_build_frame", "ship_grid", "camera", "mid_view_marker", "far_view_marker", "space_background", "event_image") instance=ExtResource("1_21fy4")]
 ship_sprite = NodePath("../../ShipSprite")
 ship_build_frame = NodePath("../../ShipBuildFrame")
-background_screen = NodePath("../../BackgroundScreen")
 ship_grid = NodePath("../../ShipGrid")
 camera = NodePath("../../Camera2D")
 mid_view_marker = NodePath("../../MidViewMarker")
@@ -178,6 +177,7 @@ scale = Vector2(12, 12)
 texture = ExtResource("8_3ttdw")
 
 [node name="BackgroundScreen" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(3246, 162)
 scale = Vector2(2, 2)
 texture = ExtResource("11_k1ahy")

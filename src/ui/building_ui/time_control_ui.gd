@@ -1,16 +1,17 @@
 extends MarginContainer
+class_name TimeControlUI
 
-@onready var pause_button = $VBoxContainer/PanelContainer2/HBoxContainer/MarginContainer/HBoxContainer/PauseContainer/Button
-@onready var pause_texture = $VBoxContainer/PanelContainer2/HBoxContainer/MarginContainer/HBoxContainer/PauseContainer/TextureRect
-@onready var normal_button = $VBoxContainer/PanelContainer2/HBoxContainer/MarginContainer/HBoxContainer/Speed1Container/Button
-@onready var normal_texture = $VBoxContainer/PanelContainer2/HBoxContainer/MarginContainer/HBoxContainer/Speed1Container/TextureRect
-@onready var fast_button = $VBoxContainer/PanelContainer2/HBoxContainer/MarginContainer/HBoxContainer/Speed2Container/Button
-@onready var fast_texture =$VBoxContainer/PanelContainer2/HBoxContainer/MarginContainer/HBoxContainer/Speed2Container/TextureRect
+@onready var pause_button: Button = $VBoxContainer/PanelContainer2/HBoxContainer/MarginContainer/HBoxContainer/PauseContainer/Button
+@onready var pause_texture: TextureRect = $VBoxContainer/PanelContainer2/HBoxContainer/MarginContainer/HBoxContainer/PauseContainer/TextureRect
+@onready var normal_button: Button = $VBoxContainer/PanelContainer2/HBoxContainer/MarginContainer/HBoxContainer/Speed1Container/Button
+@onready var normal_texture: TextureRect = $VBoxContainer/PanelContainer2/HBoxContainer/MarginContainer/HBoxContainer/Speed1Container/TextureRect
+@onready var fast_button: Button = $VBoxContainer/PanelContainer2/HBoxContainer/MarginContainer/HBoxContainer/Speed2Container/Button
+@onready var fast_texture: TextureRect =$VBoxContainer/PanelContainer2/HBoxContainer/MarginContainer/HBoxContainer/Speed2Container/TextureRect
 
-@onready var tick_progress_bar = $VBoxContainer/PanelContainer/ProgressBar
+@onready var tick_progress_bar: ProgressBar = $VBoxContainer/PanelContainer/ProgressBar
 
-@onready var day_counter = $VBoxContainer/PanelContainer3/MarginContainer/HBoxContainer/MarginContainer/DayLabel
-@onready var date = $VBoxContainer/PanelContainer3/MarginContainer/HBoxContainer/MarginContainer2/DateLabel
+@onready var day_counter: Label = $VBoxContainer/PanelContainer3/MarginContainer/HBoxContainer/MarginContainer/DayLabel
+@onready var date: Label = $VBoxContainer/PanelContainer3/MarginContainer/HBoxContainer/MarginContainer2/DateLabel
 
 var button_click_sfx = preload("res://assets/audio/sfx/ui_click_1.mp3")
 
@@ -53,6 +54,14 @@ func _physics_process(delta):
 	tick_progress_bar.value = saved_progress + tick_progress
 
 
+func disabled_buttons():
+	pause_button.disabled = true
+	pause_texture.modulate = Color.GRAY
+	normal_button.disabled = true
+	normal_texture.modulate = Color.GRAY
+	fast_button.disabled = true
+	fast_texture.modulate = Color.GRAY
+
 func _update_day_counter():
 	current_day += 1
 	day_counter.text = "Day {0}".format([str(current_day + 1)])
@@ -79,7 +88,7 @@ func _on_pause_button_pressed():
 func _on_speed_1_button_pressed():
 	SoundManager.play_sound(button_click_sfx, "UI")
 	normal_button.disabled = true
-	normal_texture.modulate = Color.WHITE
+	normal_texture.modulate = Color.GRAY
 	TickManager._set_tick_rate(TickManager.SLOW_TICK_SPEED)
 	
 	if pause_button.disabled:
