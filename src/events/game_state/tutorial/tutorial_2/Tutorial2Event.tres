@@ -6,6 +6,7 @@
 script = ExtResource("1_ga80i")
 name = "Tutorial 2"
 type = 3
+active_screen = 2
 event_text_file = "res://src/events/game_state/tutorial/tutorial_2/tutorial_2.txt"
 pop_reward_1 = 2
 food_reward_1 = 0

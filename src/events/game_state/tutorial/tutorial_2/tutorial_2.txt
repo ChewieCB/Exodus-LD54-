@@ -5,6 +5,7 @@ ExecutiveOfficer (Normal): We now have the accommodation facilities to take on e
 - Contact the lifepod and welcome them into the crew.
 	[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "{pop_reward_1}"]" single_use="true"]
 	You gained {pop_reward_1} Crew.
+	[signal arg="change_to_nav_screen"]
 	ExecutiveOfficer (Normal): Good work, Captain. We now have more crew, but more crew means we need to produce more oxygen, water and food. From now on, it's important we balance resources with each increase in the number of crew.
 	ExecutiveOfficer (Normal): We have limited resources and limited space on our journey, and there'll be others who need help. Use your best judgement, Captain, but watch those resource levels. 
 	ExecutiveOfficer (Normal): Navigation has calculated our journey to the portal system will take 200 days. We are in your hands, Captain.

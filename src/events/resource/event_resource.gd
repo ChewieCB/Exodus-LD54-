@@ -8,9 +8,16 @@ enum EVENT_TYPES {
 	DEBUG
 }
 
+enum ACTIVE_SCREEN {
+	BUILD,
+	NAV,
+	EVENT
+}
+
 @export var name: String
 @export var type: EVENT_TYPES
 @export var background: Texture2D
+@export var active_screen: ACTIVE_SCREEN = ACTIVE_SCREEN.EVENT
 @export_file("*.txt") var event_text_file
 var event_text = ""
 
@@ -66,7 +73,8 @@ var event_text = ""
 
 
 func _init(
-	p_name = "", p_type = EVENT_TYPES.SPACE, p_background = null, p_event_text_file = "",
+	p_name = "", p_type = EVENT_TYPES.SPACE, p_background = null,
+	p_active_screen = ACTIVE_SCREEN.EVENT,p_event_text_file = "",
 	p_pop_reward_1 = 0, p_food_reward_1 = 0, p_water_reward_1 = 0, p_air_reward_1 = 0,
 	p_pop_reward_2 = 0, p_food_reward_2 = 0, p_water_reward_2 = 0, p_air_reward_2 = 0,
 	p_pop_reward_3 = 0, p_food_reward_3 = 0, p_water_reward_3 = 0, p_air_reward_3 = 0,
@@ -80,6 +88,7 @@ func _init(
 	name = p_name
 	type = p_type
 	background = p_background
+	active_screen = p_active_screen
 	event_text_file = p_event_text_file
 	pop_reward_1 = p_pop_reward_1
 	food_reward_1 = p_food_reward_1

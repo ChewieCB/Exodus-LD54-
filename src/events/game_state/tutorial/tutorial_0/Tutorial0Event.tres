@@ -6,6 +6,7 @@
 script = ExtResource("1_i21oh")
 name = "Tutorial 0"
 type = 3
+active_screen = 1
 event_text_file = "res://src/events/game_state/tutorial/tutorial_0/tutorial_0.txt"
 pop_reward_1 = 0
 food_reward_1 = 0

@@ -100,7 +100,7 @@ func play_event(event: Event) -> Node:
 	else:
 		change_event_image(get_random_background(event.type))
 	var timeline = event.build_dialogic_timeline()
-	emit_signal("start_event", event.name)
+	emit_signal("start_event", event)
 	var dialog = Dialogic.start(timeline)
 	return dialog
 
