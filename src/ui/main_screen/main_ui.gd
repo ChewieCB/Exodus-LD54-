@@ -121,7 +121,6 @@ func _on_start_event(event: Event):
 			tween.parallel().tween_property(camera, "zoom", Vector2(0.15, 0.15), 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", far_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(event_image, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
-			tween.parallel().tween_property(background_screen, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
 			ship_grid.visible = false
 			ship_build_frame.visible = false
 			build_show_toggle.visible = false
@@ -135,7 +134,6 @@ func _on_finish_event(arg: String):
 	match arg:
 		"change_to_build_screen":
 			var tween = get_tree().create_tween()
-			tween.tween_property(background_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 			if event_image:
 				tween.tween_property(event_image, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
 
@@ -150,7 +148,6 @@ func _on_finish_event(arg: String):
 
 			tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
-			tween.parallel().tween_property(background_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 			ship_grid.visible = false
 			ship_build_frame.visible = false
 			build_show_toggle.visible = true
@@ -160,7 +157,6 @@ func _on_finish_event(arg: String):
 			tween.parallel().tween_property(camera, "zoom", Vector2(0.15, 0.15), 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", far_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(event_image, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
-			tween.parallel().tween_property(background_screen, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
 			ship_grid.visible = false
 			ship_build_frame.visible = false
 			build_show_toggle.visible = false
@@ -169,7 +165,6 @@ func _on_finish_event(arg: String):
 			var tween = get_tree().create_tween()
 			if event_image:
 				tween.tween_property(event_image, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
-
 			tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(travel_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
