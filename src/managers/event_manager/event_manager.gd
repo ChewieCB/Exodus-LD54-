@@ -5,7 +5,7 @@ var n_food_building = 0
 var n_water_building = 0
 var n_air_building = 0
 
-var tutorial_progress = -1 # -1 = disable tutorial, 0 = enable tutorial
+var tutorial_progress = 0 # -1 = disable tutorial, 0 = enable tutorial
 var tick_since_last_event = 0
 var tick_to_event = 20
 var tick_passed_total = 0
@@ -152,30 +152,39 @@ func reset_state():
 	tick_to_event = randi_range(MIN_TICK_FOR_EVENT, MAX_TICK_FOR_EVENT) + 5
 
 
-# TODO - refactor these into Resource Objects VVVVV
+# TODO - refactor these fact events into Resource Objects 
 
-#func space_fact_event():
-#	var fact_pool = ["The Milky Way Galaxy, which is home to our solar system, contains over 100 billion stars.",
-#	"Space is completely silent because there is no air or atmosphere to carry sound waves.",
-#	"The largest volcano in the solar system is Olympus Mons, located on Mars. It is nearly 13.6 miles (22 kilometers) high, which is almost three times the height of Mount Everest.",
-#	"The Great Red Spot on Jupiter is a massive storm that has been raging for at least 350 years, and it's so large that it could fit three Earths inside of it.",
-#	"Astronauts experience 'space sickness', a condition similar to motion sickness, when they first enter space due to the absence of gravity.",
-#	"The Hubble Space Telescope, launched in 1990, has provided stunning images and valuable data about the universe and has made over 1.4 million observations.",
-#	"Saturn's rings are not solid but are made up of countless small particles of ice and rock, ranging in size from tiny grains to several meters in diameter.",
-#	"Space is not completely empty; it contains extremely low-density particles and radiation, including cosmic rays and micrometeoroids.",
-#	"The speed of light in a vacuum is approximately 186,282 miles per second (299,792 kilometers per second). This is the fastest speed at which information or matter can travel in the universe.",
-#	"The nearest star system to our solar system is Alpha Centauri, located about 4.37 light-years away. It consists of three stars: Alpha Centauri A, Alpha Centauri B, and Proxima Centauri, the closest-known exoplanetary system to our sun.",
-#	"Most of the events in this game were coded in 3 hours before the submission deadline.",
-#	"The dialogue writer for this game is a published novelist. You should go buy his book, it's called The Helios Incident."]
-#	var random_fact = get_random_element_from_array(fact_pool)
-#	var event_source_text = """
-#	Join ExecutiveOfficer 0
-#	ExecutiveOfficer (Normal): Hey Captain, did you know that...
-#	Join IntercomGuy 4
-#	IntercomGuy (Normal): {random_fact}
-#	Leave ExecutiveOfficer
-#	Leave IntercomGuy
-#	[signal arg="end_event"]
-#	"""
-#	event_source_text = event_source_text.format({"random_fact"=random_fact})
-#	return event_source_text
+func play_space_fact_event():
+	var _events = space_fact_event().split("\n")
+	var timeline : DialogicTimeline = DialogicTimeline.new()
+	timeline.events = _events
+	emit_signal("start_event", "Space Fact")
+	var dialog = Dialogic.start(timeline)
+	return dialog
+
+
+func space_fact_event():
+	var fact_pool = ["The Milky Way Galaxy, which is home to our solar system, contains over 100 billion stars.",
+	"Space is completely silent because there is no air or atmosphere to carry sound waves.",
+	"The largest volcano in the solar system is Olympus Mons, located on Mars. It is nearly 13.6 miles (22 kilometers) high, which is almost three times the height of Mount Everest.",
+	"The Great Red Spot on Jupiter is a massive storm that has been raging for at least 350 years, and it's so large that it could fit three Earths inside of it.",
+	"Astronauts experience 'space sickness', a condition similar to motion sickness, when they first enter space due to the absence of gravity.",
+	"The Hubble Space Telescope, launched in 1990, has provided stunning images and valuable data about the universe and has made over 1.4 million observations.",
+	"Saturn's rings are not solid but are made up of countless small particles of ice and rock, ranging in size from tiny grains to several meters in diameter.",
+	"Space is not completely empty; it contains extremely low-density particles and radiation, including cosmic rays and micrometeoroids.",
+	"The speed of light in a vacuum is approximately 186,282 miles per second (299,792 kilometers per second). This is the fastest speed at which information or matter can travel in the universe.",
+	"The nearest star system to our solar system is Alpha Centauri, located about 4.37 light-years away. It consists of three stars: Alpha Centauri A, Alpha Centauri B, and Proxima Centauri, the closest-known exoplanetary system to our sun.",
+	"Most of the events in this game were coded in 3 hours before the submission deadline.",
+	"The dialogue writer for this game is a published novelist. You should go buy his book, it's called The Helios Incident."]
+	var random_fact = fact_pool[randi() % fact_pool.size()]
+	var event_source_text = """
+	Join ExecutiveOfficer 0
+	ExecutiveOfficer (Normal): Hey Captain, did you know that...
+	Join IntercomGuy 4
+	IntercomGuy (Normal): {random_fact}
+	Leave ExecutiveOfficer
+	Leave IntercomGuy
+	[signal arg="end_event"]
+	"""
+	event_source_text = event_source_text.format({"random_fact"=random_fact})
+	return event_source_text

@@ -79,7 +79,7 @@ func _on_listen_fact_pressed():
 	ship_grid.visible = false
 	build_show_toggle.visible = false
 	build_menu.visible = false
-	EventManager.play_specific_event("space_fact_event")
+	EventManager.play_space_fact_event()
 
 
 func _on_start_event(event_name: String):
