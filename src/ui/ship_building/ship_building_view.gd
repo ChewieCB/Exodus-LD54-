@@ -10,7 +10,6 @@ var bgm_audio_player: AudioStreamPlayer
 var bgm_music
 
 func _ready():
-	print("ohayo")
 	TickManager.tick_changed.connect(_update_star_particles)
 	EventManager.building_finished.connect(tutorial_tracker)
 	if tutorial_disabled:
@@ -24,7 +23,6 @@ func _ready():
 	bgm_audio_player.finished.connect(play_bgm_again)
 
 	get_tree().paused = false
-	TickManager.start_ticks()
 
 
 func tutorial_tracker(type: Building.TYPES):
@@ -66,7 +64,6 @@ func _update_star_particles(tick_speed, is_paused):
 
 
 func _on_start_tutorial_timer_timeout() -> void:
-	print("timer timeout")
 	if EventManager.tutorial_progress == 0 and not tutorial_disabled:
 		EventManager.play_specific_event("tutorial1_event")
 	else:
