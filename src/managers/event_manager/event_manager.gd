@@ -61,10 +61,13 @@ func finished_building(type: Building.TYPES):
 func get_random_event():
 	randomize()
 	var rand_index = randi() % available_events.size()
-	var event: Event = available_events.pop_at(rand_index)
-	completed_events.push_back(event)
-	
-	return event
+	if available_events:
+		var event: Event = available_events.pop_at(rand_index)
+		completed_events.push_back(event)
+		
+		return event
+	else:
+		return null
 
 
 func get_random_background(type):
@@ -81,7 +84,7 @@ func get_random_background(type):
 	var rand_index = randi() % background_array.size()
 	var background = background_array[rand_index]
 	# Prevent showing the same background twice in a row
-	if previous_background:
+	if previous_background and background_array.size() > 1:
 		while background == previous_background:
 			rand_index = randi() % background_array.size()
 			background = background_array[rand_index]
