@@ -1,0 +1,4 @@
+Join ExecutiveOfficer 0
+ExecutiveOfficer (Normal): Welcome back, Captain.
+Leave ExecutiveOfficer
+[signal arg="end_event"]

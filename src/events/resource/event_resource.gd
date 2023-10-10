@@ -1,5 +1,5 @@
 extends Resource
-class_name Event
+class_name ExodusEvent
 
 enum EVENT_TYPES {
 	PLANET,
@@ -69,7 +69,7 @@ var event_text = ""
 @export_group("Event Chains")
 @export var is_chain_event: bool = false
 @export_subgroup("Event Chain Properties")
-@export var next_chain_event: Event
+@export var next_chain_event: ExodusEvent
 
 
 func _init(

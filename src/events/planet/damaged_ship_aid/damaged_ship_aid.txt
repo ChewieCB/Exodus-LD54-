@@ -3,7 +3,7 @@ ExecutiveOfficer (Normal): Captain, we've received a message from a nearby ship,
 ExecutiveOfficer (Normal): The ship's hull is intact and it seems the only problem is their faulty oxygen generator. We could send some technicians down and help them with repairs.
 ExecutiveOfficer (Normal): What are your orders?
 
-- We have time and crew to spare. 
+- We have time and crew to spare.
 	Send a memo to engineering, ask for volunteers who willing to go planetside and help the Intrepid with repairs.
 	set {chance} = range(1,100).pick_random()
 	# 50% chance success
