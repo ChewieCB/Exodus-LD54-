@@ -1,0 +1,25 @@
+Join ExecutiveOfficer 0
+ExecutiveOfficer (Normal): Captain, planetary customs and control has found some irregularities in our docking permits. Our ship has been grounded and we are ordered to remain in port until these irregularities are resolved.
+ExecutiveOfficer (Normal): Lucky for us, this port is badly maintained and poorly guarded. We could gather the crew and slip out without delay.
+ExecutiveOfficer (Normal): What are your orders?
+
+- Gather the crew, Pressley. We'll sneak past port control, take back our ship and leave this system for good.
+	set {chance} = range(1,100).pick_random()
+	# 50% chance success
+	if {chance} >= 50:
+		ExecutiveOfficer (Normal): Captain, we've escaped successfully without anyone being the wiser. 
+		ExecutiveOfficer (Normal):No doubt that pesky customs official will be surprised when he finds our empty berth.
+		Leave ExecutiveOfficer
+	else:
+		ExecutiveOfficer (Normal): Captain, we escaped successfully, but I regret not all of the crew managed to get on board in time and were detained by port security. 
+		ExecutiveOfficer (Normal): We had to leave them behind.
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "-{population_cost_1}"]" single_use="true"]
+		Leave ExecutiveOfficer
+		You lost {population_cost_1} Crew.
+
+- It's not worth the risk. We'll wait until port control gets our documents in order and we will leave as soon as we are able.
+	ExecutiveOfficer (Normal): Captain, after a prolonged stay, port control finally have our permit documentation in order. 
+	ExecutiveOfficer (Normal): We have been granted permission to board ship and depart. 
+	ExecutiveOfficer (Normal): Let's leave this wretched planet behind.
+
+[signal arg="end_event"]

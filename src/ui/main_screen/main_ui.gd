@@ -14,7 +14,8 @@ extends Control
 @onready var build_menu: MarginContainer = $BuildMenu
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 @onready var objective_label: Label = $ObjectiveLabel
-@onready var time_control_ui: TimeControlUI = $TimeControlUI/MarginContainer
+@onready var time_control_ui = $TimeControlUI/MarginContainer
+@onready var debug_event_dropdown = $DebugEventsMenu/MarginContainer/PanelContainer/VBoxContainer/OptionButton
 @onready var chat_crew_button: Button = $ChatCrewButton
 
 var build_menu_open = false
@@ -77,7 +78,7 @@ func _on_chat_crew_pressed():
 	ship_grid.visible = false
 	build_show_toggle.visible = false
 	build_menu.visible = false
-	EventManager.play_specific_event("space_fact_event")
+	EventManager.play_space_fact_event()
 
 func _open_build_menu():
 	build_show_toggle.visible = true
@@ -92,7 +93,7 @@ func _open_build_menu():
 	travel_screen.hide_screen()
 
 
-func _on_start_event(event_name: String):
+func _on_start_event(event: Event):
 	TickManager.stop_ticks()
 	var tween = get_tree().create_tween()
 
@@ -101,18 +102,29 @@ func _on_start_event(event_name: String):
 		build_menu_open = false
 
 	# For some events, we dont need to zoom farside
-	if event_name in ["tutorial1_event", "tutorial2_event", "space_fact_event", "start_game_without_tutorial"]:
-		tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
-		tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
-	else:
-		tween.parallel().tween_property(camera, "zoom", Vector2(0.15, 0.15), 0.5).set_trans(Tween.TRANS_LINEAR)
-		tween.parallel().tween_property(camera, "global_position", far_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
-		tween.parallel().tween_property(event_image, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
-		tween.parallel().tween_property(travel_screen, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
-	ship_grid.visible = false
-	ship_build_frame.visible = false
-	build_show_toggle.visible = false
-	build_menu.visible = false
+	match event.active_screen:
+		Event.ACTIVE_SCREEN.BUILD:
+			tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
+			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
+			ship_grid.visible = true
+			ship_build_frame.visible = true
+			build_show_toggle.visible = true
+			build_menu.visible = true
+		Event.ACTIVE_SCREEN.NAV:
+			tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
+			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
+			ship_grid.visible = false
+			ship_build_frame.visible = false
+			build_show_toggle.visible = true
+			build_menu.visible = false
+		Event.ACTIVE_SCREEN.EVENT:
+			tween.parallel().tween_property(camera, "zoom", Vector2(0.15, 0.15), 0.5).set_trans(Tween.TRANS_LINEAR)
+			tween.parallel().tween_property(camera, "global_position", far_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
+			tween.parallel().tween_property(event_image, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
+			ship_grid.visible = false
+			ship_build_frame.visible = false
+			build_show_toggle.visible = false
+			build_menu.visible = false
 
 	chat_crew_button.disabled = true
 	time_control_ui.disabled_buttons()
@@ -120,11 +132,39 @@ func _on_start_event(event_name: String):
 
 func _on_finish_event(arg: String):
 	match arg:
-		"end_event":
+		"change_to_build_screen":
 			var tween = get_tree().create_tween()
 			if event_image:
 				tween.tween_property(event_image, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
 
+			ship_grid.visible = true
+			ship_build_frame.visible = true
+			build_show_toggle.visible = true
+			build_menu.visible = true
+		"change_to_nav_screen":
+			var tween = get_tree().create_tween()
+			if event_image:
+				tween.tween_property(event_image, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
+
+			tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
+			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
+			ship_grid.visible = false
+			ship_build_frame.visible = false
+			build_show_toggle.visible = true
+			build_menu.visible = false
+		"change_to_event_screen":
+			var tween = get_tree().create_tween()
+			tween.parallel().tween_property(camera, "zoom", Vector2(0.15, 0.15), 0.5).set_trans(Tween.TRANS_LINEAR)
+			tween.parallel().tween_property(camera, "global_position", far_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
+			tween.parallel().tween_property(event_image, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
+			ship_grid.visible = false
+			ship_build_frame.visible = false
+			build_show_toggle.visible = false
+			build_menu.visible = false
+		"end_event":
+			var tween = get_tree().create_tween()
+			if event_image:
+				tween.tween_property(event_image, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(travel_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
@@ -160,15 +200,33 @@ func _on_finish_event(arg: String):
 		"open_build_screen":
 			_open_build_menu()
 
-func change_event_image(texture_path: String):
-	if texture_path == "":
-		event_image.texture = null
+
+func change_event_image(_texture: Texture2D):
+	if _texture:
+		event_image.texture = _texture
 	else:
-		event_image.texture = load(texture_path)
+		event_image.texture = null
+
 
 func change_objective_label(text: String):
 	objective_label.text = "Objective: " + text
 
 
-func _on_events_option_item_selected(index):
-	pass # Replace with function body.
+func _on_debug_event_menu_button_item_selected(index):
+	# Adjust for separator items
+	var id = debug_event_dropdown.get_item_id(index)
+	var event_name = debug_event_dropdown.get_item_text(index)
+	if "Tutorial" in event_name:
+		EventManager.play_event(
+			EventManager.tutorial_events[id]
+		)
+	elif "Victory" in event_name:
+		EventManager.play_event(
+			EventManager.victory_event
+		)
+	else:
+		EventManager.play_event(
+			EventManager.event_resources[id-4]
+		)
+	debug_event_dropdown.select(-1)
+

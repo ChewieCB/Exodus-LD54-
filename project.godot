@@ -19,12 +19,12 @@ config/icon="res://icon.svg"
 [autoload]
 
 ScreenTransitionManager="*res://src/ui/ScreenTransitionManager.tscn"
-SoundManager="*res://addons/sound_manager/sound_manager.gd"
 Dialogic="*res://addons/dialogic/Other/DialogicGameHandler.gd"
 ResourceManager="*res://src/managers/resource_manager/ResourceManager.tscn"
 BuildingManager="*res://src/managers/building_manager/BuildingManger.tscn"
 EventManager="*res://src/managers/event_manager/EventManager.tscn"
 TickManager="*res://src/managers/tick_manager/TickManager.tscn"
+SoundManager="*res://addons/sound_manager/sound_manager.gd"
 
 [debug]
 
@@ -35,7 +35,7 @@ gdscript/warnings/unused_parameter=0
 
 variables={
 "air": "0",
-"available_housing": "0",
+"available_housing": "",
 "chance": "1",
 "choice1_check": "false",
 "choice2_check": "false",
@@ -43,7 +43,6 @@ variables={
 "choice4_check": "false",
 "food": "0",
 "population": "0",
-"population_reward": "0",
 "water": "0"
 }
 settings/text_speed=0.01
