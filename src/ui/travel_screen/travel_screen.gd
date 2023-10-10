@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 class_name TravelScreen
 
 @onready var desc_label: Label = $DeviceFrame/TabContainer/Travel/PathChoiceView/DescLabel
