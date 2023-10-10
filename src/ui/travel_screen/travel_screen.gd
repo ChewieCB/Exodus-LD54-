@@ -11,7 +11,7 @@ class_name TravelScreen
 @onready var path_follow: PathFollow2D = $DeviceFrame/TabContainer/Travel/ProgressView/Path2D/PathFollow2D
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var show_hide_travel_screen_button: Button = $DeviceFrame/ShowHideTravelScreen
+@onready var show_hide_command_screen_button: Button = $DeviceFrame/ShowHideCommandScreen
 
 var trave_screen_open = false
 var chose_path_screen_open = false
@@ -84,16 +84,16 @@ func _on_change_path_button_toggled(button_pressed:bool) -> void:
 
 func _on_show_hide_travel_screen_toggled(button_pressed:bool) -> void:
 	if button_pressed:
-		show_hide_travel_screen_button.text = "Hide travel screen"
+		show_hide_command_screen_button.text = "Hide command screen"
 		animation_player.play("show")
 		trave_screen_open = true
-		show_hide_travel_screen_button.button_pressed = button_pressed
+		show_hide_command_screen_button.button_pressed = button_pressed
 
 	else:
-		show_hide_travel_screen_button.text = "Show travel screen"
+		show_hide_command_screen_button.text = "Show command screen"
 		animation_player.play("hide")
 		trave_screen_open = false
-		show_hide_travel_screen_button.button_pressed = button_pressed
+		show_hide_command_screen_button.button_pressed = button_pressed
 
 
 func hide_screen():

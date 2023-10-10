@@ -137,6 +137,7 @@ Chosen this path will make it more likely to meet other travellers."
 autowrap_mode = 2
 
 [node name="ChangePathButton" type="Button" parent="DeviceFrame/TabContainer/Travel"]
+layout_mode = 0
 offset_left = 190.0
 offset_top = 195.0
 offset_right = 296.0
@@ -148,14 +149,14 @@ text = "Change path"
 visible = false
 layout_mode = 2
 
-[node name="ShowHideTravelScreen" type="Button" parent="DeviceFrame"]
+[node name="ShowHideCommandScreen" type="Button" parent="DeviceFrame"]
 offset_left = -330.0
 offset_top = 120.0
 offset_right = -80.0
 offset_bottom = 151.0
 rotation = -1.57079
 toggle_mode = true
-text = "Show Travel Screen"
+text = "Show Command Screen"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../DeviceFrame")
@@ -168,4 +169,4 @@ libraries = {
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button3" to="." method="_on_asteroid_field_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button4" to="." method="_on_void_field_pressed"]
 [connection signal="toggled" from="DeviceFrame/TabContainer/Travel/ChangePathButton" to="." method="_on_change_path_button_toggled"]
-[connection signal="toggled" from="DeviceFrame/ShowHideTravelScreen" to="." method="_on_show_hide_travel_screen_toggled"]
+[connection signal="toggled" from="DeviceFrame/ShowHideCommandScreen" to="." method="_on_show_hide_travel_screen_toggled"]
