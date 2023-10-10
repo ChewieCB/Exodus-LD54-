@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c2gvwiki601v3"
-path="res://.godot/imported/display screen.png-6f5f593681a3f0d7f3f42da34171f955.ctex"
+uid="uid://8m1r17nptfyg"
+path="res://.godot/imported/space_map.png-99bfd6cccc43e0c1fd530a0eeeb6a677.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/backgrounds/display screen.png"
-dest_files=["res://.godot/imported/display screen.png-6f5f593681a3f0d7f3f42da34171f955.ctex"]
+source_file="res://assets/sprite/space_map.png"
+dest_files=["res://.godot/imported/space_map.png-99bfd6cccc43e0c1fd530a0eeeb6a677.ctex"]
 
 [params]
 

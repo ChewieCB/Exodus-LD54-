@@ -1,0 +1,137 @@
+[gd_scene load_steps=4 format=3 uid="uid://cymcngb74n5dp"]
+
+[ext_resource type="FontFile" uid="uid://4r5r4qviqq2k" path="res://assets/ui/fonts/Improbable.otf" id="1_6e8lu"]
+[ext_resource type="Script" path="res://src/ui/menus/main/setting_menu.gd" id="1_r48g2"]
+[ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="2_rqv82"]
+
+[node name="SettingMenu" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.000207172
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+script = ExtResource("1_r48g2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="ButtonsContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 300
+theme_override_constants/margin_top = 208
+theme_override_constants/margin_right = 300
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/ButtonsContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/ButtonsContainer/PanelContainer"]
+modulate = Color(0.133333, 0.152941, 0.247059, 0.784314)
+layout_mode = 2
+texture = ExtResource("2_rqv82")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ButtonsContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 8
+
+[node name="FullscreenContainer" type="MarginContainer" parent="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 128
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/FullscreenContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/FullscreenContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6e8lu")
+theme_override_font_sizes/font_size = 32
+text = "Fullscreen"
+
+[node name="CheckButton" type="CheckButton" parent="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/FullscreenContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="MusicLabelContainer" type="MarginContainer" parent="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = -4
+
+[node name="Label" type="Label" parent="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/MusicLabelContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6e8lu")
+theme_override_font_sizes/font_size = 32
+text = "Music"
+
+[node name="MusicSliderContainer" type="MarginContainer" parent="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = -4
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/MusicSliderContainer"]
+layout_mode = 2
+tick_count = 10
+
+[node name="SFXLabelContainer" type="MarginContainer" parent="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = -4
+
+[node name="Label" type="Label" parent="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/SFXLabelContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6e8lu")
+theme_override_font_sizes/font_size = 32
+text = "SFX"
+
+[node name="SFXSliderContainer" type="MarginContainer" parent="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = -4
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/SFXSliderContainer"]
+layout_mode = 2
+tick_count = 10
+
+[node name="UILabelContainer" type="MarginContainer" parent="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = -4
+
+[node name="Label" type="Label" parent="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/UILabelContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6e8lu")
+theme_override_font_sizes/font_size = 32
+text = "UI SFX"
+
+[node name="UISliderLabelContainer" type="MarginContainer" parent="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = -4
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/UISliderLabelContainer"]
+layout_mode = 2
+tick_count = 10
+
+[node name="BackButtonContainer" type="MarginContainer" parent="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_bottom = 28
+
+[node name="Button" type="Button" parent="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/BackButtonContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6e8lu")
+theme_override_font_sizes/font_size = 32
+text = "Back
+"
+
+[connection signal="pressed" from="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/FullscreenContainer/HBoxContainer/CheckButton" to="." method="_on_fullscreen_button_pressed"]
+[connection signal="changed" from="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/MusicSliderContainer/HSlider" to="." method="_on_music_slider_changed"]
+[connection signal="value_changed" from="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/MusicSliderContainer/HSlider" to="." method="_on_music_volume_slider_value_changed"]
+[connection signal="changed" from="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/SFXSliderContainer/HSlider" to="." method="_on_sfx_slider_changed"]
+[connection signal="value_changed" from="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/SFXSliderContainer/HSlider" to="." method="_on_sfx_volume_slider_value_changed"]
+[connection signal="changed" from="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/UISliderLabelContainer/HSlider" to="." method="_on_ui_sfx_slider_changed"]
+[connection signal="value_changed" from="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/UISliderLabelContainer/HSlider" to="." method="_on_ui_sfx_slider_value_changed"]
+[connection signal="pressed" from="VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/BackButtonContainer/Button" to="." method="_on_back_button_pressed"]

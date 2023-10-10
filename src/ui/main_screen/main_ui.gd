@@ -93,7 +93,7 @@ func _open_build_menu():
 	travel_screen.hide_screen()
 
 
-func _on_start_event(event: Event):
+func _on_start_event(event: ExodusEvent):
 	TickManager.stop_ticks()
 	var tween = get_tree().create_tween()
 
@@ -103,21 +103,21 @@ func _on_start_event(event: Event):
 
 	# For some events, we dont need to zoom farside
 	match event.active_screen:
-		Event.ACTIVE_SCREEN.BUILD:
+		ExodusEvent.ACTIVE_SCREEN.BUILD:
 			tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 			ship_grid.visible = true
 			ship_build_frame.visible = true
 			build_show_toggle.visible = true
 			build_menu.visible = true
-		Event.ACTIVE_SCREEN.NAV:
+		ExodusEvent.ACTIVE_SCREEN.NAV:
 			tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 			ship_grid.visible = false
 			ship_build_frame.visible = false
 			build_show_toggle.visible = true
 			build_menu.visible = false
-		Event.ACTIVE_SCREEN.EVENT:
+		ExodusEvent.ACTIVE_SCREEN.EVENT:
 			tween.parallel().tween_property(camera, "zoom", Vector2(0.15, 0.15), 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", far_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(event_image, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)

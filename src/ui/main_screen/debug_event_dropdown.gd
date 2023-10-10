@@ -13,11 +13,11 @@ func _ready() -> void:
 	debug_events.append(EventManager.victory_event)
 	#
 	for _event in events:
-		if _event.type == Event.EVENT_TYPES.PLANET:
+		if _event.type == ExodusEvent.EVENT_TYPES.PLANET:
 			planetary_events.append(_event)
-		elif _event.type == Event.EVENT_TYPES.SPACE:
+		elif _event.type == ExodusEvent.EVENT_TYPES.SPACE:
 			space_events.append(_event)
-		elif _event.type == Event.EVENT_TYPES.DEBUG:
+		elif _event.type == ExodusEvent.EVENT_TYPES.DEBUG:
 			debug_events.append(_event)
 	
 	var id_count = 0

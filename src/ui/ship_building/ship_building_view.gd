@@ -11,7 +11,6 @@ var bgm_music
 
 
 func _ready():
-	print("ohayo")
 	TickManager.tick_changed.connect(_update_star_particles)
 	EventManager.building_finished.connect(tutorial_tracker)
 	if tutorial_disabled:
@@ -19,13 +18,12 @@ func _ready():
 
 	ScreenTransitionManager.fade_in(1.5)
 	await ScreenTransitionManager.transitioned
-	
+
 	bgm_music = load("res://assets/audio/music/ld54-bgm-medley-no-alarms-1.1.mp3")
 	bgm_audio_player = SoundManager.play_music(bgm_music, 0.2, "Music")
 	bgm_audio_player.finished.connect(play_bgm_again)
 
 	get_tree().paused = false
-	TickManager.start_ticks()
 
 
 func tutorial_tracker(type: Building.TYPES):
@@ -67,13 +65,10 @@ func _update_star_particles(tick_speed, is_paused):
 
 
 func _on_start_tutorial_timer_timeout() -> void:
-	print("timer timeout")
 	if EventManager.tutorial_progress == 0 and not tutorial_disabled:
 		EventManager.play_event(EventManager.tutorial_events[0])
 	else:
-	# TODO - replace this with the Resource object version
-		# EventManager.play_specific_event("start_game_without_tutorial")
-		pass
+		EventManager.play_event(EventManager.tutorial_events[3]) # start_game_without_tutorial
 
 
 func play_bgm_again():

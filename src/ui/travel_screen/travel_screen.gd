@@ -1,17 +1,17 @@
-extends Node2D
+extends Control
 class_name TravelScreen
 
-@onready var desc_label: Label = $TravelScreen/PathChoiceView/DescLabel
-@onready var title_label: Label = $TravelScreen/TitleLabel
-@onready var default_path_button: Button = $TravelScreen/PathChoiceView/VBoxContainer/Button
-@onready var intergalatic_route_button: Button = $TravelScreen/PathChoiceView/VBoxContainer/Button2
-@onready var asteroid_field_button: Button = $TravelScreen/PathChoiceView/VBoxContainer/Button3
-@onready var void_field_button: Button = $TravelScreen/PathChoiceView/VBoxContainer/Button4
-@onready var path_choice_view = $TravelScreen/PathChoiceView
-@onready var change_path_button: Button = $TravelScreen/ChangePathButton
-@onready var show_hide_travel_screen_button: Button = $TravelScreen/ShowHideTravelScreen
+@onready var desc_label: Label = $DeviceFrame/TabContainer/Travel/PathChoiceView/DescLabel
+@onready var default_path_button: Button = $DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button
+@onready var intergalatic_route_button: Button = $DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button2
+@onready var asteroid_field_button: Button = $DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button3
+@onready var void_field_button: Button = $DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button4
+@onready var path_choice_view = $DeviceFrame/TabContainer/Travel/PathChoiceView
+@onready var change_path_button: Button = $DeviceFrame/TabContainer/Travel/ChangePathButton
+@onready var path_follow: PathFollow2D = $DeviceFrame/TabContainer/Travel/ProgressView/Path2D/PathFollow2D
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var path_follow: PathFollow2D = $TravelScreen/ProgressView/Path2D/PathFollow2D
+@onready var show_hide_command_screen_button: Button = $DeviceFrame/ShowHideCommandScreen
 
 var trave_screen_open = false
 var chose_path_screen_open = false
@@ -84,16 +84,16 @@ func _on_change_path_button_toggled(button_pressed:bool) -> void:
 
 func _on_show_hide_travel_screen_toggled(button_pressed:bool) -> void:
 	if button_pressed:
-		show_hide_travel_screen_button.text = "Hide travel screen"
+		show_hide_command_screen_button.text = "Hide command screen"
 		animation_player.play("show")
 		trave_screen_open = true
-		show_hide_travel_screen_button.button_pressed = button_pressed
+		show_hide_command_screen_button.button_pressed = button_pressed
 
 	else:
-		show_hide_travel_screen_button.text = "Show travel screen"
+		show_hide_command_screen_button.text = "Show command screen"
 		animation_player.play("hide")
 		trave_screen_open = false
-		show_hide_travel_screen_button.button_pressed = button_pressed
+		show_hide_command_screen_button.button_pressed = button_pressed
 
 
 func hide_screen():

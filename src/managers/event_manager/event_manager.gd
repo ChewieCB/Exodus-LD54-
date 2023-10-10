@@ -28,17 +28,17 @@ signal request_change_event_image
 signal request_change_objective_label
 signal victory
 
-@export var event_resources: Array[Event]
-@export var tutorial_events: Array[Event]
-@export var victory_event: Event
+@export var event_resources: Array[ExodusEvent]
+@export var tutorial_events: Array[ExodusEvent]
+@export var victory_event: ExodusEvent
 #
 @export var planet_backgrounds: Array[Texture2D]
 @export var ship_backgrounds: Array[Texture2D]
 @export var space_backgrounds: Array[Texture2D]
 var previous_background: Texture2D = null
 #
-@onready var available_events: Array[Event] = event_resources.duplicate()
-var completed_events: Array[Event]
+@onready var available_events: Array[ExodusEvent] = event_resources.duplicate()
+var completed_events: Array[ExodusEvent]
 
 const MIN_TICK_FOR_EVENT = 6
 const MAX_TICK_FOR_EVENT = 20
@@ -77,7 +77,7 @@ func get_random_event():
 	randomize()
 	var rand_index = randi() % available_events.size()
 	if available_events:
-		var event: Event = available_events.pop_at(rand_index)
+		var event: ExodusEvent = available_events.pop_at(rand_index)
 		completed_events.push_back(event)
 		
 		return event
@@ -88,11 +88,11 @@ func get_random_event():
 func get_random_background(type):
 	var background_array
 	match type:
-		Event.EVENT_TYPES.PLANET:
+		ExodusEvent.EVENT_TYPES.PLANET:
 			background_array = planet_backgrounds
-		Event.EVENT_TYPES.SHIP:
+		ExodusEvent.EVENT_TYPES.SHIP:
 			background_array = ship_backgrounds
-		Event.EVENT_TYPES.DEBUG:
+		ExodusEvent.EVENT_TYPES.DEBUG:
 			return null
 		_:
 			background_array = space_backgrounds
@@ -111,7 +111,7 @@ func get_random_background(type):
 	return background
 
 
-func play_event(event: Event) -> Node:
+func play_event(event: ExodusEvent) -> Node:
 	if event.background:
 		change_event_image(event.background)
 	else:
@@ -206,16 +206,4 @@ func space_fact_event():
 	"""
 	event_source_text = event_source_text.format({"random_fact"=random_fact})
 	return event_source_text
-
-# TODO - refactor this into an Event Resource Object
-
-func start_game_without_tutorial() -> String:
-	var event_source_text = """
-	Join ExecutiveOfficer 0
-	ExecutiveOfficer (Normal): Welcome back, Captain.
-	Leave ExecutiveOfficer
-	[signal arg="end_event"]
-	"""
-	return event_source_text
-
 
