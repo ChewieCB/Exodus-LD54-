@@ -2,7 +2,7 @@ extends Control
 
 @export var ship_sprite: Sprite2D
 @export var ship_build_frame: Sprite2D
-@export var travel_screen: TravelScreen
+@export var command_screen: CommandScreen
 @export var ship_grid: Node2D
 @export var camera: Camera2D
 @export var mid_view_marker: Marker2D
@@ -19,23 +19,16 @@ extends Control
 @onready var chat_crew_button: Button = $ChatCrewButton
 
 var build_menu_open = false
-var button_click_sfx = preload("res://assets/audio/sfx/ui_click_1.mp3")
 
 func _ready() -> void:
 	EventManager.start_event.connect(_on_start_event)
 	EventManager.finish_event.connect(_on_finish_event)
 	EventManager.request_change_objective_label.connect(change_objective_label)
 	EventManager.request_change_event_image.connect(change_event_image)
-	# if EventManager.tutorial_progress == -1:
-	# 	print("LMAO2")
-	# 	var tween = get_tree().create_tween()
-	# 	tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
-	# 	tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
-	# 	tween.parallel().tween_property(travel_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 
 func _on_build_button_pressed():
 	if anim_player.animation_finished:
-		SoundManager.play_sound(button_click_sfx, "UI")
+		SoundManager.play_button_click_sfx()
 		var tween = get_tree().create_tween()
 		if build_menu_open:
 			anim_player.play("hide_build_menu")
@@ -48,7 +41,7 @@ func _on_build_button_pressed():
 		else:
 			anim_player.play("show_build_menu")
 			build_menu_open = true
-			travel_screen.hide_screen()
+			command_screen.hide_screen()
 			if ship_grid != null:
 				ship_grid.visible = true
 				ship_build_frame.visible = true
@@ -57,7 +50,7 @@ func _on_build_button_pressed():
 
 
 func _on_play_dialog_pressed():
-	SoundManager.play_sound(button_click_sfx, "UI")
+	SoundManager.play_button_click_sfx()
 	TickManager.stop_ticks()
 	if build_menu_open:
 		anim_player.play("hide_build_menu")
@@ -70,7 +63,7 @@ func _on_play_dialog_pressed():
 
 
 func _on_chat_crew_pressed():
-	SoundManager.play_sound(button_click_sfx, "UI")
+	SoundManager.play_button_click_sfx()
 	TickManager.stop_ticks()
 	if build_menu_open:
 		anim_player.play("hide_build_menu")
@@ -90,7 +83,7 @@ func _open_build_menu():
 	var tween = get_tree().create_tween()
 	tween.parallel().tween_property(camera, "global_position", ship_sprite.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 	tween.parallel().tween_property(camera, "zoom", Vector2(0.5, 0.5), 0.5).set_trans(Tween.TRANS_LINEAR)
-	travel_screen.hide_screen()
+	command_screen.hide_screen()
 
 
 func _on_start_event(event: ExodusEvent):
@@ -167,7 +160,7 @@ func _on_finish_event(arg: String):
 				tween.tween_property(event_image, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
-			tween.parallel().tween_property(travel_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
+			tween.parallel().tween_property(command_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 
 			build_show_toggle.visible = true
 			build_menu.visible = true
@@ -183,7 +176,7 @@ func _on_finish_event(arg: String):
 		# Hack to end an event with the build menu open for tutorials and such
 		"end_event_build":
 			var tween = get_tree().create_tween()
-			tween.tween_property(travel_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
+			tween.tween_property(command_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 			if event_image:
 				tween.tween_property(event_image, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
 

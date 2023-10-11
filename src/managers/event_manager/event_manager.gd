@@ -40,6 +40,9 @@ var previous_background: Texture2D = null
 @onready var available_events: Array[ExodusEvent] = event_resources.duplicate()
 var completed_events: Array[ExodusEvent]
 
+
+var n_woke_up_citizen = 0
+
 const MIN_TICK_FOR_EVENT = 6
 const MAX_TICK_FOR_EVENT = 20
 
@@ -165,6 +168,7 @@ func reset_state():
 	n_food_building = 0
 	n_water_building = 0
 	n_air_building = 0
+	n_woke_up_citizen = 0
 	
 	tutorial_progress = -1
 	tick_since_last_event = 0

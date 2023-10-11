@@ -316,6 +316,15 @@ func change_resource_from_event(resource: String, amount_str: String):
 				population_amount += amount
 
 
+func wake_up_citizen(water_cost) -> String:
+	if water_amount < 15:
+		return "fail_water"
+	if available_housing <= 0:
+		return "fail_housing"
+	population_amount += 1
+	water_amount -= water_cost
+	return "success"
+
 func reset_state():
 	# TODO - load initial values from file for difficulty settings
 	population_amount = 3

@@ -76,7 +76,7 @@ func _on_worker_ui_mouse_exited():
 
 
 func _on_pop_ui_mouse_entered():
-	ResourceManager.emit_signal("ui_hover_show", "Total Population")
+	ResourceManager.emit_signal("ui_hover_show", "Total Crew memebers")
 
 
 func _on_pop_ui_mouse_exited():
@@ -84,7 +84,7 @@ func _on_pop_ui_mouse_exited():
 
 
 func _on_hab_ui_mouse_entered():
-	ResourceManager.emit_signal("ui_hover_show", "Housing (Available Housing)")
+	ResourceManager.emit_signal("ui_hover_show", "Housing (Available Housing)\nNegative available housing will cause unrest and unfortunate events more likely to happen")
 
 
 func _on_hab_ui_mouse_exited():

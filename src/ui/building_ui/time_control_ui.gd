@@ -13,8 +13,6 @@ class_name TimeControlUI
 @onready var day_counter: Label = $VBoxContainer/PanelContainer3/MarginContainer/HBoxContainer/MarginContainer/DayLabel
 @onready var date: Label = $VBoxContainer/PanelContainer3/MarginContainer/HBoxContainer/MarginContainer2/DateLabel
 
-var button_click_sfx = preload("res://assets/audio/sfx/ui_click_1.mp3")
-
 var current_day = 0
 var start_date_unix = 3873826800
 # Unix timestamp works in seconds from 1970, 1 day is 86,400 seconds
@@ -72,7 +70,7 @@ func _update_day_counter():
 
 
 func _on_pause_button_pressed():
-	SoundManager.play_sound(button_click_sfx, "UI")
+	SoundManager.play_button_click_sfx()
 	pause_button.disabled = true
 	pause_texture.modulate = Color.GRAY
 	TickManager.stop_ticks()
@@ -86,7 +84,7 @@ func _on_pause_button_pressed():
 
 
 func _on_speed_1_button_pressed():
-	SoundManager.play_sound(button_click_sfx, "UI")
+	SoundManager.play_button_click_sfx()
 	normal_button.disabled = true
 	normal_texture.modulate = Color.GRAY
 	TickManager._set_tick_rate(TickManager.SLOW_TICK_SPEED)
@@ -101,7 +99,7 @@ func _on_speed_1_button_pressed():
 
 
 func _on_speed_2_button_pressed():
-	SoundManager.play_sound(button_click_sfx, "UI")
+	SoundManager.play_button_click_sfx()
 	fast_button.disabled = true
 	fast_texture.modulate = Color.GRAY
 	TickManager._set_tick_rate(TickManager.FAST_TICK_SPEED)

@@ -7,6 +7,7 @@ const MusicPlayer = preload("res://addons/sound_manager/music.gd")
 var sound_effects: SoundEffectsPlayer = SoundEffectsPlayer.new(["Sounds", "SFX"], 8)
 var ui_sound_effects: SoundEffectsPlayer = SoundEffectsPlayer.new(["UI", "Interface", "Sounds", "SFX"], 8)
 var music: MusicPlayer = MusicPlayer.new(["Music"], 2)
+var button_click_sfx = preload("res://assets/audio/sfx/ui_click_1.mp3")
 
 var sound_process_mode: ProcessMode:
 	set(value):
@@ -126,7 +127,12 @@ func set_default_music_bus(bus: String) -> void:
 
 ### Helpers
 
-
 func _show_shared_bus_warning() -> void:
 	if music.bus == sound_effects.bus or music.bus == ui_sound_effects.bus:
 		push_warning("Both music and sounds are using the same bus: %s" % music.bus)
+
+
+### Shortcuts
+
+func play_button_click_sfx():
+	SoundManager.play_sound(button_click_sfx, "UI")
