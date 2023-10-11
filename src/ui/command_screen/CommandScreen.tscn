@@ -1,10 +1,10 @@
 [gd_scene load_steps=10 format=3 uid="uid://b1xmgw2jwmunk"]
 
-[ext_resource type="Script" path="res://src/ui/travel_screen/travel_screen.gd" id="1_asns5"]
-[ext_resource type="Texture2D" uid="uid://d3pj8wans2lr4" path="res://assets/sprite/circle.png" id="2_1gkvm"]
-[ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="2_amgg7"]
-[ext_resource type="Texture2D" uid="uid://8m1r17nptfyg" path="res://assets/sprite/space_map.png" id="3_a480o"]
-[ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="3_jku4b"]
+[ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="1_4qidw"]
+[ext_resource type="Script" path="res://src/ui/command_screen/command_screen.gd" id="1_rladp"]
+[ext_resource type="Texture2D" uid="uid://8m1r17nptfyg" path="res://assets/sprite/space_map.png" id="2_tgm10"]
+[ext_resource type="Texture2D" uid="uid://d3pj8wans2lr4" path="res://assets/sprite/circle.png" id="3_4kwp3"]
+[ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="4_hkjqs"]
 
 [sub_resource type="Curve2D" id="Curve2D_ncuok"]
 _data = {
@@ -50,17 +50,17 @@ _data = {
 "show": SubResource("Animation_uvmic")
 }
 
-[node name="TravelScreen" type="Control"]
+[node name="CommandScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_asns5")
+script = ExtResource("1_rladp")
 
 [node name="DeviceFrame" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = 1119.0
 offset_right = 1777.0
 offset_bottom = 685.0
-texture = ExtResource("2_amgg7")
+texture = ExtResource("1_4qidw")
 
 [node name="TabContainer" type="TabContainer" parent="DeviceFrame"]
 layout_mode = 0
@@ -78,7 +78,7 @@ layout_mode = 0
 offset_top = 1.0
 offset_right = 453.0
 offset_bottom = 236.0
-texture = ExtResource("3_a480o")
+texture = ExtResource("2_tgm10")
 
 [node name="ProgressView" type="Control" parent="DeviceFrame/TabContainer/Travel"]
 anchors_preset = 0
@@ -101,7 +101,7 @@ modulate = Color(1, 0.0588235, 0, 1)
 position = Vector2(-0.707031, -0.707092)
 rotation = 2.35619
 scale = Vector2(0.15625, 0.15625)
-texture = ExtResource("2_1gkvm")
+texture = ExtResource("3_4kwp3")
 
 [node name="PathChoiceView" type="Control" parent="DeviceFrame/TabContainer/Travel"]
 modulate = Color(1, 1, 1, 0)
@@ -114,12 +114,12 @@ offset_bottom = 118.0
 [node name="Sprite2D2" type="TextureRect" parent="DeviceFrame/TabContainer/Travel/PathChoiceView"]
 self_modulate = Color(0.117647, 0.117647, 0.117647, 0.937255)
 layout_mode = 0
-offset_left = -55.0
-offset_top = -0.500008
-offset_right = -55.0
-offset_bottom = -0.500008
+offset_left = -286.0
+offset_top = -117.0
+offset_right = -222.0
+offset_bottom = -53.0
 scale = Vector2(7, 3.70312)
-texture = ExtResource("3_jku4b")
+texture = ExtResource("4_hkjqs")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Travel/PathChoiceView"]
 layout_mode = 1
@@ -152,6 +152,7 @@ layout_mode = 2
 text = "Void field"
 
 [node name="DescLabel" type="Label" parent="DeviceFrame/TabContainer/Travel/PathChoiceView"]
+layout_mode = 0
 offset_left = -99.0
 offset_top = -70.0
 offset_right = 144.0
@@ -161,11 +162,18 @@ Chosen this path will make it more likely to meet other travellers."
 autowrap_mode = 2
 
 [node name="ChangePathButton" type="Button" parent="DeviceFrame/TabContainer/Travel"]
-layout_mode = 0
-offset_left = 190.0
-offset_top = 195.0
-offset_right = 296.0
-offset_bottom = 226.0
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -53.0
+offset_top = -41.0
+offset_right = 53.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
 toggle_mode = true
 text = "Change path"
 
@@ -173,13 +181,65 @@ text = "Change path"
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]
-self_modulate = Color(0.129412, 0.129412, 0.129412, 1)
+self_modulate = Color(0.0156863, 0.0784314, 0.152941, 1)
 layout_mode = 0
 offset_left = 2.0
 offset_top = 2.0
 offset_right = 451.0
 offset_bottom = 235.0
-texture = ExtResource("3_jku4b")
+texture = ExtResource("4_hkjqs")
+
+[node name="TitleLabel" type="Label" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]
+layout_mode = 0
+offset_left = 59.0
+offset_top = 15.0
+offset_right = 386.0
+offset_bottom = 67.0
+text = "Wake up hibernating citizen to get more crew member"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="CountLabel" type="Label" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -68.0
+offset_top = -28.0
+offset_right = 68.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Woke up 0 citizen"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 128.0
+offset_right = 303.0
+offset_bottom = 159.0
+text = "Wake up 1 citzen"
+
+[node name="CostLabel" type="Label" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]
+layout_mode = 0
+offset_left = 166.0
+offset_top = 103.0
+offset_right = 276.0
+offset_bottom = 129.0
+text = "Cost: 15 water"
+
+[node name="WarningLabel" type="Label" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]
+visible = false
+self_modulate = Color(1, 0.0392157, 0.054902, 1)
+layout_mode = 0
+offset_left = 109.0
+offset_top = 161.0
+offset_right = 337.0
+offset_bottom = 187.0
+text = "Warning: not enough housing"
 
 [node name="ShowHideCommandScreen" type="Button" parent="DeviceFrame"]
 layout_mode = 0
@@ -197,9 +257,11 @@ libraries = {
 "": SubResource("AnimationLibrary_vxeel")
 }
 
+[connection signal="tab_changed" from="DeviceFrame/TabContainer" to="." method="_on_tab_container_tab_changed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button" to="." method="_on_default_path_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button2" to="." method="_on_intergalatic_route_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button3" to="." method="_on_asteroid_field_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button4" to="." method="_on_void_field_pressed"]
 [connection signal="toggled" from="DeviceFrame/TabContainer/Travel/ChangePathButton" to="." method="_on_change_path_button_toggled"]
+[connection signal="pressed" from="DeviceFrame/TabContainer/Cryostasis Citizen/Button" to="." method="_on_wake_up_citizen"]
 [connection signal="toggled" from="DeviceFrame/ShowHideCommandScreen" to="." method="_on_show_hide_travel_screen_toggled"]

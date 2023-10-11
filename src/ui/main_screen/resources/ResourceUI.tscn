@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://bdbib8np6c616"]
+[gd_scene load_steps=9 format=3 uid="uid://bdbib8np6c616"]
 
 [ext_resource type="Script" path="res://src/ui/main_screen/resources/resource_ui.gd" id="1_tl7ra"]
+[ext_resource type="PackedScene" uid="uid://dcuhjw7qe51sg" path="res://src/ui/main_screen/resources/ResourceChangePopup.tscn" id="2_ffyc8"]
 [ext_resource type="Texture2D" uid="uid://8paydokn6heu" path="res://assets/ui/icons/final_icons/worker_icon.png" id="2_l7p2u"]
 [ext_resource type="Texture2D" uid="uid://phc81a0xnugk" path="res://assets/ui/icons/final_icons/pop_icon.png" id="3_i4mfg"]
 [ext_resource type="Texture2D" uid="uid://cn31v70gmweo1" path="res://assets/ui/icons/final_icons/hab_icon.png" id="4_mfwa8"]
@@ -19,6 +20,7 @@ grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
 script = ExtResource("1_tl7ra")
+resource_change_popup = ExtResource("2_ffyc8")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 custom_minimum_size = Vector2(0, 32)

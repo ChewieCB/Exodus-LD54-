@@ -1,5 +1,5 @@
 extends Control
-class_name TravelScreen
+class_name CommandScreen
 
 @onready var desc_label: Label = $DeviceFrame/TabContainer/Travel/PathChoiceView/DescLabel
 @onready var default_path_button: Button = $DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button
@@ -10,6 +10,9 @@ class_name TravelScreen
 @onready var change_path_button: Button = $DeviceFrame/TabContainer/Travel/ChangePathButton
 @onready var path_follow: PathFollow2D = $DeviceFrame/TabContainer/Travel/ProgressView/Path2D/PathFollow2D
 
+@onready var wakeup_warning_label: Label = get_node("DeviceFrame/TabContainer/Cryostasis Citizen/WarningLabel")
+@onready var count_wakeup_label: Label = get_node("DeviceFrame/TabContainer/Cryostasis Citizen/CountLabel")
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var show_hide_command_screen_button: Button = $DeviceFrame/ShowHideCommandScreen
 
@@ -17,11 +20,13 @@ var trave_screen_open = false
 var chose_path_screen_open = false
 var path_length
 
+const WAKEUP_CITIZEN_WATER_COST = 15
 
 func _ready() -> void:
-	chose_path_screen_open = true
-	_on_default_path_pressed()
-	chose_path_screen_open = false
+	reset_color_all_buttons()
+	default_path_button.self_modulate = Color.GREEN
+	EventManager.chosen_path = EventManager.TRAVEL_PATH_TYPE.DEFAULT_PATH
+	desc_label.text = "Default path\nYou have equal chance to meet all type of events."
 	TickManager.tick.connect(_update_path_follow)
 
 
@@ -32,6 +37,7 @@ func _update_path_follow():
 
 
 func _on_default_path_pressed() -> void:
+	SoundManager.play_button_click_sfx()
 	if chose_path_screen_open:
 		reset_color_all_buttons()
 		default_path_button.self_modulate = Color.GREEN
@@ -40,6 +46,7 @@ func _on_default_path_pressed() -> void:
 
 
 func _on_intergalatic_route_pressed() -> void:
+	SoundManager.play_button_click_sfx()
 	if chose_path_screen_open:
 		reset_color_all_buttons()
 		intergalatic_route_button.self_modulate = Color.GREEN
@@ -48,6 +55,7 @@ func _on_intergalatic_route_pressed() -> void:
 
 
 func _on_asteroid_field_pressed() -> void:
+	SoundManager.play_button_click_sfx()
 	if chose_path_screen_open:
 		reset_color_all_buttons()
 		asteroid_field_button.self_modulate = Color.GREEN
@@ -56,6 +64,7 @@ func _on_asteroid_field_pressed() -> void:
 
 
 func _on_void_field_pressed() -> void:
+	SoundManager.play_button_click_sfx()
 	if chose_path_screen_open:
 		reset_color_all_buttons()
 		void_field_button.self_modulate = Color.GREEN
@@ -71,6 +80,7 @@ func reset_color_all_buttons():
 
 
 func _on_change_path_button_toggled(button_pressed:bool) -> void:
+	SoundManager.play_button_click_sfx()
 	var tween = get_tree().create_tween()
 	if button_pressed:
 		change_path_button.text = "Close"
@@ -83,6 +93,7 @@ func _on_change_path_button_toggled(button_pressed:bool) -> void:
 
 
 func _on_show_hide_travel_screen_toggled(button_pressed:bool) -> void:
+	wakeup_warning_label.visible = false
 	if button_pressed:
 		show_hide_command_screen_button.text = "Hide command screen"
 		animation_player.play("show")
@@ -96,6 +107,23 @@ func _on_show_hide_travel_screen_toggled(button_pressed:bool) -> void:
 		show_hide_command_screen_button.button_pressed = button_pressed
 
 
+func _on_wake_up_citizen():
+	SoundManager.play_button_click_sfx()
+	var result = ResourceManager.wake_up_citizen(WAKEUP_CITIZEN_WATER_COST)
+	match result:
+		"success":
+			wakeup_warning_label.visible = false
+			EventManager.n_woke_up_citizen += 1
+			count_wakeup_label.text = "Woke up {n_citizen} citizen".format({"n_citizen": EventManager.n_woke_up_citizen})
+		"fail_water":
+			wakeup_warning_label.text = "Warning: Not enough water"
+			wakeup_warning_label.visible = true
+		"fail_housing":
+			wakeup_warning_label.text = "Warning: Not enough housing"
+			wakeup_warning_label.visible = true
+
+
+
 func hide_screen():
 	if trave_screen_open:
 		_on_show_hide_travel_screen_toggled(false)
@@ -104,3 +132,8 @@ func hide_screen():
 func show_screen():
 	if not trave_screen_open:
 		_on_show_hide_travel_screen_toggled(true)
+
+
+func _on_tab_container_tab_changed(tab:int) -> void:
+	SoundManager.play_button_click_sfx()
+	wakeup_warning_label.visible = false

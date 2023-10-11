@@ -5,7 +5,8 @@ enum EVENT_TYPES {
 	PLANET,
 	SHIP,
 	SPACE,
-	DEBUG
+	DEBUG,
+	SELF
 }
 
 enum ACTIVE_SCREEN {

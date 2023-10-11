@@ -4,9 +4,6 @@ extends Control
 @onready var anim_player = $AnimationPlayer
 @onready var game_over_label = $MarginContainer/VBoxContainer/GameOver
 
-var button_click_sfx = preload("res://assets/audio/sfx/ui_click_1.mp3")
-
-
 func _ready():
 	ResourceManager.connect("game_over", _game_over)
 	EventManager.connect("victory", _victory)
@@ -43,7 +40,7 @@ func _victory():
 
 
 func _on_restart_button_pressed():
-	SoundManager.play_sound(button_click_sfx, "UI")
+	SoundManager.play_button_click_sfx()
 	ScreenTransitionManager.fade_out(0.7)
 	await ScreenTransitionManager.transitioned
 	await get_tree().create_timer(0.6).timeout
@@ -57,7 +54,7 @@ func _on_restart_button_pressed():
 
 
 func _on_quit_button_pressed():
-	SoundManager.play_sound(button_click_sfx, "UI")
+	SoundManager.play_button_click_sfx()
 	ScreenTransitionManager.fade_out(1.5)
 	await ScreenTransitionManager.transitioned
 	get_tree().quit()

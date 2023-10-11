@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bfhd8krrn8mx2" path="res://src/ui/game_over/GameOver.tscn" id="2_3v6ei"]
 [ext_resource type="PackedScene" uid="uid://bsqw1bcfuxbvr" path="res://src/ui/building_ui/TimeControlUI.tscn" id="4_2kxyh"]
 [ext_resource type="PackedScene" uid="uid://cnjv60xkxx8oq" path="res://src/ui/building_ui/NotEnoughWorkersPopup.tscn" id="4_eo2jl"]
-[ext_resource type="PackedScene" uid="uid://b1xmgw2jwmunk" path="res://src/ui/travel_screen/CommandScreen.tscn" id="6_hbhke"]
+[ext_resource type="PackedScene" uid="uid://b1xmgw2jwmunk" path="res://src/ui/command_screen/CommandScreen.tscn" id="6_hbhke"]
 [ext_resource type="Script" path="res://src/ui/main_screen/debug_event_dropdown.gd" id="7_my6e0"]
 [ext_resource type="PackedScene" uid="uid://b2rwhkbjj7e4n" path="res://src/ui/main_screen/ResourceAlertsUI.tscn" id="7_njybl"]
 [ext_resource type="PackedScene" uid="uid://d2r3r36bru83h" path="res://src/ui/main_screen/BuildingAlert.tscn" id="7_r6nxt"]
@@ -96,7 +96,7 @@ _data = {
 "show_build_menu": SubResource("Animation_aef8j")
 }
 
-[node name="MainUI" type="Control" node_paths=PackedStringArray("travel_screen")]
+[node name="MainUI" type="Control" node_paths=PackedStringArray("command_screen")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -105,7 +105,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_xagyo")
-travel_screen = NodePath("CommandScreen")
+command_screen = NodePath("CommandScreen")
 
 [node name="BuildShowToggle" type="MarginContainer" parent="."]
 layout_mode = 1

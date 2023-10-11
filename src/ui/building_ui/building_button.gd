@@ -14,9 +14,6 @@ extends MarginContainer
 
 var building_cost
 
-var button_click_sfx = preload("res://assets/audio/sfx/ui_click_1.mp3")
-
-
 func _ready():
 	var building = building_object.instantiate()
 	name_label.text = str(building.data.name)
@@ -24,7 +21,8 @@ func _ready():
 	time_cost_label.text = str(building.data.construction_time)
 	icon.texture = building.data.sprite
 
-	ResourceManager.workers_changed.connect(_update_status)
+	if not Engine.is_editor_hint():
+		ResourceManager.workers_changed.connect(_update_status)
 
 	var production
 	var prod_type_string
@@ -65,7 +63,7 @@ func _update_status(available_workers):
 
 
 func _on_button_pressed():
-	SoundManager.play_sound(button_click_sfx, "UI")
+	SoundManager.play_button_click_sfx()
 	BuildingManager._build(building_object)
 	button.release_focus()
 

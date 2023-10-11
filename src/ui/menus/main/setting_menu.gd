@@ -5,8 +5,6 @@ extends Control
 @onready var sfx_volume_slider = $VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/SFXSliderContainer/HSlider
 @onready var ui_sfx_volume_slider = $VBoxContainer/ButtonsContainer/PanelContainer/VBoxContainer/UISliderLabelContainer/HSlider
 
-var button_click_sfx = preload("res://assets/audio/sfx/ui_click_1.mp3")
-
 func _ready() -> void:
 	music_volume_slider.value = SoundManager.get_music_volume() * 100
 	sfx_volume_slider.value = SoundManager.get_sound_volume() * 100
@@ -18,12 +16,12 @@ func _ready() -> void:
 
 func _input(event):
 	if event.is_action_pressed("setting_menu"):
-		SoundManager.play_sound(button_click_sfx, "UI")
+		SoundManager.play_button_click_sfx()
 		visible = !visible
 		
 
 func _on_fullscreen_button_pressed():
-	SoundManager.play_sound(button_click_sfx, "UI")
+	SoundManager.play_button_click_sfx()
 	# Checked = Fullscreen, Unchecked = Windowed
 	var window_mode
 	match fullscreen_toggle.button_pressed:
@@ -52,17 +50,17 @@ func _on_ui_sfx_slider_value_changed(value):
 
 
 func _on_ui_sfx_slider_changed():
-	SoundManager.play_sound(button_click_sfx, "UI")
+	SoundManager.play_button_click_sfx()
 
 
 func _on_sfx_slider_changed():
-	SoundManager.play_sound(button_click_sfx, "UI")
+	SoundManager.play_button_click_sfx()
 
 
 func _on_music_slider_changed():
-	SoundManager.play_sound(button_click_sfx, "UI")
+	SoundManager.play_button_click_sfx()
 
 
 func _on_back_button_pressed():
-	SoundManager.play_sound(button_click_sfx, "UI")
+	SoundManager.play_button_click_sfx()
 	visible = false

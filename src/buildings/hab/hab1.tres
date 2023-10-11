@@ -16,4 +16,4 @@ resource_cost = 1
 people_cost = 1
 refund_value = 0
 construction_time = 2.0
-destruction_time = 4
+destruction_time = 2

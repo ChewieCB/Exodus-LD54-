@@ -40,6 +40,9 @@ var previous_background: Texture2D = null
 @onready var available_events: Array[ExodusEvent] = event_resources.duplicate()
 var completed_events: Array[ExodusEvent]
 
+
+var n_woke_up_citizen = 0
+
 const MIN_TICK_FOR_EVENT = 6
 const MAX_TICK_FOR_EVENT = 20
 
@@ -122,6 +125,9 @@ func play_event(event: ExodusEvent) -> Node:
 	return dialog
 
 
+func play_event_legacy(event_name: String) -> Node:
+	return call(event_name)
+
 func change_event_image(_texture: Texture2D):
 	if _texture:
 		emit_signal("request_change_event_image", _texture)
@@ -162,6 +168,7 @@ func reset_state():
 	n_food_building = 0
 	n_water_building = 0
 	n_air_building = 0
+	n_woke_up_citizen = 0
 	
 	tutorial_progress = -1
 	tick_since_last_event = 0
@@ -170,13 +177,15 @@ func reset_state():
 	tick_to_event = randi_range(MIN_TICK_FOR_EVENT, MAX_TICK_FOR_EVENT) + 5
 
 
-# TODO - refactor these fact events into Resource Objects 
-
 func play_space_fact_event():
 	var _events = space_fact_event().split("\n")
 	var timeline : DialogicTimeline = DialogicTimeline.new()
 	timeline.events = _events
-	emit_signal("start_event", "Space Fact")
+	var exodus_event: ExodusEvent = ExodusEvent.new()
+	exodus_event.active_screen = ExodusEvent.ACTIVE_SCREEN.NAV
+	exodus_event.name = "Space fact"
+	exodus_event.type = ExodusEvent.EVENT_TYPES.SELF
+	emit_signal("start_event", exodus_event)
 	var dialog = Dialogic.start(timeline)
 	return dialog
 
