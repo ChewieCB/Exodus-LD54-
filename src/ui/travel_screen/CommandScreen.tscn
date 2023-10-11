@@ -152,6 +152,7 @@ layout_mode = 2
 text = "Void field"
 
 [node name="DescLabel" type="Label" parent="DeviceFrame/TabContainer/Travel/PathChoiceView"]
+layout_mode = 0
 offset_left = -99.0
 offset_top = -70.0
 offset_right = 144.0
