@@ -35,7 +35,8 @@ enum TYPES {
 	HabBuilding,
 	FoodBuilding,
 	WaterBuilding,
-	AirBuilding
+	AirBuilding,
+	CryoPod
 }
 
 

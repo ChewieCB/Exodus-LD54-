@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bfedsax4b6dse"]
+[gd_resource type="Resource" script_class="BuildingResource" load_steps=3 format=3 uid="uid://bfedsax4b6dse"]
 
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_ndhch"]
 [ext_resource type="Texture2D" uid="uid://cwfj12lst2m3s" path="res://assets/buildings/old/hydroponics_bay.png" id="2_jlhwk"]
