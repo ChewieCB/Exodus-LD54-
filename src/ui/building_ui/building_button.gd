@@ -21,7 +21,7 @@ func _ready():
 	time_cost_label.text = str(building.data.construction_time)
 	icon.texture = building.data.sprite
 
-	if ResourceManager != null:
+	if not Engine.is_editor_hint():
 		ResourceManager.workers_changed.connect(_update_status)
 
 	var production

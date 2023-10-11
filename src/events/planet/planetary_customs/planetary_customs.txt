@@ -13,9 +13,9 @@ ExecutiveOfficer (Normal): What are your orders?
 	else:
 		ExecutiveOfficer (Normal): Captain, we escaped successfully, but I regret not all of the crew managed to get on board in time and were detained by port security. 
 		ExecutiveOfficer (Normal): We had to leave them behind.
-		[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "-{population_cost_1}"]" single_use="true"]
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "-{pop_cost_1}"]" single_use="true"]
 		Leave ExecutiveOfficer
-		You lost {population_cost_1} Crew.
+		You lost {pop_cost_1} Crew.
 
 - It's not worth the risk. We'll wait until port control gets our documents in order and we will leave as soon as we are able.
 	ExecutiveOfficer (Normal): Captain, after a prolonged stay, port control finally have our permit documentation in order. 

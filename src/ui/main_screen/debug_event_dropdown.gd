@@ -7,6 +7,7 @@ func _ready() -> void:
 	var planetary_events = []
 	var space_events = []
 	var debug_events = []
+	var self_events = []
 	#
 	for _event in EventManager.tutorial_events:
 		debug_events.append(_event)
@@ -18,6 +19,8 @@ func _ready() -> void:
 		elif _event.type == ExodusEvent.EVENT_TYPES.SPACE:
 			space_events.append(_event)
 		elif _event.type == ExodusEvent.EVENT_TYPES.DEBUG:
+			debug_events.append(_event)
+		elif _event.type == ExodusEvent.EVENT_TYPES.SELF:
 			debug_events.append(_event)
 	
 	var id_count = 0
@@ -40,6 +43,11 @@ func _ready() -> void:
 		for _event in space_events:
 			add_item(_event.name, id_count)
 			id_count += 1
-	
+	# Self
+	if self_events:
+		add_separator("Self")
+		for _event in self_events:
+			add_item(_event.name, id_count)
+			id_count += 1
 	# Deselect any options
 	select(-1)
