@@ -99,6 +99,7 @@ func _process(delta):
 func _on_tick():
 	if not placed:
 		return
+
 	if not building_complete and is_constructing:
 		if ticks_left_to_build <= 1:
 			building_complete = true
@@ -120,11 +121,16 @@ func _on_tick():
 			ResourceManager.retrieve_workers(self)
 			BuildingManager.construction_queue.erase(self)
 			SoundManager.play_sound(build_finish_sfx, "SFX")
+			deconstructed_refund_resource()
 			self.queue_free()
 		else:
 			ticks_left_to_delete -= 1
 			build_timer_ui.label.text = str(ticks_left_to_delete)
 
+
+func deconstructed_refund_resource():
+	if type == Building.TYPES.CryoPod:
+		ResourceManager.population_amount += 1
 
 func set_building_placed():
 	is_constructing = true
