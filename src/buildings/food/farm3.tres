@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://c8scjmxctet8n"]
+[gd_resource type="Resource" script_class="BuildingResource" load_steps=3 format=3 uid="uid://c8scjmxctet8n"]
 
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_s1q55"]
 [ext_resource type="Texture2D" uid="uid://bix0qv2bh7d56" path="res://assets/buildings/old/nutrition_reclamation_plant_new.png" id="2_p2d43"]
@@ -12,8 +12,12 @@ housing_prod = 0
 food_prod = 12
 water_prod = 0
 air_prod = 0
-resource_cost = 8
+food_cost = 0
+air_cost = 0
+water_cost = 0
 people_cost = 8
-refund_value = 0
+refund_food = 0
+refund_air = 0
+refund_water = 0
 construction_time = 8.0
 destruction_time = 4

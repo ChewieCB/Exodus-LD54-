@@ -15,6 +15,9 @@ extends MarginContainer
 var building_cost
 
 func _ready():
+	if building_object == null:
+		return
+
 	var building = building_object.instantiate()
 	name_label.text = str(building.data.name)
 	worker_cost_label.text = str(building.data.people_cost)
@@ -64,6 +67,6 @@ func _update_status(available_workers):
 
 func _on_button_pressed():
 	SoundManager.play_button_click_sfx()
-	BuildingManager._build(building_object)
+	BuildingManager.start_building(building_object)
 	button.release_focus()
 

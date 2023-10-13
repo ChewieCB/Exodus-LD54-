@@ -1,7 +1,7 @@
 extends Node2D
 class_name Building
 
-@export var data: Resource
+@export var data: BuildingResource
 @onready var type = data.type
 
 @onready var sprite = $Sprite2D
@@ -31,11 +31,15 @@ var can_delete: bool = true
 var is_deconstructing: bool = false
 var ticks_left_to_delete: int
 
+var is_displaying_info_panel = false
+
+
 enum TYPES {
 	HabBuilding,
 	FoodBuilding,
 	WaterBuilding,
-	AirBuilding
+	AirBuilding,
+	CryoPod
 }
 
 
@@ -83,7 +87,14 @@ func _physics_process(delta):
 				cancel_building_remove()
 			else:
 				set_building_remove()
-			
+
+
+func _input(event):
+	if event.is_action_pressed("left_click"):
+		if is_selected:
+			BuildingManager.show_building_info_panel(global_position, data)
+			is_displaying_info_panel = true
+
 
 func _process(delta):
 	if not placed and preview:
@@ -98,6 +109,7 @@ func _process(delta):
 func _on_tick():
 	if not placed:
 		return
+
 	if not building_complete and is_constructing:
 		if ticks_left_to_build <= 1:
 			building_complete = true
@@ -119,11 +131,16 @@ func _on_tick():
 			ResourceManager.retrieve_workers(self)
 			BuildingManager.construction_queue.erase(self)
 			SoundManager.play_sound(build_finish_sfx, "SFX")
+			deconstructed_refund_resource()
 			self.queue_free()
 		else:
 			ticks_left_to_delete -= 1
 			build_timer_ui.label.text = str(ticks_left_to_delete)
 
+
+func deconstructed_refund_resource():
+	if type == Building.TYPES.CryoPod:
+		ResourceManager.population_amount += 1
 
 func set_building_placed():
 	is_constructing = true
@@ -200,6 +217,8 @@ func _notification(what: int) -> void:
 
 func on_predelete() -> void:
 	ResourceManager.remove_building(self)
+	if is_displaying_info_panel:
+		BuildingManager.hide_building_info_panel()
 
 
 func _on_area_2d_mouse_entered():
@@ -219,6 +238,8 @@ func _on_area_2d_mouse_entered():
 func _on_area_2d_mouse_exited():
 	is_selected = false
 	sprite.material.set_shader_parameter("mode", 0)
+	BuildingManager.hide_building_info_panel()
+	is_displaying_info_panel = false
 
 func rotate_cw():
 	rotation += PI/2
