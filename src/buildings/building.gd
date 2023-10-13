@@ -1,7 +1,7 @@
 extends Node2D
 class_name Building
 
-@export var data: Resource
+@export var data: BuildingResource
 @onready var type = data.type
 
 @onready var sprite = $Sprite2D
@@ -30,6 +30,9 @@ var is_selected: bool = false
 var can_delete: bool = true
 var is_deconstructing: bool = false
 var ticks_left_to_delete: int
+
+var is_displaying_info_panel = false
+
 
 enum TYPES {
 	HabBuilding,
@@ -84,7 +87,14 @@ func _physics_process(delta):
 				cancel_building_remove()
 			else:
 				set_building_remove()
-			
+
+
+func _input(event):
+	if event.is_action_pressed("left_click"):
+		if is_selected:
+			BuildingManager.show_building_info_panel(global_position, data)
+			is_displaying_info_panel = true
+
 
 func _process(delta):
 	if not placed and preview:
@@ -207,6 +217,8 @@ func _notification(what: int) -> void:
 
 func on_predelete() -> void:
 	ResourceManager.remove_building(self)
+	if is_displaying_info_panel:
+		BuildingManager.hide_building_info_panel()
 
 
 func _on_area_2d_mouse_entered():
@@ -226,6 +238,8 @@ func _on_area_2d_mouse_entered():
 func _on_area_2d_mouse_exited():
 	is_selected = false
 	sprite.material.set_shader_parameter("mode", 0)
+	BuildingManager.hide_building_info_panel()
+	is_displaying_info_panel = false
 
 func rotate_cw():
 	rotation += PI/2
