@@ -21,6 +21,7 @@ class_name BuildingResource
 @export var refund_food: int
 @export var refund_air: int
 @export var refund_water: int
+@export var refund_population: int # Exclusive to CRYO POD type building
 @export_subgroup("Timings")
 @export var construction_time: int
 @export var destruction_time: int

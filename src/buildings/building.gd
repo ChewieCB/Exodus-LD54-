@@ -140,7 +140,7 @@ func _on_tick():
 
 func deconstructed_refund_resource():
 	if type == Building.TYPES.CryoPod:
-		ResourceManager.population_amount += 1
+		ResourceManager.population_amount += data.refund_population
 
 func set_building_placed():
 	is_constructing = true

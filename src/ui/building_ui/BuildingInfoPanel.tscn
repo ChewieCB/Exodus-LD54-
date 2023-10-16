@@ -1,9 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://dv3uxnkp8ekhg"]
+[gd_scene load_steps=4 format=3 uid="uid://dv3uxnkp8ekhg"]
 
 [ext_resource type="Script" path="res://src/ui/building_ui/building_info_panel.gd" id="1_tj680"]
 
-[sub_resource type="Theme" id="Theme_334wf"]
-Label/font_sizes/font_size = 12
+[sub_resource type="Theme" id="Theme_mxffo"]
+default_font_size = 12
+
+[sub_resource type="Theme" id="Theme_16jmh"]
+default_font_size = 12
 
 [node name="BuildingInfoPanel" type="Node2D"]
 position = Vector2(572, 317)
@@ -17,7 +20,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -99.0
 offset_top = -63.0
-offset_right = 99.0
+offset_right = 131.0
 offset_bottom = -7.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -43,7 +46,14 @@ horizontal_alignment = 1
 
 [node name="DescLabel" type="Label" parent="Margin/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme = SubResource("Theme_334wf")
+theme = SubResource("Theme_mxffo")
 text = "Produce 5 Food per day"
 horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="StatLabel" type="Label" parent="Margin/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_16jmh")
+text = "Deconstruct time: 5 days
+Workers required: 5 crewmates"
 autowrap_mode = 2

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c6s7o88tyavpj"]
+[gd_scene load_steps=22 format=3 uid="uid://c6s7o88tyavpj"]
 
 [ext_resource type="PackedScene" uid="uid://cu7ivg1u3vbhl" path="res://src/ui/main_screen/MainUI.tscn" id="1_21fy4"]
 [ext_resource type="Script" path="res://src/ui/ship_building/ship_building_view.gd" id="1_ae44n"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://p6x8qph6gl3j" path="res://assets/backgrounds/build_frame.png" id="8_fs641"]
 [ext_resource type="Texture2D" uid="uid://cygmypnooav7y" path="res://assets/event/Ship_wreak_Pixel.png" id="8_p8t6q"]
 [ext_resource type="PackedScene" uid="uid://cga44qrkh08wg" path="res://src/buildings/cryostasis_pod/CryoPod1.tscn" id="9_ejje4"]
+[ext_resource type="PackedScene" uid="uid://bsrgyas0y86au" path="res://src/buildings/cryostasis_pod/CryoPod2.tscn" id="10_urp2k"]
 [ext_resource type="PackedScene" uid="uid://cymcngb74n5dp" path="res://src/ui/menus/main/SettingMenu.tscn" id="11_t4hll"]
 [ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="13_vvqwf"]
 
@@ -153,20 +154,16 @@ position = Vector2(640, 511.5)
 placed = true
 building_complete = true
 
-[node name="CryoPod3" parent="ShipGrid" instance=ExtResource("9_ejje4")]
-position = Vector2(768, 511.5)
-placed = true
-building_complete = true
-
-[node name="CryoPod4" parent="ShipGrid" instance=ExtResource("9_ejje4")]
-position = Vector2(832, 639.5)
-placed = true
-building_complete = true
-
 [node name="CryoPod5" parent="ShipGrid" instance=ExtResource("9_ejje4")]
 position = Vector2(576, -64.5)
 placed = true
 building_complete = true
+
+[node name="CryoPodArray6" parent="ShipGrid" instance=ExtResource("10_urp2k")]
+position = Vector2(832, -192.5)
+
+[node name="CryoPodArray" parent="ShipGrid" instance=ExtResource("10_urp2k")]
+position = Vector2(768, 511.5)
 
 [node name="ShipBuildFrame" type="Sprite2D" parent="."]
 visible = false

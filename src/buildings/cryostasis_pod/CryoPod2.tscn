@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://bsrgyas0y86au"]
+
+[ext_resource type="Script" path="res://src/buildings/building.gd" id="1_n6cwr"]
+[ext_resource type="Resource" uid="uid://b8fbf5vwmkcvf" path="res://src/buildings/cryostasis_pod/cryo_pod2.tres" id="2_n6hvy"]
+[ext_resource type="Texture2D" uid="uid://cyjvcd4ur3y2w" path="res://assets/buildings/new/cryo_pod_2.png" id="3_qfdjy"]
+[ext_resource type="PackedScene" uid="uid://bp6x36xyoxhh2" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="4_8vqqp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0tb0d"]
+size = Vector2(122, 122)
+
+[node name="CryoPodArray" type="Node2D"]
+script = ExtResource("1_n6cwr")
+data = ExtResource("2_n6hvy")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(96, 64)
+texture = ExtResource("3_qfdjy")
+offset = Vector2(-96, -64)
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(-32, -32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(32, 32)
+shape = SubResource("RectangleShape2D_0tb0d")
+
+[node name="BuildTimerUI" parent="." instance=ExtResource("4_8vqqp")]
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

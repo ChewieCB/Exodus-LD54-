@@ -19,5 +19,6 @@ people_cost = 12
 refund_food = 0
 refund_air = 0
 refund_water = 0
+refund_population = 0
 construction_time = 11
 destruction_time = 6
