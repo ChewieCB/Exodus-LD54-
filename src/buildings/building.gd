@@ -39,7 +39,8 @@ enum TYPES {
 	FoodBuilding,
 	WaterBuilding,
 	AirBuilding,
-	CryoPod
+	CryoPod,
+	MiningBuilding,
 }
 
 

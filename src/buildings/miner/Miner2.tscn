@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://dei47a5yup0l5"]
+
+[ext_resource type="Script" path="res://src/buildings/building.gd" id="1_id7y8"]
+[ext_resource type="Resource" uid="uid://c0rbi85ffjr8v" path="res://src/buildings/miner/miner2.tres" id="2_d1opw"]
+[ext_resource type="Texture2D" uid="uid://cuaukf2rs1rq1" path="res://assets/buildings/new/miner_2.png" id="3_ayslq"]
+[ext_resource type="PackedScene" uid="uid://bp6x36xyoxhh2" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="4_ggft2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0tb0d"]
+size = Vector2(122, 122)
+
+[node name="Miner2" type="Node2D"]
+script = ExtResource("1_id7y8")
+data = ExtResource("2_d1opw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(96, 64)
+texture = ExtResource("3_ayslq")
+offset = Vector2(-96, -64)
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(-32, -32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(32, 32)
+shape = SubResource("RectangleShape2D_0tb0d")
+
+[node name="BuildTimerUI" parent="." instance=ExtResource("4_ggft2")]
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
