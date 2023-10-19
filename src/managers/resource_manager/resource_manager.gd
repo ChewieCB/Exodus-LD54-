@@ -6,10 +6,12 @@ signal housing_changed(total, available)
 signal food_changed(value)
 signal water_changed(value)
 signal air_changed(value)
+signal metal_changed(value)
 #
 signal food_modifier_changed(total, modifier)
 signal water_modifier_changed(total, modifier)
 signal air_modifier_changed(total, modifier)
+signal metal_modifier_changed(total, modifier)
 #
 signal starving(ticks_left)
 signal dehydrated(ticks_left)
@@ -26,7 +28,6 @@ signal ui_hover_hide
 
 signal construction_cancelled_lack_of_workers(building_name)
 
-var housing_alert_shown = false
 var food_alert_shown = false
 var water_alert_shown = false
 var air_alert_shown = false
@@ -83,7 +84,8 @@ enum RESOURCE_TYPE {
 	HOUSING,
 	FOOD,
 	WATER,
-	AIR
+	AIR,
+	METAL
 }
 
 # Resources to be managed
@@ -147,22 +149,22 @@ var air_amount: int:
 	set(value):
 		air_amount = value
 		emit_signal("air_changed", air_amount)
+var metal_amount: int:
+	set(value):
+		metal_amount = value
+		emit_signal("metal_changed", metal_amount)
 
 var current_food_modifier: int = 0
 var current_air_modifier: int = 0
 var current_water_modifier: int = 0
+var current_metal_modifier: int = 0
 
 # How many resources-per-tick does one person cost?
 var pop_housing_cost: int = 1
 var pop_food_cost: int = 2
 var pop_water_cost: int = 3
 var pop_air_cost: int = 1
-#
-var housing_low_threshold: int = 2
-var food_low_threshold: int = 2
-var water_low_threshold: int = 3
-var air_low_threshold: int = 2
-# 
+
 var buildings = []
 
 
@@ -176,15 +178,10 @@ func _ready() -> void:
 	pop_water_cost = 2
 	pop_air_cost = 1
 
-	# Thresholds to alert the player to low resource
-	housing_low_threshold = 0
-	food_low_threshold = 10
-	water_low_threshold = 10
-	air_low_threshold = 10
 
-
+# TODO: Can be optimized, only run on build/tick event, not every frame
 func _physics_process(delta):
-	for idx in range(0, 5):
+	for idx in range(0, 6):
 		calculate_resource_modifier(idx, population_amount)
 		match idx:
 			RESOURCE_TYPE.POPULATION:
@@ -197,7 +194,8 @@ func _physics_process(delta):
 				emit_signal("water_modifier_changed", water_amount, current_water_modifier)
 			RESOURCE_TYPE.AIR:
 				emit_signal("air_modifier_changed", air_amount, current_air_modifier)
-
+			RESOURCE_TYPE.METAL:
+				emit_signal("metal_modifier_changed", metal_amount, current_metal_modifier)
 
 func calculate_resource_modifier(resource_type, population) -> void:
 	var production = 0
@@ -228,6 +226,10 @@ func calculate_resource_modifier(resource_type, population) -> void:
 				production += building.data.air_prod
 			consumption = population * pop_air_cost
 			current_air_modifier = production - consumption
+		RESOURCE_TYPE.METAL:
+			for building in buildings:
+				production += building.data.metal_prod
+			current_metal_modifier = production
 
 
 func update_resource_tick() -> void:
@@ -236,6 +238,7 @@ func update_resource_tick() -> void:
 	food_amount = clamp(food_amount + current_food_modifier, 0, 999)
 	water_amount = clamp(water_amount + current_water_modifier, 0, 999)
 	air_amount = clamp(air_amount + current_air_modifier, 0, 999)
+	metal_amount = clamp(metal_amount + current_metal_modifier, 0, 999)
 	
 	# TODO - change resource UI colours over low threshold
 	
@@ -307,6 +310,8 @@ func change_resource_from_event(resource: String, amount_str: String):
 			water_amount += amount
 		"air":
 			air_amount += amount
+		"metal":
+			metal_amount += amount
 		"population":
 			if amount > 0:
 				var empty_spot = housing_amount - population_amount
@@ -332,8 +337,8 @@ func reset_state():
 	food_amount = 150
 	water_amount = 250
 	air_amount = 200
+	metal_amount = 10
 
-	housing_alert_shown = false
 	food_alert_shown = false
 	water_alert_shown = false
 	air_alert_shown = false
