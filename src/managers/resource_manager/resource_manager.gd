@@ -277,13 +277,13 @@ func remove_building(building):
 
 
 func assign_workers(building):
-	# TODO - we can also handle material cost here
 	var workers_needed = building.data.people_cost
-	# Check that there are {number_of_workers} free in the current worker pool
-	if workers_needed > worker_amount:
-		return 
-	# Update the worker pool
+	var metal_needed = building.data.metal_cost
+	if workers_needed > worker_amount or metal_needed > metal_amount:
+		return
+	
 	worker_amount -= workers_needed
+	metal_amount -= metal_needed
 
 
 func retrieve_workers(building):
