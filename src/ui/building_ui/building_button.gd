@@ -48,7 +48,10 @@ func _ready():
 			production = building.data.air_prod
 			prod_type_string = "air"
 			prod_type_icon = load("res://assets/ui/icons/air_icon.png")
-
+		Building.TYPES.MiningBuilding:
+			production = building.data.metal_prod
+			prod_type_string = "metal"
+			prod_type_icon = load("res://assets/ui/icons/metal_icon.png")
 	production_label.text = "+{0}".format([production])
 	production_icon.texture = prod_type_icon
 

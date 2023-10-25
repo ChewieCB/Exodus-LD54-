@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dcbxfejiiultm" path="res://assets/ui/icons/final_icons/food_icon.png" id="5_pvja7"]
 [ext_resource type="Texture2D" uid="uid://bg6rommr2x7he" path="res://assets/ui/icons/final_icons/water_icon.png" id="6_1skcb"]
 [ext_resource type="Texture2D" uid="uid://bhhb3iolj8d4r" path="res://assets/ui/icons/final_icons/air_icon.png" id="7_auq0d"]
-[ext_resource type="Texture2D" uid="uid://vr3s3nju34ut" path="res://assets/ui/icons/16/Metal.png" id="9_o5tcc"]
+[ext_resource type="Texture2D" uid="uid://vr3s3nju34ut" path="res://assets/ui/icons/metal_icon.png" id="9_a1rp3"]
 
 [node name="ResourceUI" type="Control"]
 layout_mode = 3
@@ -189,7 +189,7 @@ layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer6/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("9_o5tcc")
+texture = ExtResource("9_a1rp3")
 stretch_mode = 3
 
 [node name="MetalLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer6/HBoxContainer"]
