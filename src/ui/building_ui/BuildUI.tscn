@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://sjhl1wud5upl"]
+[gd_scene load_steps=17 format=3 uid="uid://sjhl1wud5upl"]
 
 [ext_resource type="Script" path="res://src/ui/building_ui/build_ui.gd" id="1_pbqqm"]
 [ext_resource type="PackedScene" uid="uid://ch76y03t2bdgx" path="res://src/buildings/water/Water3.tscn" id="11_21mgq"]
@@ -6,7 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://3slp8ujgyckn" path="res://src/buildings/hab/Hab1.tscn" id="13_rymv3"]
 [ext_resource type="PackedScene" uid="uid://ccc7bkjtmvcyj" path="res://src/buildings/hab/Hab2.tscn" id="14_iyyrq"]
 [ext_resource type="PackedScene" uid="uid://cj4agtag2f6lo" path="res://src/buildings/air/Air3.tscn" id="14_th1qt"]
+[ext_resource type="PackedScene" uid="uid://cxn6drxpjw6ii" path="res://src/buildings/miner/Miner1.tscn" id="15_oucui"]
 [ext_resource type="PackedScene" uid="uid://cpyp0agt500ec" path="res://src/buildings/hab/Hab3.tscn" id="15_pi5gv"]
+[ext_resource type="PackedScene" uid="uid://dei47a5yup0l5" path="res://src/buildings/miner/Miner2.tscn" id="16_3adho"]
 [ext_resource type="PackedScene" uid="uid://bclsae0sreyu5" path="res://src/buildings/food/Farm1.tscn" id="16_7mq1p"]
 [ext_resource type="PackedScene" uid="uid://uno8ymiehbgk" path="res://src/buildings/food/Farm2.tscn" id="17_hojxr"]
 [ext_resource type="PackedScene" uid="uid://c7u8fjnfs0wfs" path="res://src/buildings/food/Farm3.tscn" id="18_e2gxg"]
@@ -190,5 +192,38 @@ building_object = ExtResource("22_wi86k")
 [node name="BuildingButton3" parent="MarginContainer2/TabContainer/Air/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
 layout_mode = 2
 building_object = ExtResource("14_th1qt")
+
+[node name="Metal" type="TabBar" parent="MarginContainer2/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/TabContainer/Metal"]
+layout_mode = 0
+offset_right = 328.0
+offset_bottom = 481.0
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 8
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer2/TabContainer/Metal/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/TabContainer/Metal/MarginContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/TabContainer/Metal/MarginContainer/ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_constants/separation = 80
+
+[node name="BuildingButton" parent="MarginContainer2/TabContainer/Metal/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
+layout_mode = 2
+theme_override_constants/margin_top = 48
+building_object = ExtResource("15_oucui")
+
+[node name="BuildingButton2" parent="MarginContainer2/TabContainer/Metal/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
+layout_mode = 2
+building_object = ExtResource("16_3adho")
 
 [connection signal="tab_clicked" from="MarginContainer2/TabContainer" to="." method="_on_tab_container_tab_clicked"]

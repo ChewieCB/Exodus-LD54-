@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://5ce2cbb55dyv"]
+[gd_scene load_steps=7 format=3 uid="uid://5ce2cbb55dyv"]
 
 [ext_resource type="Texture2D" uid="uid://bkvlrsm0lwbme" path="res://assets/buildings/old/hab1.png" id="1_5jg35"]
 [ext_resource type="Script" path="res://src/ui/building_ui/building_button.gd" id="1_jspa8"]
 [ext_resource type="Texture2D" uid="uid://bj4y01dn0igj5" path="res://assets/ui/icons/16/People.png" id="2_ol8gj"]
 [ext_resource type="Texture2D" uid="uid://dawueysu2x7ts" path="res://assets/ui/icons/food_icon.png" id="3_cldon"]
 [ext_resource type="Texture2D" uid="uid://2p4jagl32fr1" path="res://assets/ui/icons/16/Clock.png" id="3_g56x5"]
+[ext_resource type="Texture2D" uid="uid://vr3s3nju34ut" path="res://assets/ui/icons/metal_icon.png" id="4_6adgf"]
 
 [node name="BuildingButton" type="MarginContainer"]
 anchors_preset = 8
@@ -57,6 +58,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="RequirementsContainer" type="HBoxContainer" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -70,7 +72,7 @@ theme_override_constants/margin_left = 4
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="BuildingCost" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer/WorkersContainer/HBoxContainer"]
+[node name="WorkerCost" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer/WorkersContainer/HBoxContainer"]
 layout_mode = 2
 text = "10"
 horizontal_alignment = 1
@@ -99,6 +101,26 @@ vertical_alignment = 1
 [node name="TimeIcon" type="TextureRect" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer/TimeContainer/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("3_g56x5")
+stretch_mode = 5
+
+[node name="MetalContainer" type="MarginContainer" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer/MetalContainer"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="MetalCost" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer/MetalContainer/HBoxContainer"]
+layout_mode = 2
+text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MetalIcon" type="TextureRect" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer/MetalContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_6adgf")
 stretch_mode = 5
 
 [node name="MarginContainer3" type="MarginContainer" parent="CenterContainer/HBoxContainer/VBoxContainer"]

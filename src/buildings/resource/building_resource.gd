@@ -11,16 +11,19 @@ class_name BuildingResource
 @export var food_prod: int
 @export var water_prod: int
 @export var air_prod: int
+@export var metal_prod: int
 @export_group("Construction")
 @export_subgroup("Building")
 @export var food_cost: int
 @export var air_cost: int
 @export var water_cost: int
+@export var metal_cost: int
 @export var people_cost: int # required for building. Will be refund after finished building
 @export_subgroup("Destroying")
 @export var refund_food: int
 @export var refund_air: int
 @export var refund_water: int
+@export var refund_metal: int
 @export var refund_population: int # Exclusive to CRYO POD type building
 @export_subgroup("Timings")
 @export var construction_time: int

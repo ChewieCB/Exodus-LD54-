@@ -39,7 +39,8 @@ enum TYPES {
 	FoodBuilding,
 	WaterBuilding,
 	AirBuilding,
-	CryoPod
+	CryoPod,
+	MiningBuilding,
 }
 
 
@@ -90,7 +91,7 @@ func _physics_process(delta):
 
 
 func _input(event):
-	if event.is_action_pressed("left_click"):
+	if event.is_action_pressed("left_click") and not preview:
 		if is_selected:
 			BuildingManager.show_building_info_panel(global_position, data)
 			is_displaying_info_panel = true
@@ -174,16 +175,18 @@ func set_building_remove():
 		SoundManager.play_sound(cant_place_sfx, "SFX")
 
 
+# Cancel a building that is constructing
 func cancel_building(no_refund=false):
 	is_constructing = false
 	build_timer_ui.visible = false
 	if not no_refund:
 		ResourceManager.retrieve_workers(self)
+		ResourceManager.metal_amount += data.metal_cost
 	BuildingManager.construction_queue.erase(self)
 	SoundManager.play_sound(build_finish_sfx, "SFX")
 	self.queue_free()
 
-
+# Cancel a building that is de-constructing
 func cancel_building_remove(no_refund=false):
 	is_deconstructing = false
 	build_timer_ui.visible = false

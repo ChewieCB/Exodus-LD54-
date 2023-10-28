@@ -91,17 +91,20 @@ func is_in_blocked_tile(coord: Vector2) -> bool:
 		return false
 
 func place_building():
-	if ResourceManager.worker_amount >= current_building.data.people_cost:
-		current_building.set_building_placed()
-		var tmp_building = current_building
-		previous_rotation = current_building.rotation
-		current_building.build_timer_ui.update_rotation()
-		current_building = null
-#		get_new_building()
-	else:
+	if ResourceManager.worker_amount < current_building.data.people_cost:
 		BuildingManager.emit_signal("not_enough_workers")
 		SoundManager.play_sound(cant_place_sfx, "SFX")
+		return
+	if ResourceManager.metal_amount < current_building.data.metal_cost:
+		BuildingManager.emit_signal("not_enough_metal")
+		SoundManager.play_sound(cant_place_sfx, "SFX")
+		return
 
+	current_building.set_building_placed()
+	var tmp_building = current_building
+	previous_rotation = current_building.rotation
+	current_building.build_timer_ui.update_rotation()
+	current_building = null
 
 func stop_building_preview():
 	if current_building != null:

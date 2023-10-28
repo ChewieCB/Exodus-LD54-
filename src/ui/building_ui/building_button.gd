@@ -4,8 +4,9 @@ extends MarginContainer
 @export var building_object: PackedScene
 
 @onready var name_label = $CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/NameContainer/BuildingName
-@onready var worker_cost_label = $CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer/WorkersContainer/HBoxContainer/BuildingCost
-@onready var time_cost_label = $CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer/TimeContainer/HBoxContainer/BuildingTime
+@onready var worker_cost_label = $%RequirementsContainer/WorkersContainer/HBoxContainer/WorkerCost
+@onready var metal_cost_label = $%RequirementsContainer/MetalContainer/HBoxContainer/MetalCost
+@onready var time_cost_label = $%RequirementsContainer/TimeContainer/HBoxContainer/BuildingTime
 @onready var icon = $CenterContainer/HBoxContainer/MarginContainer2/BuildingIcon
 @onready var production_label = $CenterContainer/HBoxContainer/VBoxContainer/MarginContainer3/HBoxContainer/BuildingProd
 @onready var production_icon = $CenterContainer/HBoxContainer/VBoxContainer/MarginContainer3/HBoxContainer/TextureRect
@@ -21,6 +22,7 @@ func _ready():
 	var building = building_object.instantiate()
 	name_label.text = str(building.data.name)
 	worker_cost_label.text = str(building.data.people_cost)
+	metal_cost_label.text = str(building.data.metal_cost)
 	time_cost_label.text = str(building.data.construction_time)
 	icon.texture = building.data.sprite
 
@@ -48,7 +50,10 @@ func _ready():
 			production = building.data.air_prod
 			prod_type_string = "air"
 			prod_type_icon = load("res://assets/ui/icons/air_icon.png")
-
+		Building.TYPES.MiningBuilding:
+			production = building.data.metal_prod
+			prod_type_string = "metal"
+			prod_type_icon = load("res://assets/ui/icons/metal_icon.png")
 	production_label.text = "+{0}".format([production])
 	production_icon.texture = prod_type_icon
 

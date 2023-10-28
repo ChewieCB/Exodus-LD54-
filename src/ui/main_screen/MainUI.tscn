@@ -125,9 +125,9 @@ text = "Build Menu"
 
 [node name="ResourceUI" parent="." instance=ExtResource("1_4u51x")]
 layout_mode = 1
-offset_left = -299.5
+offset_left = -346.5
 offset_top = -72.0
-offset_right = 299.5
+offset_right = 346.5
 
 [node name="BuildingAlerts" parent="." instance=ExtResource("7_r6nxt")]
 layout_mode = 1
@@ -167,7 +167,7 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -384.0
+offset_left = -247.0
 offset_top = -128.0
 grow_horizontal = 0
 grow_vertical = 0

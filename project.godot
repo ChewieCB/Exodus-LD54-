@@ -42,6 +42,7 @@ variables={
 "choice3_check": "false",
 "choice4_check": "false",
 "food": "0",
+"metal": "0",
 "population": "0",
 "water": "0"
 }
