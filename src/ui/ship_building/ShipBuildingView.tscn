@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://bsrgyas0y86au" path="res://src/buildings/cryostasis_pod/CryoPod2.tscn" id="10_urp2k"]
 [ext_resource type="PackedScene" uid="uid://cxn6drxpjw6ii" path="res://src/buildings/miner/Miner1.tscn" id="11_iprk5"]
 [ext_resource type="PackedScene" uid="uid://cymcngb74n5dp" path="res://src/ui/menus/main/SettingMenu.tscn" id="11_t4hll"]
-[ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="13_vvqwf"]
+[ext_resource type="PackedScene" uid="uid://b6k7tg1vynpk0" path="res://addons/PixelPlanetGenerator/Planets/Rivers/Rivers.tscn" id="16_j7vbh"]
 
 [sub_resource type="Gradient" id="Gradient_5qkd4"]
 offsets = PackedFloat32Array(0, 0.264706, 0.759804, 1)
@@ -206,17 +206,16 @@ position = Vector2(2336, 160)
 position = Vector2(4000, 77)
 
 [node name="PlanetTest" type="Sprite2D" parent="."]
-modulate = Color(1, 1, 1, 0)
 position = Vector2(4736, -512)
 scale = Vector2(12, 12)
 texture = ExtResource("8_3ttdw")
 
-[node name="BackgroundScreen" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(3246, 162)
-scale = Vector2(2, 2)
-texture = ExtResource("13_vvqwf")
-
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Control" parent="." instance=ExtResource("16_j7vbh")]
+offset_left = 2826.0
+offset_top = -2454.0
+offset_right = 3850.0
+offset_bottom = -1430.0
 
 [connection signal="timeout" from="StartTutorialTimer" to="." method="_on_start_tutorial_timer_timeout"]

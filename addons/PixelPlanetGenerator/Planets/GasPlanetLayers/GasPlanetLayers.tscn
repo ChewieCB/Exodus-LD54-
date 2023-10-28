@@ -1,0 +1,73 @@
+[gd_scene load_steps=11 format=3 uid="uid://bx75gac7kmhix"]
+
+[ext_resource type="PackedScene" uid="uid://dwfcaffdnhdto" path="res://addons/PixelPlanetGenerator/Planets/Planet.tscn" id="1"]
+[ext_resource type="Script" path="res://addons/PixelPlanetGenerator/Planets/GasPlanetLayers/GasPlanetLayers.gd" id="2"]
+[ext_resource type="Shader" path="res://addons/PixelPlanetGenerator/Planets/GasPlanetLayers/Ring.gdshader" id="3"]
+[ext_resource type="Shader" path="res://addons/PixelPlanetGenerator/Planets/GasPlanetLayers/GasLayers.gdshader" id="4"]
+
+[sub_resource type="Gradient" id="1"]
+offsets = PackedFloat32Array(0, 0.498182, 1)
+colors = PackedColorArray(0.933333, 0.764706, 0.603922, 1, 0.85098, 0.627451, 0.4, 1, 0.560784, 0.337255, 0.231373, 1)
+
+[sub_resource type="GradientTexture1D" id="2"]
+gradient = SubResource("1")
+
+[sub_resource type="Gradient" id="3"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.4, 0.223529, 0.192157, 1, 0.270588, 0.156863, 0.235294, 1, 0.133333, 0.12549, 0.203922, 1)
+
+[sub_resource type="GradientTexture1D" id="4"]
+gradient = SubResource("3")
+
+[sub_resource type="ShaderMaterial" id="5"]
+shader = ExtResource("4")
+shader_parameter/pixels = 100.0
+shader_parameter/rotation = 0.0
+shader_parameter/cloud_cover = 0.61
+shader_parameter/light_origin = Vector2(-0.1, 0.3)
+shader_parameter/time_speed = 0.05
+shader_parameter/stretch = 2.204
+shader_parameter/cloud_curve = 1.376
+shader_parameter/light_border_1 = 0.52
+shader_parameter/light_border_2 = 0.62
+shader_parameter/bands = 0.892
+shader_parameter/should_dither = true
+shader_parameter/size = 10.107
+shader_parameter/OCTAVES = 3
+shader_parameter/seed = 6.314
+shader_parameter/time = 0.0
+shader_parameter/colorscheme = SubResource("2")
+shader_parameter/dark_colorscheme = SubResource("4")
+
+[sub_resource type="ShaderMaterial" id="6"]
+shader = ExtResource("3")
+shader_parameter/pixels = 300.0
+shader_parameter/rotation = 0.7
+shader_parameter/light_origin = Vector2(-0.1, 0.3)
+shader_parameter/time_speed = 0.2
+shader_parameter/light_border_1 = 0.52
+shader_parameter/light_border_2 = 0.62
+shader_parameter/ring_width = 0.127
+shader_parameter/ring_perspective = 6.0
+shader_parameter/scale_rel_to_planet = 6.0
+shader_parameter/size = 15.0
+shader_parameter/OCTAVES = 4
+shader_parameter/seed = 8.461
+shader_parameter/time = 0.0
+shader_parameter/colorscheme = SubResource("2")
+shader_parameter/dark_colorscheme = SubResource("4")
+
+[node name="Planet" instance=ExtResource("1")]
+layout_mode = 3
+anchors_preset = 15
+script = ExtResource("2")
+relative_scale = 3.0
+gui_zoom = 2.5
+
+[node name="GasLayers" type="ColorRect" parent="." index="0"]
+material = SubResource("5")
+layout_mode = 0
+
+[node name="Ring" type="ColorRect" parent="." index="1"]
+material = SubResource("6")
+layout_mode = 0
