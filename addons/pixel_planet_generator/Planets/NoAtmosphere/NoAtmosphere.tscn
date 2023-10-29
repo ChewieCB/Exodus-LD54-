@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://c3m7r5kjmsjar"]
+
+[ext_resource type="Script" path="res://addons/pixel_planet_generator/Planets/NoAtmosphere/NoAtmosphere.gd" id="1_jlu7k"]
+[ext_resource type="Shader" path="res://addons/pixel_planet_generator/Planets/NoAtmosphere/NoAtmosphere.gdshader" id="2_8xk4q"]
+[ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="2_qnq5y"]
+[ext_resource type="Shader" path="res://addons/pixel_planet_generator/Planets/NoAtmosphere/Craters.gdshader" id="3_d428m"]
+
+[sub_resource type="ShaderMaterial" id="1"]
+shader = ExtResource("2_8xk4q")
+shader_parameter/pixels = 100.0
+shader_parameter/rotation = 0.0
+shader_parameter/light_origin = Vector2(0.25, 0.25)
+shader_parameter/time_speed = 0.4
+shader_parameter/dither_size = 2.0
+shader_parameter/light_border_1 = 0.615
+shader_parameter/light_border_2 = 0.729
+shader_parameter/color1 = Color(0.639216, 0.654902, 0.760784, 1)
+shader_parameter/color2 = Color(0.298039, 0.407843, 0.521569, 1)
+shader_parameter/color3 = Color(0.227451, 0.247059, 0.368627, 1)
+shader_parameter/size = 8.0
+shader_parameter/OCTAVES = 4
+shader_parameter/seed = 1.012
+shader_parameter/time = 0.0
+shader_parameter/should_dither = true
+
+[sub_resource type="ShaderMaterial" id="2"]
+shader = ExtResource("3_d428m")
+shader_parameter/pixels = 87.419
+shader_parameter/rotation = 0.0
+shader_parameter/light_origin = Vector2(0.25, 0.25)
+shader_parameter/time_speed = 0.001
+shader_parameter/light_border = 0.465
+shader_parameter/color1 = Color(0.298039, 0.407843, 0.521569, 1)
+shader_parameter/color2 = Color(0.227451, 0.247059, 0.368627, 1)
+shader_parameter/size = 5.0
+shader_parameter/seed = 4.517
+shader_parameter/time = 0.0
+
+[node name="NoAtmosphere" type="Node2D"]
+position = Vector2(575, 330)
+scale = Vector2(4, 4)
+script = ExtResource("1_jlu7k")
+
+[node name="Ground" type="Sprite2D" parent="."]
+material = SubResource("1")
+texture = ExtResource("2_qnq5y")
+
+[node name="Craters" type="Sprite2D" parent="."]
+material = SubResource("2")
+texture = ExtResource("2_qnq5y")
