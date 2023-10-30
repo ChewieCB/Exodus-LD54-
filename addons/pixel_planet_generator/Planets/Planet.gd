@@ -4,6 +4,7 @@ extends Node2D
 var time = 1000.0
 var override_time = false
 var original_colors = []
+var rotate_speed_modifier = 1
 @export var relative_scale: float = 1.0
 @export var gui_zoom: float = 1.0
 
@@ -23,8 +24,13 @@ func update_time(_t):
 func set_custom_time(_t):
 	pass
 
+func set_rotate_speed_modifier(_m):
+	rotate_speed_modifier = _m
+
 func get_multiplier(mat):
-	return (round(mat.get_shader_parameter("size")) * 2.0) / mat.get_shader_parameter("time_speed")
+	var mul = (round(mat.get_shader_parameter("size")) * 2.0) / mat.get_shader_parameter("time_speed")
+	mul = (mul / 10) * rotate_speed_modifier
+	return mul
 	
 func _process(delta):
 	time += delta	

@@ -1,11 +1,14 @@
-[gd_resource type="Resource" script_class="ExodusEvent" load_steps=2 format=3 uid="uid://ccl7foxs8yr7p"]
+[gd_resource type="Resource" script_class="ExodusEvent" load_steps=3 format=3 uid="uid://ccl7foxs8yr7p"]
 
+[ext_resource type="Texture2D" uid="uid://cygmypnooav7y" path="res://assets/event/Ship_wreak_Pixel.png" id="1_46xju"]
 [ext_resource type="Script" path="res://src/events/resource/event_resource.gd" id="1_vvw1o"]
 
 [resource]
 script = ExtResource("1_vvw1o")
 name = "Damaged Ship Aid"
 type = 0
+event_image = ExtResource("1_46xju")
+planet_type = 1
 active_screen = 2
 event_text_file = "res://src/events/planet/damaged_ship_aid/damaged_ship_aid.txt"
 pop_reward_1 = 0

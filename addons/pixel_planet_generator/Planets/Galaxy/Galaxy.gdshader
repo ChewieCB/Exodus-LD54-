@@ -110,5 +110,5 @@ void fragment() {
 	f2 = floor(f2 * (n_colors + 1.0)) / n_colors;
 	vec4 col = texture(colorscheme, vec2(f2, 0.0));
 
-	COLOR = vec4(col.rgb, a * col.a);
+	COLOR = vec4(col.rgb, a * col.a * COLOR.a);
 }

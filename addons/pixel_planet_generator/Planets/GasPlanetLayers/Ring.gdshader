@@ -112,5 +112,5 @@ void fragment() {
 		col = texture(dark_colorscheme, vec2(posterized-1.0, uv.y));
 	}
 	float ring_a = step(0.28, ring);
-	COLOR = vec4(col.rgb, ring_a * col.a);
+	COLOR = vec4(col.rgb, ring_a * col.a * COLOR.a);
 }

@@ -6,6 +6,7 @@
 script = ExtResource("1_5xsm8")
 name = "Asteroid Cluster"
 type = 2
+planet_type = 12
 active_screen = 2
 event_text_file = "res://src/events/ship/asteroid_cluster/asteroid_cluster.txt"
 pop_reward_1 = 0

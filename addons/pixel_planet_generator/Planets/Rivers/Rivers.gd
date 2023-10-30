@@ -11,7 +11,7 @@ func set_light(pos):
 	$Land.material.set_shader_parameter("light_origin", pos)
 
 func set_seed(sd):
-	var converted_seed = sd%1000/100.0
+	var converted_seed = sd % 1000 / 100.0
 	$Cloud.material.set_shader_parameter("seed", converted_seed)
 	$Cloud.material.set_shader_parameter("cloud_cover", randf_range(0.35, 0.6))
 	$Land.material.set_shader_parameter("seed", converted_seed)

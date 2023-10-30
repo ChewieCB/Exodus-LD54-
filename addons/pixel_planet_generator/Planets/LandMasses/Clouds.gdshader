@@ -131,5 +131,5 @@ void fragment() {
 	}
 
 	c *= step(d_to_center, 0.5);
-	COLOR = vec4(col.rgb, step(cloud_cover, c) * a * col.a);
+	COLOR = vec4(col.rgb, step(cloud_cover, c) * a * col.a * COLOR.a);
 }

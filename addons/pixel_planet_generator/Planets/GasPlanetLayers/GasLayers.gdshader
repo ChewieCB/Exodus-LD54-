@@ -139,5 +139,5 @@ void fragment() {
 		col = texture(dark_colorscheme, vec2(posterized-1.0, uv.y));
 	}
 
-	COLOR = vec4(col.rgb, a * col.a);
+	COLOR = vec4(col.rgb, a * col.a * COLOR.a);
 }

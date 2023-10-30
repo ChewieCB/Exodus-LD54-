@@ -37,7 +37,6 @@ shader_parameter/seed = 4.517
 shader_parameter/time = 0.0
 
 [node name="NoAtmosphere" type="Node2D"]
-position = Vector2(575, 330)
 scale = Vector2(4, 4)
 script = ExtResource("1_jlu7k")
 

@@ -121,5 +121,5 @@ void fragment() {
 		col = color3;
 	}
 	
-	COLOR = vec4(col.rgb, n_step * col.a);
+	COLOR = vec4(col.rgb, n_step * col.a * COLOR.a);
 }

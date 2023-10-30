@@ -39,9 +39,22 @@ var previous_background: Texture2D = null
 #
 @onready var available_events: Array[ExodusEvent] = event_resources.duplicate()
 var completed_events: Array[ExodusEvent]
-
-
 var n_woke_up_citizen = 0
+
+@onready var planets = {
+	ExodusEvent.PlanetType.WET_TERRAIN: preload("res://addons/pixel_planet_generator/Planets/Rivers/Rivers.tscn"),
+	ExodusEvent.PlanetType.DRY_TERRAIN: preload("res://addons/pixel_planet_generator/Planets/DryTerran/DryTerrain.tscn"),	
+	ExodusEvent.PlanetType.ISLAND: preload("res://addons/pixel_planet_generator/Planets/LandMasses/LandMasses.tscn"),
+	ExodusEvent.PlanetType.NO_ATMOSPHERE: preload("res://addons/pixel_planet_generator/Planets/NoAtmosphere/NoAtmosphere.tscn"),
+	ExodusEvent.PlanetType.GAS_PLANET: preload("res://addons/pixel_planet_generator/Planets/GasPlanet/GasPlanet.tscn"),
+	ExodusEvent.PlanetType.GAS_PLANET_RING: preload("res://addons/pixel_planet_generator/Planets/GasPlanetLayers/GasPlanetLayers.tscn"),
+	ExodusEvent.PlanetType.ICE_WORLD: preload("res://addons/pixel_planet_generator/Planets/IceWorld/IceWorld.tscn"),
+	ExodusEvent.PlanetType.LAVA_WORLD: preload("res://addons/pixel_planet_generator/Planets/LavaWorld/LavaWorld.tscn"),
+	ExodusEvent.PlanetType.ASTEROID: preload("res://addons/pixel_planet_generator/Planets/Asteroids/Asteroid.tscn"),
+	ExodusEvent.PlanetType.BLACK_HOLE: preload("res://addons/pixel_planet_generator/Planets/BlackHole/BlackHole.tscn"),
+	ExodusEvent.PlanetType.GALAXY: preload("res://addons/pixel_planet_generator/Planets/Galaxy/Galaxy.tscn"),
+	ExodusEvent.PlanetType.STAR: preload("res://addons/pixel_planet_generator/Planets/Star/Star.tscn")
+}
 
 const MIN_TICK_FOR_EVENT = 6
 const MAX_TICK_FOR_EVENT = 20
@@ -88,6 +101,7 @@ func get_random_event():
 		return null
 
 
+# unused
 func get_random_background(type):
 	var background_array
 	match type:
@@ -115,10 +129,7 @@ func get_random_background(type):
 
 
 func play_event(event: ExodusEvent) -> Node:
-	if event.background:
-		change_event_image(event.background)
-	else:
-		change_event_image(get_random_background(event.type))
+	change_event_image(event.event_image, event.planet_type)
 	var timeline = event.build_dialogic_timeline()
 	emit_signal("start_event", event)
 	var dialog = Dialogic.start(timeline)
@@ -128,9 +139,8 @@ func play_event(event: ExodusEvent) -> Node:
 func play_event_legacy(event_name: String) -> Node:
 	return call(event_name)
 
-func change_event_image(_texture: Texture2D):
-	if _texture:
-		emit_signal("request_change_event_image", _texture)
+func change_event_image(_texture: Texture2D, planet_type: ExodusEvent.PlanetType):
+	emit_signal("request_change_event_image", _texture, planet_type)
 
 
 func change_objective_label(text: String):

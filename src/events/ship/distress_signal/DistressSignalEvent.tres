@@ -1,11 +1,14 @@
-[gd_resource type="Resource" script_class="ExodusEvent" load_steps=2 format=3 uid="uid://u5r2ypm555n4"]
+[gd_resource type="Resource" script_class="ExodusEvent" load_steps=3 format=3 uid="uid://u5r2ypm555n4"]
 
 [ext_resource type="Script" path="res://src/events/resource/event_resource.gd" id="1_87c5i"]
+[ext_resource type="Texture2D" uid="uid://cygmypnooav7y" path="res://assets/event/Ship_wreak_Pixel.png" id="1_ycl0k"]
 
 [resource]
 script = ExtResource("1_87c5i")
 name = "Distress Signal"
 type = 2
+event_image = ExtResource("1_ycl0k")
+planet_type = 0
 active_screen = 2
 event_text_file = "res://src/events/ship/distress_signal/distress_signal.txt"
 pop_reward_1 = 4

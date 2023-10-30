@@ -29,7 +29,7 @@ float rand(vec2 coord) {
 float noise(vec2 coord){
 	vec2 i = floor(coord);
 	vec2 f = fract(coord);
-	
+
 	float a = rand(i);
 	float b = rand(i + vec2(1.0, 0.0));
 	float c = rand(i + vec2(0.0, 1.0));
@@ -65,13 +65,13 @@ float circleNoise(vec2 uv) {
 
 float cloud_alpha(vec2 uv) {
 	float c_noise = 0.0;
-	
+
 	// more iterations for more turbulence
 	for (int i = 0; i < 9; i++) {
 		c_noise += circleNoise((uv * size * 0.3) + (float(i+1)+10.) + (vec2(time*time_speed, 0.0)));
 	}
 	float fbm = fbm(uv*size+c_noise + vec2(time*time_speed, 0.0));
-	
+
 	return fbm;//step(a_cutoff, fbm);
 }
 
@@ -95,25 +95,25 @@ vec2 rotate(vec2 coord, float angle){
 void fragment() {
 	// pixelize uv
 	vec2 uv = floor(UV*pixels)/pixels;
-	
+
 	// distance to light source
 	float d_light = distance(uv , light_origin);
-	
+
 	// cut out a circle
 	float d_circle = distance(uv, vec2(0.5));
 	// stepping over 0.5 instead of 0.49999 makes some pixels a little buggy
 	float a = step(d_circle, 0.49999);
-	
+
 	uv = rotate(uv, rotation);
-	
+
 	// map to sphere
 	uv = spherify(uv);
-	
+
 	// slightly make uv go down on the right, and up in the left
 	uv.y += smoothstep(0.0, cloud_curve, abs(uv.x-0.4));
-	
+
 	float c = cloud_alpha(uv*vec2(1.0, stretch));
-	
+
 	// assign some colors based on cloud depth & distance from light
 	vec4 col = base_color;
 	if (c < cloud_cover + 0.03) {
@@ -126,6 +126,6 @@ void fragment() {
 	if (d_light + c*0.2 > light_border_2) {
 		col = shadow_outline_color;
 	}
-	
-	COLOR = vec4(col.rgb, step(cloud_cover, c) * a * col.a);
+
+	COLOR = vec4(col.rgb, step(cloud_cover, c) * a * col.a * COLOR.a);
 }

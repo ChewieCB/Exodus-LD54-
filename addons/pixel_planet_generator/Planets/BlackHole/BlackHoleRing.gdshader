@@ -157,5 +157,5 @@ void fragment() {
 //	col.rgb *= pow(uv.x, 0.15);
 
 	float disk_a = step(0.15, disk);
-	COLOR = vec4(col.rgb, disk_a * col.a);
+	COLOR = vec4(col.rgb, disk_a * col.a * COLOR.a);
 }

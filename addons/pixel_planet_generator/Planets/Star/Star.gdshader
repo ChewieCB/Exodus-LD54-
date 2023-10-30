@@ -105,5 +105,5 @@ void fragment() {
 	float interpolate = floor(n * 3.0) / 3.0;
 	vec4 col = texture(colorramp, vec2(interpolate, 0.0));
 	
-	COLOR = vec4(col.rgb, a * col.a);
+	COLOR = vec4(col.rgb, a * col.a * COLOR.a);
 }

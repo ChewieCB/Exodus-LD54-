@@ -8,7 +8,7 @@
 
 [sub_resource type="ShaderMaterial" id="1"]
 shader = ExtResource("2_33e3f")
-shader_parameter/pixels = 128.0
+shader_parameter/pixels = 256.0
 shader_parameter/rotation = 0.0
 shader_parameter/light_origin = Vector2(0.39, 0.39)
 shader_parameter/time_speed = 0.1
@@ -26,7 +26,7 @@ shader_parameter/should_dither = true
 
 [sub_resource type="ShaderMaterial" id="2"]
 shader = ExtResource("4_jvjja")
-shader_parameter/pixels = 128.0
+shader_parameter/pixels = 256.0
 shader_parameter/rotation = 0.2
 shader_parameter/light_origin = Vector2(0.39, 0.39)
 shader_parameter/time_speed = 0.2
@@ -45,7 +45,7 @@ shader_parameter/time = 0.0
 
 [sub_resource type="ShaderMaterial" id="3"]
 shader = ExtResource("5_kfsbg")
-shader_parameter/pixels = 128.0
+shader_parameter/pixels = 256.0
 shader_parameter/rotation = 0.0
 shader_parameter/cloud_cover = 0.415
 shader_parameter/light_origin = Vector2(0.39, 0.39)
@@ -64,7 +64,6 @@ shader_parameter/seed = 5.939
 shader_parameter/time = 0.0
 
 [node name="LandMasses" type="Node2D"]
-position = Vector2(447, 315)
 scale = Vector2(4, 4)
 script = ExtResource("1_i1jb7")
 

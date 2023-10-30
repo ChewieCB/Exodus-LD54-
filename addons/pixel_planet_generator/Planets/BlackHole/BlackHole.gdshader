@@ -26,5 +26,5 @@ void fragment() {
 	
 	float a = step(d_to_center, radius);
 	
-	COLOR = vec4(col.rgb, a * col.a);
+	COLOR = vec4(col.rgb, a * col.a * COLOR.a);
 }

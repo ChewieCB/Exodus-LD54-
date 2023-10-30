@@ -126,5 +126,5 @@ void fragment() {
 		col = col1;
 	}
 	
-	COLOR = vec4(col.rgb, step(land_cutoff, fbm1) * a * col.a);
+	COLOR = vec4(col.rgb, step(land_cutoff, fbm1) * a * col.a * COLOR.a);
 }

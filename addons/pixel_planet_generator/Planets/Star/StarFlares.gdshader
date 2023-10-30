@@ -132,5 +132,5 @@ void fragment() {
 	
 	// final step to not have everything appear from the center
 	a *= step(n2 * 0.25, d);
-	COLOR = vec4(col.rgb, a * col.a);
+	COLOR = vec4(col.rgb, a * col.a * COLOR.a);
 }

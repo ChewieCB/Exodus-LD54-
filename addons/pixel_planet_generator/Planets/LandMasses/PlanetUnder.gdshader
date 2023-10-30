@@ -108,5 +108,5 @@ void fragment() {
 		}
 	}
 	
-	COLOR = vec4(col.rgb, a * col.a);
+	COLOR = vec4(col.rgb, a * col.a * COLOR.a);
 }
