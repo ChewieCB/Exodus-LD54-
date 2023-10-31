@@ -14,7 +14,7 @@ config/name="LD54 Exodus"
 run/main_scene="res://src/ui/menus/splash/SplashScreen.tscn"
 config/features=PackedStringArray("4.1", "GL Compatibility")
 boot_splash/show_image=false
-config/icon="res://icon.svg"
+config/icon="res://assets/sprite/game_avatar.png"
 
 [autoload]
 
