@@ -1,10 +1,67 @@
-[gd_scene load_steps=6 format=3 uid="uid://cycdqhy5xadoa"]
+[gd_scene load_steps=17 format=3 uid="uid://cycdqhy5xadoa"]
 
 [ext_resource type="Script" path="res://src/ui/menus/main/main_menu.gd" id="1_1aer0"]
-[ext_resource type="FontFile" uid="uid://4r5r4qviqq2k" path="res://assets/ui/fonts/Improbable.otf" id="1_svkb1"]
 [ext_resource type="PackedScene" uid="uid://c6s7o88tyavpj" path="res://src/ui/ship_building/ShipBuildingView.tscn" id="2_2q72j"]
-[ext_resource type="Texture2D" uid="uid://ctgsf4d6gg6gj" path="res://assets/ui/menus/main/concept_bg_1.png" id="2_sgqft"]
+[ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="3_ljouy"]
+[ext_resource type="PackedScene" uid="uid://b6k7tg1vynpk0" path="res://addons/pixel_planet_generator/Planets/Rivers/Rivers.tscn" id="4_m5lpp"]
 [ext_resource type="PackedScene" uid="uid://cymcngb74n5dp" path="res://src/ui/menus/main/SettingMenu.tscn" id="5_befr1"]
+[ext_resource type="Texture2D" uid="uid://cmbixfktrvffm" path="res://assets/sprite/ship_colored.png" id="6_pqru6"]
+[ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="7_a81tv"]
+[ext_resource type="Texture2D" uid="uid://umfswvb0k6d6" path="res://assets/sprite/star.png" id="7_lr2lw"]
+
+[sub_resource type="Gradient" id="Gradient_in258"]
+offsets = PackedFloat32Array(0, 0.295455, 0.736364, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.835294, 1, 1, 1, 0.862745, 1, 1, 1, 0)
+
+[sub_resource type="Animation" id="Animation_eurpb"]
+resource_name = "ship_float"
+length = 12.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ship:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3, 5, 7, 11, 12),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(148, 474), Vector2(160, 480), Vector2(165, 474), Vector2(180, 470), Vector2(150, 474), Vector2(148, 474)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_verxt"]
+_data = {
+"ship_float": SubResource("Animation_eurpb")
+}
+
+[sub_resource type="Animation" id="Animation_dccbk"]
+resource_name = "planet_floatby"
+length = 20.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Planet:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 20),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1296, 268), Vector2(-145, 268)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cyqln"]
+_data = {
+"planet_floatby": SubResource("Animation_dccbk")
+}
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xtjbc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e0yrm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j00bh"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -18,96 +75,229 @@ size_flags_vertical = 3
 script = ExtResource("1_1aer0")
 scene_after_start = ExtResource("2_2q72j")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 1164.0
-offset_bottom = 653.0
-mouse_filter = 2
-texture = ExtResource("2_sgqft")
-
-[node name="MainScreen" type="MarginContainer" parent="."]
+[node name="SpaceBG" type="TextureRect" parent="."]
+modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -35.0
-offset_bottom = 35.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 50
+mouse_filter = 2
+texture = ExtResource("3_ljouy")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainScreen"]
-layout_mode = 2
-
-[node name="TitleContainer" type="MarginContainer" parent="MainScreen/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/margin_top = 40
-theme_override_constants/margin_bottom = 80
-
-[node name="Label" type="Label" parent="MainScreen/VBoxContainer/TitleContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_svkb1")
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -555.0
+offset_top = -16.0
+offset_right = -484.0
+offset_bottom = 162.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0.541176, 1, 1)
 theme_override_font_sizes/font_size = 128
-text = "Exodus"
+text = "E"
 
-[node name="ButtonsContainer" type="MarginContainer" parent="MainScreen/VBoxContainer"]
-layout_mode = 2
+[node name="TitleLabel2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -485.0
+offset_top = -1.0
+offset_right = -205.0
+offset_bottom = 134.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 96
+text = "xodus"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainScreen/VBoxContainer/ButtonsContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/separation = 20
+[node name="TitleLabel3" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -362.0
+offset_top = 107.0
+offset_right = -173.0
+offset_bottom = 177.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+text = "a space odyssey"
 
-[node name="PlayContainer" type="MarginContainer" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Button" type="Button" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_svkb1")
-theme_override_font_sizes/font_size = 48
-text = "Play"
-
-[node name="SettingsContainer" type="MarginContainer" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Button" type="Button" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/SettingsContainer"]
-layout_mode = 2
-mouse_default_cursor_shape = 2
-theme_override_fonts/font = ExtResource("1_svkb1")
-theme_override_font_sizes/font_size = 48
-text = "Settings"
-
-[node name="QuitContainer" type="MarginContainer" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Button" type="Button" parent="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/QuitContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_svkb1")
-theme_override_font_sizes/font_size = 48
-text = "Quit"
-
-[node name="Tag" type="MarginContainer" parent="MainScreen/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/margin_left = 785
-theme_override_constants/margin_top = 120
-
-[node name="Label" type="Label" parent="MainScreen/VBoxContainer/Tag"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_svkb1")
-theme_override_font_sizes/font_size = 28
-text = "Ludum Dare 54"
+[node name="Planet" parent="." instance=ExtResource("4_m5lpp")]
+position = Vector2(1296, 268)
 
 [node name="SettingMenu" parent="." instance=ExtResource("5_befr1")]
 visible = false
 layout_mode = 1
 
-[connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/PlayContainer/Button" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/SettingsContainer/Button" to="." method="_on_settings_button_pressed"]
-[connection signal="pressed" from="MainScreen/VBoxContainer/ButtonsContainer/VBoxContainer/QuitContainer/Button" to="." method="_on_quit_button_pressed"]
+[node name="Ship" type="Sprite2D" parent="."]
+position = Vector2(148, 474)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("6_pqru6")
+
+[node name="StarCPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(915, 336)
+amount = 32
+lifetime = 9.0
+explosiveness = 0.3
+randomness = 0.3
+texture = ExtResource("7_lr2lw")
+emission_shape = 3
+emission_rect_extents = Vector2(700, 500)
+direction = Vector2(-1, 0)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 25.0
+initial_velocity_max = 100.0
+angular_velocity_min = -30.0
+angular_velocity_max = 30.0
+scale_amount_min = 0.1
+scale_amount_max = 0.25
+color_ramp = SubResource("Gradient_in258")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "ship_float"
+libraries = {
+"": SubResource("AnimationLibrary_verxt")
+}
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+autoplay = "planet_floatby"
+speed_scale = 0.25
+libraries = {
+"": SubResource("AnimationLibrary_cyqln")
+}
+
+[node name="DeviceFrame" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -336.0
+offset_top = -330.0
+offset_right = 322.0
+offset_bottom = 355.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("7_a81tv")
+
+[node name="LDTag" type="Label" parent="DeviceFrame"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 33.3333
+offset_top = -205.0
+offset_right = 166.333
+offset_bottom = -176.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 18
+text = "Ludum Dare 54"
+
+[node name="TextureRect" type="TextureRect" parent="DeviceFrame"]
+self_modulate = Color(0.0156863, 0.0784314, 0.152941, 1)
+layout_mode = 0
+offset_left = 47.0
+offset_top = 222.0
+offset_right = 500.0
+offset_bottom = 460.0
+texture = ExtResource("3_ljouy")
+
+[node name="TabContainer" type="TabContainer" parent="DeviceFrame/TextureRect"]
+layout_mode = 0
+offset_top = 1.0
+offset_right = 453.0
+offset_bottom = 238.0
+theme_override_font_sizes/font_size = 24
+
+[node name="Operation" type="TabBar" parent="DeviceFrame/TextureRect/TabContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="DeviceFrame/TextureRect/TabContainer/Operation"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -160.0
+offset_top = 17.6665
+offset_right = 160.0
+offset_bottom = 62.6665
+grow_horizontal = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_pressed_color = Color(0.0235294, 1, 0, 1)
+theme_override_colors/font_hover_color = Color(0.0235294, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(0.0235294, 1, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.0235294, 1, 0, 1)
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xtjbc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_xtjbc")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_xtjbc")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_xtjbc")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xtjbc")
+text = ">Commence Mission"
+
+[node name="Button2" type="Button" parent="DeviceFrame/TextureRect/TabContainer/Operation"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -117.5
+offset_top = -34.1668
+offset_right = 117.5
+offset_bottom = 10.8332
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_pressed_color = Color(1, 0.988235, 0.333333, 1)
+theme_override_colors/font_hover_color = Color(1, 0.988235, 0.333333, 1)
+theme_override_colors/font_focus_color = Color(1, 0.988235, 0.333333, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 0.988235, 0.333333, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxEmpty_e0yrm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_e0yrm")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_e0yrm")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_e0yrm")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_e0yrm")
+text = ">Setting"
+
+[node name="Button3" type="Button" parent="DeviceFrame/TextureRect/TabContainer/Operation"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -117.5
+offset_top = -45.0001
+offset_right = 117.5
+offset_bottom = -11.0001
+grow_horizontal = 2
+grow_vertical = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_pressed_color = Color(0.713726, 0.145098, 0.0980392, 1)
+theme_override_colors/font_hover_color = Color(0.713726, 0.145098, 0.0980392, 1)
+theme_override_colors/font_focus_color = Color(0.713726, 0.145098, 0.0980392, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.713726, 0.145098, 0.0980392, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_j00bh")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_j00bh")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_j00bh")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_j00bh")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_j00bh")
+text = ">Abandon"
+
+[node name="Credit" type="TabBar" parent="DeviceFrame/TextureRect/TabContainer"]
+visible = false
+layout_mode = 2
+
+[connection signal="pressed" from="DeviceFrame/TextureRect/TabContainer/Operation/Button" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="DeviceFrame/TextureRect/TabContainer/Operation/Button2" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="DeviceFrame/TextureRect/TabContainer/Operation/Button3" to="." method="_on_quit_button_pressed"]

@@ -12,7 +12,6 @@ func _ready():
 	ScreenTransitionManager.fade_in(0.8)
 	await ScreenTransitionManager.transitioned
 
-
 func _on_settings_button_pressed():
 	SoundManager.play_button_click_sfx()
 	setting_menu.visible = true
