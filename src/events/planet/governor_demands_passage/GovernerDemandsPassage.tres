@@ -6,6 +6,7 @@
 script = ExtResource("1_whple")
 name = "Governor Demands Passage"
 type = 0
+planet_type = 7
 active_screen = 2
 event_text_file = "res://src/events/planet/governor_demands_passage/governer_demands_passage.txt"
 pop_reward_1 = 4

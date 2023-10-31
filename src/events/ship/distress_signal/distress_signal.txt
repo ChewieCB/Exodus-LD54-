@@ -10,7 +10,7 @@ ExecutiveOfficer (Normal): Should we help?
 	if {chance} >= 25:
 		The crew of the Menelaus are grateful for aid, but the ship is beyond repair.
 		if {available_housing} >= {pop_reward_1}:
-			They strip the Menelaus for any useful parts and join your crew. 
+			They strip the Menelaus for any useful parts and join your crew.
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "{pop_reward_1}"]" single_use="true"]
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{water_reward_1}"]" single_use="true"]
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "{food_reward_1}"]" single_use="true"]

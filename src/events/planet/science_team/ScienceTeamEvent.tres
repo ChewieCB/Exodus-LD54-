@@ -6,6 +6,7 @@
 script = ExtResource("1_64y13")
 name = "Science Team"
 type = 0
+planet_type = 4
 active_screen = 2
 event_text_file = "res://src/events/planet/science_team/science_team.txt"
 pop_reward_1 = 5

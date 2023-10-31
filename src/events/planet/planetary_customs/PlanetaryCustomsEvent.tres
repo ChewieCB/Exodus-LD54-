@@ -6,6 +6,7 @@
 script = ExtResource("1_js11m")
 name = "Planetary Customs"
 type = 0
+planet_type = 1
 active_screen = 2
 event_text_file = "res://src/events/planet/planetary_customs/planetary_customs.txt"
 pop_reward_1 = 0

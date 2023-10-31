@@ -1,21 +1,20 @@
-[gd_scene load_steps=23 format=3 uid="uid://c6s7o88tyavpj"]
+[gd_scene load_steps=22 format=3 uid="uid://c6s7o88tyavpj"]
 
 [ext_resource type="PackedScene" uid="uid://cu7ivg1u3vbhl" path="res://src/ui/main_screen/MainUI.tscn" id="1_21fy4"]
 [ext_resource type="Script" path="res://src/ui/ship_building/ship_building_view.gd" id="1_ae44n"]
 [ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="2_jcwrl"]
 [ext_resource type="Texture2D" uid="uid://umfswvb0k6d6" path="res://assets/sprite/star.png" id="3_74hi2"]
 [ext_resource type="Script" path="res://src/ui/ship_building/grid_placement.gd" id="3_tehqe"]
+[ext_resource type="PackedScene" uid="uid://b6k7tg1vynpk0" path="res://addons/pixel_planet_generator/Planets/Rivers/Rivers.tscn" id="4_4v6ii"]
 [ext_resource type="Texture2D" uid="uid://cmbixfktrvffm" path="res://assets/sprite/ship_colored.png" id="5_gakyr"]
 [ext_resource type="PackedScene" uid="uid://3slp8ujgyckn" path="res://src/buildings/hab/Hab1.tscn" id="7_8yr63"]
 [ext_resource type="Texture2D" uid="uid://de4cco3yhejqk" path="res://assets/buildings/old/building_placeholders.png" id="7_dj4xh"]
-[ext_resource type="Texture2D" uid="uid://c723ddgavfsnp" path="res://assets/backgrounds/planet_concept_1.png" id="8_3ttdw"]
 [ext_resource type="Texture2D" uid="uid://p6x8qph6gl3j" path="res://assets/backgrounds/build_frame.png" id="8_fs641"]
 [ext_resource type="Texture2D" uid="uid://cygmypnooav7y" path="res://assets/event/Ship_wreak_Pixel.png" id="8_p8t6q"]
 [ext_resource type="PackedScene" uid="uid://cga44qrkh08wg" path="res://src/buildings/cryostasis_pod/CryoPod1.tscn" id="9_ejje4"]
 [ext_resource type="PackedScene" uid="uid://bsrgyas0y86au" path="res://src/buildings/cryostasis_pod/CryoPod2.tscn" id="10_urp2k"]
 [ext_resource type="PackedScene" uid="uid://cxn6drxpjw6ii" path="res://src/buildings/miner/Miner1.tscn" id="11_iprk5"]
 [ext_resource type="PackedScene" uid="uid://cymcngb74n5dp" path="res://src/ui/menus/main/SettingMenu.tscn" id="11_t4hll"]
-[ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="13_vvqwf"]
 
 [sub_resource type="Gradient" id="Gradient_5qkd4"]
 offsets = PackedFloat32Array(0, 0.264706, 0.759804, 1)
@@ -107,11 +106,20 @@ angular_velocity_max = 30.0
 scale_amount_min = 0.25
 color_ramp = SubResource("Gradient_isfht")
 
-[node name="EventImage" type="Sprite2D" parent="."]
+[node name="EventImageHolder" type="Node2D" parent="."]
 modulate = Color(1, 1, 1, 0)
+position = Vector2(4414, -886)
+
+[node name="EventPlanetHolder" type="Node2D" parent="EventImageHolder"]
+position = Vector2(808, 593)
+scale = Vector2(10, 10)
+
+[node name="Rivers" parent="EventImageHolder/EventPlanetHolder" instance=ExtResource("4_4v6ii")]
+
+[node name="EventImage" type="Sprite2D" parent="EventImageHolder"]
 texture_filter = 1
-position = Vector2(4736, -512)
-scale = Vector2(12, 12)
+position = Vector2(67, 837)
+scale = Vector2(8, 8)
 texture = ExtResource("8_p8t6q")
 
 [node name="ShipSprite" type="Sprite2D" parent="."]
@@ -180,7 +188,7 @@ texture = ExtResource("8_fs641")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="MainUI" parent="UI" node_paths=PackedStringArray("ship_sprite", "ship_build_frame", "ship_grid", "camera", "mid_view_marker", "far_view_marker", "space_background", "event_image") instance=ExtResource("1_21fy4")]
+[node name="MainUI" parent="UI" node_paths=PackedStringArray("ship_sprite", "ship_build_frame", "ship_grid", "camera", "mid_view_marker", "far_view_marker", "space_background", "event_image_holder") instance=ExtResource("1_21fy4")]
 ship_sprite = NodePath("../../ShipSprite")
 ship_build_frame = NodePath("../../ShipBuildFrame")
 ship_grid = NodePath("../../ShipGrid")
@@ -188,7 +196,7 @@ camera = NodePath("../../Camera2D")
 mid_view_marker = NodePath("../../MidViewMarker")
 far_view_marker = NodePath("../../FarViewMarker")
 space_background = NodePath("../../Space")
-event_image = NodePath("../../EventImage")
+event_image_holder = NodePath("../../EventImageHolder")
 
 [node name="SettingMenu" parent="UI" instance=ExtResource("11_t4hll")]
 visible = false
@@ -204,18 +212,6 @@ position = Vector2(2336, 160)
 
 [node name="FarViewMarker" type="Marker2D" parent="."]
 position = Vector2(4000, 77)
-
-[node name="PlanetTest" type="Sprite2D" parent="."]
-modulate = Color(1, 1, 1, 0)
-position = Vector2(4736, -512)
-scale = Vector2(12, 12)
-texture = ExtResource("8_3ttdw")
-
-[node name="BackgroundScreen" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(3246, 162)
-scale = Vector2(2, 2)
-texture = ExtResource("13_vvqwf")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

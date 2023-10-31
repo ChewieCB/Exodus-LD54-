@@ -6,6 +6,7 @@
 script = ExtResource("1_x2i1x")
 name = "Faimilies Seeking Passage"
 type = 0
+planet_type = 1
 active_screen = 2
 event_text_file = "res://src/events/planet/families_seeking_passage/families_seeking_passage.txt"
 pop_reward_1 = 6

@@ -8,7 +8,7 @@ extends Control
 @export var mid_view_marker: Marker2D
 @export var far_view_marker: Marker2D
 @export var space_background: Sprite2D
-@export var event_image: Sprite2D
+@export var event_image_holder: Node2D
 
 @onready var build_show_toggle: MarginContainer = $BuildShowToggle
 @onready var build_menu: MarginContainer = $BuildMenu
@@ -19,12 +19,16 @@ extends Control
 @onready var chat_crew_button: Button = $ChatCrewButton
 
 var build_menu_open = false
+var event_image: Sprite2D
+var event_planet_holder: Node2D
 
 func _ready() -> void:
 	EventManager.start_event.connect(_on_start_event)
 	EventManager.finish_event.connect(_on_finish_event)
 	EventManager.request_change_objective_label.connect(change_objective_label)
 	EventManager.request_change_event_image.connect(change_event_image)
+	event_image = event_image_holder.get_node("EventImage")
+	event_planet_holder = event_image_holder.get_node("EventPlanetHolder")
 
 func _on_build_button_pressed():
 	if anim_player.animation_finished:
@@ -113,7 +117,7 @@ func _on_start_event(event: ExodusEvent):
 		ExodusEvent.ACTIVE_SCREEN.EVENT:
 			tween.parallel().tween_property(camera, "zoom", Vector2(0.15, 0.15), 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", far_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
-			tween.parallel().tween_property(event_image, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
+			tween.parallel().tween_property(event_image_holder, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 			ship_grid.visible = false
 			ship_build_frame.visible = false
 			build_show_toggle.visible = false
@@ -127,8 +131,8 @@ func _on_finish_event(arg: String):
 	match arg:
 		"change_to_build_screen":
 			var tween = get_tree().create_tween()
-			if event_image:
-				tween.tween_property(event_image, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
+			if event_image_holder:
+				tween.tween_property(event_image_holder, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
 
 			ship_grid.visible = true
 			ship_build_frame.visible = true
@@ -136,8 +140,8 @@ func _on_finish_event(arg: String):
 			build_menu.visible = true
 		"change_to_nav_screen":
 			var tween = get_tree().create_tween()
-			if event_image:
-				tween.tween_property(event_image, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
+			if event_image_holder:
+				tween.tween_property(event_image_holder, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
 
 			tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
@@ -149,15 +153,15 @@ func _on_finish_event(arg: String):
 			var tween = get_tree().create_tween()
 			tween.parallel().tween_property(camera, "zoom", Vector2(0.15, 0.15), 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", far_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
-			tween.parallel().tween_property(event_image, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
+			tween.parallel().tween_property(event_image_holder, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 			ship_grid.visible = false
 			ship_build_frame.visible = false
 			build_show_toggle.visible = false
 			build_menu.visible = false
 		"end_event":
 			var tween = get_tree().create_tween()
-			if event_image:
-				tween.tween_property(event_image, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
+			if event_image_holder:
+				tween.tween_property(event_image_holder, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(command_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
@@ -177,8 +181,8 @@ func _on_finish_event(arg: String):
 		"end_event_build":
 			var tween = get_tree().create_tween()
 			tween.tween_property(command_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
-			if event_image:
-				tween.tween_property(event_image, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
+			if event_image_holder:
+				tween.tween_property(event_image_holder, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
 
 			build_show_toggle.visible = true
 			build_menu.visible = true
@@ -194,11 +198,20 @@ func _on_finish_event(arg: String):
 			_open_build_menu()
 
 
-func change_event_image(_texture: Texture2D):
+func change_event_image(_texture: Texture2D, planet_type: ExodusEvent.PlanetType):
 	if _texture:
 		event_image.texture = _texture
 	else:
 		event_image.texture = null
+
+	for p in event_planet_holder.get_children():
+		p.queue_free()
+
+	if planet_type != ExodusEvent.PlanetType.NONE:
+		var new_p = EventManager.planets[planet_type].instantiate()
+		new_p.position = Vector2(0, 0)
+		event_planet_holder.add_child(new_p)
+		new_p.set_seed(randi_range(1, 100000))
 
 
 func change_objective_label(text: String):
@@ -219,7 +232,6 @@ func _on_debug_event_menu_button_item_selected(index):
 			EventManager.victory_event
 		)
 	else:
-		print("ADADADADAD ", id )
 		EventManager.play_event(
 			EventManager.event_resources[id - offset]
 		)
