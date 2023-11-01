@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://b1xmgw2jwmunk"]
+[gd_scene load_steps=11 format=3 uid="uid://b1xmgw2jwmunk"]
 
 [ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="1_4qidw"]
 [ext_resource type="Script" path="res://src/ui/command_screen/command_screen.gd" id="1_rladp"]
 [ext_resource type="Texture2D" uid="uid://8m1r17nptfyg" path="res://assets/sprite/space_map.png" id="2_tgm10"]
 [ext_resource type="Texture2D" uid="uid://d3pj8wans2lr4" path="res://assets/sprite/circle.png" id="3_4kwp3"]
+[ext_resource type="PackedScene" uid="uid://1dd0jvugd41x" path="res://src/ui/command_screen/star_map/StarMap.tscn" id="3_jn7gj"]
 [ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="4_hkjqs"]
 
 [sub_resource type="Curve2D" id="Curve2D_ncuok"]
@@ -70,8 +71,10 @@ offset_right = 500.0
 offset_bottom = 460.0
 
 [node name="Travel" type="TabBar" parent="DeviceFrame/TabContainer"]
-visible = false
 layout_mode = 2
+
+[node name="StarMap" parent="DeviceFrame/TabContainer/Travel" instance=ExtResource("3_jn7gj")]
+layout_mode = 1
 
 [node name="SpaceMap" type="TextureRect" parent="DeviceFrame/TabContainer/Travel"]
 layout_mode = 0
@@ -178,6 +181,7 @@ toggle_mode = true
 text = "Change path"
 
 [node name="Cryostasis Citizen" type="TabBar" parent="DeviceFrame/TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]
