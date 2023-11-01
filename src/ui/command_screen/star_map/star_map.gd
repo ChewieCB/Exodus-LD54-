@@ -1,5 +1,7 @@
+@tool
 extends Control
 
+@export_group("Poisson Disc")
 @export var radius: float = 1:
 	set(value):
 		radius = value
@@ -14,23 +16,39 @@ extends Control
 		samples = value
 		redraw_points()
 
-var points_to_draw: PackedVector2Array
-var negation_zone_center: Vector2 = Vector2.ZERO
+@export_group("Starlane Generation")
+@export var point_connection_range: float = 100
+@export var max_point_connections: int = 100
+
+@export_group("Negation Zone")
 @export var negation_zone_radius: int = 64
+
+var points_to_draw: PackedVector2Array
+var adjacency_list = []
+var negation_zone_center: Vector2 = Vector2.ZERO
+var drawn_edges = []
 
 
 func _ready():
 	redraw_points()
+	adjacency_list = generate_weighted_adjacency_list(points_to_draw)
+	generate_edges(points_to_draw, adjacency_list)
 
 
 func _draw():
 	if points_to_draw:
 		for point in points_to_draw:
-			draw_circle(point, 1, Color.WHITE)
+			draw_circle(point, 4, Color.WHITE)
 	# Negation Zone edge
 	draw_circle_donut_poly(negation_zone_center, negation_zone_radius, negation_zone_radius + 2, 0, 360, Color.ORANGE)
 	# Negation Zone backfill
 	draw_circle_donut_poly(negation_zone_center, negation_zone_radius, 500, 0, 360, Color(1, 0, 0, 0.5))
+	for edge in drawn_edges:
+		draw_line(points_to_draw[edge[0]], points_to_draw[edge[1]], Color.GOLD, 1.0)
+		# Draw the weight
+		# FIXME
+#		var default_font = ThemeDB.fallback_font
+#		draw_string(default_font, points_to_draw[edge[1]] - points_to_draw[edge[0]], str(edge[2]), HORIZONTAL_ALIGNMENT_CENTER, -1, 4)
 
 
 func _process(_delta):
@@ -41,7 +59,72 @@ func redraw_points() -> void:
 	points_to_draw = generate_points(radius, region_size, samples)
 
 
+func generate_edges(points, _adjacency_list):
+	for i in range(_adjacency_list.size() - 1):
+		var node_a = _adjacency_list[i]
+		for j in range(node_a.size() - 1):
+			var node_b = node_a[j][0]
+			var weight  = node_a[j][1]
+			var edge = [i, node_b, weight]
+			if edge in drawn_edges:
+				continue
+			# Declare an edge
+			var point_a = points[i]
+			var point_b = points[node_b]
+			# Mark edge as drawn
+			drawn_edges.append(edge)
 
+
+func generate_weighted_adjacency_list(points: PackedVector2Array):
+	# Generate a randomly weighted graph from the available points
+	randomize()
+	
+	var num_points = points.size() - 1
+	var _adjacency_list = []
+	var weight_min = 0
+	var weight_max = 20
+	
+	# Build the empty adjacency list to populate
+	for i in range(num_points):
+		_adjacency_list.append([])
+	
+	# Generate edge connections for 
+	for i in range(_adjacency_list.size() - 1):
+		# For now we connect every point to every other point with random weights.
+		# We can look at randomly removing connections when this works.
+		#
+		# Limit the number of connections per point to prevent clustering
+		if _adjacency_list[i].size() < max_point_connections:
+			for j in range(num_points):
+				# Don't connect points to themselves
+				if j == i:
+					continue
+				# Only connect nearby points
+				if points_to_draw[i].distance_to(points[j]) > point_connection_range:
+					continue
+				# Limit the number of connections per point to prevent clustering
+				if _adjacency_list[j].size() >= max_point_connections:
+					continue
+				var random_weight = randi_range(weight_min, weight_max)
+				_adjacency_list = graph_add_edge(_adjacency_list, i, j, random_weight)
+				var DEBUG_size = _adjacency_list[i].size()
+				var DEBUG_max_connections = max_point_connections
+				if _adjacency_list[i].size() >= max_point_connections:
+					break
+	
+	return _adjacency_list
+
+
+func graph_add_edge(adjacency_list, node_a, node_b, weight):
+	'''Create an edge within the adjacency list between node_a and node_b.'''
+	adjacency_list[node_a].append([node_b, weight])
+	adjacency_list[node_b].append([node_a, weight])
+	return adjacency_list
+
+
+func create_mst(points: PackedVector2Array):
+#	var 
+	pass
 
 
 func generate_points(radius: float, sample_region_size: Vector2, num_samples_before_rejection: int = 30) -> PackedVector2Array:

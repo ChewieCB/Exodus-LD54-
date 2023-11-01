@@ -20,6 +20,7 @@ size_flags_vertical = 4
 script = ExtResource("1_eteq2")
 radius = 50.0
 region_size = Vector2(512, 512)
+max_point_connections = 4
 negation_zone_radius = 256
 
 [node name="ColorRect" type="ColorRect" parent="."]
