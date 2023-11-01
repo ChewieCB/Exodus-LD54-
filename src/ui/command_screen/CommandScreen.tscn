@@ -75,6 +75,9 @@ layout_mode = 2
 
 [node name="StarMap" parent="DeviceFrame/TabContainer/Travel" instance=ExtResource("3_jn7gj")]
 layout_mode = 1
+circle_radius = null
+poisson_radius = null
+retries = null
 max_point_connections = 4
 
 [node name="SpaceMap" type="TextureRect" parent="DeviceFrame/TabContainer/Travel"]

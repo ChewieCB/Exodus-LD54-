@@ -2,18 +2,17 @@
 extends Control
 
 @export_group("Poisson Disc")
-@export var radius: float = 1:
+@export var circle_radius: float = 64:
 	set(value):
-		radius = value
+		circle_radius = value
 		redraw_points()
-@export var region_size: Vector2 = Vector2(64, 64):
+@export var poisson_radius: float = 50:
 	set(value):
-		region_size = value
-		negation_zone_center = region_size / 2
+		poisson_radius = value
 		redraw_points()
-@export var samples: int = 30:
+@export var retries: int = 30:
 	set(value):
-		samples = value
+		retries = value
 		redraw_points()
 
 @export_group("Starlane Generation")
@@ -21,24 +20,31 @@ extends Control
 @export var max_point_connections: int = 100
 
 @export_group("Negation Zone")
-@export var negation_zone_radius: int = 64
+@export var negation_zone_radius: int = 64:
+	set(value):
+		negation_zone_radius = value
+		circle_radius = value
+		redraw_points()
 
 var points_to_draw: PackedVector2Array
 var adjacency_list = []
 var negation_zone_center: Vector2 = Vector2.ZERO
 var drawn_edges = []
 
+enum ShapeType {CIRCLE, POLYGON}
+static var shape_info: Dictionary
+
 
 func _ready():
 	redraw_points()
-	adjacency_list = generate_weighted_adjacency_list(points_to_draw)
-	generate_edges(points_to_draw, adjacency_list)
+#	adjacency_list = generate_weighted_adjacency_list(points_to_draw)
+#	generate_edges(points_to_draw, adjacency_list)
 
 
 func _draw():
 	if points_to_draw:
 		for point in points_to_draw:
-			draw_circle(point, 4, Color.WHITE)
+			draw_circle(point, 2, Color.WHITE)
 	# Negation Zone edge
 	draw_circle_donut_poly(negation_zone_center, negation_zone_radius, negation_zone_radius + 2, 0, 360, Color.ORANGE)
 	# Negation Zone backfill
@@ -56,7 +62,7 @@ func _process(_delta):
 
 
 func redraw_points() -> void:
-	points_to_draw = generate_points(radius, region_size, samples)
+	points_to_draw = generate_points_for_circle(Vector2.ZERO, circle_radius, poisson_radius, retries)
 
 
 func generate_edges(points, _adjacency_list):
@@ -127,65 +133,92 @@ func create_mst(points: PackedVector2Array):
 	pass
 
 
-func generate_points(radius: float, sample_region_size: Vector2, num_samples_before_rejection: int = 30) -> PackedVector2Array:
-	var cell_size = radius / sqrt(2)
-	# Generate a 2D array for the grid
+static func generate_points_for_circle(circle_position: Vector2, circle_radius: float, poisson_radius: float, retries: int, start_point := Vector2.INF) -> PackedVector2Array:
+	var sample_region_rect = Rect2(circle_position.x - circle_radius, circle_position.y - circle_radius, circle_radius * 2, circle_radius * 2)
+	if start_point.x == INF:
+		var angle: float = 2 * PI * randf()
+		start_point = circle_position + Vector2(cos(angle), sin(angle)) * circle_radius * randf()
+	elif not Geometry2D.is_point_in_circle(start_point, circle_position, circle_radius):
+		push_error("Starting point ", start_point, " is not a valid point inside the circle!")
+		return PackedVector2Array()
+	
+	shape_info[ShapeType.CIRCLE] = {
+		"circle_position": circle_position,
+		"circle_radius": circle_radius
+	}
+	
+	return _generate_points(ShapeType.CIRCLE, sample_region_rect, poisson_radius, retries, start_point)
+
+
+static func _generate_points(shape: int, sample_region_rect: Rect2, poisson_radius: float, retries: int, start_pos: Vector2) -> PackedVector2Array:
+	var points: PackedVector2Array = PackedVector2Array()
+	points.clear()
+	var cell_size: float = poisson_radius / sqrt(2)
+	var cols: int = max(floor(sample_region_rect.size.x / cell_size), 1)
+	var rows: int = max(floor(sample_region_rect.size.y / cell_size), 1)
+	
+	# scale the cell size in each axis
+	var cell_size_scaled: Vector2
+	cell_size_scaled.x = sample_region_rect.size.x / cols 
+	cell_size_scaled.y = sample_region_rect.size.y / rows
+	
+	# use tranpose to map points starting from origin to calculate grid position
+	var transpose = -sample_region_rect.position
+	
 	var grid: Array = []
-	for i in range(ceil(sample_region_size.x / cell_size)): 
+	for i in cols:
 		grid.append([])
-		for j in range(ceil(sample_region_size.y / cell_size)): 
-			grid[i].append(0)
-
-	var points: PackedVector2Array = []
-	var spawn_points: PackedVector2Array = []
-
-	spawn_points.append(sample_region_size / 2)
+		for j in rows:
+			grid[i].append(-1)
+	
+	var spawn_points: Array = []
+	spawn_points.append(start_pos)
+	
 	while spawn_points.size() > 0:
-		var spawn_index: int = randi_range(0, spawn_points.size() - 1)
-		var spawn_center: Vector2 = spawn_points[spawn_index]
-
-		var candidate_accepted: bool = false
-		for i in range(0, num_samples_before_rejection):
-			var angle: float = randf() * PI * 2
-			var dir := Vector2(sin(angle), cos(angle))
-			var candidate: Vector2 = spawn_center + dir * randf_range(radius, radius * 2)
-			if is_valid(candidate, sample_region_size, cell_size, radius, points, grid):
-				points.append(candidate)
-				spawn_points.append(candidate)
-				grid[int(candidate.x / cell_size)][int(candidate.y / cell_size)] = points.size()
-				candidate_accepted = true
-				break
-		if not candidate_accepted:
+		var spawn_index: int = randi() % spawn_points.size()
+		var spawn_centre: Vector2 = spawn_points[spawn_index]
+		var sample_accepted: bool = false
+		for i in retries:
+			var angle: float = 2 * PI * randf()
+			var sample: Vector2 = spawn_centre + Vector2(cos(angle), sin(angle)) * (poisson_radius + poisson_radius * randf())
+			if _is_point_in_sample_region(sample, shape):
+				if _is_valid_sample(shape, sample, transpose, cell_size_scaled, cols, rows, grid, points, poisson_radius):
+					grid[int((transpose.x + sample.x) / cell_size_scaled.x)][int((transpose.y + sample.y) / cell_size_scaled.y)] = points.size()
+					points.append(sample)
+					spawn_points.append(sample)
+					sample_accepted = true
+					break
+		if not sample_accepted and points.size() > 0:
 			spawn_points.remove_at(spawn_index)
-
 	return points
 
 
-func is_valid(
-	candidate: Vector2, sample_region_size: Vector2, cell_size: float, 
-	radius: float, points: PackedVector2Array, grid: Array
-) -> bool:
-#	if Geometry2D.is_point_in_circle(candidate, Vector2.ZERO, negation_zone_radius):
-	if candidate.x >= 0 and candidate.x < sample_region_size.x and \
-	candidate.y >= 0 and candidate.y < sample_region_size.y:
-		var cell_x = int(candidate.x / cell_size)
-		var cell_y = int(candidate.y / cell_size)
-		var search_start_x: int = max(0, cell_x - 2)
-		var search_end_x: int = min(cell_x + 2, ceil(sample_region_size.x / cell_size - 1))
-		var search_start_y: int = max(0, cell_y - 2)
-		var search_end_y: int = min(cell_y + 2, ceil(sample_region_size.y / cell_size - 1))
+static func _is_valid_sample(shape: int, sample: Vector2, transpose: Vector2, cell_size_scaled: Vector2, cols: int, rows: int, grid: Array, points: Array, poisson_radius: float) -> bool:
+	var cell := Vector2(int((transpose.x + sample.x) / cell_size_scaled.x), int((transpose.y + sample.y) / cell_size_scaled.y))
+	var cell_start := Vector2(max(0, cell.x - 2), max(0, cell.y - 2))
+	var cell_end := Vector2(min(cell.x + 2, cols - 1), min(cell.y + 2, rows - 1))
 
-		for x in range(search_start_x, search_end_x):
-			for y in range(search_start_y, search_end_y):
-				var point_index = grid[x][y] - 1
-				if point_index != -1:
-					var sqr_dst: float = (candidate - points[point_index]).length_squared()
-					if sqr_dst < radius**2:
-						return false
-		return true
+	for i in range(cell_start.x, cell_end.x + 1):
+		for j in range(cell_start.y, cell_end.y + 1):
+			var search_index: int = grid[i][j]
+			if search_index != -1:
+				var dist: float = points[search_index].distance_to(sample)
+				if dist < poisson_radius:
+					return false
+	return true
 
-	return false
-		
+
+static func _is_point_in_sample_region(sample: Vector2, shape: int) -> bool:
+	if shape == ShapeType.POLYGON and Geometry2D.is_point_in_polygon(sample, shape_info[shape]["points"]):
+			return true
+	elif shape == ShapeType.CIRCLE and Geometry2D.is_point_in_circle(sample, shape_info[shape]["circle_position"], shape_info[shape]["circle_radius"]):
+			return true
+	else:
+		return false
+
+
+
+
 
 func draw_circle_arc(center, radius, angle_from, angle_to, color):
 	var nb_points = 32
