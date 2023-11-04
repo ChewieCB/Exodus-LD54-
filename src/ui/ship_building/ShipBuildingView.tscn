@@ -200,8 +200,10 @@ event_image_holder = NodePath("../../EventImageHolder")
 
 [node name="SettingMenu" parent="UI" instance=ExtResource("11_t4hll")]
 visible = false
-offset_top = -141.0
-offset_bottom = -121.0
+offset_left = -237.0
+offset_top = -275.0
+offset_right = 304.0
+offset_bottom = 250.0
 
 [node name="StartTutorialTimer" type="Timer" parent="."]
 one_shot = true
