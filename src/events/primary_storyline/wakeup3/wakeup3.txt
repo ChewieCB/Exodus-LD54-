@@ -1,0 +1,5 @@
+Join ExecutiveOfficer 0
+ExecutiveOfficer (Normal): Aye Captain, 10 of the hibernation crewmates woke up and ready to serve. No more will wake up, unless you request them
+[call_node path="ResourceManager" method="change_resource_from_event" args="["population_forced", "10"]" single_use="true"]
+ExecutiveOfficer (Normal): Great work, Captain.
+[signal arg="end_event"]

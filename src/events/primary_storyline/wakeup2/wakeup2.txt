@@ -1,0 +1,5 @@
+Join ExecutiveOfficer 0
+ExecutiveOfficer (Normal): Aye Captain, 7 of the hibernation crewmates woke up and ready to serve. The next wave of waking up will be on day 150, and this time it will be 10 crew mates.
+[call_node path="ResourceManager" method="change_resource_from_event" args="["population_forced", "7"]" single_use="true"]
+ExecutiveOfficer (Normal): Good luck, Captains.
+[signal arg="end_event"]

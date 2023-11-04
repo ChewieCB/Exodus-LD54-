@@ -12,6 +12,8 @@ func _ready() -> void:
 	for _event in EventManager.tutorial_events:
 		debug_events.append(_event)
 	debug_events.append(EventManager.victory_event)
+	for _event in EventManager.primary_story_events:
+		self_events.append(_event)
 	#
 	for _event in events:
 		if _event.type == ExodusEvent.EVENT_TYPES.PLANET:
@@ -21,7 +23,7 @@ func _ready() -> void:
 		elif _event.type == ExodusEvent.EVENT_TYPES.DEBUG:
 			debug_events.append(_event)
 		elif _event.type == ExodusEvent.EVENT_TYPES.SELF:
-			debug_events.append(_event)
+			self_events.append(_event)
 	
 	var id_count = 0
 	

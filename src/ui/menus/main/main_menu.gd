@@ -14,7 +14,7 @@ func _ready():
 
 func _on_settings_button_pressed():
 	SoundManager.play_button_click_sfx()
-	setting_menu.visible = true
+	setting_menu.visible = !setting_menu.visible
 
 
 func _on_quit_button_pressed():

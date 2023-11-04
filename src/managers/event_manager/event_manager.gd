@@ -21,6 +21,10 @@ enum TRAVEL_PATH_TYPE {
 
 var chosen_path: TRAVEL_PATH_TYPE = TRAVEL_PATH_TYPE.DEFAULT_PATH
 
+# primary storyline
+var primary_story_date = [10, 50, 100, 150]
+var primary_story_id = 0
+
 signal building_finished
 signal start_event
 signal finish_event
@@ -30,6 +34,7 @@ signal victory
 
 @export var event_resources: Array[ExodusEvent]
 @export var tutorial_events: Array[ExodusEvent]
+@export var primary_story_events: Array[ExodusEvent]
 @export var victory_event: ExodusEvent
 #
 @export var planet_backgrounds: Array[Texture2D]
@@ -101,33 +106,6 @@ func get_random_event():
 		return null
 
 
-# unused
-func get_random_background(type):
-	var background_array
-	match type:
-		ExodusEvent.EVENT_TYPES.PLANET:
-			background_array = planet_backgrounds
-		ExodusEvent.EVENT_TYPES.SHIP:
-			background_array = ship_backgrounds
-		ExodusEvent.EVENT_TYPES.DEBUG:
-			return null
-		_:
-			background_array = space_backgrounds
-	
-	randomize()
-	var rand_index = randi() % background_array.size()
-	var background = background_array[rand_index]
-	# Prevent showing the same background twice in a row
-	if previous_background and background_array.size() > 1:
-		while background == previous_background:
-			rand_index = randi() % background_array.size()
-			background = background_array[rand_index]
-	
-	previous_background = background
-	
-	return background
-
-
 func play_event(event: ExodusEvent) -> Node:
 	change_event_image(event.event_image, event.planet_type)
 	var timeline = event.build_dialogic_timeline()
@@ -135,6 +113,15 @@ func play_event(event: ExodusEvent) -> Node:
 	var dialog = Dialogic.start(timeline)
 	return dialog
 
+func play_event_by_name(event_name: String) -> Node:
+	var event: ExodusEvent = null
+	for e in event_resources:
+		if e.name.to_lower() == event_name.to_lower():
+			event = e
+			break
+	if event != null:
+		return play_event(event)
+	return null
 
 func play_event_legacy(event_name: String) -> Node:
 	return call(event_name)
@@ -148,9 +135,16 @@ func change_objective_label(text: String):
 
 
 func check_tick_for_random_event():
+	# Tick equal days passed
 	tick_since_last_event += 1
 	tick_passed_total += 1
 	print("Tick left for event ", tick_to_event - tick_since_last_event)
+
+
+	if primary_story_id <= 3 and tick_passed_total >= primary_story_date[primary_story_id] - 1:
+		tick_to_event += 1 # Delay normal event a day to prevent stuff happened same time
+		play_event(primary_story_events[primary_story_id])
+		primary_story_id += 1
 
 	if tick_passed_total >= tick_to_victory and not end_game:
 		end_game = true

@@ -24,4 +24,4 @@ refund_water = 0
 refund_metal = 0
 refund_population = 0
 construction_time = 4
-destruction_time = 3
+destruction_time = 2

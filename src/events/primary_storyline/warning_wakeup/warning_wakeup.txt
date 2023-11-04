@@ -1,0 +1,4 @@
+Join ExecutiveOfficer 0
+ExecutiveOfficer (Normal): Dear Captain, look like the hibernation fluid or out crew are running thin. I calculated that around day 50, 3 of them will wake up.
+ExecutiveOfficer (Normal): Please prepare facilities to acommodate our newly awoken crewmates, Captain.
+[signal arg="end_event"]

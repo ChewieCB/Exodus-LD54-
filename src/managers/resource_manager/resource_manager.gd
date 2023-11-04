@@ -319,6 +319,8 @@ func change_resource_from_event(resource: String, amount_str: String):
 					population_amount += amount
 			else:
 				population_amount += amount
+		"population_forced":
+			population_amount += amount
 
 
 func wake_up_citizen(water_cost) -> String:
