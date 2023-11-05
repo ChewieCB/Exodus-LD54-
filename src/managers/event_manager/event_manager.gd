@@ -23,7 +23,10 @@ var chosen_path: TRAVEL_PATH_TYPE = TRAVEL_PATH_TYPE.DEFAULT_PATH
 
 # primary storyline
 var primary_story_date = [10, 50, 100, 150]
-var primary_story_id = 0
+var primary_story_id = 0:
+	set(value):
+		primary_story_id = value
+		emit_signal("primary_story_id_changed")
 
 signal building_finished
 signal start_event
@@ -31,6 +34,7 @@ signal finish_event
 signal request_change_event_image
 signal request_change_objective_label
 signal victory
+signal primary_story_id_changed
 
 @export var event_resources: Array[ExodusEvent]
 @export var tutorial_events: Array[ExodusEvent]

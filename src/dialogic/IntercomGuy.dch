@@ -16,7 +16,7 @@
 "portraits": {
 "Normal": {
 "export_overrides": {
-"image": "\"res://assets/character/c_p_2.png\""
+"image": "\"res://assets/character/torgon.png\""
 },
 "image": "",
 "mirror": false,

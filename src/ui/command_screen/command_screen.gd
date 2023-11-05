@@ -29,7 +29,6 @@ func _ready() -> void:
 	desc_label.text = "Default path\nYou have equal chance to meet all type of events."
 	TickManager.tick.connect(_update_path_follow)
 
-
 func _update_path_follow():
 	var path_progress = float(EventManager.tick_passed_total) / EventManager.tick_to_victory
 	path_progress = clampf(path_progress, 0, 1)

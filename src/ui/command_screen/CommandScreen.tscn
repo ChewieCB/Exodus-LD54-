@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://b1xmgw2jwmunk"]
+[gd_scene load_steps=11 format=3 uid="uid://b1xmgw2jwmunk"]
 
 [ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="1_4qidw"]
 [ext_resource type="Script" path="res://src/ui/command_screen/command_screen.gd" id="1_rladp"]
 [ext_resource type="Texture2D" uid="uid://8m1r17nptfyg" path="res://assets/sprite/space_map.png" id="2_tgm10"]
 [ext_resource type="Texture2D" uid="uid://d3pj8wans2lr4" path="res://assets/sprite/circle.png" id="3_4kwp3"]
 [ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="4_hkjqs"]
+[ext_resource type="Texture2D" uid="uid://cegl6af3k4xpo" path="res://assets/character/pressley.png" id="6_wk0bw"]
 
 [sub_resource type="Curve2D" id="Curve2D_ncuok"]
 _data = {
@@ -177,7 +178,45 @@ grow_vertical = 0
 toggle_mode = true
 text = "Change path"
 
+[node name="Officers" type="TabBar" parent="DeviceFrame/TabContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Officers"]
+self_modulate = Color(0.0156863, 0.0784314, 0.152941, 1)
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 451.0
+offset_bottom = 235.0
+texture = ExtResource("4_hkjqs")
+
+[node name="Portrait" type="TextureRect" parent="DeviceFrame/TabContainer/Officers"]
+visible = false
+modulate = Color(0.501961, 0.501961, 0.501961, 0.54902)
+layout_mode = 0
+offset_left = 43.0
+offset_top = 20.0
+offset_right = 180.0
+offset_bottom = 211.0
+texture = ExtResource("6_wk0bw")
+expand_mode = 1
+
+[node name="GridContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Officers"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 14.0
+offset_right = 313.0
+offset_bottom = 223.0
+
+[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Officers/GridContainer"]
+layout_mode = 2
+text = "Pressley (Executive Officer)"
+
+[node name="Label2" type="Label" parent="DeviceFrame/TabContainer/Officers/GridContainer"]
+layout_mode = 2
+text = "Torgon (Intercom Officer)"
+
 [node name="Cryostasis Citizen" type="TabBar" parent="DeviceFrame/TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]
@@ -195,7 +234,7 @@ offset_left = 59.0
 offset_top = 15.0
 offset_right = 386.0
 offset_bottom = 67.0
-text = "Wake up hibernating citizen to get more crew member"
+text = "Wake up hibernating citizen to recruit more crew member"
 horizontal_alignment = 1
 autowrap_mode = 2
 

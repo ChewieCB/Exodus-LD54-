@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cegl6af3k4xpo"
-path="res://.godot/imported/mc_p.png-9818cd4f4953f90536fb62c9b47ec6ea.ctex"
+path="res://.godot/imported/pressley.png-2e5354b7be8c0bc0a257a0150b9a6a41.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/character/mc_p.png"
-dest_files=["res://.godot/imported/mc_p.png-9818cd4f4953f90536fb62c9b47ec6ea.ctex"]
+source_file="res://assets/character/pressley.png"
+dest_files=["res://.godot/imported/pressley.png-2e5354b7be8c0bc0a257a0150b9a6a41.ctex"]
 
 [params]
 
