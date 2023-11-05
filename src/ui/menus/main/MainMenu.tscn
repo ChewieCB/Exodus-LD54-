@@ -1,12 +1,14 @@
-[gd_scene load_steps=21 format=3 uid="uid://cycdqhy5xadoa"]
+[gd_scene load_steps=23 format=3 uid="uid://cycdqhy5xadoa"]
 
 [ext_resource type="Script" path="res://src/ui/menus/main/main_menu.gd" id="1_1aer0"]
 [ext_resource type="PackedScene" uid="uid://c6s7o88tyavpj" path="res://src/ui/ship_building/ShipBuildingView.tscn" id="2_2q72j"]
 [ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="3_ljouy"]
+[ext_resource type="Texture2D" uid="uid://c4rxgw4telfsu" path="res://assets/event/Planet_2_Pixel.png" id="4_cksha"]
 [ext_resource type="Texture2D" uid="uid://dj0svl1xlrud7" path="res://assets/ui/menus/main/Title-logo.png" id="4_f43q0"]
 [ext_resource type="PackedScene" uid="uid://b6k7tg1vynpk0" path="res://addons/pixel_planet_generator/Planets/Rivers/Rivers.tscn" id="4_m5lpp"]
 [ext_resource type="PackedScene" uid="uid://cymcngb74n5dp" path="res://src/ui/menus/main/SettingMenu.tscn" id="5_befr1"]
 [ext_resource type="Texture2D" uid="uid://4fytxdwdouii" path="res://assets/event/Planet_1_Pixel.png" id="5_j8x86"]
+[ext_resource type="Texture2D" uid="uid://cucahpuvdvpm5" path="res://assets/event/Planet_3_Pixel.png" id="5_qf5sm"]
 [ext_resource type="Texture2D" uid="uid://cmbixfktrvffm" path="res://assets/sprite/ship_colored.png" id="6_pqru6"]
 [ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="7_a81tv"]
 [ext_resource type="Texture2D" uid="uid://umfswvb0k6d6" path="res://assets/sprite/star.png" id="7_lr2lw"]
@@ -66,7 +68,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Planet1Pixel:rotation")
+tracks/0/path = NodePath("../PlanetLogo:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -98,6 +100,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_1aer0")
 scene_after_start = ExtResource("2_2q72j")
+planet_images = Array[Texture2D]([ExtResource("5_j8x86"), ExtResource("4_cksha"), ExtResource("5_qf5sm")])
 
 [node name="SpaceBG" type="TextureRect" parent="."]
 modulate = Color(0, 0, 0, 1)
@@ -110,14 +113,13 @@ grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("3_ljouy")
 
-[node name="Title-logo" type="Sprite2D" parent="."]
+[node name="TitleLogo" type="Sprite2D" parent="."]
 position = Vector2(268.392, 87.0625)
 scale = Vector2(0.282821, 0.282821)
 texture = ExtResource("4_f43q0")
 
-[node name="Planet1Pixel" type="Sprite2D" parent="."]
+[node name="PlanetLogo" type="Sprite2D" parent="."]
 position = Vector2(198, 86)
-rotation = 4.54567
 scale = Vector2(0.29, 0.29)
 texture = ExtResource("5_j8x86")
 
