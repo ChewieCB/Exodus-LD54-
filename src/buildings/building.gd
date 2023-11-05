@@ -98,6 +98,7 @@ func _input(event):
 
 
 func _process(delta):
+	# TODO: Optimize this
 	if not placed and preview:
 		if collider.has_overlapping_areas() or collider.has_overlapping_bodies() or outside_gridmap:
 			color_sprite(1, 0, 0, 0.5)
