@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b1xmgw2jwmunk"]
+[gd_scene load_steps=12 format=3 uid="uid://b1xmgw2jwmunk"]
 
 [ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="1_4qidw"]
 [ext_resource type="Script" path="res://src/ui/command_screen/command_screen.gd" id="1_rladp"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://d3pj8wans2lr4" path="res://assets/sprite/circle.png" id="3_4kwp3"]
 [ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="4_hkjqs"]
 [ext_resource type="Texture2D" uid="uid://cegl6af3k4xpo" path="res://assets/character/pressley.png" id="6_wk0bw"]
+[ext_resource type="PackedScene" uid="uid://dyp35m08s3ciy" path="res://src/ui/command_screen/TaskContainer.tscn" id="7_vetcu"]
 
 [sub_resource type="Curve2D" id="Curve2D_ncuok"]
 _data = {
@@ -71,7 +72,6 @@ offset_right = 500.0
 offset_bottom = 460.0
 
 [node name="Travel" type="TabBar" parent="DeviceFrame/TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="SpaceMap" type="TextureRect" parent="DeviceFrame/TabContainer/Travel"]
@@ -184,6 +184,7 @@ layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Officers"]
 self_modulate = Color(0.109804, 0.109804, 0.105882, 1)
+layout_mode = 0
 offset_left = 2.0
 offset_top = 2.0
 offset_right = 451.0
@@ -217,48 +218,41 @@ layout_mode = 2
 text = "Torgon (Intercom Officer)"
 
 [node name="Tasks" type="TabBar" parent="DeviceFrame/TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Tasks"]
 self_modulate = Color(0.054902, 0.0823529, 0.0392157, 1)
+layout_mode = 0
 offset_left = 2.0
 offset_top = 2.0
 offset_right = 451.0
 offset_bottom = 235.0
 texture = ExtResource("4_hkjqs")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Tasks"]
+[node name="ScrollContainer" type="ScrollContainer" parent="DeviceFrame/TabContainer/Tasks"]
 layout_mode = 0
-offset_left = 14.0
-offset_top = 15.0
-offset_right = 437.0
-offset_bottom = 222.0
+offset_left = 9.0
+offset_top = 8.0
+offset_right = 444.0
+offset_bottom = 229.0
 
-[node name="TaskContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Tasks/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Tasks/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="TaskContainer" parent="DeviceFrame/TabContainer/Tasks/ScrollContainer/VBoxContainer" instance=ExtResource("7_vetcu")]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Tasks/VBoxContainer/TaskContainer"]
-layout_mode = 2
-text = "Task: Repair the hull
-Cost: 10 Food, 15 Metal, 3 Air"
-
-[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Tasks/VBoxContainer/TaskContainer"]
-layout_mode = 2
-text = "Complete task
-"
-
-[node name="TaskContainer2" type="MarginContainer" parent="DeviceFrame/TabContainer/Tasks/VBoxContainer"]
+[node name="TaskContainer2" parent="DeviceFrame/TabContainer/Tasks/ScrollContainer/VBoxContainer" instance=ExtResource("7_vetcu")]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Tasks/VBoxContainer/TaskContainer2"]
+[node name="TaskContainer3" parent="DeviceFrame/TabContainer/Tasks/ScrollContainer/VBoxContainer" instance=ExtResource("7_vetcu")]
 layout_mode = 2
-text = "Task: Research Water-Synth Foodmaker
-Cost: 50 Water, 50 Food"
 
-[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Tasks/VBoxContainer/TaskContainer2"]
+[node name="TaskContainer4" parent="DeviceFrame/TabContainer/Tasks/ScrollContainer/VBoxContainer" instance=ExtResource("7_vetcu")]
 layout_mode = 2
-text = "Complete task
-"
 
 [node name="Cryostasis Citizen" type="TabBar" parent="DeviceFrame/TabContainer"]
 visible = false
