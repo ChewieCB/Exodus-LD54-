@@ -12,6 +12,10 @@ var tick_passed_total = 0
 var tick_to_victory = 199
 var end_game = false
 
+var ship_speed_per_day = 1
+var distance_travelled = 0
+var distance_to_victory = 200
+
 enum TRAVEL_PATH_TYPE {
 	DEFAULT_PATH,
 	INTERGALATIC_ROUTE,

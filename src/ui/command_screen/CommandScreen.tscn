@@ -11,7 +11,7 @@
 
 [sub_resource type="Curve2D" id="Curve2D_ncuok"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 106, -63, 0, 0, 0, 0, 87, -78, 0, 0, 0, 0, 35, -60, 0, 0, 0, 0, -1, -14, 0, 0, 0, 0, -6, -3, 0, 0, 0, 0, 8, 38)
+"points": PackedVector2Array(0, 0, 0, 0, 105, -62, 0, 0, 0, 0, 88, -77, 0, 0, 0, 0, 35, -58, 0, 0, 0, 0, -1, -11, 0, 0, 0, 0, -5, 0, 0, 0, 0, 0, 8, 44)
 }
 point_count = 6
 
@@ -80,7 +80,7 @@ layout_mode = 2
 layout_mode = 0
 offset_top = 1.0
 offset_right = 453.0
-offset_bottom = 236.0
+offset_bottom = 243.0
 texture = ExtResource("2_tgm10")
 
 [node name="ProgressView" type="Control" parent="DeviceFrame/TabContainer/Travel"]
@@ -95,8 +95,8 @@ position = Vector2(-7, 0)
 curve = SubResource("Curve2D_ncuok")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="DeviceFrame/TabContainer/Travel/ProgressView/Path2D"]
-position = Vector2(106, -63)
-rotation = -2.4733
+position = Vector2(105, -62)
+rotation = -2.41861
 loop = false
 
 [node name="Sprite2D" type="Sprite2D" parent="DeviceFrame/TabContainer/Travel/ProgressView/Path2D/PathFollow2D"]
@@ -189,7 +189,7 @@ layout_mode = 0
 offset_left = 2.0
 offset_top = 2.0
 offset_right = 451.0
-offset_bottom = 235.0
+offset_bottom = 242.0
 texture = ExtResource("4_hkjqs")
 
 [node name="TitleLabel" type="Label" parent="DeviceFrame/TabContainer/Officers"]
@@ -219,17 +219,32 @@ offset_top = 40.0
 offset_right = 247.0
 offset_bottom = 223.0
 
-[node name="Label" parent="DeviceFrame/TabContainer/Officers/VBoxContainer" node_paths=PackedStringArray("portrait_texturerect") instance=ExtResource("7_rk483")]
+[node name="Label" parent="DeviceFrame/TabContainer/Officers/VBoxContainer" node_paths=PackedStringArray("portrait_texturerect", "desc_label") instance=ExtResource("7_rk483")]
 layout_mode = 2
 portrait_sprite = ExtResource("6_wk0bw")
+description = "Your dependable, trustworthy officer."
 portrait_texturerect = NodePath("../../PortraitTextureRect")
+desc_label = NodePath("../../OfficerDescLabel")
 
-[node name="Label2" parent="DeviceFrame/TabContainer/Officers/VBoxContainer" node_paths=PackedStringArray("portrait_texturerect") instance=ExtResource("7_rk483")]
+[node name="Label2" parent="DeviceFrame/TabContainer/Officers/VBoxContainer" node_paths=PackedStringArray("portrait_texturerect", "desc_label") instance=ExtResource("7_rk483")]
 layout_mode = 2
 text = "Torgon (Intercom Officer)"
 portrait_sprite = ExtResource("8_jre42")
 officer = 1
+description = "Maybe look a bit unreliable but he won't fail your trust."
 portrait_texturerect = NodePath("../../PortraitTextureRect")
+desc_label = NodePath("../../OfficerDescLabel")
+
+[node name="OfficerDescLabel" type="Label" parent="DeviceFrame/TabContainer/Officers"]
+visible = false
+layout_mode = 0
+offset_left = 263.0
+offset_top = 46.0
+offset_right = 443.0
+offset_bottom = 217.0
+theme_override_font_sizes/font_size = 14
+text = "Your trustworthy officer. Can be depend on."
+autowrap_mode = 2
 
 [node name="Ship" type="TabBar" parent="DeviceFrame/TabContainer"]
 visible = false
@@ -241,7 +256,7 @@ layout_mode = 0
 offset_left = 2.0
 offset_top = 2.0
 offset_right = 451.0
-offset_bottom = 235.0
+offset_bottom = 242.0
 texture = ExtResource("4_hkjqs")
 
 [node name="Title" type="Label" parent="DeviceFrame/TabContainer/Ship"]
@@ -252,16 +267,6 @@ offset_right = 184.0
 offset_bottom = 45.0
 theme_override_font_sizes/font_size = 24
 text = "System status"
-horizontal_alignment = 1
-
-[node name="Title2" type="Label" parent="DeviceFrame/TabContainer/Ship"]
-layout_mode = 0
-offset_left = 267.0
-offset_top = 8.0
-offset_right = 428.0
-offset_bottom = 45.0
-theme_override_font_sizes/font_size = 24
-text = "Storage"
 horizontal_alignment = 1
 
 [node name="Label" type="Label" parent="DeviceFrame/TabContainer/Ship"]
@@ -275,44 +280,6 @@ Weapon Lv. 2
 Shield Lv. 2 (Malfunction)
 Speed: 1.2 LY / day"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="DeviceFrame/TabContainer/Ship"]
-layout_mode = 0
-offset_left = 257.0
-offset_top = 49.0
-offset_right = 443.0
-offset_bottom = 227.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Ship/ScrollContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Ship/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-text = "Blue dark box"
-
-[node name="Label2" type="Label" parent="DeviceFrame/TabContainer/Ship/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-text = "Strange egg"
-
-[node name="Label3" type="Label" parent="DeviceFrame/TabContainer/Ship/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-text = "White dress"
-
-[node name="Label4" type="Label" parent="DeviceFrame/TabContainer/Ship/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-text = "Black knife"
-
-[node name="Label5" type="Label" parent="DeviceFrame/TabContainer/Ship/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-text = "Wooden round peg"
-
-[node name="Label6" type="Label" parent="DeviceFrame/TabContainer/Ship/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-text = "Board with square hole"
-
-[node name="Label7" type="Label" parent="DeviceFrame/TabContainer/Ship/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-text = "Big ass laser gun"
-
 [node name="Cryostasis Citizen" type="TabBar" parent="DeviceFrame/TabContainer"]
 visible = false
 layout_mode = 2
@@ -323,7 +290,7 @@ layout_mode = 0
 offset_left = 2.0
 offset_top = 2.0
 offset_right = 451.0
-offset_bottom = 235.0
+offset_bottom = 242.0
 texture = ExtResource("4_hkjqs")
 
 [node name="TitleLabel" type="Label" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]
