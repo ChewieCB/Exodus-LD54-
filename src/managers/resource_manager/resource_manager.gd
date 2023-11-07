@@ -88,6 +88,10 @@ enum RESOURCE_TYPE {
 	METAL
 }
 
+
+
+var current_officers = [EnumAutoload.Officer.PRESSLEY, EnumAutoload.Officer.TORGON]
+
 # Resources to be managed
 # Pop/Worker
 var population_amount: int:

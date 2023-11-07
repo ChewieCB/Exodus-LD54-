@@ -16,6 +16,10 @@ class_name CommandScreen
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var show_hide_command_screen_button: Button = $DeviceFrame/ShowHideCommandScreen
 
+
+# Officer tab
+@onready var officer_container = $DeviceFrame/TabContainer/Officers/VBoxContainer
+
 var trave_screen_open = false
 var chose_path_screen_open = false
 var path_length
@@ -28,12 +32,20 @@ func _ready() -> void:
 	EventManager.chosen_path = EventManager.TRAVEL_PATH_TYPE.DEFAULT_PATH
 	desc_label.text = "Default path\nYou have equal chance to meet all type of events."
 	TickManager.tick.connect(_update_path_follow)
+	update_officer_list()
 
 func _update_path_follow():
 	var path_progress = float(EventManager.tick_passed_total) / EventManager.tick_to_victory
 	path_progress = clampf(path_progress, 0, 1)
 	path_follow.progress_ratio = path_progress
 
+func update_officer_list():
+	for child in officer_container.get_children():
+		var officer_label = child as OfficerLabel
+		if officer_label.officer in ResourceManager.current_officers:
+			officer_label.visible = true
+		else:
+			officer_label = false
 
 func _on_default_path_pressed() -> void:
 	SoundManager.play_button_click_sfx()

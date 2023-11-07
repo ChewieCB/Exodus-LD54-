@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://lwk7nc56s8g8"]
+
+[ext_resource type="Script" path="res://src/ui/command_screen/officer_label.gd" id="1_h0d1p"]
+
+[node name="Label" type="Label"]
+mouse_filter = 1
+text = "Pressley (Executive Officer)"
+script = ExtResource("1_h0d1p")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

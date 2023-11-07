@@ -18,6 +18,7 @@ config/icon="res://assets/sprite/game_avatar.png"
 
 [autoload]
 
+EnumAutoload="*res://src/managers/enum_autoload/enum_autoload.gd"
 ScreenTransitionManager="*res://src/ui/ScreenTransitionManager.tscn"
 Dialogic="*res://addons/dialogic/Other/DialogicGameHandler.gd"
 ResourceManager="*res://src/managers/resource_manager/ResourceManager.tscn"
@@ -71,7 +72,9 @@ layout/styles={
 "box_animation_in": "2",
 "box_animation_out": "2",
 "box_modulate": "Color(0.317647, 0.317647, 0.317647, 0.733333)",
-"name_label_box_modulate": "Color(0, 0, 0, 0.682353)"
+"name_label_box_modulate": "Color(0, 0, 0, 0.682353)",
+"name_label_font_size": "20.0",
+"text_size": "16.0"
 },
 "inherits": "",
 "layout": "res://addons/dialogic/Modules/DefaultLayouts/Default/DialogicDefaultLayout.tscn"
@@ -92,6 +95,11 @@ project/assembly_name="LD54"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/dialogic/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/sound_manager/plugin.cfg")
+
+[gui]
+
+theme/custom_font="res://assets/ui/fonts/pc-9800.ttf"
+theme/default_font_antialiasing=0
 
 [input]
 

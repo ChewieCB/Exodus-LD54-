@@ -1,5 +1,5 @@
 extends MarginContainer
-
+# Not used
 @export_multiline var task_text: String
 @export_multiline var reward_text: String
 
@@ -13,6 +13,12 @@ var required_air = 0
 var required_water = 0
 var required_metal = 0
 var task_id = -1
+
+enum TaskIdName {
+	REPAIR_SHIP_HULL,
+	REPAIR_ENGINE,
+
+}
 
 func _ready() -> void:
 	TickManager.tick.connect(check_if_sastify_condition)
