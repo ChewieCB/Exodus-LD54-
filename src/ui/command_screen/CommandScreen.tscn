@@ -181,6 +181,7 @@ toggle_mode = true
 text = "Change path"
 
 [node name="Officers" type="TabBar" parent="DeviceFrame/TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Officers"]
@@ -247,7 +248,6 @@ text = "Your trustworthy officer. Can be depend on."
 autowrap_mode = 2
 
 [node name="Ship" type="TabBar" parent="DeviceFrame/TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Ship"]
@@ -269,16 +269,32 @@ theme_override_font_sizes/font_size = 24
 text = "System status"
 horizontal_alignment = 1
 
-[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Ship"]
+[node name="ShipStatusLabel" type="Label" parent="DeviceFrame/TabContainer/Ship"]
 layout_mode = 0
 offset_left = 18.0
 offset_top = 59.0
 offset_right = 212.0
 offset_bottom = 163.0
-text = "Ship hull Lv. 3
-Weapon Lv. 2
-Shield Lv. 2 (Malfunction)
-Speed: 1.2 LY / day"
+text = "Ship hull Lv. 1
+Speed: ~1 LY / day"
+
+[node name="WarningLabel" type="Label" parent="DeviceFrame/TabContainer/Ship"]
+visible = false
+self_modulate = Color(1, 0.0392157, 0.054902, 1)
+offset_left = 116.0
+offset_top = 213.0
+offset_right = 344.0
+offset_bottom = 239.0
+text = "Warning: not enough resource"
+
+[node name="UpgradeHullButton" type="Button" parent="DeviceFrame/TabContainer/Ship"]
+layout_mode = 2
+offset_left = 154.0
+offset_top = 169.0
+offset_right = 298.0
+offset_bottom = 209.0
+text = "Improve ship hull
+(15 Metal)"
 
 [node name="Cryostasis Citizen" type="TabBar" parent="DeviceFrame/TabContainer"]
 visible = false
@@ -367,5 +383,6 @@ libraries = {
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button3" to="." method="_on_asteroid_field_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button4" to="." method="_on_void_field_pressed"]
 [connection signal="toggled" from="DeviceFrame/TabContainer/Travel/ChangePathButton" to="." method="_on_change_path_button_toggled"]
+[connection signal="pressed" from="DeviceFrame/TabContainer/Ship/UpgradeHullButton" to="." method="_on_upgrade_hull_button_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Cryostasis Citizen/Button" to="." method="_on_wake_up_citizen"]
 [connection signal="toggled" from="DeviceFrame/ShowHideCommandScreen" to="." method="_on_show_hide_travel_screen_toggled"]

@@ -16,6 +16,8 @@ var ship_speed_per_day = 1
 var distance_travelled = 0
 var distance_to_victory = 200
 
+var ship_hull_level = 1
+
 enum TRAVEL_PATH_TYPE {
 	DEFAULT_PATH,
 	INTERGALATIC_ROUTE,

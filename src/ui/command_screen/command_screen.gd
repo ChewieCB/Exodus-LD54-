@@ -9,13 +9,17 @@ class_name CommandScreen
 @onready var path_choice_view = $DeviceFrame/TabContainer/Travel/PathChoiceView
 @onready var change_path_button: Button = $DeviceFrame/TabContainer/Travel/ChangePathButton
 @onready var path_follow: PathFollow2D = $DeviceFrame/TabContainer/Travel/ProgressView/Path2D/PathFollow2D
-
-@onready var wakeup_warning_label: Label = get_node("DeviceFrame/TabContainer/Cryostasis Citizen/WarningLabel")
-@onready var count_wakeup_label: Label = get_node("DeviceFrame/TabContainer/Cryostasis Citizen/CountLabel")
-
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var show_hide_command_screen_button: Button = $DeviceFrame/ShowHideCommandScreen
 
+# Cryostasis Citizen tab
+@onready var wakeup_warning_label: Label = get_node("DeviceFrame/TabContainer/Cryostasis Citizen/WarningLabel")
+@onready var count_wakeup_label: Label = get_node("DeviceFrame/TabContainer/Cryostasis Citizen/CountLabel")
+
+# Ship tab
+@onready var ship_status_label: Label = $DeviceFrame/TabContainer/Ship/ShipStatusLabel
+@onready var ship_upgrade_warning_label: Label = $DeviceFrame/TabContainer/Ship/WarningLabel
+@onready var ship_hull_upgrade_button: Button = $DeviceFrame/TabContainer/Ship/UpgradeHullButton
 
 # Officer tab
 @onready var officer_container = $DeviceFrame/TabContainer/Officers/VBoxContainer
@@ -25,6 +29,7 @@ var chose_path_screen_open = false
 var path_length
 
 const WAKEUP_CITIZEN_WATER_COST = 15
+const SHIP_HULL_METAL_COST_PER_LV = 10
 
 func _ready() -> void:
 	reset_color_all_buttons()
@@ -46,6 +51,13 @@ func update_officer_list():
 			officer_label.visible = true
 		else:
 			officer_label = false
+
+
+func update_ship_status_screen():
+	var upgrade_hull_metal_cost = EventManager.ship_hull_level * SHIP_HULL_METAL_COST_PER_LV
+	ship_hull_upgrade_button.text = "Improve ship hull\n({cost} Metal)".format({"cost": upgrade_hull_metal_cost})
+	ship_status_label.text = "Ship hull Lv. {ship_hull_lv}\nSpeed: ~{ship_speed} LY / day".format(
+		{"ship_hull_lv": EventManager.ship_hull_level, "ship_speed": 1})
 
 func _on_default_path_pressed() -> void:
 	SoundManager.play_button_click_sfx()
@@ -148,3 +160,16 @@ func show_screen():
 func _on_tab_container_tab_changed(tab:int) -> void:
 	SoundManager.play_button_click_sfx()
 	wakeup_warning_label.visible = false
+
+
+func _on_upgrade_hull_button_pressed() -> void:
+	SoundManager.play_button_click_sfx()
+	var upgrade_hull_metal_cost = EventManager.ship_hull_level * SHIP_HULL_METAL_COST_PER_LV
+	if ResourceManager.metal_amount >= upgrade_hull_metal_cost:
+		ResourceManager.metal_amount -= upgrade_hull_metal_cost
+		ship_upgrade_warning_label.visible = false
+		EventManager.ship_hull_level += 1
+		update_ship_status_screen()
+	else:
+		ship_upgrade_warning_label.text = "Warning: Not enough resource"
+		ship_upgrade_warning_label.visible = true
