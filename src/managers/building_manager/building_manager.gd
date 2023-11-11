@@ -10,7 +10,7 @@ signal hide_info_panel
 # to least recent, used so we can cancel construction and refund remaining workers
 # when pop goes down.
 var construction_queue = []
-var buildings = []
+var buildings: Array[Building] = []
 
 
 func start_building(building_scene):
@@ -21,6 +21,21 @@ func show_building_info_panel(pos: Vector2, building_data: BuildingResource):
 
 func hide_building_info_panel():
 	emit_signal("hide_info_panel")
+
+func check_if_building_exist(building_name: String) -> bool:
+	for b in buildings:
+		if b.name == building_name:
+			return true
+	return false
+
+func delete_building_with_name(building_name: String) -> bool:
+	""" Return true if success. building_name is object name """
+	for b in buildings:
+		if b.name == building_name:
+			buildings.erase(b)
+			b.remove_building()
+			return true
+	return false
 
 
 func reset_state():

@@ -1,5 +1,7 @@
 Join ExecutiveOfficer 0
+[signal arg="open_build_screen"]
 ExecutiveOfficer (Normal): Aye Captain, 10 of the hibernation crewmates woke up and ready to serve. No more will wake up, unless you request them
-[call_node path="ResourceManager" method="change_resource_from_event" args="["population_forced", "10"]" single_use="true"]
+[call_node path="BuildingManager" method="delete_building_with_name" args="["CryoPodHub"]" single_use="true"]
 ExecutiveOfficer (Normal): Great work, Captain.
-[signal arg="end_event"]
+[signal arg="end_event_build"]
+

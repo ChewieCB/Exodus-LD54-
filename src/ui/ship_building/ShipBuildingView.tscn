@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c6s7o88tyavpj"]
+[gd_scene load_steps=20 format=3 uid="uid://c6s7o88tyavpj"]
 
 [ext_resource type="PackedScene" uid="uid://cu7ivg1u3vbhl" path="res://src/ui/main_screen/MainUI.tscn" id="1_21fy4"]
 [ext_resource type="Script" path="res://src/ui/ship_building/ship_building_view.gd" id="1_ae44n"]
@@ -16,31 +16,6 @@
 [ext_resource type="PackedScene" uid="uid://cymcngb74n5dp" path="res://src/ui/menus/main/SettingMenu.tscn" id="11_t4hll"]
 [ext_resource type="PackedScene" uid="uid://bsrgyas0y86au" path="res://src/buildings/cryostasis_pod/CryoPod2.tscn" id="12_acf3b"]
 [ext_resource type="PackedScene" uid="uid://fliweg8848gv" path="res://src/buildings/cryostasis_pod/CryoPod3.tscn" id="13_2b3d8"]
-
-[sub_resource type="Gradient" id="Gradient_5qkd4"]
-offsets = PackedFloat32Array(0, 0.264706, 0.759804, 1)
-colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.862745, 1, 1, 1, 0.886275, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_5aixr"]
-gradient = SubResource("Gradient_5qkd4")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6w768"]
-lifetime_randomness = 0.3
-emission_shape = 3
-emission_box_extents = Vector3(15, 15, 1)
-particle_flag_disable_z = true
-direction = Vector3(-1, 0, 0)
-spread = 0.0
-gravity = Vector3(0, 0, 0)
-initial_velocity_min = 0.25
-initial_velocity_max = 1.0
-angular_velocity_min = -30.0
-angular_velocity_max = 30.0
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
-scale_min = 0.13
-scale_max = 0.5
-color_ramp = SubResource("GradientTexture1D_5aixr")
 
 [sub_resource type="Gradient" id="Gradient_isfht"]
 offsets = PackedFloat32Array(0, 0.295455, 0.736364, 1)
@@ -74,19 +49,6 @@ self_modulate = Color(0, 0, 0, 1)
 position = Vector2(4689, -145)
 scale = Vector2(423.125, 231.219)
 texture = ExtResource("2_jcwrl")
-
-[node name="StarGPUParticles2D" type="GPUParticles2D" parent="Space"]
-process_mode = 4
-visible = false
-position = Vector2(-7.05229, 0.155697)
-scale = Vector2(0.5, 0.5)
-amount = 171
-process_material = SubResource("ParticleProcessMaterial_6w768")
-texture = ExtResource("3_74hi2")
-lifetime = 8.0
-explosiveness = 0.3
-randomness = 0.5
-visibility_rect = Rect2(0, 0, 0, 0)
 
 [node name="StarCPUParticles2D" type="CPUParticles2D" parent="Space"]
 position = Vector2(-7.0192, 1.15042)
@@ -160,7 +122,7 @@ position = Vector2(704, 192.5)
 [node name="Miner2" parent="ShipGrid" instance=ExtResource("11_iprk5")]
 position = Vector2(704, 128.5)
 
-[node name="CryoPod1" parent="ShipGrid" instance=ExtResource("11_o0hes")]
+[node name="CryoPod" parent="ShipGrid" instance=ExtResource("11_o0hes")]
 position = Vector2(704, -191.5)
 
 [node name="CryoPodArray" parent="ShipGrid" instance=ExtResource("12_acf3b")]

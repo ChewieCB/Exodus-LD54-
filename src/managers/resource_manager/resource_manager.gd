@@ -267,17 +267,17 @@ func can_add_population(value) -> bool:
 	else:
 		return false
 
-func add_building(building):
+func add_building(building: Building):
 	if building not in BuildingManager.buildings:
 		BuildingManager.buildings.append(building)
 
 
-func remove_building(building):
+func remove_building(building: Building):
 	if building in BuildingManager.buildings:
 		BuildingManager.buildings.erase(building)
 
 
-func assign_workers(building):
+func assign_workers(building: Building):
 	var workers_needed = building.data.people_cost
 	var metal_needed = building.data.metal_cost
 	if workers_needed > worker_amount or metal_needed > metal_amount:
@@ -287,7 +287,7 @@ func assign_workers(building):
 	metal_amount -= metal_needed
 
 
-func retrieve_workers(building):
+func retrieve_workers(building: Building):
 	# Refund X workers assigned to a completed building from the building's cost data
 	worker_amount += building.data.people_cost
 

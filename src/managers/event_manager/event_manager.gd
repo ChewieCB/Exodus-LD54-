@@ -28,7 +28,7 @@ enum TRAVEL_PATH_TYPE {
 var chosen_path: TRAVEL_PATH_TYPE = TRAVEL_PATH_TYPE.DEFAULT_PATH
 
 # primary storyline
-var primary_story_date = [10, 50, 100, 150]
+var primary_story_date = [10, 12, 13, 14]
 var primary_story_id = 0:
 	set(value):
 		primary_story_id = value
@@ -79,7 +79,7 @@ func _ready() -> void:
 	Dialogic.signal_event.connect(_on_dialogic_signal)
 	TickManager.tick.connect(check_tick_for_random_event)
 	tick_to_event = randi_range(MIN_TICK_FOR_EVENT, MAX_TICK_FOR_EVENT)
-	
+
 	# Remove the debug event from the available array
 	available_events.pop_front()
 	
@@ -153,7 +153,18 @@ func check_tick_for_random_event():
 
 	if primary_story_id <= 3 and tick_passed_total >= primary_story_date[primary_story_id] - 1:
 		tick_to_event += 1 # Delay normal event a day to prevent stuff happened same time
-		play_event(primary_story_events[primary_story_id])
+		match primary_story_id:
+			1:
+				if BuildingManager.check_if_building_exist("CryoPod"):
+					play_event(primary_story_events[primary_story_id])
+			2:
+				if BuildingManager.check_if_building_exist("CryoPodArray"):
+					play_event(primary_story_events[primary_story_id])
+			3:
+				if BuildingManager.check_if_building_exist("CryoPodHub"):
+					play_event(primary_story_events[primary_story_id])
+			_:
+				play_event(primary_story_events[primary_story_id])
 		primary_story_id += 1
 
 	if tick_passed_total >= tick_to_victory and not end_game:

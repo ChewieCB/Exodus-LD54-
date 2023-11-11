@@ -17,7 +17,14 @@ var rotate_counter = 0
 
 func _ready():
 	BuildingManager.building_selected.connect(_building_button_pressed)
+	EventManager.start_event.connect(_on_start_event)
 	assign_pre_placed_buildings()
+
+
+func _on_start_event(event: ExodusEvent):
+	if current_building != null:
+		current_building.queue_free()
+		current_building = null
 
 
 func assign_pre_placed_buildings() -> void:
