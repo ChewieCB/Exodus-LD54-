@@ -10,6 +10,7 @@ signal hide_info_panel
 # to least recent, used so we can cancel construction and refund remaining workers
 # when pop goes down.
 var construction_queue = []
+var buildings = []
 
 
 func start_building(building_scene):
@@ -20,3 +21,8 @@ func show_building_info_panel(pos: Vector2, building_data: BuildingResource):
 
 func hide_building_info_panel():
 	emit_signal("hide_info_panel")
+
+
+func reset_state():
+	buildings = []
+	construction_queue = []

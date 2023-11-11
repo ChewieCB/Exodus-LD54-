@@ -169,9 +169,6 @@ var pop_food_cost: int = 2
 var pop_water_cost: int = 3
 var pop_air_cost: int = 1
 
-var buildings = []
-
-
 func _ready() -> void:
 	TickManager.tick.connect(_on_tick)
 
@@ -209,29 +206,29 @@ func calculate_resource_modifier(resource_type, population) -> void:
 		RESOURCE_TYPE.HOUSING:
 			# Housing is an outlier, we don't update per turn we just keep track
 			# of used and avaialble housing
-			for building in buildings:
+			for building in BuildingManager.buildings:
 				production += building.data.housing_prod
 			consumption = population_amount
 			#
 			housing_amount = production
 			available_housing = production - consumption
 		RESOURCE_TYPE.FOOD:
-			for building in buildings:
+			for building in BuildingManager.buildings:
 				production += building.data.food_prod
 			consumption = population * pop_food_cost
 			current_food_modifier = production - consumption
 		RESOURCE_TYPE.WATER:
-			for building in buildings:
+			for building in BuildingManager.buildings:
 				production += building.data.water_prod
 			consumption = population * pop_water_cost
 			current_water_modifier = production - consumption
 		RESOURCE_TYPE.AIR:
-			for building in buildings:
+			for building in BuildingManager.buildings:
 				production += building.data.air_prod
 			consumption = population * pop_air_cost
 			current_air_modifier = production - consumption
 		RESOURCE_TYPE.METAL:
-			for building in buildings:
+			for building in BuildingManager.buildings:
 				production += building.data.metal_prod
 			current_metal_modifier = production
 
@@ -271,13 +268,13 @@ func can_add_population(value) -> bool:
 		return false
 
 func add_building(building):
-	if building not in buildings:
-		buildings.append(building)
+	if building not in BuildingManager.buildings:
+		BuildingManager.buildings.append(building)
 
 
 func remove_building(building):
-	if building in buildings:
-		buildings.erase(building)
+	if building in BuildingManager.buildings:
+		BuildingManager.buildings.erase(building)
 
 
 func assign_workers(building):
@@ -336,6 +333,7 @@ func wake_up_citizen(water_cost) -> String:
 	water_amount -= water_cost
 	return "success"
 
+
 func reset_state():
 	# TODO - load initial values from file for difficulty settings
 	population_amount = 3
@@ -357,4 +355,3 @@ func reset_state():
 	current_food_modifier = 0
 	current_air_modifier = 0
 	current_water_modifier = 0
-	buildings = []

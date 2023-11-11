@@ -48,7 +48,7 @@ func _on_restart_button_pressed():
 	TickManager.reset_state()
 	ResourceManager.reset_state()
 	EventManager.reset_state()
-	BuildingManager.construction_queue = []
+	BuildingManager.reset_state()
 
 	get_tree().reload_current_scene()
 
