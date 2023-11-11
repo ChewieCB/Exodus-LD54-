@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://c6s7o88tyavpj"]
+[gd_scene load_steps=23 format=3 uid="uid://c6s7o88tyavpj"]
 
 [ext_resource type="PackedScene" uid="uid://cu7ivg1u3vbhl" path="res://src/ui/main_screen/MainUI.tscn" id="1_21fy4"]
 [ext_resource type="Script" path="res://src/ui/ship_building/ship_building_view.gd" id="1_ae44n"]
@@ -12,7 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://p6x8qph6gl3j" path="res://assets/backgrounds/build_frame.png" id="8_fs641"]
 [ext_resource type="Texture2D" uid="uid://cygmypnooav7y" path="res://assets/event/Ship_wreak_Pixel.png" id="8_p8t6q"]
 [ext_resource type="PackedScene" uid="uid://cxn6drxpjw6ii" path="res://src/buildings/miner/Miner1.tscn" id="11_iprk5"]
+[ext_resource type="PackedScene" uid="uid://cga44qrkh08wg" path="res://src/buildings/cryostasis_pod/CryoPod1.tscn" id="11_o0hes"]
 [ext_resource type="PackedScene" uid="uid://cymcngb74n5dp" path="res://src/ui/menus/main/SettingMenu.tscn" id="11_t4hll"]
+[ext_resource type="PackedScene" uid="uid://bsrgyas0y86au" path="res://src/buildings/cryostasis_pod/CryoPod2.tscn" id="12_acf3b"]
+[ext_resource type="PackedScene" uid="uid://fliweg8848gv" path="res://src/buildings/cryostasis_pod/CryoPod3.tscn" id="13_2b3d8"]
 
 [sub_resource type="Gradient" id="Gradient_5qkd4"]
 offsets = PackedFloat32Array(0, 0.264706, 0.759804, 1)
@@ -156,6 +159,15 @@ position = Vector2(704, 192.5)
 
 [node name="Miner2" parent="ShipGrid" instance=ExtResource("11_iprk5")]
 position = Vector2(704, 128.5)
+
+[node name="CryoPod1" parent="ShipGrid" instance=ExtResource("11_o0hes")]
+position = Vector2(704, -191.5)
+
+[node name="CryoPodArray" parent="ShipGrid" instance=ExtResource("12_acf3b")]
+position = Vector2(896, 128.5)
+
+[node name="CryoPodHub" parent="ShipGrid" instance=ExtResource("13_2b3d8")]
+position = Vector2(736, 546.5)
 
 [node name="ShipBuildFrame" type="Sprite2D" parent="."]
 visible = false
