@@ -18,10 +18,9 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_eteq2")
-circle_radius = 146.0
-poisson_radius = 22.0
-max_point_connections = 4
-negation_zone_radius = 146
+circle_radius = 240.0
+poisson_radius = 20.045
+negation_zone_radius = 179
 
 [node name="ColorRect" type="ColorRect" parent="."]
 visible = false

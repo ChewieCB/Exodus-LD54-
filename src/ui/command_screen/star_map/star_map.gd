@@ -6,30 +6,37 @@ extends Control
 	set(value):
 		circle_radius = value
 		redraw_points()
+		generate_starlanes()
 @export var poisson_radius: float = 50:
 	set(value):
 		poisson_radius = value
 		redraw_points()
+		generate_starlanes()
 @export var retries: int = 30:
 	set(value):
 		retries = value
 		redraw_points()
+		generate_starlanes()
 
-@export_group("Starlane Generation")
-@export var point_connection_range: float = 100
-@export var max_point_connections: int = 100
+#@export_group("Starlane Generation")
+#@export var point_connection_range: float = 100:
+#	set(value):
+#		point_connection_range = value
+#		generate_starlanes()
+#@export var max_point_connections: int = 100:
+#	set(value):
+#		max_point_connections = value
+#		generate_starlanes()
 
 @export_group("Negation Zone")
 @export var negation_zone_radius: int = 64:
 	set(value):
 		negation_zone_radius = value
-		circle_radius = value
-		redraw_points()
 
 var points_to_draw: PackedVector2Array
+var edges_to_draw = []
 var adjacency_list = []
 var negation_zone_center: Vector2 = Vector2.ZERO
-var drawn_edges = []
 
 enum ShapeType {CIRCLE, POLYGON}
 static var shape_info: Dictionary
@@ -37,24 +44,44 @@ static var shape_info: Dictionary
 
 func _ready():
 	redraw_points()
-#	adjacency_list = generate_weighted_adjacency_list(points_to_draw)
-#	generate_edges(points_to_draw, adjacency_list)
+	generate_starlanes()
 
 
 func _draw():
+	# Starlanes
+	if edges_to_draw:
+		for edge in edges_to_draw:
+			var negation_value = 0
+			# 0 = not in negation zone
+			# 1 = line crosses the negation range - clip it at the negation radius
+			# 2 = line outside of negation range - don't draw
+			for _vertex in edge:
+				if not Geometry2D.is_point_in_circle(_vertex, negation_zone_center, negation_zone_radius):
+					negation_value += 1
+			match negation_value:
+				0:
+					draw_line(edge[0], edge[1], Color.GOLD, 1.0)
+				1:
+					var line_dir = edge[0].direction_to(edge[1])
+					var clipped_edge = line_dir * negation_zone_radius
+					draw_line(edge[0], edge[1], Color.RED, 1.0)
+				_:
+					continue
+	# Stars
 	if points_to_draw:
 		for point in points_to_draw:
-			draw_circle(point, 2, Color.WHITE)
+			if Geometry2D.is_point_in_circle(point, negation_zone_center, negation_zone_radius):
+				draw_circle(point, 2, Color.WHITE)
 	# Negation Zone edge
-	draw_circle_donut_poly(negation_zone_center, negation_zone_radius, negation_zone_radius + 2, 0, 360, Color.ORANGE)
+	draw_circle_donut_poly(
+		negation_zone_center, negation_zone_radius, negation_zone_radius + 2, 
+		0, 360, Color.ORANGE
+	)
 	# Negation Zone backfill
-	draw_circle_donut_poly(negation_zone_center, negation_zone_radius, 500, 0, 360, Color(1, 0, 0, 0.5))
-	for edge in drawn_edges:
-		draw_line(points_to_draw[edge[0]], points_to_draw[edge[1]], Color.GOLD, 1.0)
-		# Draw the weight
-		# FIXME
-#		var default_font = ThemeDB.fallback_font
-#		draw_string(default_font, points_to_draw[edge[1]] - points_to_draw[edge[0]], str(edge[2]), HORIZONTAL_ALIGNMENT_CENTER, -1, 4)
+	draw_circle_donut_poly(
+		negation_zone_center, negation_zone_radius, 500, 
+		0, 360, Color(1, 0, 0, 0.5)
+	)
 
 
 func _process(_delta):
@@ -65,72 +92,40 @@ func redraw_points() -> void:
 	points_to_draw = generate_points_for_circle(Vector2.ZERO, circle_radius, poisson_radius, retries)
 
 
-func generate_edges(points, _adjacency_list):
-	for i in range(_adjacency_list.size() - 1):
-		var node_a = _adjacency_list[i]
-		for j in range(node_a.size() - 1):
-			var node_b = node_a[j][0]
-			var weight  = node_a[j][1]
-			var edge = [i, node_b, weight]
-			if edge in drawn_edges:
-				continue
-			# Declare an edge
-			var point_a = points[i]
-			var point_b = points[node_b]
-			# Mark edge as drawn
-			drawn_edges.append(edge)
-
-
-func generate_weighted_adjacency_list(points: PackedVector2Array):
-	# Generate a randomly weighted graph from the available points
-	randomize()
-	
-	var num_points = points.size() - 1
-	var _adjacency_list = []
-	var weight_min = 0
-	var weight_max = 20
-	
-	# Build the empty adjacency list to populate
-	for i in range(num_points):
-		_adjacency_list.append([])
-	
-	# Generate edge connections for 
-	for i in range(_adjacency_list.size() - 1):
-		# For now we connect every point to every other point with random weights.
-		# We can look at randomly removing connections when this works.
-		#
-		# Limit the number of connections per point to prevent clustering
-		if _adjacency_list[i].size() < max_point_connections:
-			for j in range(num_points):
-				# Don't connect points to themselves
-				if j == i:
-					continue
-				# Only connect nearby points
-				if points_to_draw[i].distance_to(points[j]) > point_connection_range:
-					continue
-				# Limit the number of connections per point to prevent clustering
-				if _adjacency_list[j].size() >= max_point_connections:
-					continue
-				var random_weight = randi_range(weight_min, weight_max)
-				_adjacency_list = graph_add_edge(_adjacency_list, i, j, random_weight)
-				var DEBUG_size = _adjacency_list[i].size()
-				var DEBUG_max_connections = max_point_connections
-				if _adjacency_list[i].size() >= max_point_connections:
-					break
-	
-	return _adjacency_list
-
-
-func graph_add_edge(adjacency_list, node_a, node_b, weight):
-	'''Create an edge within the adjacency list between node_a and node_b.'''
-	adjacency_list[node_a].append([node_b, weight])
-	adjacency_list[node_b].append([node_a, weight])
-	return adjacency_list
-
-
-func create_mst(points: PackedVector2Array):
-#	var 
-	pass
+func generate_starlanes() -> void:
+	var triangle_point_idxs = Geometry2D.triangulate_delaunay(points_to_draw)
+	var triangles = []
+	# Turn the list of point indexes into defined triangle clusters of point indexes
+	for i in range(len(triangle_point_idxs) / 3):
+		var _triangle = []
+		# Each 3 consecutive points compose the vertices of one triangle
+		for j in range(3):
+			_triangle.append(triangle_point_idxs[(i * 3) + j])
+		triangles.append(_triangle)
+	# Turn each point index into a world position
+	var triangle_points = []
+	for i in range(triangles.size() - 1):
+		var _triangle_point = []
+		for j in range(3):
+			_triangle_point.append(
+				points_to_draw[(triangles[i][j])]
+			)
+		triangle_points.append(_triangle_point)
+	# Calculate edges to draw
+	edges_to_draw = []
+	for _triangle in triangle_points:
+		for i in range(3):
+			var next_idx = null
+			match i:
+				2:
+					next_idx = 0
+				_:
+					next_idx = i + 1
+			var _edge = [_triangle[i], _triangle[next_idx]]
+			if _edge not in edges_to_draw:
+				edges_to_draw.append(_edge)
+#	adjacency_list = generate_weighted_adjacency_list(points_to_draw)
+#	generate_edges(points_to_draw, adjacency_list)
 
 
 static func generate_points_for_circle(circle_position: Vector2, circle_radius: float, poisson_radius: float, retries: int, start_point := Vector2.INF) -> PackedVector2Array:
@@ -215,9 +210,6 @@ static func _is_point_in_sample_region(sample: Vector2, shape: int) -> bool:
 			return true
 	else:
 		return false
-
-
-
 
 
 func draw_circle_arc(center, radius, angle_from, angle_to, color):
