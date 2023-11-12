@@ -1,9 +1,12 @@
 extends Resource
 class_name ExodusEvent
 
+# PLANET = events happens on a planet (signal from a planet, go down a planet to get supply)
+# SPACE = events happens during space travel (meet other ship, see a rich mineral asteroid)
+# SELF = events happens on our ship (ship riot, crew sick, aliens sneak in, main story)
+# DEBUG = events for debugging, never appear in normal gameplay
 enum EVENT_TYPES {
 	PLANET,
-	SHIP,
 	SPACE,
 	DEBUG,
 	SELF

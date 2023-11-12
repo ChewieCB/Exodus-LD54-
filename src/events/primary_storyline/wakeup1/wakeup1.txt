@@ -1,7 +1,7 @@
 Join ExecutiveOfficer 0
 [signal arg="open_build_screen"]
-ExecutiveOfficer (Normal): Aye Captain, 3 of the hibernation crewmates woke up and ready to serve. The next wave of waking up will be on day 100, and this time will be 5 crew mates.
+ExecutiveOfficer (Normal): The first 3 of the hibernating crewmates woke up and ready to serve. The next wave of waking up will be on day 100, and this time will be 5 crew mates.
 [call_node path="BuildingManager" method="delete_building_with_name" args="["CryoPod"]" single_use="true"]
+ExecutiveOfficer (Normal): Those guys are sleeping in blue cryopods, located near the middle of the ship.
 ExecutiveOfficer (Normal): Good luck, Captains.
 [signal arg="end_event_build"]
-

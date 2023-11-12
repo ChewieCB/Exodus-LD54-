@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ExodusEvent" load_steps=2 format=3 uid="uid://ddg6fhlxpprsd"]
 
-[ext_resource type="Script" path="res://src/events/resource/event_resource.gd" id="1_8xath"]
+[ext_resource type="Script" path="res://src/events/event_resource.gd" id="1_8xath"]
 
 [resource]
 script = ExtResource("1_8xath")

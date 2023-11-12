@@ -36,7 +36,7 @@ gdscript/warnings/unused_parameter=0
 
 variables={
 "air": "0",
-"available_housing": "",
+"available_housing": "0",
 "chance": "1",
 "choice1_check": "false",
 "choice2_check": "false",

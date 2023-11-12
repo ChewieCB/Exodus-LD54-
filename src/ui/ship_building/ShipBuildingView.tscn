@@ -118,18 +118,28 @@ building_complete = true
 
 [node name="Miner" parent="ShipGrid" instance=ExtResource("11_iprk5")]
 position = Vector2(704, 192.5)
+placed = true
+building_complete = true
 
 [node name="Miner2" parent="ShipGrid" instance=ExtResource("11_iprk5")]
 position = Vector2(704, 128.5)
+placed = true
+building_complete = true
 
 [node name="CryoPod" parent="ShipGrid" instance=ExtResource("11_o0hes")]
 position = Vector2(704, -191.5)
+placed = true
+building_complete = true
 
 [node name="CryoPodArray" parent="ShipGrid" instance=ExtResource("12_acf3b")]
 position = Vector2(896, 128.5)
+placed = true
+building_complete = true
 
 [node name="CryoPodHub" parent="ShipGrid" instance=ExtResource("13_2b3d8")]
 position = Vector2(736, 546.5)
+placed = true
+building_complete = true
 
 [node name="ShipBuildFrame" type="Sprite2D" parent="."]
 visible = false

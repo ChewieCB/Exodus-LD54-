@@ -28,7 +28,7 @@ enum TRAVEL_PATH_TYPE {
 var chosen_path: TRAVEL_PATH_TYPE = TRAVEL_PATH_TYPE.DEFAULT_PATH
 
 # primary storyline
-var primary_story_date = [10, 12, 13, 14]
+var primary_story_date = [10, 50, 100, 150]
 var primary_story_id = 0:
 	set(value):
 		primary_story_id = value
@@ -42,19 +42,18 @@ signal request_change_objective_label
 signal victory
 signal primary_story_id_changed
 
-@export var event_resources: Array[ExodusEvent]
+@export var encounter_events: Array[ExodusEvent]
+@export var debug_events: Array[ExodusEvent]
 @export var tutorial_events: Array[ExodusEvent]
 @export var primary_story_events: Array[ExodusEvent]
 @export var victory_event: ExodusEvent
 #
-@export var planet_backgrounds: Array[Texture2D]
-@export var ship_backgrounds: Array[Texture2D]
-@export var space_backgrounds: Array[Texture2D]
 var previous_background: Texture2D = null
 #
-@onready var available_events: Array[ExodusEvent] = event_resources.duplicate()
+@onready var available_events: Array[ExodusEvent] = encounter_events.duplicate()
 var completed_events: Array[ExodusEvent]
 var n_woke_up_citizen = 0
+var event_dict = {} # Dictionary, format int : ExodusEvent (example: {0: tutorial_event_0}). Use in debug event dropdown
 
 @onready var planets = {
 	ExodusEvent.PlanetType.WET_TERRAIN: preload("res://addons/pixel_planet_generator/Planets/Rivers/Rivers.tscn"),
@@ -125,7 +124,7 @@ func play_event(event: ExodusEvent) -> Node:
 
 func play_event_by_name(event_name: String) -> Node:
 	var event: ExodusEvent = null
-	for e in event_resources:
+	for e in encounter_events:
 		if e.name.to_lower() == event_name.to_lower():
 			event = e
 			break
@@ -154,6 +153,8 @@ func check_tick_for_random_event():
 	if primary_story_id <= 3 and tick_passed_total >= primary_story_date[primary_story_id] - 1:
 		tick_to_event += 1 # Delay normal event a day to prevent stuff happened same time
 		match primary_story_id:
+			0:
+				play_event(primary_story_events[primary_story_id])
 			1:
 				if BuildingManager.check_if_building_exist("CryoPod"):
 					play_event(primary_story_events[primary_story_id])
@@ -163,8 +164,6 @@ func check_tick_for_random_event():
 			3:
 				if BuildingManager.check_if_building_exist("CryoPodHub"):
 					play_event(primary_story_events[primary_story_id])
-			_:
-				play_event(primary_story_events[primary_story_id])
 		primary_story_id += 1
 
 	if tick_passed_total >= tick_to_victory and not end_game:
