@@ -2,7 +2,7 @@
 extends Control
 
 @export_group("Poisson Disc")
-@export var circle_radius: float = 64:
+@export var circle_radius: float = 256:
 	set(value):
 		circle_radius = value
 		redraw_points()
@@ -29,11 +29,12 @@ extends Control
 #		generate_starlanes()
 
 @export_group("Negation Zone")
-@export var negation_zone_radius: int = 64:
+@export_range(0, 256, 1) var negation_zone_radius: int = 256:
 	set(value):
 		negation_zone_radius = value
 
 var points_to_draw: PackedVector2Array
+var starmap_graph: Graph
 var edges_to_draw = []
 var adjacency_list = []
 var negation_zone_center: Vector2 = Vector2.ZERO
@@ -51,20 +52,28 @@ func _draw():
 	# Starlanes
 	if edges_to_draw:
 		for edge in edges_to_draw:
+			var negated_vert = []
 			var negation_value = 0
 			# 0 = not in negation zone
 			# 1 = line crosses the negation range - clip it at the negation radius
 			# 2 = line outside of negation range - don't draw
 			for _vertex in edge:
+				if not _vertex is Vector2:
+					continue
 				if not Geometry2D.is_point_in_circle(_vertex, negation_zone_center, negation_zone_radius):
 					negation_value += 1
+					negated_vert.append(_vertex)
 			match negation_value:
 				0:
 					draw_line(edge[0], edge[1], Color.GOLD, 1.0)
 				1:
-					var line_dir = edge[0].direction_to(edge[1])
-					var clipped_edge = line_dir * negation_zone_radius
-					draw_line(edge[0], edge[1], Color.RED, 1.0)
+					var _vert = negated_vert.pop_front()
+					if _vert == edge[0]:
+						var clamped_edge = (negation_zone_radius) * edge[0].normalized()
+						draw_line(clamped_edge, edge[1], Color.RED, 1.0)
+					elif _vert == edge[1]:
+						var clamped_edge = (negation_zone_radius) * edge[1].normalized()
+						draw_line(edge[0], clamped_edge, Color.RED, 1.0)
 				_:
 					continue
 	# Stars
@@ -92,7 +101,113 @@ func redraw_points() -> void:
 	points_to_draw = generate_points_for_circle(Vector2.ZERO, circle_radius, poisson_radius, retries)
 
 
+class Graph:
+	var vertices
+	var graph
+	var mst
+	
+	func _init(vertices):
+		self.vertices = vertices
+		self.graph = []
+		self.mst = []
+	
+	# Function to add an edge to graph 
+	func add_edge(u, v, w): 
+		self.graph.append([u, v, w]) 
+	
+	# Turn each point index into a world position
+	func convert_to_world(edges, world_points):
+		var result = []
+		for i in range(edges.size() - 1):
+			var _edge_world = [
+				world_points[edges[i][0]],
+				world_points[edges[i][1]],
+				edges[2]
+			]
+			result.append(_edge_world)
+			
+		return result
+  
+	# A utility function to find set of an element i 
+	# (truly uses path compression technique) 
+	func find(parent, i): 
+		if parent[i] != i: 
+			# Reassignment of node's parent 
+			# to root node as 
+			# path compression requires 
+			parent[i] = self.find(parent, parent[i]) 
+		return parent[i] 
+  
+	# A function that does union of two sets of x and y 
+	# (uses union by rank) 
+	func union(parent, rank, x, y): 
+		# Attach smaller rank tree under root of 
+		# high rank tree (Union by Rank) 
+		if rank[x] < rank[y]: 
+			parent[x] = y 
+		elif rank[x] > rank[y]: 
+			parent[y] = x 
+		# If ranks are same, then make one as root 
+		# and increment its rank by one 
+		else: 
+			parent[y] = x 
+			rank[x] += 1
+	
+	# The main function to construct MST 
+	# using Kruskal's algorithm 
+	func kruskal_mst(): 
+		# This will store the resultant MST 
+		var result = [] 
+		# An index variable, used for sorted edges 
+		var i = 0
+		# An index variable, used for result[] 
+		var e = 0
+		# Sort all the edges in non-decreasing order of their weight 
+		self.graph.sort_custom(func(a, b): return a[2] < b[2]) 
+		var parent = [] 
+		var rank = [] 
+		# Create V subsets with single elements 
+		for node in range(self.vertices.size()): 
+			parent.append(node) 
+			rank.append(0) 
+		# Number of edges to be taken is less than to V-1 
+		while e < self.vertices.size() - 1: 
+			# Pick the smallest edge and increment 
+			# the index for next iteration
+			var edge = self.graph[i]
+			var u = edge[0]
+			var v = edge[1]
+			var w = edge[2]
+			i = i + 1
+			var x = self.find(parent, u) 
+			var y = self.find(parent, v) 
+			# If including this edge doesn't 
+			# cause cycle, then include it in result 
+			# and increment the index of result 
+			# for next edge 
+			if x != y: 
+				e = e + 1
+				result.append([u, v, w]) 
+				self.union(parent, rank, x, y) 
+			# Else discard the edge 
+		var minimumCost = 0
+		print("Edges in the constructed MST") 
+		for edge in result:
+			var u = edge[0]
+			var v = edge[1]
+			var weight = edge[2]
+			minimumCost += weight 
+			print("%d -- %d == %d" % [u, v, weight]) 
+		print("Minimum Spanning Tree ", minimumCost)
+		
+		return result
+
+
 func generate_starlanes() -> void:
+	# Build Graph object to store edges and MST
+	starmap_graph = Graph.new(points_to_draw)
+	
+	# Generate fully connected graph using delaunay triangulation
 	var triangle_point_idxs = Geometry2D.triangulate_delaunay(points_to_draw)
 	var triangles = []
 	# Turn the list of point indexes into defined triangle clusters of point indexes
@@ -102,18 +217,9 @@ func generate_starlanes() -> void:
 		for j in range(3):
 			_triangle.append(triangle_point_idxs[(i * 3) + j])
 		triangles.append(_triangle)
-	# Turn each point index into a world position
-	var triangle_points = []
-	for i in range(triangles.size() - 1):
-		var _triangle_point = []
-		for j in range(3):
-			_triangle_point.append(
-				points_to_draw[(triangles[i][j])]
-			)
-		triangle_points.append(_triangle_point)
 	# Calculate edges to draw
 	edges_to_draw = []
-	for _triangle in triangle_points:
+	for _triangle in triangles:
 		for i in range(3):
 			var next_idx = null
 			match i:
@@ -121,11 +227,13 @@ func generate_starlanes() -> void:
 					next_idx = 0
 				_:
 					next_idx = i + 1
-			var _edge = [_triangle[i], _triangle[next_idx]]
-			if _edge not in edges_to_draw:
-				edges_to_draw.append(_edge)
-#	adjacency_list = generate_weighted_adjacency_list(points_to_draw)
-#	generate_edges(points_to_draw, adjacency_list)
+			var _edge = [_triangle[i], _triangle[next_idx], 1]
+			starmap_graph.add_edge(_triangle[i], _triangle[next_idx], 1)
+#			if _edge not in edges_to_draw:
+#				edges_to_draw.append(_edge)
+	#
+	starmap_graph.mst = starmap_graph.kruskal_mst()
+	edges_to_draw = starmap_graph.convert_to_world(starmap_graph.mst, points_to_draw)
 
 
 static func generate_points_for_circle(circle_position: Vector2, circle_radius: float, poisson_radius: float, retries: int, start_point := Vector2.INF) -> PackedVector2Array:
