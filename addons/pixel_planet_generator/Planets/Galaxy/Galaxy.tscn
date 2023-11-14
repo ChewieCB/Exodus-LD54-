@@ -13,7 +13,7 @@ gradient = SubResource("2")
 
 [sub_resource type="ShaderMaterial" id="4"]
 shader = ExtResource("2")
-shader_parameter/pixels = 512.0
+shader_parameter/pixels = 1024.0
 shader_parameter/rotation = 0.674
 shader_parameter/time_speed = 1.0
 shader_parameter/dither_size = 2.0

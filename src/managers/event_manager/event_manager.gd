@@ -9,7 +9,7 @@ var tutorial_progress = 0 # -1 = disable tutorial, 0 = enable tutorial
 var tick_since_last_event = 0
 var tick_to_event = 20
 var tick_passed_total = 0
-var tick_to_victory = 199
+var tick_to_victory = 200
 var end_game = false
 
 var ship_speed_per_day = 1
@@ -28,8 +28,8 @@ enum TRAVEL_PATH_TYPE {
 var chosen_path: TRAVEL_PATH_TYPE = TRAVEL_PATH_TYPE.DEFAULT_PATH
 
 # primary storyline
-var primary_story_date = [10, 50, 100, 150]
-var primary_story_id = 0:
+var primary_story_date = [10, 50, 100, 150, 199]
+var primary_story_id = :
 	set(value):
 		primary_story_id = value
 		emit_signal("primary_story_id_changed")
@@ -150,11 +150,9 @@ func check_tick_for_random_event():
 	print("Tick left for event ", tick_to_event - tick_since_last_event)
 
 
-	if primary_story_id <= 3 and tick_passed_total >= primary_story_date[primary_story_id] - 1:
+	if primary_story_id <= len(primary_story_date) - 1 and tick_passed_total >= primary_story_date[primary_story_id] - 1:
 		tick_to_event += 1 # Delay normal event a day to prevent stuff happened same time
 		match primary_story_id:
-			0:
-				play_event(primary_story_events[primary_story_id])
 			1:
 				if BuildingManager.check_if_building_exist("CryoPod"):
 					play_event(primary_story_events[primary_story_id])
@@ -164,6 +162,8 @@ func check_tick_for_random_event():
 			3:
 				if BuildingManager.check_if_building_exist("CryoPodHub"):
 					play_event(primary_story_events[primary_story_id])
+			_:
+				play_event(primary_story_events[primary_story_id])
 		primary_story_id += 1
 
 	if tick_passed_total >= tick_to_victory and not end_game:

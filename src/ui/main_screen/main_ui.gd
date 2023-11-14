@@ -223,26 +223,8 @@ func change_objective_label(text: String):
 
 func _on_debug_event_menu_button_item_selected(index):
 	# Adjust for separator items
-	# Dropdown order: debug, planet, space, self
 	var id = debug_event_dropdown.get_item_id(index)
 	var event_name = debug_event_dropdown.get_item_text(index)
-	# if "Tutorial" in event_name:
-	# 	EventManager.play_event(
-	# 		EventManager.tutorial_events[id]
-	# 	)
-	# elif "Victory" in event_name:
-	# 	EventManager.play_event(
-	# 		EventManager.victory_event
-	# 	)
-	# elif "Wakeup" in event_name:
-	# 	EventManager.play_event(
-	# 		EventManager.primary_story_events[id]
-	# 	)
-	# else:
-	# 	var offset = len(EventManager.tutorial_events) + 1
-	# 	EventManager.play_event(
-	# 		EventManager.encounter_events[id - offset]
-	# 	)
 	EventManager.play_event(EventManager.event_dict[id])
 	debug_event_dropdown.select(-1)
 
