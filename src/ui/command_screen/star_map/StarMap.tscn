@@ -18,8 +18,14 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_eteq2")
-circle_radius = 254.02
+circle_radius = 254.05
 poisson_radius = 14.98
+galactic_center_radius = 100.0
+galactic_center_connection_chance = 75.0
+galactic_center_connection_jitter = 0.74
+tertiary_connection_chance = 45.0
+tertiary_connection_jitter = 0.43
+negation_zone_radius = 201
 
 [node name="ColorRect" type="ColorRect" parent="."]
 visible = false

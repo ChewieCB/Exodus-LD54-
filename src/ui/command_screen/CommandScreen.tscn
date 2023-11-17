@@ -73,16 +73,24 @@ offset_bottom = 460.0
 [node name="Travel" type="TabBar" parent="DeviceFrame/TabContainer"]
 layout_mode = 2
 
-[node name="StarMap" parent="DeviceFrame/TabContainer/Travel" instance=ExtResource("3_jn7gj")]
-layout_mode = 1
-poisson_radius = 50.0
-
 [node name="SpaceMap" type="TextureRect" parent="DeviceFrame/TabContainer/Travel"]
+visible = false
 layout_mode = 0
 offset_top = 1.0
 offset_right = 453.0
 offset_bottom = 236.0
 texture = ExtResource("2_tgm10")
+
+[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Travel"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 1.0
+offset_right = 453.0
+offset_bottom = 236.0
+
+[node name="StarMap" parent="DeviceFrame/TabContainer/Travel/MarginContainer" instance=ExtResource("3_jn7gj")]
+layout_mode = 2
+poisson_radius = 50.0
 
 [node name="ProgressView" type="Control" parent="DeviceFrame/TabContainer/Travel"]
 anchors_preset = 0

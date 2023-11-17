@@ -18,15 +18,27 @@ extends Control
 		redraw_points()
 		generate_starlanes()
 
-#@export_group("Starlane Generation")
-#@export var point_connection_range: float = 100:
-#	set(value):
-#		point_connection_range = value
-#		generate_starlanes()
-#@export var max_point_connections: int = 100:
-#	set(value):
-#		max_point_connections = value
-#		generate_starlanes()
+@export_group("Starlane Generation")
+@export_range(0, 100, 1) var galactic_center_radius: float = 30:
+	set(value):
+		galactic_center_radius = value
+		generate_starlanes()
+@export_range(0, 100, 1) var galactic_center_connection_chance: float = 80:
+	set(value):
+		galactic_center_connection_chance = value
+		generate_starlanes()
+@export_range(0, 1, 0.01) var galactic_center_connection_jitter: float = 0.8:
+	set(value):
+		galactic_center_connection_jitter = value
+		generate_starlanes()
+@export_range(0, 100, 1) var tertiary_connection_chance: float = 30:
+	set(value):
+		tertiary_connection_chance = value
+		generate_starlanes()
+@export_range(0, 1, 0.01) var tertiary_connection_jitter: float = 0.5:
+	set(value):
+		tertiary_connection_jitter = value
+		generate_starlanes()
 
 @export_group("Negation Zone")
 @export_range(0, 256, 1) var negation_zone_radius: int = 256:
@@ -122,7 +134,7 @@ class Graph:
 			var _edge_world = [
 				world_points[edges[i][0]],
 				world_points[edges[i][1]],
-				edges[2]
+				edges[i][2]
 			]
 			result.append(_edge_world)
 			
@@ -191,17 +203,66 @@ class Graph:
 				self.union(parent, rank, x, y) 
 			# Else discard the edge 
 		var minimumCost = 0
-		print("Edges in the constructed MST") 
 		for edge in result:
 			var u = edge[0]
 			var v = edge[1]
 			var weight = edge[2]
 			minimumCost += weight 
-			print("%d -- %d == %d" % [u, v, weight]) 
-		print("Minimum Spanning Tree ", minimumCost)
 		
 		return result
 
+
+func _weight_toward_centre(a: Vector2, b: Vector2) -> float:
+	var close_vertex
+	var far_vertex
+	if a.distance_to(Vector2.ZERO) < b.distance_to(Vector2.ZERO):
+		close_vertex = a
+		far_vertex = b
+	else:
+		close_vertex = b 
+		far_vertex = a
+	
+	# Calculate how closely the edge vector points to the centre
+	var edge_dir = far_vertex.direction_to(close_vertex)
+	var dir_to_centre = close_vertex.direction_to(Vector2.ZERO)
+	var dot = edge_dir.dot(dir_to_centre)
+	
+	var weight = remap(abs(dot), 0, 1, 10, 1)
+	
+	return weight
+
+
+func _distance_to_centre(a: Vector2, b: Vector2) -> float:
+	var close_vertex
+	var far_vertex
+	if a.distance_to(Vector2.ZERO) < b.distance_to(Vector2.ZERO):
+		close_vertex = a
+		far_vertex = b
+	else:
+		close_vertex = b 
+		far_vertex = a
+	return close_vertex.distance_to(Vector2.ZERO)
+
+
+func _generate_tertiary_lanes(all_edges, mst_edges):
+	randomize()
+	var result = []
+	var non_mst_edges = all_edges.filter(
+		func(edge): return not edge in mst_edges
+	)
+	for edge in non_mst_edges:
+		# Generate more tertiary connections the closer we are to the centre
+		var dist = _distance_to_centre(edge[0], edge[1])
+		if dist <= galactic_center_radius:
+			dist = remap(dist, 0, galactic_center_radius, 0, galactic_center_connection_jitter)
+			if randf() + dist < galactic_center_connection_chance / 100:
+				result.append(edge)
+		else:
+			dist = remap(dist, 0, circle_radius, 0, tertiary_connection_jitter)
+			if randf() + dist < tertiary_connection_chance / 100:
+				result.append(edge)
+	
+	return result
 
 func generate_starlanes() -> void:
 	# Build Graph object to store edges and MST
@@ -227,13 +288,17 @@ func generate_starlanes() -> void:
 					next_idx = 0
 				_:
 					next_idx = i + 1
-			var _edge = [_triangle[i], _triangle[next_idx], 1]
-			starmap_graph.add_edge(_triangle[i], _triangle[next_idx], 1)
-#			if _edge not in edges_to_draw:
-#				edges_to_draw.append(_edge)
+			var _weight = _weight_toward_centre(
+				points_to_draw[_triangle[i]],
+				points_to_draw[_triangle[next_idx]]
+			)
+			starmap_graph.add_edge(_triangle[i], _triangle[next_idx], _weight)
 	#
 	starmap_graph.mst = starmap_graph.kruskal_mst()
-	edges_to_draw = starmap_graph.convert_to_world(starmap_graph.mst, points_to_draw)
+	var all_edges = starmap_graph.convert_to_world(starmap_graph.graph, points_to_draw)
+	var mst_lanes = starmap_graph.convert_to_world(starmap_graph.mst, points_to_draw)
+	var tertiary_lanes = _generate_tertiary_lanes(all_edges, mst_lanes)
+	edges_to_draw = mst_lanes + tertiary_lanes
 
 
 static func generate_points_for_circle(circle_position: Vector2, circle_radius: float, poisson_radius: float, retries: int, start_point := Vector2.INF) -> PackedVector2Array:
