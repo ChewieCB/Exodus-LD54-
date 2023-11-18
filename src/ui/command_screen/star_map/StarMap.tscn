@@ -1,27 +1,32 @@
-[gd_scene load_steps=2 format=3 uid="uid://1dd0jvugd41x"]
+[gd_scene load_steps=3 format=3 uid="uid://1dd0jvugd41x"]
 
 [ext_resource type="Script" path="res://src/ui/command_screen/star_map/star_map.gd" id="1_eteq2"]
+[ext_resource type="Script" path="res://src/ui/command_screen/star_map/starmap_camera.gd" id="2_k456u"]
 
-[node name="StarMap" type="Control"]
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -85.0
-offset_top = -82.0
-offset_right = 448.0
-offset_bottom = 444.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+[node name="StarMap" type="Node2D"]
 script = ExtResource("1_eteq2")
-circle_radius = 300.0
-poisson_radius = 13.0
-galactic_center_radius = 70.0
-galactic_center_connection_chance = 100.0
-galactic_center_connection_jitter = 0.71
+circle_radius = 400.0
+poisson_radius = 32.0
+galactic_center_radius = 95.0
+galactic_center_connection_chance = 86.0
+galactic_center_connection_jitter = 0.56
 tertiary_connection_chance = 37.0
-tertiary_connection_jitter = 0.24
+tertiary_connection_jitter = 0.29
+negation_zone_radius = 311
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(8, 8)
+script = ExtResource("2_k456u")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer"]
+visible = false
+offset_left = 640.0
+offset_top = -192.0
+offset_right = 1216.0
+offset_bottom = 320.0
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/SubViewportContainer"]
+handle_input_locally = false
+render_target_update_mode = 0

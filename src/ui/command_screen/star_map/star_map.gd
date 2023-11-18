@@ -1,5 +1,5 @@
 @tool
-extends Control
+extends Node2D
 
 @export_group("Poisson Disc")
 @export var circle_radius: float = 256:
@@ -46,6 +46,7 @@ extends Control
 		negation_zone_radius = value
 
 var points_to_draw: PackedVector2Array
+var stars: Array
 var starmap_graph: Graph
 var edges_to_draw = []
 var adjacency_list = []
@@ -54,10 +55,30 @@ var negation_zone_center: Vector2 = Vector2.ZERO
 enum ShapeType {CIRCLE, POLYGON}
 static var shape_info: Dictionary
 
+@onready var camera = $Camera2D
+@onready var star_node = preload("res://src/ui/star_map/star/StarNode.tscn")
+
+var target_zoom: float = 1.0
+var star_shaders_visible = 0:
+	set(value):
+		star_shaders_visible = value
+		print("%s star shaders visible." % value)
+
 
 func _ready():
 	redraw_points()
 	generate_starlanes()
+	# Clear any previously generated stars
+	for _star in stars:
+		_star.queue_free()
+		stars.erase(_star)
+	
+	var star_node = load("res://src/ui/star_map/star/StarNode.tscn")
+	for _point in points_to_draw:
+		var star_instance = star_node.instantiate()
+		star_instance.global_position = _point
+		add_child(star_instance)
+		stars.append(star_instance)
 
 
 func _draw():
@@ -89,7 +110,7 @@ func _draw():
 				_:
 					continue
 	# Stars
-	if points_to_draw:
+	if points_to_draw and Engine.is_editor_hint():
 		for point in points_to_draw:
 			if Geometry2D.is_point_in_circle(point, negation_zone_center, negation_zone_radius):
 				draw_circle(point, 2, Color.WHITE)
