@@ -41,7 +41,7 @@ extends Control
 		generate_starlanes()
 
 @export_group("Negation Zone")
-@export_range(0, 256, 1) var negation_zone_radius: int = 256:
+@export_range(0, 10000, 1) var negation_zone_radius: int = 256:
 	set(value):
 		negation_zone_radius = value
 
@@ -102,6 +102,9 @@ func _draw():
 	draw_circle_donut_poly(
 		negation_zone_center, negation_zone_radius, 500, 
 		0, 360, Color(1, 0, 0, 0.5)
+	)
+	draw_circle(
+		Vector2.ZERO, galactic_center_radius, Color(Color(0.941176, 1, 1, 0.4))
 	)
 
 
