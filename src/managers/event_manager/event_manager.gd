@@ -9,8 +9,14 @@ var tutorial_progress = 0 # -1 = disable tutorial, 0 = enable tutorial
 var tick_since_last_event = 0
 var tick_to_event = 20
 var tick_passed_total = 0
-var tick_to_victory = 199
+var tick_to_victory = 200
 var end_game = false
+
+var ship_speed_per_day = 1
+var distance_travelled = 0
+var distance_to_victory = 200
+
+var ship_hull_level = 1
 
 enum TRAVEL_PATH_TYPE {
 	DEFAULT_PATH,
@@ -21,25 +27,33 @@ enum TRAVEL_PATH_TYPE {
 
 var chosen_path: TRAVEL_PATH_TYPE = TRAVEL_PATH_TYPE.DEFAULT_PATH
 
+# primary storyline
+var primary_story_date = [10, 50, 100, 150, 199]
+var primary_story_id = :
+	set(value):
+		primary_story_id = value
+		emit_signal("primary_story_id_changed")
+
 signal building_finished
 signal start_event
 signal finish_event
 signal request_change_event_image
 signal request_change_objective_label
 signal victory
+signal primary_story_id_changed
 
-@export var event_resources: Array[ExodusEvent]
+@export var encounter_events: Array[ExodusEvent]
+@export var debug_events: Array[ExodusEvent]
 @export var tutorial_events: Array[ExodusEvent]
+@export var primary_story_events: Array[ExodusEvent]
 @export var victory_event: ExodusEvent
 #
-@export var planet_backgrounds: Array[Texture2D]
-@export var ship_backgrounds: Array[Texture2D]
-@export var space_backgrounds: Array[Texture2D]
 var previous_background: Texture2D = null
 #
-@onready var available_events: Array[ExodusEvent] = event_resources.duplicate()
+@onready var available_events: Array[ExodusEvent] = encounter_events.duplicate()
 var completed_events: Array[ExodusEvent]
 var n_woke_up_citizen = 0
+var event_dict = {} # Dictionary, format int : ExodusEvent (example: {0: tutorial_event_0}). Use in debug event dropdown
 
 @onready var planets = {
 	ExodusEvent.PlanetType.WET_TERRAIN: preload("res://addons/pixel_planet_generator/Planets/Rivers/Rivers.tscn"),
@@ -64,7 +78,7 @@ func _ready() -> void:
 	Dialogic.signal_event.connect(_on_dialogic_signal)
 	TickManager.tick.connect(check_tick_for_random_event)
 	tick_to_event = randi_range(MIN_TICK_FOR_EVENT, MAX_TICK_FOR_EVENT)
-	
+
 	# Remove the debug event from the available array
 	available_events.pop_front()
 	
@@ -101,33 +115,6 @@ func get_random_event():
 		return null
 
 
-# unused
-func get_random_background(type):
-	var background_array
-	match type:
-		ExodusEvent.EVENT_TYPES.PLANET:
-			background_array = planet_backgrounds
-		ExodusEvent.EVENT_TYPES.SHIP:
-			background_array = ship_backgrounds
-		ExodusEvent.EVENT_TYPES.DEBUG:
-			return null
-		_:
-			background_array = space_backgrounds
-	
-	randomize()
-	var rand_index = randi() % background_array.size()
-	var background = background_array[rand_index]
-	# Prevent showing the same background twice in a row
-	if previous_background and background_array.size() > 1:
-		while background == previous_background:
-			rand_index = randi() % background_array.size()
-			background = background_array[rand_index]
-	
-	previous_background = background
-	
-	return background
-
-
 func play_event(event: ExodusEvent) -> Node:
 	change_event_image(event.event_image, event.planet_type)
 	var timeline = event.build_dialogic_timeline()
@@ -135,6 +122,15 @@ func play_event(event: ExodusEvent) -> Node:
 	var dialog = Dialogic.start(timeline)
 	return dialog
 
+func play_event_by_name(event_name: String) -> Node:
+	var event: ExodusEvent = null
+	for e in encounter_events:
+		if e.name.to_lower() == event_name.to_lower():
+			event = e
+			break
+	if event != null:
+		return play_event(event)
+	return null
 
 func play_event_legacy(event_name: String) -> Node:
 	return call(event_name)
@@ -148,9 +144,27 @@ func change_objective_label(text: String):
 
 
 func check_tick_for_random_event():
+	# Tick equal days passed
 	tick_since_last_event += 1
 	tick_passed_total += 1
 	print("Tick left for event ", tick_to_event - tick_since_last_event)
+
+
+	if primary_story_id <= len(primary_story_date) - 1 and tick_passed_total >= primary_story_date[primary_story_id] - 1:
+		tick_to_event += 1 # Delay normal event a day to prevent stuff happened same time
+		match primary_story_id:
+			1:
+				if BuildingManager.check_if_building_exist("CryoPod"):
+					play_event(primary_story_events[primary_story_id])
+			2:
+				if BuildingManager.check_if_building_exist("CryoPodArray"):
+					play_event(primary_story_events[primary_story_id])
+			3:
+				if BuildingManager.check_if_building_exist("CryoPodHub"):
+					play_event(primary_story_events[primary_story_id])
+			_:
+				play_event(primary_story_events[primary_story_id])
+		primary_story_id += 1
 
 	if tick_passed_total >= tick_to_victory and not end_game:
 		end_game = true

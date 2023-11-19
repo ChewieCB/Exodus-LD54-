@@ -98,6 +98,7 @@ func _input(event):
 
 
 func _process(delta):
+	# TODO: Optimize this
 	if not placed and preview:
 		if collider.has_overlapping_areas() or collider.has_overlapping_bodies() or outside_gridmap:
 			color_sprite(1, 0, 0, 0.5)
@@ -128,16 +129,20 @@ func _on_tick():
 			build_timer_ui.label.text = str(ticks_left_to_build)
 	elif is_deconstructing:
 		if ticks_left_to_delete <= 1:
-			build_timer_ui.visible = false
-			ResourceManager.retrieve_workers(self)
-			BuildingManager.construction_queue.erase(self)
-			SoundManager.play_sound(build_finish_sfx, "SFX")
-			deconstructed_refund_resource()
-			self.queue_free()
+			remove_building()
 		else:
 			ticks_left_to_delete -= 1
 			build_timer_ui.label.text = str(ticks_left_to_delete)
 
+
+func remove_building():
+	build_timer_ui.visible = false
+	if is_constructing or is_deconstructing:
+		ResourceManager.retrieve_workers(self)
+	BuildingManager.construction_queue.erase(self)
+	SoundManager.play_sound(build_finish_sfx, "SFX")
+	deconstructed_refund_resource()
+	self.queue_free()
 
 func deconstructed_refund_resource():
 	if type == Building.TYPES.CryoPod:

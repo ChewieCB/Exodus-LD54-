@@ -13,7 +13,7 @@ gradient = SubResource("1")
 
 [sub_resource type="ShaderMaterial" id="3"]
 shader = ExtResource("4")
-shader_parameter/pixels = 128.0
+shader_parameter/pixels = 256.0
 shader_parameter/black_color = Color(0.152941, 0.152941, 0.211765, 1)
 shader_parameter/radius = 0.247
 shader_parameter/light_width = 0.028
@@ -28,7 +28,7 @@ gradient = SubResource("4")
 
 [sub_resource type="ShaderMaterial" id="6"]
 shader = ExtResource("3")
-shader_parameter/pixels = 384.0
+shader_parameter/pixels = 1024.0
 shader_parameter/rotation = 0.766
 shader_parameter/light_origin = Vector2(0.607, 0.444)
 shader_parameter/time_speed = 0.2
