@@ -1,7 +1,61 @@
-[gd_scene load_steps=3 format=3 uid="uid://1dd0jvugd41x"]
+[gd_scene load_steps=10 format=3 uid="uid://1dd0jvugd41x"]
 
 [ext_resource type="Script" path="res://src/ui/command_screen/star_map/star_map.gd" id="1_eteq2"]
+[ext_resource type="Texture2D" uid="uid://ptj0v57gt0k7" path="res://assets/backgrounds/Space Background(1).png" id="2_70tav"]
 [ext_resource type="Script" path="res://src/ui/command_screen/star_map/starmap_camera.gd" id="2_k456u"]
+[ext_resource type="Shader" path="res://src/ui/command_screen/star_map/space_bg_temp.gdshader" id="4_qryj1"]
+[ext_resource type="Shader" path="res://src/ui/command_screen/star_map/crt_overlay.gdshader" id="6_n6u0w"]
+[ext_resource type="Shader" path="res://src/ui/command_screen/star_map/starnest.gdshader" id="6_unoj6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_28fq1"]
+shader = ExtResource("4_qryj1")
+shader_parameter/iterations = 17
+shader_parameter/formuparam = 0.53
+shader_parameter/volsteps = 10
+shader_parameter/stepsize = 0.1
+shader_parameter/zoom = 0.8
+shader_parameter/tile = 0.85
+shader_parameter/speed = 0.0
+shader_parameter/brightness = 0.0015
+shader_parameter/darkmatter = 0.3
+shader_parameter/distfading = 0.73
+shader_parameter/saturation = 0.85
+shader_parameter/rotation = null
+shader_parameter/colorampMix = 0.5
+shader_parameter/isColoramp = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_41bdo"]
+shader = ExtResource("6_n6u0w")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.134
+shader_parameter/scanlines_width = 0.25
+shader_parameter/grille_opacity = 0.125
+shader_parameter/resolution = Vector2(450, 235)
+shader_parameter/pixelate = true
+shader_parameter/roll = true
+shader_parameter/roll_speed = 1.14
+shader_parameter/roll_size = 25.656
+shader_parameter/roll_variation = 1.304
+shader_parameter/distort_intensity = 0.006
+shader_parameter/noise_opacity = 0.089
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.06
+shader_parameter/aberration = 0.00500005
+shader_parameter/brightness = 1.4
+shader_parameter/discolor = true
+shader_parameter/warp_amount = 0.672
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.72
+shader_parameter/vignette_opacity = 0.254
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ckex1"]
+shader = ExtResource("6_unoj6")
+shader_parameter/ring_radius = 0.42
+shader_parameter/thickness_scalar = 0.75
+shader_parameter/oscillation_scalar = 0.01
+shader_parameter/speed = 1.0
+shader_parameter/main_color = Color(0.690196, 1, 0.784314, 1)
+shader_parameter/lerp_color = Color(1, 1, 0.690196, 1)
 
 [node name="StarMap" type="Node2D"]
 script = ExtResource("1_eteq2")
@@ -14,11 +68,36 @@ tertiary_connection_chance = 37.0
 tertiary_connection_jitter = 0.29
 negation_zone_radius = 311
 
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 512.0
+offset_bottom = 512.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("2_70tav")
+stretch_mode = 1
+
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(8, 8)
 script = ExtResource("2_k456u")
 
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="SpaceBackground" type="ColorRect" parent="CanvasLayer2"]
+material = SubResource("ShaderMaterial_28fq1")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer"]
 visible = false
@@ -30,3 +109,27 @@ offset_bottom = 320.0
 [node name="SubViewport" type="SubViewport" parent="CanvasLayer/SubViewportContainer"]
 handle_input_locally = false
 render_target_update_mode = 0
+
+[node name="CRTOverlay" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_41bdo")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="GalacticCenter" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_ckex1")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 128.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

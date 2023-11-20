@@ -1,16 +1,28 @@
-[gd_scene load_steps=10 format=3 uid="uid://b8ngxiiqcpo1k"]
+[gd_scene load_steps=13 format=3 uid="uid://b8ngxiiqcpo1k"]
 
 [ext_resource type="Script" path="res://assets/planets/Star/Star.gd" id="1"]
+[ext_resource type="Shader" path="res://assets/planets/Star/Glow.gdshader" id="1_0ykfh"]
 [ext_resource type="Shader" path="res://assets/planets/Star/StarBlobs.gdshader" id="2_ifj1o"]
 [ext_resource type="Shader" path="res://assets/planets/Star/Star.gdshader" id="2_n5g26"]
 [ext_resource type="Shader" path="res://assets/planets/Star/StarFlares.gdshader" id="4_iakqi"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0cir6"]
+shader = ExtResource("1_0ykfh")
+shader_parameter/radius = 0.6
+shader_parameter/thickness = 0.39
+shader_parameter/color = Color(0.929412, 0.592157, 0.0823529, 1)
+shader_parameter/brightness = 1.84
+shader_parameter/angular_speed = 1.27
+shader_parameter/radial_speed = 1.56
+shader_parameter/alpha = 0.23
+
 [sub_resource type="ShaderMaterial" id="1"]
+resource_local_to_scene = true
 shader = ExtResource("2_ifj1o")
 shader_parameter/pixels = 300.0
 shader_parameter/color = Color(0.929641, 0.588174, 0.082063, 1)
 shader_parameter/time_speed = 0.05
-shader_parameter/time = 2258.34
+shader_parameter/time = 4943.27
 shader_parameter/rotation = 0.0
 shader_parameter/seed = null
 shader_parameter/circle_amount = 2.0
@@ -20,29 +32,31 @@ shader_parameter/OCTAVES = 4
 
 [sub_resource type="Gradient" id="Gradient_fo81h"]
 offsets = PackedFloat32Array(0, 0.994737)
-colors = PackedColorArray(0.93, 0.59148, 0.0837, 1, 0.94, 0.0846, 0.0846, 1)
+colors = PackedColorArray(0.929412, 0.592157, 0.0823529, 1, 0.94, 0.0846, 0.0846, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_utib5"]
 gradient = SubResource("Gradient_fo81h")
 
 [sub_resource type="ShaderMaterial" id="4"]
+resource_local_to_scene = true
 shader = ExtResource("2_n5g26")
 shader_parameter/pixels = 100.0
 shader_parameter/time_speed = 1.0
-shader_parameter/time = 45.1668
-shader_parameter/rotation = 0.0
+shader_parameter/time = 741.49
+shader_parameter/rotation = 1.255
 shader_parameter/should_dither = true
-shader_parameter/seed = 4.615
-shader_parameter/size = 4.0
-shader_parameter/OCTAVES = 4
-shader_parameter/TILES = 1.0
+shader_parameter/seed = 6.427
+shader_parameter/size = 30.0
+shader_parameter/OCTAVES = 8
+shader_parameter/TILES = 9.0
 shader_parameter/colorramp = SubResource("GradientTexture2D_utib5")
 
 [sub_resource type="ShaderMaterial" id="7"]
+resource_local_to_scene = true
 shader = ExtResource("4_iakqi")
 shader_parameter/pixels = 200.0
 shader_parameter/time_speed = 0.05
-shader_parameter/time = 33875.1
+shader_parameter/time = 74149.0
 shader_parameter/rotation = 0.0
 shader_parameter/should_dither = true
 shader_parameter/storm_width = 0.3
@@ -53,6 +67,14 @@ shader_parameter/circle_amount = 5.0
 shader_parameter/circle_scale = 1.0
 shader_parameter/size = 50.0
 shader_parameter/OCTAVES = null
+
+[sub_resource type="Environment" id="Environment_rbybe"]
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 2.35
+glow_strength = 1.08
+glow_blend_mode = 0
+glow_hdr_threshold = 0.63
 
 [node name="Star" type="Control"]
 layout_mode = 3
@@ -72,6 +94,21 @@ size_flags_vertical = 4
 script = ExtResource("1")
 relative_scale = 2.0
 gui_zoom = 2.0
+
+[node name="Glow" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_0cir6")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.5
+offset_top = -2.5
+offset_right = 3.5
+offset_bottom = 3.5
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Blobs" type="ColorRect" parent="."]
 visible = false
@@ -108,3 +145,6 @@ grow_vertical = 2
 visible = false
 material = SubResource("7")
 layout_mode = 0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_rbybe")

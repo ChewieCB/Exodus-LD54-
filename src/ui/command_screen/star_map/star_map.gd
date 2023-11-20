@@ -57,6 +57,7 @@ static var shape_info: Dictionary
 
 @onready var camera = $Camera2D
 @onready var star_node = preload("res://src/ui/star_map/star/StarNode.tscn")
+@onready var starlane_scene = load("res://src/ui/star_map/starlane/Starlane.tscn")
 
 var target_zoom: float = 1.0
 var star_shaders_visible = 0:
@@ -68,6 +69,9 @@ var star_shaders_visible = 0:
 func _ready():
 	redraw_points()
 	generate_starlanes()
+	# TODO - figure out why we need that extra 32 pixels on the sizes 
+	$GalacticCenter.size = Vector2(galactic_center_radius * 2 + 32, galactic_center_radius * 2 + 32)
+	$GalacticCenter.set_anchors_and_offsets_preset(Control.PRESET_CENTER, Control.PRESET_MODE_KEEP_SIZE)
 	# Clear any previously generated stars
 	for _star in stars:
 		_star.queue_free()
@@ -75,40 +79,41 @@ func _ready():
 	
 	var star_node = load("res://src/ui/star_map/star/StarNode.tscn")
 	for _point in points_to_draw:
-		var star_instance = star_node.instantiate()
-		star_instance.global_position = _point
-		add_child(star_instance)
-		stars.append(star_instance)
+		if Geometry2D.is_point_in_circle(_point, negation_zone_center, negation_zone_radius):
+			var star_instance = star_node.instantiate()
+			star_instance.global_position = _point
+			add_child(star_instance)
+			stars.append(star_instance)
 
 
 func _draw():
 	# Starlanes
-	if edges_to_draw:
-		for edge in edges_to_draw:
-			var negated_vert = []
-			var negation_value = 0
-			# 0 = not in negation zone
-			# 1 = line crosses the negation range - clip it at the negation radius
-			# 2 = line outside of negation range - don't draw
-			for _vertex in edge:
-				if not _vertex is Vector2:
-					continue
-				if not Geometry2D.is_point_in_circle(_vertex, negation_zone_center, negation_zone_radius):
-					negation_value += 1
-					negated_vert.append(_vertex)
-			match negation_value:
-				0:
-					draw_line(edge[0], edge[1], Color.GOLD, 1.0)
-				1:
-					var _vert = negated_vert.pop_front()
-					if _vert == edge[0]:
-						var clamped_edge = (negation_zone_radius) * edge[0].normalized()
-						draw_line(clamped_edge, edge[1], Color.RED, 1.0)
-					elif _vert == edge[1]:
-						var clamped_edge = (negation_zone_radius) * edge[1].normalized()
-						draw_line(edge[0], clamped_edge, Color.RED, 1.0)
-				_:
-					continue
+#	if edges_to_draw:
+#		for edge in edges_to_draw:
+#			var negated_vert = []
+#			var negation_value = 0
+#			# 0 = not in negation zone
+#			# 1 = line crosses the negation range - clip it at the negation radius
+#			# 2 = line outside of negation range - don't draw
+#			for _vertex in edge:
+#				if not _vertex is Vector2:
+#					continue
+#				if not Geometry2D.is_point_in_circle(_vertex, negation_zone_center, negation_zone_radius):
+#					negation_value += 1
+#					negated_vert.append(_vertex)
+#			match negation_value:
+#				0:
+#					draw_line(edge[0], edge[1], Color.GOLD, 1.0)
+#				1:
+#					var _vert = negated_vert.pop_front()
+#					if _vert == edge[0]:
+#						var clamped_edge = (negation_zone_radius) * edge[0].normalized()
+#						draw_line(clamped_edge, edge[1], Color.RED, 1.0)
+#					elif _vert == edge[1]:
+#						var clamped_edge = (negation_zone_radius) * edge[1].normalized()
+#						draw_line(edge[0], clamped_edge, Color.RED, 1.0)
+#				_:
+#					continue
 	# Stars
 	if points_to_draw and Engine.is_editor_hint():
 		for point in points_to_draw:
@@ -123,9 +128,6 @@ func _draw():
 	draw_circle_donut_poly(
 		negation_zone_center, negation_zone_radius, 500, 
 		0, 360, Color(1, 0, 0, 0.5)
-	)
-	draw_circle(
-		Vector2.ZERO, galactic_center_radius, Color(Color(0.941176, 1, 1, 0.4))
 	)
 
 
@@ -288,6 +290,7 @@ func _generate_tertiary_lanes(all_edges, mst_edges):
 	
 	return result
 
+
 func generate_starlanes() -> void:
 	# Build Graph object to store edges and MST
 	starmap_graph = Graph.new(points_to_draw)
@@ -323,6 +326,42 @@ func generate_starlanes() -> void:
 	var mst_lanes = starmap_graph.convert_to_world(starmap_graph.mst, points_to_draw)
 	var tertiary_lanes = _generate_tertiary_lanes(all_edges, mst_lanes)
 	edges_to_draw = mst_lanes + tertiary_lanes
+	
+	if starlane_scene:
+		for edge in edges_to_draw:
+			var negated_vert = []
+			var negation_value = 0
+			# 0 = not in negation zone
+			# 1 = line crosses the negation range - clip it at the negation radius
+			# 2 = line outside of negation range - don't draw
+			for _vertex in edge.slice(0, 2):
+				if not _vertex is Vector2:
+					continue
+				if not Geometry2D.is_point_in_circle(_vertex, negation_zone_center, negation_zone_radius):
+					negation_value += 1
+					negated_vert.append(_vertex)
+			var starlane_instance = starlane_scene.instantiate()
+			match negation_value:
+				0:
+					starlane_instance.points = [edge[0], edge[1]]
+#					starlane_instance.material.set_shader_parameter("color", "#6effffb2")
+#					starlane_instance.material.set_shader_parameter("outline_color", "#6effffb2")
+				1:
+					var _vert = negated_vert.pop_front()
+					if _vert == edge[0]:
+						var clamped_edge = (negation_zone_radius) * edge[0].normalized()
+						starlane_instance.points = [clamped_edge, edge[1]]
+#						starlane_instance.material.set_shader_parameter("color", "#ff8c7347")
+#						starlane_instance.material.set_shader_parameter("outline_color", "#ff3b3ba0")
+					elif _vert == edge[1]:
+						var clamped_edge = (negation_zone_radius) * edge[1].normalized()
+						starlane_instance.points = [edge[0], clamped_edge]
+#						starlane_instance.material.set_shader_parameter("color", "#ff8c7347")
+#						starlane_instance.material.set_shader_parameter("outline_color", "#ff3b3ba0")
+				_:
+					continue
+			
+			add_child(starlane_instance)
 
 
 static func generate_points_for_circle(circle_position: Vector2, circle_radius: float, poisson_radius: float, retries: int, start_point := Vector2.INF) -> PackedVector2Array:

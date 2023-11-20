@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://cd8jv562e8xdi"]
+
+[ext_resource type="Shader" path="res://src/ui/star_map/starlane/starlane.gdshader" id="1_nao2e"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ck10c"]
+resource_local_to_scene = true
+shader = ExtResource("1_nao2e")
+shader_parameter/beams = 1
+shader_parameter/energy = 1.2
+shader_parameter/roughness = 1
+shader_parameter/frequency = 7
+shader_parameter/speed = 1.0
+shader_parameter/thickness = 0.017
+shader_parameter/outline_thickness = 0.03
+shader_parameter/beam_difference = 0.041
+shader_parameter/glow = 0.295
+shader_parameter/outline_glow = 0.065
+shader_parameter/color = Color(1, 0.517647, 0.168627, 0.360784)
+shader_parameter/outline_color = Color(1, 0.231373, 0.231373, 0.407843)
+shader_parameter/progress = 1.0
+shader_parameter/y_offset = 0.0
+shader_parameter/fixed_edge_size = 0.05
+shader_parameter/noise_scale = Vector2(1, 1)
+
+[node name="Starlane" type="Line2D"]
+material = SubResource("ShaderMaterial_ck10c")
+points = PackedVector2Array(0, 0, 100, 20, 140, 70, 250, 145)
+width = 20.0
+texture_mode = 2
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
