@@ -30,6 +30,11 @@ func _ready() -> void:
 	TickManager.tick.connect(_update_path_follow)
 
 
+func _input(event: InputEvent):
+	if event is InputEventMouseMotion or event is InputEventMouseButton:
+		$DeviceFrame/TabContainer/Travel/MarginContainer/SubViewport.push_input(event, false)
+
+
 func _update_path_follow():
 	var path_progress = float(EventManager.tick_passed_total) / EventManager.tick_to_victory
 	path_progress = clampf(path_progress, 0, 1)
@@ -99,12 +104,14 @@ func _on_show_hide_travel_screen_toggled(button_pressed:bool) -> void:
 		animation_player.play("show")
 		trave_screen_open = true
 		show_hide_command_screen_button.button_pressed = button_pressed
+		$DeviceFrame/TabContainer/Travel/MarginContainer.grab_focus()
 
 	else:
 		show_hide_command_screen_button.text = "Show command screen"
 		animation_player.play("hide")
 		trave_screen_open = false
 		show_hide_command_screen_button.button_pressed = button_pressed
+		$DeviceFrame/TabContainer/Travel/MarginContainer.release_focus()
 
 
 func _on_wake_up_citizen():

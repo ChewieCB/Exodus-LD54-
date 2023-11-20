@@ -22,7 +22,7 @@ shader_parameter/distfading = 0.73
 shader_parameter/saturation = 0.85
 shader_parameter/rotation = null
 shader_parameter/colorampMix = 0.5
-shader_parameter/isColoramp = null
+shader_parameter/isColoramp = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_41bdo"]
 shader = ExtResource("6_n6u0w")
@@ -60,7 +60,7 @@ shader_parameter/lerp_color = Color(1, 1, 0.690196, 1)
 [node name="StarMap" type="Node2D"]
 script = ExtResource("1_eteq2")
 circle_radius = 400.0
-poisson_radius = 32.0
+poisson_radius = 28.0
 galactic_center_radius = 95.0
 galactic_center_connection_chance = 86.0
 galactic_center_connection_jitter = 0.56

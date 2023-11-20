@@ -1,6 +1,6 @@
 extends Camera2D
 
-const MIN_ZOOM: float = 4.0
+const MIN_ZOOM: float = 2.0
 const MAX_ZOOM: float = 16.0
 const ZOOM_INCREMENT: float = 0.1
 const ZOOM_RATE: float = 16.0
@@ -11,16 +11,19 @@ var _target_zoom: float = 8.0
 
 
 func _physics_process(delta):
+	print(position)
 	zoom = lerp(
 		zoom, _target_zoom * Vector2.ONE,
 		ZOOM_RATE * delta 
 	)
 
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
+	if not get_parent().viewport_has_focus:
+		return
 	if event is InputEventMouseMotion:
 		if event.button_mask == MOUSE_BUTTON_MASK_MIDDLE:
-			position -= event.relative * zoom * 0.035
+			position -= event.relative / zoom * 0.35
 			# Clamp the camera position so we can't go past the negation zone
 			var center = get_screen_center_position()
 			var viewport_rect = get_viewport_rect()
@@ -28,16 +31,16 @@ func _unhandled_input(event: InputEvent) -> void:
 			var right_edge = center.x + viewport_rect.size.x
 			var top_edge = center.y + viewport_rect.size.y
 			var bottom_edge = center.y - viewport_rect.size.y
-			global_position.x = clamp(
-				global_position.x, 
-				-negation_zone_radius, 
-				negation_zone_radius
-			)
-			global_position.y = clamp(
-				global_position.y,
-				-negation_zone_radius, 
-				negation_zone_radius
-			)
+#			global_position.x = clamp(
+#				global_position.x, 
+#				-negation_zone_radius, 
+#				negation_zone_radius
+#			)
+#			global_position.y = clamp(
+#				global_position.y,
+#				-negation_zone_radius, 
+#				negation_zone_radius
+#			)
 	if event is InputEventMouseButton:
 		if event.is_pressed():
 			if event.button_index == MOUSE_BUTTON_WHEEL_UP:

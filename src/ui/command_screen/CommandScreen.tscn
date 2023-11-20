@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b1xmgw2jwmunk"]
+[gd_scene load_steps=12 format=3 uid="uid://b1xmgw2jwmunk"]
 
 [ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="1_4qidw"]
 [ext_resource type="Script" path="res://src/ui/command_screen/command_screen.gd" id="1_rladp"]
@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://d3pj8wans2lr4" path="res://assets/sprite/circle.png" id="3_4kwp3"]
 [ext_resource type="PackedScene" uid="uid://1dd0jvugd41x" path="res://src/ui/command_screen/star_map/StarMap.tscn" id="3_jn7gj"]
 [ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="4_hkjqs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ywpr8"]
+size = Vector2(450, 235)
 
 [sub_resource type="Curve2D" id="Curve2D_ncuok"]
 _data = {
@@ -54,6 +57,7 @@ _data = {
 [node name="CommandScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+mouse_filter = 1
 script = ExtResource("1_rladp")
 
 [node name="DeviceFrame" type="TextureRect" parent="."]
@@ -72,6 +76,7 @@ offset_bottom = 460.0
 
 [node name="Travel" type="TabBar" parent="DeviceFrame/TabContainer"]
 layout_mode = 2
+mouse_filter = 1
 
 [node name="SpaceMap" type="TextureRect" parent="DeviceFrame/TabContainer/Travel"]
 visible = false
@@ -81,7 +86,7 @@ offset_right = 453.0
 offset_bottom = 236.0
 texture = ExtResource("2_tgm10")
 
-[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Travel"]
+[node name="MarginContainer" type="SubViewportContainer" parent="DeviceFrame/TabContainer/Travel"]
 clip_contents = true
 layout_mode = 1
 anchors_preset = 8
@@ -95,14 +100,26 @@ offset_right = 225.0
 offset_bottom = 117.5
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+stretch = true
 
-[node name="StarMap" parent="DeviceFrame/TabContainer/Travel/MarginContainer" instance=ExtResource("3_jn7gj")]
-circle_radius = 600.0
-poisson_radius = 55.0
-retries = 18
-negation_zone_radius = 206
+[node name="Area2D" type="Area2D" parent="DeviceFrame/TabContainer/Travel/MarginContainer"]
+position = Vector2(224.5, 117)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeviceFrame/TabContainer/Travel/MarginContainer/Area2D"]
+shape = SubResource("RectangleShape2D_ywpr8")
+
+[node name="SubViewport" type="SubViewport" parent="DeviceFrame/TabContainer/Travel/MarginContainer"]
+handle_input_locally = false
+size = Vector2i(450, 235)
+render_target_update_mode = 4
+
+[node name="StarMap" parent="DeviceFrame/TabContainer/Travel/MarginContainer/SubViewport" instance=ExtResource("3_jn7gj")]
+position = Vector2(1167.5, 224)
+poisson_radius = 32.0
 
 [node name="ProgressView" type="Control" parent="DeviceFrame/TabContainer/Travel"]
+visible = false
 anchors_preset = 0
 offset_left = 289.0
 offset_top = 118.0
@@ -281,6 +298,8 @@ libraries = {
 }
 
 [connection signal="tab_changed" from="DeviceFrame/TabContainer" to="." method="_on_tab_container_tab_changed"]
+[connection signal="mouse_entered" from="DeviceFrame/TabContainer/Travel/MarginContainer/Area2D" to="DeviceFrame/TabContainer/Travel/MarginContainer/SubViewport/StarMap" method="_on_viewport_mouse_entered"]
+[connection signal="mouse_exited" from="DeviceFrame/TabContainer/Travel/MarginContainer/Area2D" to="DeviceFrame/TabContainer/Travel/MarginContainer/SubViewport/StarMap" method="_on_viewport_mouse_exited"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button" to="." method="_on_default_path_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button2" to="." method="_on_intergalatic_route_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button3" to="." method="_on_asteroid_field_pressed"]
