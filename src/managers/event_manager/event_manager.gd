@@ -29,7 +29,7 @@ var chosen_path: TRAVEL_PATH_TYPE = TRAVEL_PATH_TYPE.DEFAULT_PATH
 
 # primary storyline
 var primary_story_date = [10, 50, 100, 150, 199]
-var primary_story_id = :
+var primary_story_id = 0:
 	set(value):
 		primary_story_id = value
 		emit_signal("primary_story_id_changed")
