@@ -33,6 +33,7 @@ var water_alert_shown = false
 var air_alert_shown = false
 
 const FAROQ_KHAN_BONUS = 1.5
+const GOVERNOR_BONUS = 2
 
 # How many ticks/days/turns each endgame flag can go on for before you lose
 var starving_time: int = 9
@@ -208,6 +209,8 @@ func calculate_resource_modifier(resource_type, population) -> void:
 			# of used and avaialble housing
 			for building in BuildingManager.buildings:
 				production += building.data.housing_prod
+			if EnumAutoload.Officer.GOVERNOR in current_officers and production > 0:
+				production = (int)(GOVERNOR_BONUS * production)
 			consumption = population_amount
 			#
 			housing_amount = production
@@ -215,10 +218,10 @@ func calculate_resource_modifier(resource_type, population) -> void:
 		RESOURCE_TYPE.FOOD:
 			for building in BuildingManager.buildings:
 				production += building.data.food_prod
+			if EnumAutoload.Officer.FAROQ_KHAN in current_officers and production > 0:
+				production = (int)(FAROQ_KHAN_BONUS * production)
 			consumption = population * pop_food_cost
 			current_food_modifier = production - consumption
-			if EnumAutoload.Officer.FAROQ_KHAN in current_officers and current_food_modifier > 0:
-				current_food_modifier = (int)(FAROQ_KHAN_BONUS * current_food_modifier)
 		RESOURCE_TYPE.WATER:
 			for building in BuildingManager.buildings:
 				production += building.data.water_prod

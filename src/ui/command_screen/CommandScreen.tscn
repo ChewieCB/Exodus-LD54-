@@ -217,11 +217,12 @@ expand_mode = 1
 layout_mode = 0
 offset_left = 16.0
 offset_top = 40.0
-offset_right = 247.0
+offset_right = 255.0
 offset_bottom = 223.0
 
 [node name="Label" parent="DeviceFrame/TabContainer/Officers/VBoxContainer" node_paths=PackedStringArray("portrait_texturerect", "desc_label") instance=ExtResource("7_rk483")]
 layout_mode = 2
+text = "- Pressley (Executive Officer)"
 portrait_sprite = ExtResource("6_wk0bw")
 description = "Your dependable, trustworthy officer."
 portrait_texturerect = NodePath("../../PortraitTextureRect")
@@ -229,7 +230,7 @@ desc_label = NodePath("../../OfficerDescLabel")
 
 [node name="Label2" parent="DeviceFrame/TabContainer/Officers/VBoxContainer" node_paths=PackedStringArray("portrait_texturerect", "desc_label") instance=ExtResource("7_rk483")]
 layout_mode = 2
-text = "Torgon (Intercom Officer)"
+text = "- Torgon (Intercom Officer)"
 portrait_sprite = ExtResource("8_jre42")
 officer = 1
 description = "Maybe look a bit unreliable but he won't fail your trust."
@@ -238,7 +239,8 @@ desc_label = NodePath("../../OfficerDescLabel")
 
 [node name="Label3" parent="DeviceFrame/TabContainer/Officers/VBoxContainer" node_paths=PackedStringArray("portrait_texturerect", "desc_label") instance=ExtResource("7_rk483")]
 layout_mode = 2
-text = "Faroq Khan (Agriculture Director)"
+text = "- Faroq Khan (Agriculture Director)"
+autowrap_mode = 2
 portrait_sprite = ExtResource("9_47m3x")
 officer = 2
 description = "Very good at farm stuff. Boost your food production by 50%."
@@ -246,7 +248,6 @@ portrait_texturerect = NodePath("../../PortraitTextureRect")
 desc_label = NodePath("../../OfficerDescLabel")
 
 [node name="OfficerDescLabel" type="Label" parent="DeviceFrame/TabContainer/Officers"]
-visible = false
 layout_mode = 0
 offset_left = 263.0
 offset_top = 46.0
@@ -396,4 +397,4 @@ libraries = {
 [connection signal="toggled" from="DeviceFrame/TabContainer/Travel/ChangePathButton" to="." method="_on_change_path_button_toggled"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Ship/UpgradeHullButton" to="." method="_on_upgrade_hull_button_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Cryostasis Citizen/Button" to="." method="_on_wake_up_citizen"]
-[connection signal="toggled" from="DeviceFrame/ShowHideCommandScreen" to="." method="_on_show_hide_travel_screen_toggled"]
+[connection signal="toggled" from="DeviceFrame/ShowHideCommandScreen" to="." method="_on_show_hide_command_screen_toggled"]
