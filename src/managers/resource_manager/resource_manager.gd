@@ -32,6 +32,8 @@ var food_alert_shown = false
 var water_alert_shown = false
 var air_alert_shown = false
 
+const FAROQ_KHAN_BONUS = 1.5
+
 # How many ticks/days/turns each endgame flag can go on for before you lose
 var starving_time: int = 9
 var starving_time_left = starving_time:
@@ -87,8 +89,6 @@ enum RESOURCE_TYPE {
 	AIR,
 	METAL
 }
-
-
 
 var current_officers = [EnumAutoload.Officer.PRESSLEY, EnumAutoload.Officer.TORGON]
 
@@ -217,6 +217,8 @@ func calculate_resource_modifier(resource_type, population) -> void:
 				production += building.data.food_prod
 			consumption = population * pop_food_cost
 			current_food_modifier = production - consumption
+			if EnumAutoload.Officer.FAROQ_KHAN in current_officers and current_food_modifier > 0:
+				current_food_modifier = (int)(FAROQ_KHAN_BONUS * current_food_modifier)
 		RESOURCE_TYPE.WATER:
 			for building in BuildingManager.buildings:
 				production += building.data.water_prod
@@ -323,6 +325,19 @@ func change_resource_from_event(resource: String, amount_str: String):
 		"population_forced":
 			population_amount += amount
 
+func change_specialist_from_event(operation: String, specialist_name: String):
+	var specialist = null
+	match specialist_name:
+		"faroq_khan":
+			specialist = EnumAutoload.Officer.FAROQ_KHAN
+		"governor_jerrerod":
+			specialist = EnumAutoload.Officer.GOVERNOR
+	if specialist != null:
+		if operation == "add":
+			add_specialist(specialist)
+		else:
+			remove_specialist(specialist)
+			
 
 func wake_up_citizen(water_cost) -> String:
 	if water_amount < 15:
@@ -333,6 +348,21 @@ func wake_up_citizen(water_cost) -> String:
 	water_amount -= water_cost
 	return "success"
 
+
+func add_specialist(specialist: EnumAutoload.Officer):
+	if specialist not in current_officers:
+		current_officers.append(specialist)
+	print("Add spaecialist")		
+	update_specialist_bonus()
+
+func remove_specialist(specialist: EnumAutoload.Officer):
+	if specialist in current_officers:
+		current_officers.erase(specialist)
+	update_specialist_bonus()
+	print("Remove spaecialist")		
+
+func update_specialist_bonus():
+	return
 
 func reset_state():
 	# TODO - load initial values from file for difficulty settings
@@ -355,3 +385,5 @@ func reset_state():
 	current_food_modifier = 0
 	current_air_modifier = 0
 	current_water_modifier = 0
+	current_officers = [EnumAutoload.Officer.PRESSLEY, EnumAutoload.Officer.TORGON]
+	update_specialist_bonus()

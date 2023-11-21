@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b1xmgw2jwmunk"]
+[gd_scene load_steps=14 format=3 uid="uid://b1xmgw2jwmunk"]
 
 [ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="1_4qidw"]
 [ext_resource type="Script" path="res://src/ui/command_screen/command_screen.gd" id="1_rladp"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cegl6af3k4xpo" path="res://assets/character/pressley.png" id="6_wk0bw"]
 [ext_resource type="PackedScene" uid="uid://lwk7nc56s8g8" path="res://src/ui/command_screen/OfficerLabel.tscn" id="7_rk483"]
 [ext_resource type="Texture2D" uid="uid://df0siiqlu7ln3" path="res://assets/character/torgon.png" id="8_jre42"]
+[ext_resource type="Texture2D" uid="uid://xor5ih5p1g3d" path="res://assets/character/faroq_khan.png" id="9_47m3x"]
 
 [sub_resource type="Curve2D" id="Curve2D_ncuok"]
 _data = {
@@ -181,7 +182,6 @@ toggle_mode = true
 text = "Change path"
 
 [node name="Officers" type="TabBar" parent="DeviceFrame/TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Officers"]
@@ -236,6 +236,15 @@ description = "Maybe look a bit unreliable but he won't fail your trust."
 portrait_texturerect = NodePath("../../PortraitTextureRect")
 desc_label = NodePath("../../OfficerDescLabel")
 
+[node name="Label3" parent="DeviceFrame/TabContainer/Officers/VBoxContainer" node_paths=PackedStringArray("portrait_texturerect", "desc_label") instance=ExtResource("7_rk483")]
+layout_mode = 2
+text = "Faroq Khan (Agriculture Director)"
+portrait_sprite = ExtResource("9_47m3x")
+officer = 2
+description = "Very good at farm stuff. Boost your food production by 50%."
+portrait_texturerect = NodePath("../../PortraitTextureRect")
+desc_label = NodePath("../../OfficerDescLabel")
+
 [node name="OfficerDescLabel" type="Label" parent="DeviceFrame/TabContainer/Officers"]
 visible = false
 layout_mode = 0
@@ -248,6 +257,7 @@ text = "Your trustworthy officer. Can be depend on."
 autowrap_mode = 2
 
 [node name="Ship" type="TabBar" parent="DeviceFrame/TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Ship"]
@@ -281,6 +291,7 @@ Speed: ~1 LY / day"
 [node name="WarningLabel" type="Label" parent="DeviceFrame/TabContainer/Ship"]
 visible = false
 self_modulate = Color(1, 0.0392157, 0.054902, 1)
+layout_mode = 0
 offset_left = 116.0
 offset_top = 213.0
 offset_right = 344.0

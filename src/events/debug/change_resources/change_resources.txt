@@ -79,4 +79,14 @@ Debug menu, choose a resource to increase:
 	- -{air_cost_3} Population
 		You lose {air_cost_3} Air
 		[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "-{air_cost_3}"]" single_use="true"]
+- Add Officier
+	Choose officier to add
+	- Faroq Khan
+		Faroq Khan joined your crew
+		[call_node path="ResourceManager" method="change_specialist_from_event" args="["add", "faroq_khan"]" single_use="true"]
+- Remove Officier
+	Choose officier to remove
+	- Faroq Khan
+		Faroq Khan left your crew
+		[call_node path="ResourceManager" method="change_specialist_from_event" args="["remove", "faroq_khan"]" single_use="true"]
 [signal arg="end_event"]

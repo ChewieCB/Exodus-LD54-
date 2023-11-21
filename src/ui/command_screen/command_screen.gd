@@ -50,7 +50,7 @@ func update_officer_list():
 		if officer_label.officer in ResourceManager.current_officers:
 			officer_label.visible = true
 		else:
-			officer_label = false
+			officer_label.visible = false
 
 
 func update_ship_status_screen():
@@ -115,7 +115,8 @@ func _on_change_path_button_toggled(button_pressed:bool) -> void:
 		chose_path_screen_open = false
 
 
-func _on_show_hide_travel_screen_toggled(button_pressed:bool) -> void:
+func _on_show_hide_command_screen_toggled(button_pressed:bool) -> void:
+	update_officer_list()
 	wakeup_warning_label.visible = false
 	if button_pressed:
 		show_hide_command_screen_button.text = "Hide command screen"
@@ -149,12 +150,12 @@ func _on_wake_up_citizen():
 
 func hide_screen():
 	if trave_screen_open:
-		_on_show_hide_travel_screen_toggled(false)
+		_on_show_hide_command_screen_toggled(false)
 
 
 func show_screen():
 	if not trave_screen_open:
-		_on_show_hide_travel_screen_toggled(true)
+		_on_show_hide_command_screen_toggled(true)
 
 
 func _on_tab_container_tab_changed(tab:int) -> void:

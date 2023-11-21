@@ -3,7 +3,7 @@ extends Node
 enum Officer {
 	PRESSLEY,
 	TORGON,
-	FAROQ_KHAN,
+	FAROQ_KHAN, # Boost food production
 	DR_TURNER,
-	GOVERNOR
+	GOVERNOR # Boost habitation capacity
 }
