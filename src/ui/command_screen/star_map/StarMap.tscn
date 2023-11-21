@@ -1,11 +1,41 @@
-[gd_scene load_steps=10 format=3 uid="uid://1dd0jvugd41x"]
+[gd_scene load_steps=13 format=3 uid="uid://1dd0jvugd41x"]
 
 [ext_resource type="Script" path="res://src/ui/command_screen/star_map/star_map.gd" id="1_eteq2"]
 [ext_resource type="Texture2D" uid="uid://ptj0v57gt0k7" path="res://assets/backgrounds/Space Background(1).png" id="2_70tav"]
 [ext_resource type="Script" path="res://src/ui/command_screen/star_map/starmap_camera.gd" id="2_k456u"]
 [ext_resource type="Shader" path="res://src/ui/command_screen/star_map/space_bg_temp.gdshader" id="4_qryj1"]
+[ext_resource type="Shader" path="res://src/ui/command_screen/star_map/center_black_hole.gdshader" id="5_ihuh7"]
 [ext_resource type="Shader" path="res://src/ui/command_screen/star_map/crt_overlay.gdshader" id="6_n6u0w"]
 [ext_resource type="Shader" path="res://src/ui/command_screen/star_map/starnest.gdshader" id="6_unoj6"]
+[ext_resource type="Texture2D" uid="uid://ckoxrr26nrbmi" path="res://assets/sprite/ship_concept_side.png" id="7_pxyjt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ckex1"]
+shader = ExtResource("6_unoj6")
+shader_parameter/ring_radius = 0.42
+shader_parameter/thickness_scalar = 0.75
+shader_parameter/oscillation_scalar = 0.01
+shader_parameter/speed = 1.0
+shader_parameter/main_color = Color(0.690196, 1, 0.784314, 1)
+shader_parameter/lerp_color = Color(1, 1, 0.690196, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ikp86"]
+resource_local_to_scene = true
+shader = ExtResource("5_ihuh7")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/size = 1.738
+shader_parameter/squishness = Vector2(1, 1)
+shader_parameter/color1 = Color(0, 0, 0, 1)
+shader_parameter/color2 = Color(0, 0, 0, 1)
+shader_parameter/color3 = Color(0.0666667, 0.0705882, 0, 0.890196)
+shader_parameter/color4 = Color(0.309804, 0.231373, 0.109804, 1)
+shader_parameter/color5 = Color(0.239216, 0.101961, 0, 0.486275)
+shader_parameter/color6 = Color(0, 0, 0, 0)
+shader_parameter/step1 = 0.159
+shader_parameter/step2 = 0.141
+shader_parameter/step3 = 0.151
+shader_parameter/step4 = 0.174
+shader_parameter/step5 = 0.216
+shader_parameter/step6 = 0.274
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_28fq1"]
 shader = ExtResource("4_qryj1")
@@ -48,15 +78,6 @@ shader_parameter/clip_warp = false
 shader_parameter/vignette_intensity = 0.72
 shader_parameter/vignette_opacity = 0.254
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ckex1"]
-shader = ExtResource("6_unoj6")
-shader_parameter/ring_radius = 0.42
-shader_parameter/thickness_scalar = 0.75
-shader_parameter/oscillation_scalar = 0.01
-shader_parameter/speed = 1.0
-shader_parameter/main_color = Color(0.690196, 1, 0.784314, 1)
-shader_parameter/lerp_color = Color(1, 1, 0.690196, 1)
-
 [node name="StarMap" type="Node2D"]
 script = ExtResource("1_eteq2")
 circle_radius = 400.0
@@ -84,6 +105,53 @@ stretch_mode = 1
 zoom = Vector2(8, 8)
 script = ExtResource("2_k456u")
 
+[node name="GalacticCenter" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_ckex1")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -111.0
+offset_top = -111.0
+offset_right = 111.0
+offset_bottom = 111.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BlackHole" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_ikp86")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="BlackHoleRing" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_ikp86")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 layer = -1
 
@@ -99,17 +167,6 @@ mouse_filter = 2
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer"]
-visible = false
-offset_left = 640.0
-offset_top = -192.0
-offset_right = 1216.0
-offset_bottom = 320.0
-
-[node name="SubViewport" type="SubViewport" parent="CanvasLayer/SubViewportContainer"]
-handle_input_locally = false
-render_target_update_mode = 0
-
 [node name="CRTOverlay" type="ColorRect" parent="CanvasLayer"]
 material = SubResource("ShaderMaterial_41bdo")
 anchors_preset = 15
@@ -119,17 +176,13 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="GalacticCenter" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_ckex1")
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -128.0
-offset_top = -128.0
-offset_right = 128.0
-offset_bottom = 128.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
+[node name="Stars" type="Node2D" parent="."]
+
+[node name="Starlanes" type="Node2D" parent="."]
+
+[node name="ShipTracker" type="Node2D" parent="."]
+position = Vector2(-79, -11)
+
+[node name="Sprite2D" type="Sprite2D" parent="ShipTracker"]
+scale = Vector2(0.008, 0.008)
+texture = ExtResource("7_pxyjt")

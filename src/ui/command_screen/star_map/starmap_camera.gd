@@ -4,6 +4,7 @@ const MIN_ZOOM: float = 2.0
 const MAX_ZOOM: float = 16.0
 const ZOOM_INCREMENT: float = 0.1
 const ZOOM_RATE: float = 16.0
+const PAN_RETURN_RATE: float = 4.0
 
 var _target_zoom: float = 8.0
 
@@ -11,16 +12,25 @@ var _target_zoom: float = 8.0
 
 
 func _physics_process(delta):
-	print(position)
 	zoom = lerp(
 		zoom, _target_zoom * Vector2.ONE,
 		ZOOM_RATE * delta 
 	)
+	var ship_sprite = get_parent().get_node("ShipTracker/Sprite2D")
+	var new_sprite_scale = 0.008 * remap(zoom.x, MIN_ZOOM, MAX_ZOOM, 2, 1)
+	ship_sprite.scale = Vector2(new_sprite_scale, new_sprite_scale)
+	if not Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE):
+		if self.global_position != get_parent().get_node("ShipTracker").global_position:
+			global_position = lerp(
+				global_position, 
+				get_parent().get_node("ShipTracker").global_position,
+				PAN_RETURN_RATE * delta
+			)
 
 
 func _input(event: InputEvent) -> void:
-	if not get_parent().viewport_has_focus:
-		return
+#	if not get_parent().viewport_has_focus:
+#		return
 	if event is InputEventMouseMotion:
 		if event.button_mask == MOUSE_BUTTON_MASK_MIDDLE:
 			position -= event.relative / zoom * 0.35

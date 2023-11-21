@@ -49,10 +49,10 @@ func _on_visible_on_screen_notifier_2d_screen_entered():
 	for _param in star_attributes.keys().slice(2):
 		star_instance.set_param(_param, star_attributes[_param])
 	
-	get_parent().star_shaders_visible += 1
+	get_parent().get_parent().star_shaders_visible += 1
 	add_child(star_instance)
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	star_instance.queue_free()
-	get_parent().star_shaders_visible -= 1
+	get_parent().get_parent().star_shaders_visible -= 1

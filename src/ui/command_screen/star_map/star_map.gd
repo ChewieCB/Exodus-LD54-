@@ -23,6 +23,7 @@ extends Node2D
 	set(value):
 		galactic_center_radius = value
 		generate_starlanes()
+#var black_hole_radius: float = 15
 @export_range(0, 100, 1) var galactic_center_connection_chance: float = 80:
 	set(value):
 		galactic_center_connection_chance = value
@@ -48,15 +49,25 @@ extends Node2D
 var points_to_draw: PackedVector2Array
 var stars: Array
 var starmap_graph: Graph
+
 var edges_to_draw = []
+var available_spawn_lanes = []
+var previous_star_lanes = []
+
 var adjacency_list = []
+
 var negation_zone_center: Vector2 = Vector2.ZERO
+
+var next_star: Vector2
+const SHIP_MOVE_RATE: float = 10.0
 
 enum ShapeType {CIRCLE, POLYGON}
 static var shape_info: Dictionary
 
 @onready var camera = $Camera2D
+@onready var stars_parent = $Stars
 @onready var star_node = preload("res://src/ui/star_map/star/StarNode.tscn")
+@onready var starlanes_parent = $Starlanes
 @onready var starlane_scene = load("res://src/ui/star_map/starlane/Starlane.tscn")
 
 var viewport_has_focus: bool = false
@@ -72,18 +83,17 @@ func _ready():
 	# TODO - figure out why we need that extra 32 pixels on the sizes 
 	$GalacticCenter.size = Vector2(galactic_center_radius * 2 + 32, galactic_center_radius * 2 + 32)
 	$GalacticCenter.set_anchors_and_offsets_preset(Control.PRESET_CENTER, Control.PRESET_MODE_KEEP_SIZE)
-	# Clear any previously generated stars
-	for _star in stars:
-		_star.queue_free()
-		stars.erase(_star)
-	
-	var star_node = load("res://src/ui/star_map/star/StarNode.tscn")
-	for _point in points_to_draw:
-		if Geometry2D.is_point_in_circle(_point, negation_zone_center, negation_zone_radius):
-			var star_instance = star_node.instantiate()
-			star_instance.global_position = _point
-			add_child(star_instance)
-			stars.append(star_instance)
+	$BlackHole.size = Vector2(galactic_center_radius/2 + 32, galactic_center_radius/2 + 32)
+	$BlackHole.set_anchors_and_offsets_preset(Control.PRESET_CENTER, Control.PRESET_MODE_KEEP_SIZE)
+	# Add star shaders
+	var star_positions = generate_stars(stars)
+	# Pick an outer star and place the ship tracker there
+	var outer_stars = get_outer_stars(star_positions)
+	var start_point = outer_stars[randi_range(0, outer_stars.size() - 1)]
+	$ShipTracker.global_position = start_point
+	# Get next star on optimal path to center
+	next_star = get_next_star_center_path(start_point)
+	$ShipTracker.look_at(next_star)
 
 
 func _draw():
@@ -119,6 +129,13 @@ func _draw():
 		for point in points_to_draw:
 			if Geometry2D.is_point_in_circle(point, negation_zone_center, negation_zone_radius):
 				draw_circle(point, 2, Color.WHITE)
+	# DEBUG SPAWN LANES
+	if available_spawn_lanes:
+		for lane in available_spawn_lanes:
+			if lane == available_spawn_lanes[0]:
+				draw_line(lane[0], lane[1], Color.GOLD, 1.0)
+#			else:
+#				draw_line(lane[0], lane[1], Color.GREEN, 1.0)
 	# Negation Zone edge
 	draw_circle_donut_poly(
 		negation_zone_center, negation_zone_radius, negation_zone_radius + 2, 
@@ -135,8 +152,80 @@ func _process(_delta):
 	queue_redraw()
 
 
+func _physics_process(delta):
+	if next_star:
+		# TODO - get lerp working for this so we can ease it
+		$ShipTracker.global_position += (next_star - $ShipTracker.global_position).normalized() * SHIP_MOVE_RATE * delta
+
+
+func _input(_event):
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		if next_star:
+			if $ShipTracker.global_position.distance_to(next_star) < 1:
+				next_star = get_next_star_center_path($ShipTracker.global_position)
+				$ShipTracker.look_at(next_star)
+
+
+func get_next_star_center_path(start_point) -> Vector2:
+	available_spawn_lanes = edges_to_draw.duplicate()
+	# Filter out edges that don't connect to the start point
+	available_spawn_lanes = available_spawn_lanes.filter(
+		func(lane): 
+			return lane[0].distance_to(start_point) < 1 or lane[1].distance_to(start_point) < 1
+	)
+	# Sort by how closely the far vertex points to the galactic center
+	available_spawn_lanes.sort_custom(
+		func(a, b): 
+			# For each lane find which point is the start_point
+			# A
+			var close_vertex_a
+			var far_vertex_a
+			if a[0] == start_point:
+				close_vertex_a = a[0]
+				far_vertex_a = a[1]
+			else:
+				close_vertex_a = a[1]
+				far_vertex_a = a[0]
+			# B
+			var close_vertex_b
+			var far_vertex_b
+			if b[0] == start_point:
+				close_vertex_b = b[0]
+				far_vertex_b = b[1]
+			else:
+				close_vertex_b = b[1]
+				far_vertex_b = b[0]
+			
+			return far_vertex_a.distance_to(Vector2.ZERO) < far_vertex_b.distance_to(Vector2.ZERO) 
+	)
+#	# Sort by lane weight, this tells us how much the lane points towards the center.
+#	# The closer to 0 the weighting is the more the lane points towards the center.
+#	available_spawn_lanes.sort_custom(
+#		func(a, b):
+#			return abs(a[2]) < abs(b[2])
+#	)
+	#
+	var next_star
+	if available_spawn_lanes[0][0] == start_point:
+		next_star = available_spawn_lanes[0][1]
+	else:
+		next_star = available_spawn_lanes[0][0]
+	
+	# Append the lane to used so we don't loop back
+	previous_star_lanes.append(available_spawn_lanes[0])
+		
+	return next_star  
+
+
 func redraw_points() -> void:
-	points_to_draw = generate_points_for_circle(Vector2.ZERO, circle_radius, poisson_radius, retries)
+	var valid_points = generate_points_for_circle(Vector2.ZERO, circle_radius, poisson_radius, retries)
+	# Remove any points that would cross the black hole at the center
+	points_to_draw = Array(valid_points).filter(
+		func(point): 
+			return not Geometry2D.is_point_in_circle(
+				point, Vector2.ZERO, galactic_center_radius / 2
+			)
+	)
 
 
 class Graph:
@@ -210,13 +299,17 @@ class Graph:
 			rank.append(0) 
 		# Number of edges to be taken is less than to V-1 
 		while e < self.vertices.size() - 1: 
+			# Workaround since we messed with the edge generation to avoid
+			# the black hole.
+			if i > graph.size() - 1:
+				break
 			# Pick the smallest edge and increment 
 			# the index for next iteration
 			var edge = self.graph[i]
 			var u = edge[0]
 			var v = edge[1]
 			var w = edge[2]
-			i = i + 1
+			i += 1
 			var x = self.find(parent, u) 
 			var y = self.find(parent, v) 
 			# If including this edge doesn't 
@@ -319,6 +412,12 @@ func generate_starlanes() -> void:
 				points_to_draw[_triangle[i]],
 				points_to_draw[_triangle[next_idx]]
 			)
+			# Don't generate lanes that pass through the black hole center
+			if Geometry2D.segment_intersects_circle(
+				points_to_draw[_triangle[i]], points_to_draw[_triangle[next_idx]], 
+				Vector2.ZERO, galactic_center_radius / 2
+			) != -1:
+				continue
 			starmap_graph.add_edge(_triangle[i], _triangle[next_idx], _weight)
 	#
 	starmap_graph.mst = starmap_graph.kruskal_mst()
@@ -361,7 +460,34 @@ func generate_starlanes() -> void:
 				_:
 					continue
 			
-			add_child(starlane_instance)
+			starlanes_parent.add_child(starlane_instance)
+
+
+func generate_stars(stars) -> Array:
+	for _star in stars:
+		_star.queue_free()
+		stars.erase(_star)
+	
+	var star_node = load("res://src/ui/star_map/star/StarNode.tscn")
+	var star_positions = []
+	for _point in points_to_draw:
+		if Geometry2D.is_point_in_circle(_point, negation_zone_center, negation_zone_radius):
+			var star_instance = star_node.instantiate()
+			star_instance.global_position = _point
+			stars_parent.add_child(star_instance)
+			stars.append(star_instance)
+			star_positions.append(star_instance.global_position)
+	return star_positions
+
+
+func get_outer_stars(stars, min_distance=16, max_distance=32) -> Array:
+	var outer_stars = Array(stars).filter(
+		func(star): 
+			return star.distance_to(Vector2.ZERO) >= negation_zone_radius - max_distance \
+				and star.distance_to(Vector2.ZERO) <= negation_zone_radius + min_distance
+	)
+	
+	return outer_stars
 
 
 static func generate_points_for_circle(circle_position: Vector2, circle_radius: float, poisson_radius: float, retries: int, start_point := Vector2.INF) -> PackedVector2Array:
@@ -442,8 +568,12 @@ static func _is_valid_sample(shape: int, sample: Vector2, transpose: Vector2, ce
 static func _is_point_in_sample_region(sample: Vector2, shape: int) -> bool:
 	if shape == ShapeType.POLYGON and Geometry2D.is_point_in_polygon(sample, shape_info[shape]["points"]):
 			return true
-	elif shape == ShapeType.CIRCLE and Geometry2D.is_point_in_circle(sample, shape_info[shape]["circle_position"], shape_info[shape]["circle_radius"]):
-			return true
+	elif shape == ShapeType.CIRCLE and Geometry2D.is_point_in_circle(
+		sample, 
+		shape_info[shape]["circle_position"], 
+		shape_info[shape]["circle_radius"]
+	):
+		return true
 	else:
 		return false
 

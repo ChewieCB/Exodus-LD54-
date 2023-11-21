@@ -116,7 +116,6 @@ render_target_update_mode = 4
 
 [node name="StarMap" parent="DeviceFrame/TabContainer/Travel/MarginContainer/SubViewport" instance=ExtResource("3_jn7gj")]
 position = Vector2(1167.5, 224)
-poisson_radius = 32.0
 
 [node name="ProgressView" type="Control" parent="DeviceFrame/TabContainer/Travel"]
 visible = false
