@@ -335,6 +335,12 @@ func change_specialist_from_event(operation: String, specialist_name: String):
 			specialist = EnumAutoload.Officer.FAROQ_KHAN
 		"governor_jerrerod":
 			specialist = EnumAutoload.Officer.GOVERNOR
+		"dr_dorian":
+			specialist = EnumAutoload.Officer.DR_DORIAN
+		"mary_watney":
+			specialist = EnumAutoload.Officer.MARY_WATNEY
+		"sam_carter":
+			specialist = EnumAutoload.Officer.SAM_CARTER
 	if specialist != null:
 		if operation == "add":
 			add_specialist(specialist)

@@ -4,6 +4,8 @@ enum Officer {
 	PRESSLEY,
 	TORGON,
 	FAROQ_KHAN, # Boost food production
-	DR_TURNER,
-	GOVERNOR # Boost habitation capacity
+	SAM_CARTER,
+	GOVERNOR, # Boost habitation capacity
+	MARY_WATNEY,
+	DR_DORIAN
 }

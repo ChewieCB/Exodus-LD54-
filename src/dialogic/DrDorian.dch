@@ -9,14 +9,14 @@
 },
 "default_portrait": "Normal",
 "description": "",
-"display_name": "Governor Jerrerod",
+"display_name": "Dr Dorian",
 "mirror": false,
 "nicknames": [""],
 "offset": Vector2(0, 0),
 "portraits": {
 "Normal": {
 "export_overrides": {
-"image": "\"res://assets/character/governor_jerrerod.png\""
+"image": "\"res://assets/character/dr_dorian.png\""
 },
 "image": "",
 "mirror": false,

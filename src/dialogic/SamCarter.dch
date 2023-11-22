@@ -8,15 +8,15 @@
 "style": ""
 },
 "default_portrait": "Normal",
-"description": "",
-"display_name": "Governor Jerrerod",
+"description": "The scientist",
+"display_name": "Sam Carter",
 "mirror": false,
 "nicknames": [""],
 "offset": Vector2(0, 0),
 "portraits": {
 "Normal": {
 "export_overrides": {
-"image": "\"res://assets/character/governor_jerrerod.png\""
+"image": "\"res://assets/character/sam_carter.png\""
 },
 "image": "",
 "mirror": false,
