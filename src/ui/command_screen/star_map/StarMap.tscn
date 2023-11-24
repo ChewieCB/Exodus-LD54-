@@ -87,7 +87,7 @@ galactic_center_connection_chance = 86.0
 galactic_center_connection_jitter = 0.56
 tertiary_connection_chance = 37.0
 tertiary_connection_jitter = 0.29
-negation_zone_radius = 311
+negation_zone_radius = 291
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchors_preset = 15
@@ -183,8 +183,8 @@ mouse_filter = 2
 [node name="Stars" type="Node2D" parent="."]
 
 [node name="ShipTracker" type="Node2D" parent="."]
-position = Vector2(-147.966, 202.83)
-rotation = 4.52662
+position = Vector2(133.568, 235.083)
+rotation = 4.8029
 
 [node name="Sprite2D" type="Sprite2D" parent="ShipTracker"]
 scale = Vector2(0.008, 0.008)

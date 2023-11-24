@@ -60,7 +60,10 @@ var negation_zone_center: Vector2 = Vector2.ZERO
 @onready var adjusted_center = negation_zone_center + get_global_transform().origin
 
 var next_star: Vector2
-const SHIP_MOVE_RATE: float = 5.0
+const SHIP_MOVE_RATE: float = 10.0
+
+var zone_shrinking: bool = false
+const NEGATION_FIELD_SHRINK_RATE: float = 1.0
 
 enum ShapeType {CIRCLE, POLYGON}
 static var shape_info: Dictionary
@@ -93,13 +96,10 @@ func _ready():
 	# Pick an outer star and place the ship tracker there
 	var outer_stars = get_outer_stars(star_positions)
 	var start_point = outer_stars[randi_range(0, outer_stars.size() - 1)]
-	$ShipTracker.global_position = start_point
-	# Get next star on optimal path to center
-	next_star = get_next_star_center_path(start_point - get_global_transform().origin)
-	$ShipTracker.look_at(next_star)
+	next_star = start_point
 	chevrons_instance = starlane_chevrons_scene.instantiate()
-	chevrons_instance.points = [start_point - get_global_transform().origin, next_star - get_global_transform().origin]
 	starlanes_parent.add_child(chevrons_instance)
+	$ShipTracker.global_position = start_point
 
 
 func _draw():
@@ -108,13 +108,6 @@ func _draw():
 		for point in points_to_draw:
 			if Geometry2D.is_point_in_circle(point, negation_zone_center, negation_zone_radius):
 				draw_circle(point, 2, Color.WHITE)
-	# DEBUG SPAWN LANES
-	if available_spawn_lanes:
-		for lane in available_spawn_lanes:
-			if lane == available_spawn_lanes[0]:
-				draw_line(lane[0], lane[1], Color(1, 0.843137, 0, 0.5), 0.6)
-#			else:
-#				draw_line(lane[0], lane[1], Color.GREEN, 1.0)
 	# Negation Zone edge
 	draw_circle_donut_poly(
 		negation_zone_center, negation_zone_radius, negation_zone_radius + 2, 
@@ -136,17 +129,41 @@ func _physics_process(delta):
 		# TODO - get lerp working for this so we can ease it
 		$ShipTracker.global_position += (next_star - $ShipTracker.global_position).normalized() * SHIP_MOVE_RATE * delta
 		if $ShipTracker.global_position.distance_to(next_star) < 1:
-			chevrons_instance.points = []
+			if chevrons_instance:
+				chevrons_instance.points = []
 
 
-func _input(_event):
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		if next_star:
-			if $ShipTracker.global_position.distance_to(next_star) < 1:
-				var start_point = $ShipTracker.global_position - get_global_transform().origin
-				next_star = get_next_star_center_path(start_point)
-				$ShipTracker.look_at(next_star)
-				chevrons_instance.points = [start_point, next_star - get_global_transform().origin]
+#func _input(_event):
+#	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+#		pass
+
+
+func select_star_to_travel_to(star):
+	if next_star:
+		if star.global_position - get_global_transform().origin == next_star:
+			return
+		if $ShipTracker.global_position.distance_to(next_star) < 1:
+			var start_point = $ShipTracker.global_position - get_global_transform().origin
+			var connected_lanes = get_connected_starlanes(start_point)
+			for _lane in connected_lanes:
+				if star.global_position - get_global_transform().origin in _lane:
+					next_star = star.global_position
+					$ShipTracker.look_at(next_star - get_global_transform().origin)
+					chevrons_instance.points = [start_point, next_star - get_global_transform().origin]
+					#
+					if not zone_shrinking:
+						zone_shrinking = true
+
+
+func get_connected_starlanes(start_point) -> Array:
+	var connected_lanes = edges_to_draw.duplicate()
+	# Filter out edges that don't connect to the start point
+	connected_lanes = connected_lanes.filter(
+		func(lane): 
+			return lane[0].distance_to(start_point) < 1 or lane[1].distance_to(start_point) < 1
+	)
+	
+	return connected_lanes
 
 
 func get_next_star_center_path(start_point) -> Vector2:
@@ -504,6 +521,8 @@ func generate_stars(stars) -> Array:
 	for _point in points_to_draw:
 		if Geometry2D.is_point_in_circle(_point, negation_zone_center, negation_zone_radius):
 			var star_instance = star_node.instantiate()
+			#
+			star_instance.star_selected.connect(select_star_to_travel_to)
 			star_instance.global_position = _point
 			stars_parent.add_child(star_instance)
 			stars.append(star_instance)

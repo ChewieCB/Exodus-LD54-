@@ -1,6 +1,9 @@
 @tool
 extends "res://assets/planets/Planet.gd"
 
+@onready var _signal = $Signal
+@onready var _highlight = $Highlight
+
 func set_pixels(amount):
 	$Blobs.material.set_shader_parameter("pixels", amount*relative_scale)
 	$Star.material.set_shader_parameter("pixels", amount)
