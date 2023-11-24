@@ -57,6 +57,7 @@ var previous_star_lanes = []
 var adjacency_list = []
 
 var negation_zone_center: Vector2 = Vector2.ZERO
+@onready var adjusted_center = negation_zone_center + get_global_transform().origin
 
 var next_star: Vector2
 const SHIP_MOVE_RATE: float = 10.0
@@ -92,7 +93,7 @@ func _ready():
 	var start_point = outer_stars[randi_range(0, outer_stars.size() - 1)]
 	$ShipTracker.global_position = start_point
 	# Get next star on optimal path to center
-	next_star = get_next_star_center_path(start_point)
+	next_star = get_next_star_center_path(start_point - get_global_transform().origin)
 	$ShipTracker.look_at(next_star)
 
 
@@ -161,8 +162,10 @@ func _physics_process(delta):
 func _input(_event):
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		if next_star:
+			var test0 = $ShipTracker.global_position
+			var test1 = next_star
 			if $ShipTracker.global_position.distance_to(next_star) < 1:
-				next_star = get_next_star_center_path($ShipTracker.global_position)
+				next_star = get_next_star_center_path($ShipTracker.global_position - get_global_transform().origin)
 				$ShipTracker.look_at(next_star)
 
 
@@ -196,7 +199,7 @@ func get_next_star_center_path(start_point) -> Vector2:
 				close_vertex_b = b[1]
 				far_vertex_b = b[0]
 			
-			return far_vertex_a.distance_to(Vector2.ZERO) < far_vertex_b.distance_to(Vector2.ZERO) 
+			return far_vertex_a.distance_to(negation_zone_center) < far_vertex_b.distance_to(negation_zone_center) 
 	)
 #	# Sort by lane weight, this tells us how much the lane points towards the center.
 #	# The closer to 0 the weighting is the more the lane points towards the center.
@@ -214,7 +217,7 @@ func get_next_star_center_path(start_point) -> Vector2:
 	# Append the lane to used so we don't loop back
 	previous_star_lanes.append(available_spawn_lanes[0])
 		
-	return next_star  
+	return next_star + get_global_transform().origin
 
 
 func redraw_points() -> void:
@@ -329,6 +332,54 @@ class Graph:
 			minimumCost += weight 
 		
 		return result
+	
+	func dijsktra(source: int, n: int):
+		# Function to perform Dijkstra's algorithm on a given graph starting 
+		# from a given source vertex.
+		#
+		# Source is the vertex index for the start point
+		# Array of adjacency lists
+		var adjacency = Array()
+		adjacency.resize(self.vertices.size())
+		adjacency.fill([])
+		var distances = []
+		for i in range(n):
+			distances[i] = INF
+		
+		# Initialize a boolean array to track visited vertices
+		var vis = Array()
+		vis.resize(n)
+		vis.fill(false)
+		
+		# Set the distance to the source vertex to 0 and add it to a set of vertices to be processed
+		var dist = 0
+		var set = []
+		set.append([0, source])
+		
+		# Loop until there are no more vertices to process
+		while (set.size() > 0):
+			# Get the vertex with the smallest distance from the set
+			var p = set.pop_front()
+
+			# If the vertex has already been visited, skip it
+			var vert_index = p[0]
+			var weight = p[1]
+
+			if vis.has(vert_index):
+				continue
+			
+			vis[vert_index] = true
+			
+			# Loop through the adjacency list of the current vertex
+			for i in range(adjacency[vert_index].size()):
+				var neigbor_index = adjacency[vert_index][i][0] # Neighbor vertex index
+				var w = adjacency[vert_index][i][1] # Weight of the edge connecting the current vertex and its neighbor
+				
+				# If the distance to the neighbor vertex can be improved by going through the current vertex,
+				# update its distance and add it to the set of vertices to be processed
+				if (distances[vert_index] + w < distances[neigbor_index]):
+					distances[neigbor_index] = distances[vert_index] + w
+					set.append([distances[neigbor_index], neigbor_index])
 
 
 func _weight_toward_centre(a: Vector2, b: Vector2) -> float:
@@ -481,10 +532,12 @@ func generate_stars(stars) -> Array:
 
 
 func get_outer_stars(stars, min_distance=16, max_distance=32) -> Array:
+	# We need to offset the center point here based on the origin of this scene
+	# for when we run it as a SubViewport within the UI
 	var outer_stars = Array(stars).filter(
 		func(star): 
-			return star.distance_to(Vector2.ZERO) >= negation_zone_radius - max_distance \
-				and star.distance_to(Vector2.ZERO) <= negation_zone_radius + min_distance
+			return star.distance_to(adjusted_center) >= negation_zone_radius - max_distance \
+				and star.distance_to(adjusted_center) <= negation_zone_radius + min_distance
 	)
 	
 	return outer_stars
