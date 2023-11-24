@@ -112,7 +112,7 @@ shape = SubResource("RectangleShape2D_ywpr8")
 [node name="SubViewport" type="SubViewport" parent="DeviceFrame/TabContainer/Travel/MarginContainer"]
 handle_input_locally = false
 size = Vector2i(450, 235)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="StarMap" parent="DeviceFrame/TabContainer/Travel/MarginContainer/SubViewport" instance=ExtResource("3_jn7gj")]
 position = Vector2(1167.5, 224)

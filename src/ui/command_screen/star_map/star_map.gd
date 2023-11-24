@@ -60,7 +60,7 @@ var negation_zone_center: Vector2 = Vector2.ZERO
 @onready var adjusted_center = negation_zone_center + get_global_transform().origin
 
 var next_star: Vector2
-const SHIP_MOVE_RATE: float = 10.0
+const SHIP_MOVE_RATE: float = 5.0
 
 enum ShapeType {CIRCLE, POLYGON}
 static var shape_info: Dictionary
@@ -70,6 +70,8 @@ static var shape_info: Dictionary
 @onready var star_node = preload("res://src/ui/star_map/star/StarNode.tscn")
 @onready var starlanes_parent = $Starlanes
 @onready var starlane_scene = load("res://src/ui/star_map/starlane/Starlane.tscn")
+@onready var starlane_chevrons_scene = load("res://src/ui/star_map/starlane/StarlaneChevrons.tscn")
+var chevrons_instance
 
 var viewport_has_focus: bool = false
 var target_zoom: float = 1.0
@@ -95,36 +97,12 @@ func _ready():
 	# Get next star on optimal path to center
 	next_star = get_next_star_center_path(start_point - get_global_transform().origin)
 	$ShipTracker.look_at(next_star)
+	chevrons_instance = starlane_chevrons_scene.instantiate()
+	chevrons_instance.points = [start_point, next_star]
+	starlanes_parent.add_child(chevrons_instance)
 
 
 func _draw():
-	# Starlanes
-#	if edges_to_draw:
-#		for edge in edges_to_draw:
-#			var negated_vert = []
-#			var negation_value = 0
-#			# 0 = not in negation zone
-#			# 1 = line crosses the negation range - clip it at the negation radius
-#			# 2 = line outside of negation range - don't draw
-#			for _vertex in edge:
-#				if not _vertex is Vector2:
-#					continue
-#				if not Geometry2D.is_point_in_circle(_vertex, negation_zone_center, negation_zone_radius):
-#					negation_value += 1
-#					negated_vert.append(_vertex)
-#			match negation_value:
-#				0:
-#					draw_line(edge[0], edge[1], Color.GOLD, 1.0)
-#				1:
-#					var _vert = negated_vert.pop_front()
-#					if _vert == edge[0]:
-#						var clamped_edge = (negation_zone_radius) * edge[0].normalized()
-#						draw_line(clamped_edge, edge[1], Color.RED, 1.0)
-#					elif _vert == edge[1]:
-#						var clamped_edge = (negation_zone_radius) * edge[1].normalized()
-#						draw_line(edge[0], clamped_edge, Color.RED, 1.0)
-#				_:
-#					continue
 	# Stars
 	if points_to_draw and Engine.is_editor_hint():
 		for point in points_to_draw:
@@ -134,7 +112,7 @@ func _draw():
 	if available_spawn_lanes:
 		for lane in available_spawn_lanes:
 			if lane == available_spawn_lanes[0]:
-				draw_line(lane[0], lane[1], Color.GOLD, 1.0)
+				draw_line(lane[0], lane[1], Color(1, 0.843137, 0, 0.5), 0.6)
 #			else:
 #				draw_line(lane[0], lane[1], Color.GREEN, 1.0)
 	# Negation Zone edge
@@ -157,16 +135,18 @@ func _physics_process(delta):
 	if next_star:
 		# TODO - get lerp working for this so we can ease it
 		$ShipTracker.global_position += (next_star - $ShipTracker.global_position).normalized() * SHIP_MOVE_RATE * delta
+		if $ShipTracker.global_position.distance_to(next_star) < 1:
+			chevrons_instance.points = []
 
 
 func _input(_event):
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		if next_star:
-			var test0 = $ShipTracker.global_position
-			var test1 = next_star
 			if $ShipTracker.global_position.distance_to(next_star) < 1:
-				next_star = get_next_star_center_path($ShipTracker.global_position - get_global_transform().origin)
+				var start_point = $ShipTracker.global_position - get_global_transform().origin
+				next_star = get_next_star_center_path(start_point)
 				$ShipTracker.look_at(next_star)
+				chevrons_instance.points = [start_point, next_star]
 
 
 func get_next_star_center_path(start_point) -> Vector2:
