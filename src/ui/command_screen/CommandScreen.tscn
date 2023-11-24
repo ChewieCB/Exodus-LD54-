@@ -78,7 +78,6 @@ offset_right = 500.0
 offset_bottom = 460.0
 
 [node name="Travel" type="TabBar" parent="DeviceFrame/TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="SpaceMap" type="TextureRect" parent="DeviceFrame/TabContainer/Travel"]
@@ -186,6 +185,7 @@ toggle_mode = true
 text = "Change path"
 
 [node name="Officers" type="TabBar" parent="DeviceFrame/TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Officers"]
