@@ -1,6 +1,10 @@
 extends Control
 class_name CommandScreen
 
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var show_hide_command_screen_button: Button = $DeviceFrame/ShowHideCommandScreen
+
+# Travel tab
 @onready var desc_label: Label = $DeviceFrame/TabContainer/Travel/PathChoiceView/DescLabel
 @onready var default_path_button: Button = $DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button
 @onready var intergalatic_route_button: Button = $DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button2
@@ -9,8 +13,6 @@ class_name CommandScreen
 @onready var path_choice_view = $DeviceFrame/TabContainer/Travel/PathChoiceView
 @onready var change_path_button: Button = $DeviceFrame/TabContainer/Travel/ChangePathButton
 @onready var path_follow: PathFollow2D = $DeviceFrame/TabContainer/Travel/ProgressView/Path2D/PathFollow2D
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var show_hide_command_screen_button: Button = $DeviceFrame/ShowHideCommandScreen
 
 # Cryostasis Citizen tab
 @onready var wakeup_warning_label: Label = get_node("DeviceFrame/TabContainer/Cryostasis Citizen/WarningLabel")
@@ -22,7 +24,9 @@ class_name CommandScreen
 @onready var ship_hull_upgrade_button: Button = $DeviceFrame/TabContainer/Ship/UpgradeHullButton
 
 # Officer tab
-@onready var officer_container = $DeviceFrame/TabContainer/Officers/VBoxContainer
+@onready var officer_container = $DeviceFrame/TabContainer/Officers/OfficerListMC/ScrollContainer/MarginContainer/VBoxContainer
+@onready var officer_desc_label = $DeviceFrame/TabContainer/Officers/OfficerDescMC/MarginContainer/OfficerDescLabel
+@onready var officer_portrait = $DeviceFrame/TabContainer/Officers/OfficerPortrait
 
 var trave_screen_open = false
 var chose_path_screen_open = false
@@ -46,11 +50,11 @@ func _update_path_follow():
 
 func update_officer_list():
 	for child in officer_container.get_children():
-		var officer_label = child as OfficerLabel
+		var officer_label = child as OfficerButton
 		if officer_label.officer in ResourceManager.current_officers:
 			officer_label.visible = true
 		else:
-			officer_label = false
+			officer_label.visible = false
 
 
 func update_ship_status_screen():
@@ -115,8 +119,11 @@ func _on_change_path_button_toggled(button_pressed:bool) -> void:
 		chose_path_screen_open = false
 
 
-func _on_show_hide_travel_screen_toggled(button_pressed:bool) -> void:
+func _on_show_hide_command_screen_toggled(button_pressed:bool) -> void:
+	update_officer_list()
 	wakeup_warning_label.visible = false
+	officer_desc_label.visible = false
+	officer_portrait.visible = false
 	if button_pressed:
 		show_hide_command_screen_button.text = "Hide command screen"
 		animation_player.play("show")
@@ -149,12 +156,12 @@ func _on_wake_up_citizen():
 
 func hide_screen():
 	if trave_screen_open:
-		_on_show_hide_travel_screen_toggled(false)
+		_on_show_hide_command_screen_toggled(false)
 
 
 func show_screen():
 	if not trave_screen_open:
-		_on_show_hide_travel_screen_toggled(true)
+		_on_show_hide_command_screen_toggled(true)
 
 
 func _on_tab_container_tab_changed(tab:int) -> void:

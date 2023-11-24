@@ -79,4 +79,38 @@ Debug menu, choose a resource to increase:
 	- -{air_cost_3} Population
 		You lose {air_cost_3} Air
 		[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "-{air_cost_3}"]" single_use="true"]
+- Add Officier
+	Choose officier to add
+	- Faroq Khan
+		Faroq Khan joined your crew
+		[call_node path="ResourceManager" method="change_specialist_from_event" args="["add", "faroq_khan"]" single_use="true"]
+	- Governor Jerrerod
+		Governor Jerrerod joined your crew
+		[call_node path="ResourceManager" method="change_specialist_from_event" args="["add", "governor_jerrerod"]" single_use="true"]
+	- Sam Carter
+		Sam Carter joined your crew
+		[call_node path="ResourceManager" method="change_specialist_from_event" args="["add", "sam_carter"]" single_use="true"]
+	- Mary Watney
+		Mary Watney joined your crew
+		[call_node path="ResourceManager" method="change_specialist_from_event" args="["add", "mary_watney"]" single_use="true"]
+	- Dr Dorian
+		Dr Dorian joined your crew
+		[call_node path="ResourceManager" method="change_specialist_from_event" args="["add", "dr_dorian"]" single_use="true"]
+- Remove Officier
+	Choose officier to remove
+	- Faroq Khan
+		Faroq Khan left your crew
+		[call_node path="ResourceManager" method="change_specialist_from_event" args="["remove", "faroq_khan"]" single_use="true"]
+	- Governor Jerrerod
+		Governor Jerrerod left your crew
+		[call_node path="ResourceManager" method="change_specialist_from_event" args="["remove", "governor_jerrerod"]" single_use="true"]\
+	- Sam Carter
+		Sam Carter left your crew
+		[call_node path="ResourceManager" method="change_specialist_from_event" args="["remove", "sam_carter"]" single_use="true"]
+	- Mary Watney
+		Mary Watney left your crew
+		[call_node path="ResourceManager" method="change_specialist_from_event" args="["remove", "mary_watney"]" single_use="true"]
+	- Dr Dorian
+		Dr Dorian left your crew
+		[call_node path="ResourceManager" method="change_specialist_from_event" args="["remove", "dr_dorian"]" single_use="true"]
 [signal arg="end_event"]
