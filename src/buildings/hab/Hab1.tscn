@@ -9,6 +9,7 @@
 size = Vector2(60, 60)
 
 [node name="Hab1" type="Node2D"]
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_346ag")
 data = ExtResource("2_fp8i5")
 

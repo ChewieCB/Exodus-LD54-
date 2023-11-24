@@ -12,6 +12,7 @@ size = Vector2(62.5, 62)
 size = Vector2(62, 124)
 
 [node name="CryoPod1" type="Node2D"]
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_suiil")
 data = ExtResource("2_mnh2m")
 
