@@ -98,7 +98,7 @@ func _ready():
 	next_star = get_next_star_center_path(start_point - get_global_transform().origin)
 	$ShipTracker.look_at(next_star)
 	chevrons_instance = starlane_chevrons_scene.instantiate()
-	chevrons_instance.points = [start_point, next_star]
+	chevrons_instance.points = [start_point - get_global_transform().origin, next_star - get_global_transform().origin]
 	starlanes_parent.add_child(chevrons_instance)
 
 
@@ -146,7 +146,7 @@ func _input(_event):
 				var start_point = $ShipTracker.global_position - get_global_transform().origin
 				next_star = get_next_star_center_path(start_point)
 				$ShipTracker.look_at(next_star)
-				chevrons_instance.points = [start_point, next_star]
+				chevrons_instance.points = [start_point, next_star - get_global_transform().origin]
 
 
 func get_next_star_center_path(start_point) -> Vector2:
