@@ -14,6 +14,12 @@ var rotate_counter = 0
 
 @onready var cant_place_sfx = preload("res://assets/audio/sfx/Cant_Place_Building_There.mp3")
 
+const GRID_OFFSET = Vector2(16, 16)
+const OUTSIDE_SHIP_TILE_ID = Vector2i(-2, 0)
+const INSIDE_SHIP_TILE_ID = Vector2i(3, 1)
+const NO_TILE_ID = Vector2i(-1, -1)
+
+
 
 func _ready():
 	BuildingManager.building_selected.connect(_building_button_pressed)
@@ -38,6 +44,8 @@ func get_new_building():
 	new_building.preview = true
 	new_building.rotation = previous_rotation
 	new_building.visible = true
+	mouse_pos = get_global_mouse_position()
+	new_building.global_position = mouse_pos
 	add_child(new_building)
 	current_building = new_building
 
@@ -56,10 +64,10 @@ func _physics_process(_delta):
 		placement_coord -= Vector2(1, 1)
 	elif abs(rotate_counter) % 4 == 3:
 		placement_coord.y -= 1
-	preview_pos = tilemap.map_to_local(placement_coord) + Vector2(32, 32)
+	preview_pos = tilemap.map_to_local(placement_coord) + GRID_OFFSET
 	preview_pos = tilemap.to_global(preview_pos)
 
-	if current_building:
+	if current_building != null:
 		current_building.outside_gridmap = is_outside_gridmap(original_placement_coord)
 		current_building.visible = !current_building.outside_gridmap
 		current_building.global_position = preview_pos
@@ -68,7 +76,7 @@ func _physics_process(_delta):
 			current_building.queue_free()
 			current_building = null
 
-		if Input.is_action_just_released("place_building"):
+		if Input.is_action_just_pressed("place_building"):
 			if not current_building.collider.has_overlapping_areas():
 				if not is_in_blocked_tile(original_placement_coord):
 					if current_building.placeable:
@@ -92,8 +100,8 @@ func is_outside_gridmap(coord: Vector2) -> bool:
 
 
 func is_in_blocked_tile(coord: Vector2) -> bool:
-	if tilemap.get_cell_atlas_coords(0, coord) == Vector2i(4, 7) or \
-		tilemap.get_cell_atlas_coords(0, coord) == Vector2i(-1, -1):
+	if tilemap.get_cell_atlas_coords(0, coord) == OUTSIDE_SHIP_TILE_ID or \
+		tilemap.get_cell_atlas_coords(0, coord) == NO_TILE_ID:
 		return true
 	else:
 		return false

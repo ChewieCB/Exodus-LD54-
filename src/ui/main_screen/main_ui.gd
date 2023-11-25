@@ -22,6 +22,10 @@ var build_menu_open = false
 var event_image: Sprite2D
 var event_planet_holder: Node2D
 
+const BUILD_MENU_CAMERA_ZOOM = Vector2(0.6, 0.6)
+const SHIP_CAMERA_ZOOM = Vector2(0.4, 0.4)
+const EVENT_CAMERA_ZOOM = Vector2(0.15, 0.15)
+
 func _ready() -> void:
 	EventManager.start_event.connect(_on_start_event)
 	EventManager.finish_event.connect(_on_finish_event)
@@ -29,6 +33,21 @@ func _ready() -> void:
 	EventManager.request_change_event_image.connect(change_event_image)
 	event_image = event_image_holder.get_node("EventImage")
 	event_planet_holder = event_image_holder.get_node("EventPlanetHolder")
+
+func _input(event: InputEvent) -> void:
+	if build_menu_open:
+		# Zooming with mouse wheel
+		var zoom = camera.zoom
+		if event.is_action_pressed("zoom_in"):
+			zoom += Vector2(0.05, 0.05)
+		elif event.is_action_pressed("zoom_out"):
+			zoom -= Vector2(0.05, 0.05)
+		camera.zoom = clamp(zoom, Vector2(0.2, 0.2), Vector2(2, 2))
+
+		if event is InputEventMouseMotion and Input.is_action_pressed("drag_camera"):
+			var drag_modifier = remap(camera.zoom[0], 0.2, 2, 1, 0.5)
+			camera.global_position -= event.relative * Vector2(drag_modifier, drag_modifier)
+
 
 func _on_build_button_pressed():
 	if anim_player.animation_finished:
@@ -40,7 +59,7 @@ func _on_build_button_pressed():
 			if ship_grid != null:
 				ship_grid.visible = false
 				ship_build_frame.visible = false
-				tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
+				tween.parallel().tween_property(camera, "zoom", SHIP_CAMERA_ZOOM, 0.5).set_trans(Tween.TRANS_LINEAR)
 				tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 		else:
 			anim_player.play("show_build_menu")
@@ -50,7 +69,7 @@ func _on_build_button_pressed():
 				ship_grid.visible = true
 				ship_build_frame.visible = true
 				tween.parallel().tween_property(camera, "global_position", ship_sprite.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
-				tween.parallel().tween_property(camera, "zoom", Vector2(0.5, 0.5), 0.5).set_trans(Tween.TRANS_LINEAR)
+				tween.parallel().tween_property(camera, "zoom", BUILD_MENU_CAMERA_ZOOM, 0.5).set_trans(Tween.TRANS_LINEAR)
 
 
 func _on_play_dialog_pressed():
@@ -88,7 +107,7 @@ func _open_build_menu():
 	ship_build_frame.visible = true
 	var tween = get_tree().create_tween()
 	tween.parallel().tween_property(camera, "global_position", ship_sprite.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
-	tween.parallel().tween_property(camera, "zoom", Vector2(0.5, 0.5), 0.5).set_trans(Tween.TRANS_LINEAR)
+	tween.parallel().tween_property(camera, "zoom", BUILD_MENU_CAMERA_ZOOM, 0.5).set_trans(Tween.TRANS_LINEAR)
 	command_screen.hide_screen()
 
 
@@ -108,7 +127,7 @@ func _on_start_event(event: ExodusEvent):
 			if build_menu_open:
 				anim_player.play("hide_build_menu")
 				build_menu_open = false
-			tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
+			tween.parallel().tween_property(camera, "zoom", SHIP_CAMERA_ZOOM, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 			ship_grid.visible = false
 			ship_build_frame.visible = false
@@ -118,7 +137,7 @@ func _on_start_event(event: ExodusEvent):
 			if build_menu_open:
 				anim_player.play("hide_build_menu")
 				build_menu_open = false
-			tween.parallel().tween_property(camera, "zoom", Vector2(0.15, 0.15), 0.5).set_trans(Tween.TRANS_LINEAR)
+			tween.parallel().tween_property(camera, "zoom", EVENT_CAMERA_ZOOM, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", far_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(event_image_holder, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 			ship_grid.visible = false
@@ -136,7 +155,6 @@ func _on_finish_event(arg: String):
 			var tween = get_tree().create_tween()
 			if event_image_holder:
 				tween.tween_property(event_image_holder, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
-
 			ship_grid.visible = true
 			ship_build_frame.visible = true
 			build_show_toggle.visible = true
@@ -145,8 +163,7 @@ func _on_finish_event(arg: String):
 			var tween = get_tree().create_tween()
 			if event_image_holder:
 				tween.tween_property(event_image_holder, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
-
-			tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
+			tween.parallel().tween_property(camera, "zoom", SHIP_CAMERA_ZOOM, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 			ship_grid.visible = false
 			ship_build_frame.visible = false
@@ -154,7 +171,7 @@ func _on_finish_event(arg: String):
 			build_menu.visible = false
 		"change_to_event_screen":
 			var tween = get_tree().create_tween()
-			tween.parallel().tween_property(camera, "zoom", Vector2(0.15, 0.15), 0.5).set_trans(Tween.TRANS_LINEAR)
+			tween.parallel().tween_property(camera, "zoom", EVENT_CAMERA_ZOOM, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", far_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(event_image_holder, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 			ship_grid.visible = false
@@ -165,7 +182,7 @@ func _on_finish_event(arg: String):
 			var tween = get_tree().create_tween()
 			if event_image_holder:
 				tween.tween_property(event_image_holder, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
-			tween.parallel().tween_property(camera, "zoom", Vector2(0.4, 0.4), 0.5).set_trans(Tween.TRANS_LINEAR)
+			tween.parallel().tween_property(camera, "zoom", SHIP_CAMERA_ZOOM, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(command_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 

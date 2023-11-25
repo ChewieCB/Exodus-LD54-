@@ -45,8 +45,6 @@ enum TYPES {
 
 
 func _ready():
-#	sprite.texture = data.sprite
-#	collider = data.collision_data
 	set_original_color()
 	build_timer_ui.visible = false
 	TickManager.tick.connect(_on_tick)

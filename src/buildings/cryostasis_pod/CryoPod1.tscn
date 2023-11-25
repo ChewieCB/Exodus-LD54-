@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/buildings/building.gd" id="1_suiil"]
 [ext_resource type="Resource" uid="uid://bol3j1xjxepay" path="res://src/buildings/cryostasis_pod/cryo_pod1.tres" id="2_mnh2m"]
-[ext_resource type="Texture2D" uid="uid://7gwns5n7mat8" path="res://assets/buildings/new/cryo_pod_1.png" id="3_6whuh"]
+[ext_resource type="Texture2D" uid="uid://7gwns5n7mat8" path="res://assets/buildings/cryo_pod_1.png" id="3_6whuh"]
 [ext_resource type="PackedScene" uid="uid://bp6x36xyoxhh2" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="4_krdd4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1et38"]
@@ -12,6 +12,7 @@ size = Vector2(62.5, 62)
 size = Vector2(62, 124)
 
 [node name="CryoPod1" type="Node2D"]
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_suiil")
 data = ExtResource("2_mnh2m")
 

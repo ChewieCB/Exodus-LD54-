@@ -12,7 +12,6 @@ signal hide_info_panel
 var construction_queue = []
 var buildings: Array[Building] = []
 
-
 func start_building(building_scene):
 	emit_signal("building_selected", building_scene)
 
@@ -36,6 +35,14 @@ func delete_building_with_name(building_name: String) -> bool:
 			b.remove_building()
 			return true
 	return false
+
+
+func expand_building_area(blockoff_name: String):
+	var ship_building_view = get_tree().get_root().get_node("ShipBuildingView")
+	var ship_grid = ship_building_view.get_node("ShipSprite/ShipGrid")
+	var blockoff_area = ship_grid.get_node(blockoff_name)
+	blockoff_area.process_mode = PROCESS_MODE_DISABLED
+	blockoff_area.visible = false
 
 
 func reset_state():

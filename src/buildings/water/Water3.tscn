@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://src/buildings/building.gd" id="1_qsyf4"]
 [ext_resource type="Resource" uid="uid://18c3v3njvlxg" path="res://src/buildings/water/water3.tres" id="2_ltpv4"]
 [ext_resource type="Shader" path="res://src/buildings/shaders/pulse.gdshader" id="3_wi74b"]
-[ext_resource type="Texture2D" uid="uid://fpjlep711shg" path="res://assets/buildings/new/water_3.png" id="4_akyeg"]
+[ext_resource type="Texture2D" uid="uid://fpjlep711shg" path="res://assets/buildings/water_3.png" id="4_akyeg"]
 [ext_resource type="PackedScene" uid="uid://bp6x36xyoxhh2" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="5_pu5q4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l6u3g"]
@@ -21,6 +21,7 @@ size = Vector2(312, 56)
 size = Vector2(60, 62)
 
 [node name="Water2" type="Node2D"]
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_qsyf4")
 data = ExtResource("2_ltpv4")
 

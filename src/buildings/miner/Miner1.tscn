@@ -2,13 +2,14 @@
 
 [ext_resource type="Script" path="res://src/buildings/building.gd" id="1_5jpbe"]
 [ext_resource type="Resource" uid="uid://ct3p7bs8cpx3c" path="res://src/buildings/miner/miner1.tres" id="2_wxk3a"]
-[ext_resource type="Texture2D" uid="uid://dhhf4oybskm72" path="res://assets/buildings/new/miner_1.png" id="3_t2c16"]
+[ext_resource type="Texture2D" uid="uid://dhhf4oybskm72" path="res://assets/buildings/miner_1.png" id="3_t2c16"]
 [ext_resource type="PackedScene" uid="uid://bp6x36xyoxhh2" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="4_ie3xt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0tb0d"]
 size = Vector2(60, 60)
 
 [node name="Miner" type="Node2D"]
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_5jpbe")
 data = ExtResource("2_wxk3a")
 

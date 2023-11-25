@@ -11,7 +11,7 @@
 [ext_resource type="Resource" uid="uid://u5r2ypm555n4" path="res://src/events/space/distress_signal/DistressSignalEvent.tres" id="9_senqf"]
 [ext_resource type="Resource" uid="uid://cityiounuv3qd" path="res://src/events/space/rich_planetoid/RichPlanetoidEvent.tres" id="10_inr5h"]
 [ext_resource type="Resource" uid="uid://cwh07aayanmqd" path="res://src/events/self/hab_riot/HabRiotEvent.tres" id="11_fmdbt"]
-[ext_resource type="Resource" uid="uid://dyxlgp4cb5bao" path="res://src/events/debug/change_resources/ChangeResourcesEvent.tres" id="12_itrw7"]
+[ext_resource type="Resource" uid="uid://dyxlgp4cb5bao" path="res://src/events/debug/debug_menu/DebugMenuEvent.tres" id="12_itrw7"]
 [ext_resource type="Resource" uid="uid://ba2x7pp1asujo" path="res://src/events/primary_storyline/tutorial_0/Tutorial0Event.tres" id="13_7fx63"]
 [ext_resource type="Resource" uid="uid://0b1o3q1crong" path="res://src/events/primary_storyline/tutorial_1/Tutorial1Event.tres" id="14_l0y50"]
 [ext_resource type="Resource" uid="uid://b5j3oya8oyl14" path="res://src/events/primary_storyline/tutorial_2/Tutorial2Event.tres" id="15_aalwr"]

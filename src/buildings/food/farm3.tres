@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="BuildingResource" load_steps=3 format=3 uid="uid://c8scjmxctet8n"]
 
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_s1q55"]
-[ext_resource type="Texture2D" uid="uid://bix0qv2bh7d56" path="res://assets/buildings/old/nutrition_reclamation_plant_new.png" id="2_p2d43"]
+[ext_resource type="Texture2D" uid="uid://dvnp348xbjcyg" path="res://assets/buildings/food_3.png" id="2_myw13"]
 
 [resource]
 script = ExtResource("1_s1q55")
 name = "Nutrition Reclamation Plant"
 type = 1
-sprite = ExtResource("2_p2d43")
+sprite = ExtResource("2_myw13")
 housing_prod = 0
 food_prod = 32
 water_prod = 0
