@@ -1,14 +1,14 @@
 [gd_resource type="Resource" script_class="ExodusEvent" load_steps=2 format=3 uid="uid://dyxlgp4cb5bao"]
 
-[ext_resource type="Script" path="res://src/events/event_resource.gd" id="1_bg66w"]
+[ext_resource type="Script" path="res://src/events/event_resource.gd" id="1_7xmu1"]
 
 [resource]
-script = ExtResource("1_bg66w")
-name = "Change Resources"
+script = ExtResource("1_7xmu1")
+name = "Debug Menu"
 type = 2
 planet_type = 0
-active_screen = 2
-event_text_file = "res://src/events/debug/change_resources/change_resources.txt"
+active_screen = 1
+event_text_file = "res://src/events/debug/debug_menu/debug_menu.txt"
 pop_reward_1 = 1
 food_reward_1 = 25
 water_reward_1 = 25
