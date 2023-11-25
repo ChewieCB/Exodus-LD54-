@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/buildings/building.gd" id="1_346ag"]
 [ext_resource type="Resource" uid="uid://ce726vckgwu4p" path="res://src/buildings/hab/hab1.tres" id="2_fp8i5"]
-[ext_resource type="Texture2D" uid="uid://dw4vv6brsf8a1" path="res://assets/buildings/new/hab_1.png" id="3_1onqk"]
+[ext_resource type="Texture2D" uid="uid://dw4vv6brsf8a1" path="res://assets/buildings/hab_1.png" id="3_1onqk"]
 [ext_resource type="PackedScene" uid="uid://bp6x36xyoxhh2" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="4_oyx1y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0tb0d"]

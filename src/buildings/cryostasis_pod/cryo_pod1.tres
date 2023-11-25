@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="BuildingResource" load_steps=3 format=3 uid="uid://bol3j1xjxepay"]
 
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_w65rm"]
-[ext_resource type="Texture2D" uid="uid://7gwns5n7mat8" path="res://assets/buildings/new/cryo_pod_1.png" id="2_3pr7w"]
+[ext_resource type="Texture2D" uid="uid://7gwns5n7mat8" path="res://assets/buildings/cryo_pod_1.png" id="2_6mmy8"]
 
 [resource]
 script = ExtResource("1_w65rm")
 name = "Cryostasis Pod"
 type = 4
-sprite = ExtResource("2_3pr7w")
+sprite = ExtResource("2_6mmy8")
 housing_prod = 0
 food_prod = 0
 water_prod = 0

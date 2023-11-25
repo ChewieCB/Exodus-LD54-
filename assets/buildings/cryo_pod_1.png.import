@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ftoh02i7rxu2"
-path="res://.godot/imported/water_2.png-56a54a3e90198a01958bd0b22649cf23.ctex"
+uid="uid://7gwns5n7mat8"
+path="res://.godot/imported/cryo_pod_1.png-4726b377d095f6bafaf9c00e5925a6be.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/buildings/new/water_2.png"
-dest_files=["res://.godot/imported/water_2.png-56a54a3e90198a01958bd0b22649cf23.ctex"]
+source_file="res://assets/buildings/cryo_pod_1.png"
+dest_files=["res://.godot/imported/cryo_pod_1.png-4726b377d095f6bafaf9c00e5925a6be.ctex"]
 
 [params]
 

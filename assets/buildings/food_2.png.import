@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://diuknkxali318"
-path="res://.godot/imported/refiltration_center-export.png-5dde024dabc83194d5b4f8d889c88dfe.ctex"
+uid="uid://bmrisjkpambuj"
+path="res://.godot/imported/food_2.png-f993f3b711545e431011c8b9e21759d2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/buildings/old/refiltration_center-export.png"
-dest_files=["res://.godot/imported/refiltration_center-export.png-5dde024dabc83194d5b4f8d889c88dfe.ctex"]
+source_file="res://assets/buildings/food_2.png"
+dest_files=["res://.godot/imported/food_2.png-f993f3b711545e431011c8b9e21759d2.ctex"]
 
 [params]
 

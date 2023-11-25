@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/buildings/building.gd" id="1_vugly"]
 [ext_resource type="Resource" uid="uid://cp0gqu8sl1ekk" path="res://src/buildings/hab/hab2.tres" id="2_0yddn"]
-[ext_resource type="Texture2D" uid="uid://b6sj6dbisqutw" path="res://assets/buildings/new/hab_2.png" id="3_15nvv"]
+[ext_resource type="Texture2D" uid="uid://b6sj6dbisqutw" path="res://assets/buildings/hab_2.png" id="3_15nvv"]
 [ext_resource type="PackedScene" uid="uid://bp6x36xyoxhh2" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="4_lpufm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0tb0d"]
@@ -10,6 +10,7 @@ size = Vector2(122, 60)
 
 [node name="Hab2" type="Node2D"]
 position = Vector2(-64, 0)
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_vugly")
 data = ExtResource("2_0yddn")
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d4naq7lok5eym"
-path="res://.godot/imported/nutrition_reclamation_plant-export.png-5d936bc626ab2df57daa66715f17798d.ctex"
+uid="uid://d1w5fvl2ohit8"
+path="res://.godot/imported/hab_3.png-bf4e388329272ee0944174022ef9d0f5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/buildings/old/nutrition_reclamation_plant-export.png"
-dest_files=["res://.godot/imported/nutrition_reclamation_plant-export.png-5d936bc626ab2df57daa66715f17798d.ctex"]
+source_file="res://assets/buildings/hab_3.png"
+dest_files=["res://.godot/imported/hab_3.png-bf4e388329272ee0944174022ef9d0f5.ctex"]
 
 [params]
 

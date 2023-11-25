@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="BuildingResource" load_steps=3 format=3 uid="uid://c0rbi85ffjr8v"]
 
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_wbrhj"]
-[ext_resource type="Texture2D" uid="uid://cuaukf2rs1rq1" path="res://assets/buildings/new/miner_2.png" id="2_kdwgf"]
+[ext_resource type="Texture2D" uid="uid://cuaukf2rs1rq1" path="res://assets/buildings/miner_2.png" id="2_42u3y"]
 
 [resource]
 script = ExtResource("1_wbrhj")
 name = "Nebula Collector"
 type = 5
-sprite = ExtResource("2_kdwgf")
+sprite = ExtResource("2_42u3y")
 housing_prod = 0
 food_prod = 0
 water_prod = 0

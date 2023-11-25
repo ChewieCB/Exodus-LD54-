@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cd5fu0tqd45wm"
-path="res://.godot/imported/air_3.png-5b275692e5029839b55dd8a21b486421.ctex"
+uid="uid://dw4vv6brsf8a1"
+path="res://.godot/imported/hab_1.png-e6000f49771df4dda1f82b017bddf66f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/buildings/new/air_3.png"
-dest_files=["res://.godot/imported/air_3.png-5b275692e5029839b55dd8a21b486421.ctex"]
+source_file="res://assets/buildings/hab_1.png"
+dest_files=["res://.godot/imported/hab_1.png-e6000f49771df4dda1f82b017bddf66f.ctex"]
 
 [params]
 

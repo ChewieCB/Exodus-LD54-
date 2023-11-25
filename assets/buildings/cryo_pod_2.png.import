@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://w6dnpgfxxgwa"
-path="res://.godot/imported/recirculator.png-ca6263594c9e406b6f3c82df85dc795a.ctex"
+uid="uid://cyjvcd4ur3y2w"
+path="res://.godot/imported/cryo_pod_2.png-64e7bba0764cefe0ba75c09fb163c314.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/buildings/old/recirculator.png"
-dest_files=["res://.godot/imported/recirculator.png-ca6263594c9e406b6f3c82df85dc795a.ctex"]
+source_file="res://assets/buildings/cryo_pod_2.png"
+dest_files=["res://.godot/imported/cryo_pod_2.png-64e7bba0764cefe0ba75c09fb163c314.ctex"]
 
 [params]
 

@@ -24,6 +24,7 @@ func _ready():
 	bgm_audio_player.finished.connect(play_bgm_again)
 
 	get_tree().paused = false
+	get_node("UI").visible = true
 
 
 func tutorial_tracker(type: Building.TYPES):

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://duvob01qmjf6h"
-path="res://.godot/imported/hab2.png-92851a71c954ce2d84c653b71ef8a724.ctex"
+uid="uid://c080ev7smsnnd"
+path="res://.godot/imported/cryo_pod_3.png-c2b35d587268f1e722a1f3795ac98970.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/buildings/old/hab2.png"
-dest_files=["res://.godot/imported/hab2.png-92851a71c954ce2d84c653b71ef8a724.ctex"]
+source_file="res://assets/buildings/cryo_pod_3.png"
+dest_files=["res://.godot/imported/cryo_pod_3.png-c2b35d587268f1e722a1f3795ac98970.ctex"]
 
 [params]
 

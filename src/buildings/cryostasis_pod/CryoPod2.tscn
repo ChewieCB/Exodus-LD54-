@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/buildings/building.gd" id="1_n6cwr"]
 [ext_resource type="Resource" uid="uid://b8fbf5vwmkcvf" path="res://src/buildings/cryostasis_pod/cryo_pod2.tres" id="2_n6hvy"]
-[ext_resource type="Texture2D" uid="uid://cyjvcd4ur3y2w" path="res://assets/buildings/new/cryo_pod_2.png" id="3_qfdjy"]
+[ext_resource type="Texture2D" uid="uid://cyjvcd4ur3y2w" path="res://assets/buildings/cryo_pod_2.png" id="3_qfdjy"]
 [ext_resource type="PackedScene" uid="uid://bp6x36xyoxhh2" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="4_8vqqp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0tb0d"]

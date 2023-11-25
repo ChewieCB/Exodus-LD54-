@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="BuildingResource" load_steps=3 format=3 uid="uid://banpkrk7n5jfa"]
 
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_i83ox"]
-[ext_resource type="Texture2D" uid="uid://bawynujrwyl1u" path="res://assets/buildings/old/vertical_farm.png" id="2_6nqdt"]
+[ext_resource type="Texture2D" uid="uid://d4fb71dqiy4nn" path="res://assets/buildings/food_1.png" id="2_bea60"]
 
 [resource]
 script = ExtResource("1_i83ox")
 name = "Vertical Farm"
 type = 1
-sprite = ExtResource("2_6nqdt")
+sprite = ExtResource("2_bea60")
 housing_prod = 0
 food_prod = 4
 water_prod = 0

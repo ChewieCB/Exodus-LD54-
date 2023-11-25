@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dsma76iaa0bge"
-path="res://.godot/imported/air_2.png-78d90574c672ba1f2f02d22b68f253b6.ctex"
+uid="uid://dhhf4oybskm72"
+path="res://.godot/imported/miner_1.png-be9e9a0f8a20e4ad24768f4a2514cfbc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/buildings/new/air_2.png"
-dest_files=["res://.godot/imported/air_2.png-78d90574c672ba1f2f02d22b68f253b6.ctex"]
+source_file="res://assets/buildings/miner_1.png"
+dest_files=["res://.godot/imported/miner_1.png-be9e9a0f8a20e4ad24768f4a2514cfbc.ctex"]
 
 [params]
 
