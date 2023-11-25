@@ -34,6 +34,21 @@ func _ready() -> void:
 	event_image = event_image_holder.get_node("EventImage")
 	event_planet_holder = event_image_holder.get_node("EventPlanetHolder")
 
+func _input(event: InputEvent) -> void:
+	if build_menu_open:
+		# Zooming with mouse wheel
+		var zoom = camera.zoom
+		if event.is_action_pressed("zoom_in"):
+			zoom += Vector2(0.05, 0.05)
+		elif event.is_action_pressed("zoom_out"):
+			zoom -= Vector2(0.05, 0.05)
+		camera.zoom = clamp(zoom, Vector2(0.2, 0.2), Vector2(2, 2))
+
+		if event is InputEventMouseMotion and Input.is_action_pressed("drag_camera"):
+			var drag_modifier = remap(camera.zoom[0], 0.2, 2, 1, 0.5)
+			camera.global_position -= event.relative * Vector2(drag_modifier, drag_modifier)
+
+
 func _on_build_button_pressed():
 	if anim_player.animation_finished:
 		SoundManager.play_button_click_sfx()
