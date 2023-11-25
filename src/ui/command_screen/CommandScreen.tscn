@@ -399,71 +399,6 @@ offset_bottom = 209.0
 text = "Improve ship hull
 (15 Metal)"
 
-[node name="Cryostasis Citizen" type="TabBar" parent="DeviceFrame/TabContainer"]
-visible = false
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]
-self_modulate = Color(0.0117647, 0.0627451, 0.121569, 1)
-layout_mode = 0
-offset_left = 2.0
-offset_top = 2.0
-offset_right = 451.0
-offset_bottom = 242.0
-texture = ExtResource("4_hkjqs")
-
-[node name="TitleLabel" type="Label" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]
-layout_mode = 0
-offset_left = 59.0
-offset_top = 15.0
-offset_right = 386.0
-offset_bottom = 67.0
-text = "Wake up hibernating citizen to recruit more crew member"
-horizontal_alignment = 1
-autowrap_mode = 2
-
-[node name="CountLabel" type="Label" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -68.0
-offset_top = -28.0
-offset_right = 68.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "Woke up 0 citizen"
-horizontal_alignment = 1
-autowrap_mode = 2
-
-[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]
-layout_mode = 0
-offset_left = 140.0
-offset_top = 128.0
-offset_right = 303.0
-offset_bottom = 159.0
-text = "Wake up 1 citzen"
-
-[node name="CostLabel" type="Label" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]
-layout_mode = 0
-offset_left = 166.0
-offset_top = 103.0
-offset_right = 276.0
-offset_bottom = 129.0
-text = "Cost: 15 water"
-
-[node name="WarningLabel" type="Label" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]
-visible = false
-self_modulate = Color(1, 0.0392157, 0.054902, 1)
-layout_mode = 0
-offset_left = 109.0
-offset_top = 161.0
-offset_right = 337.0
-offset_bottom = 187.0
-text = "Warning: not enough housing"
-
 [node name="ShowHideCommandScreen" type="Button" parent="DeviceFrame"]
 layout_mode = 0
 offset_left = -2.0
@@ -487,5 +422,4 @@ libraries = {
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button4" to="." method="_on_void_field_pressed"]
 [connection signal="toggled" from="DeviceFrame/TabContainer/Travel/ChangePathButton" to="." method="_on_change_path_button_toggled"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Ship/UpgradeHullButton" to="." method="_on_upgrade_hull_button_pressed"]
-[connection signal="pressed" from="DeviceFrame/TabContainer/Cryostasis Citizen/Button" to="." method="_on_wake_up_citizen"]
 [connection signal="toggled" from="DeviceFrame/ShowHideCommandScreen" to="." method="_on_show_hide_command_screen_toggled"]

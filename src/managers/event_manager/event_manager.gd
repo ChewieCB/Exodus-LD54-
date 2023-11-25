@@ -52,7 +52,6 @@ var previous_background: Texture2D = null
 #
 @onready var available_events: Array[ExodusEvent] = encounter_events.duplicate()
 var completed_events: Array[ExodusEvent]
-var n_woke_up_citizen = 0
 var event_dict = {} # Dictionary, format int : ExodusEvent (example: {0: tutorial_event_0}). Use in debug event dropdown
 
 @onready var planets = {
@@ -192,7 +191,6 @@ func reset_state():
 	n_food_building = 0
 	n_water_building = 0
 	n_air_building = 0
-	n_woke_up_citizen = 0
 	
 	tutorial_progress = -1
 	tick_since_last_event = 0

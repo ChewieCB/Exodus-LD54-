@@ -14,10 +14,6 @@ class_name CommandScreen
 @onready var change_path_button: Button = $DeviceFrame/TabContainer/Travel/ChangePathButton
 @onready var path_follow: PathFollow2D = $DeviceFrame/TabContainer/Travel/ProgressView/Path2D/PathFollow2D
 
-# Cryostasis Citizen tab
-@onready var wakeup_warning_label: Label = get_node("DeviceFrame/TabContainer/Cryostasis Citizen/WarningLabel")
-@onready var count_wakeup_label: Label = get_node("DeviceFrame/TabContainer/Cryostasis Citizen/CountLabel")
-
 # Ship tab
 @onready var ship_status_label: Label = $DeviceFrame/TabContainer/Ship/ShipStatusLabel
 @onready var ship_upgrade_warning_label: Label = $DeviceFrame/TabContainer/Ship/WarningLabel
@@ -121,7 +117,6 @@ func _on_change_path_button_toggled(button_pressed:bool) -> void:
 
 func _on_show_hide_command_screen_toggled(button_pressed:bool) -> void:
 	update_officer_list()
-	wakeup_warning_label.visible = false
 	officer_desc_label.visible = false
 	officer_portrait.visible = false
 	if button_pressed:
@@ -137,23 +132,6 @@ func _on_show_hide_command_screen_toggled(button_pressed:bool) -> void:
 		show_hide_command_screen_button.button_pressed = button_pressed
 
 
-func _on_wake_up_citizen():
-	SoundManager.play_button_click_sfx()
-	var result = ResourceManager.wake_up_citizen(WAKEUP_CITIZEN_WATER_COST)
-	match result:
-		"success":
-			wakeup_warning_label.visible = false
-			EventManager.n_woke_up_citizen += 1
-			count_wakeup_label.text = "Woke up {n_citizen} citizen".format({"n_citizen": EventManager.n_woke_up_citizen})
-		"fail_water":
-			wakeup_warning_label.text = "Warning: Not enough water"
-			wakeup_warning_label.visible = true
-		"fail_housing":
-			wakeup_warning_label.text = "Warning: Not enough housing"
-			wakeup_warning_label.visible = true
-
-
-
 func hide_screen():
 	if trave_screen_open:
 		_on_show_hide_command_screen_toggled(false)
@@ -166,8 +144,7 @@ func show_screen():
 
 func _on_tab_container_tab_changed(tab:int) -> void:
 	SoundManager.play_button_click_sfx()
-	wakeup_warning_label.visible = false
-
+	ship_upgrade_warning_label.visible = false
 
 func _on_upgrade_hull_button_pressed() -> void:
 	SoundManager.play_button_click_sfx()
