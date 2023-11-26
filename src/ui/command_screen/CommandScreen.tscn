@@ -168,12 +168,15 @@ offset_bottom = 198.0
 text = "Xenology"
 
 [node name="TechTree" type="Control" parent="DeviceFrame/TabContainer/Research"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+
+[node name="TreeLabel" type="Label" parent="DeviceFrame/TabContainer/Research/TechTree"]
+layout_mode = 0
+offset_left = 177.0
+offset_top = 3.0
+offset_right = 265.0
+offset_bottom = 22.0
+text = "Agriculture"
 
 [node name="Line1-2" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
 position = Vector2(10, 7)
@@ -230,12 +233,12 @@ offset_top = 25.0
 offset_right = 67.0
 offset_bottom = 64.0
 upgrade_description = "Ultilize mineral-rich space dust to fertilize plants.
-Increased output of FOOD by [color=green]25%[/color]."
+Increased output of food by [color=green]25%[/color]."
 upgrade_id = 1
 upgrade_sprite = ExtResource("15_fhgbc")
 connection_lines = [NodePath("../Line1-2"), NodePath("../Line1-3")]
 
-[node name="Upgrade2" parent="DeviceFrame/TabContainer/Research/TechTree" node_paths=PackedStringArray("connection_lines") instance=ExtResource("14_tb8vs")]
+[node name="Upgrade2" parent="DeviceFrame/TabContainer/Research/TechTree" node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("14_tb8vs")]
 layout_mode = 0
 offset_left = 116.0
 offset_top = 25.0
@@ -243,12 +246,13 @@ offset_right = 155.0
 offset_bottom = 64.0
 upgrade_name = "Hyperphotosynthesis"
 upgrade_description = "We do a little genetic modification which make plant created significantly more air.
-FOOD buildings now output AIR by [color=green]25%[/color] of their food production."
+Food buildings now also output air by [color=green]25%[/color] of their food production."
 upgrade_id = 2
 upgrade_sprite = ExtResource("6_nolfc")
 connection_lines = [NodePath("../Line2-4")]
+require_one_of_these_upgrades = [NodePath("../Upgrade1")]
 
-[node name="Upgrade3" parent="DeviceFrame/TabContainer/Research/TechTree" node_paths=PackedStringArray("connection_lines") instance=ExtResource("14_tb8vs")]
+[node name="Upgrade3" parent="DeviceFrame/TabContainer/Research/TechTree" node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("14_tb8vs")]
 layout_mode = 0
 offset_left = 116.0
 offset_top = 86.0
@@ -256,36 +260,39 @@ offset_right = 155.0
 offset_bottom = 125.0
 upgrade_name = "Fiber Extracted Fluid"
 upgrade_description = "Get a bit of water from vegetation.
-FOOD buildings now output WATER by [color=green]25%[/color] of their food production."
+Food buildings now also output water by [color=green]25%[/color] of their food production."
 upgrade_id = 3
 upgrade_sprite = ExtResource("7_3b4ef")
 connection_lines = [NodePath("../Line3-4")]
+require_one_of_these_upgrades = [NodePath("../Upgrade1")]
 
-[node name="Upgrade4" parent="DeviceFrame/TabContainer/Research/TechTree" node_paths=PackedStringArray("connection_lines") instance=ExtResource("14_tb8vs")]
+[node name="Upgrade4" parent="DeviceFrame/TabContainer/Research/TechTree" node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("14_tb8vs")]
 layout_mode = 0
 offset_left = 202.0
 offset_top = 25.0
 offset_right = 241.0
 offset_bottom = 64.0
 upgrade_name = "Enhanced Spacedust Fertilizer"
-upgrade_description = "Increased output of FOOD by another [color=green]50%[/color]."
+upgrade_description = "Increased output of food buildings by another [color=green]50%[/color]."
 upgrade_id = 4
 upgrade_sprite = ExtResource("15_fhgbc")
 connection_lines = [NodePath("../Line4-5"), NodePath("../Line4-6")]
+require_one_of_these_upgrades = [NodePath("../Upgrade2"), NodePath("../Upgrade3")]
 
-[node name="Upgrade5" parent="DeviceFrame/TabContainer/Research/TechTree" node_paths=PackedStringArray("connection_lines") instance=ExtResource("14_tb8vs")]
+[node name="Upgrade5" parent="DeviceFrame/TabContainer/Research/TechTree" node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("14_tb8vs")]
 layout_mode = 0
 offset_left = 290.0
 offset_top = 25.0
 offset_right = 329.0
 offset_bottom = 64.0
 upgrade_name = "Harmonic Cycle"
-upgrade_description = "Food buildings now output water and air by [color=green]25%[/color] of their food production."
+upgrade_description = "Food buildings now also output water and air by [color=green]25%[/color] of their food production."
 upgrade_id = 5
 upgrade_sprite = ExtResource("8_b03ds")
 connection_lines = [NodePath("../Line5-7")]
+require_one_of_these_upgrades = [NodePath("../Upgrade4")]
 
-[node name="Upgrade6" parent="DeviceFrame/TabContainer/Research/TechTree" node_paths=PackedStringArray("connection_lines") instance=ExtResource("14_tb8vs")]
+[node name="Upgrade6" parent="DeviceFrame/TabContainer/Research/TechTree" node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("14_tb8vs")]
 layout_mode = 0
 offset_left = 290.0
 offset_top = 88.0
@@ -297,17 +304,19 @@ upgrade_description = "Encourage plants to growth faster and stronger with harsh
 upgrade_id = 6
 upgrade_sprite = ExtResource("9_w3tjd")
 connection_lines = [NodePath("../Line6-7")]
+require_one_of_these_upgrades = [NodePath("../Upgrade4")]
 
-[node name="Upgrade7" parent="DeviceFrame/TabContainer/Research/TechTree" instance=ExtResource("14_tb8vs")]
+[node name="Upgrade7" parent="DeviceFrame/TabContainer/Research/TechTree" node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("14_tb8vs")]
 layout_mode = 0
 offset_left = 386.0
 offset_top = 23.0
 offset_right = 425.0
 offset_bottom = 62.0
 upgrade_name = "Optimized Design"
-upgrade_description = "Unlock [color=green]tier IV[/color] buildings for Food, Water and Air production buildings."
+upgrade_description = "Unlock [color=green]tier IV[/color] buildings for food, water and air production buildings."
 upgrade_id = 7
 upgrade_sprite = ExtResource("10_n20d6")
+require_one_of_these_upgrades = [NodePath("../Upgrade5"), NodePath("../Upgrade6")]
 
 [node name="UpgradeButton" type="Button" parent="DeviceFrame/TabContainer/Research/TechTree"]
 layout_mode = 0
