@@ -24,6 +24,9 @@ class_name CommandScreen
 @onready var officer_desc_label = $DeviceFrame/TabContainer/Officers/OfficerDescMC/MarginContainer/OfficerDescLabel
 @onready var officer_portrait = $DeviceFrame/TabContainer/Officers/OfficerPortrait
 
+# Upgrade tab
+@onready var upgrade_desc_label: RichTextLabel = $DeviceFrame/TabContainer/Research/TechTree/UpgradeDescription
+
 var trave_screen_open = false
 var chose_path_screen_open = false
 var path_length
@@ -119,6 +122,7 @@ func _on_show_hide_command_screen_toggled(button_pressed:bool) -> void:
 	update_officer_list()
 	officer_desc_label.visible = false
 	officer_portrait.visible = false
+	upgrade_desc_label.text = ""
 	if button_pressed:
 		show_hide_command_screen_button.text = "Hide command screen"
 		animation_player.play("show")
@@ -145,6 +149,7 @@ func show_screen():
 func _on_tab_container_tab_changed(tab:int) -> void:
 	SoundManager.play_button_click_sfx()
 	ship_upgrade_warning_label.visible = false
+	upgrade_desc_label.text = ""
 
 func _on_upgrade_hull_button_pressed() -> void:
 	SoundManager.play_button_click_sfx()

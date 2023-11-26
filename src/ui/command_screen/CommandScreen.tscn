@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://b1xmgw2jwmunk"]
+[gd_scene load_steps=20 format=3 uid="uid://b1xmgw2jwmunk"]
 
 [ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="1_4qidw"]
 [ext_resource type="Script" path="res://src/ui/command_screen/command_screen.gd" id="1_rladp"]
@@ -13,6 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://dqwcek01e0v4k" path="res://assets/character/sam_carter.png" id="10_t33dg"]
 [ext_resource type="Texture2D" uid="uid://dxsiqg3h4gm0" path="res://assets/character/mary_watney.png" id="12_cymej"]
 [ext_resource type="Texture2D" uid="uid://bfqerbgujnq0s" path="res://assets/character/dr_dorian.png" id="13_xdugs"]
+[ext_resource type="PackedScene" uid="uid://duihto0qvkw2b" path="res://src/ui/command_screen/TechUpgradeButton.tscn" id="14_tb8vs"]
+[ext_resource type="Texture2D" uid="uid://b1j3jb7potb5d" path="res://assets/ui/upgrades/spacedust.png" id="15_fhgbc"]
 
 [sub_resource type="Curve2D" id="Curve2D_ncuok"]
 _data = {
@@ -76,6 +78,231 @@ offset_left = 47.0
 offset_top = 192.0
 offset_right = 500.0
 offset_bottom = 460.0
+
+[node name="Research" type="TabBar" parent="DeviceFrame/TabContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Research"]
+self_modulate = Color(0.0352941, 0.0745098, 0.0823529, 1)
+layout_mode = 0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 451.0
+offset_bottom = 242.0
+texture = ExtResource("4_hkjqs")
+
+[node name="ChooseTech" type="Control" parent="DeviceFrame/TabContainer/Research"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
+layout_mode = 0
+offset_left = 172.0
+offset_top = 25.0
+offset_right = 260.0
+offset_bottom = 49.0
+text = "Navigation"
+
+[node name="Button2" type="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 66.0
+offset_right = 172.0
+offset_bottom = 90.0
+text = "Communication
+"
+
+[node name="Button3" type="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
+layout_mode = 0
+offset_left = 281.0
+offset_top = 119.0
+offset_right = 377.0
+offset_bottom = 143.0
+text = "Agriculture
+"
+
+[node name="Button4" type="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
+layout_mode = 0
+offset_left = 282.0
+offset_top = 63.0
+offset_right = 370.0
+offset_bottom = 87.0
+text = "Governing"
+
+[node name="Button5" type="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
+layout_mode = 0
+offset_left = 63.0
+offset_top = 118.0
+offset_right = 159.0
+offset_bottom = 142.0
+text = "Engineering
+"
+
+[node name="Button6" type="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
+layout_mode = 0
+offset_left = 97.0
+offset_top = 172.0
+offset_right = 185.0
+offset_bottom = 196.0
+text = "Medical
+"
+
+[node name="Button7" type="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
+layout_mode = 0
+offset_left = 268.0
+offset_top = 174.0
+offset_right = 356.0
+offset_bottom = 198.0
+text = "Xenology"
+
+[node name="TechTree" type="Control" parent="DeviceFrame/TabContainer/Research"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Line1-2" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
+position = Vector2(10, 7)
+points = PackedVector2Array(37, 39, 126, 39)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line1-3" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
+position = Vector2(10, 7)
+points = PackedVector2Array(39, 40, 39, 104, 127, 104)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line2-4" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
+position = Vector2(10, 7)
+points = PackedVector2Array(125, 37, 215, 37)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line3-4" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
+position = Vector2(21.0204, 7)
+points = PackedVector2Array(125, 104, 190.98, 104, 190.98, 38)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line4-5" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
+position = Vector2(10, 7)
+points = PackedVector2Array(213, 38, 304, 38)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line4-6" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
+position = Vector2(10, 7)
+points = PackedVector2Array(223, 41, 223, 105, 303, 105)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line5-7" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
+position = Vector2(10, 7)
+points = PackedVector2Array(301, 37, 398, 37)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line6-7" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
+position = Vector2(10, 7)
+points = PackedVector2Array(305, 103, 397, 103, 397, 39)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Upgrade1" parent="DeviceFrame/TabContainer/Research/TechTree" instance=ExtResource("14_tb8vs")]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 25.0
+offset_right = 67.0
+offset_bottom = 64.0
+upgrade_description = "Ultilize mineral-rich space dust to fertilize plants.
+Increased output of FOOD by [color=green]25%[/color]."
+upgrade_sprite = ExtResource("15_fhgbc")
+
+[node name="Upgrade2" parent="DeviceFrame/TabContainer/Research/TechTree" instance=ExtResource("14_tb8vs")]
+layout_mode = 0
+offset_left = 116.0
+offset_top = 25.0
+offset_right = 155.0
+offset_bottom = 64.0
+upgrade_name = "Hyperphotosynthesis"
+upgrade_description = "We do a little genetic modification which make plant created significantly more air.
+FOOD buildings now output AIR by [color=green]25%[/color] of their food production."
+
+[node name="Upgrade3" parent="DeviceFrame/TabContainer/Research/TechTree" instance=ExtResource("14_tb8vs")]
+layout_mode = 0
+offset_left = 116.0
+offset_top = 86.0
+offset_right = 155.0
+offset_bottom = 125.0
+upgrade_name = "Fiber Extracted Fluid"
+upgrade_description = "Get a bit of water from vegetation.
+FOOD buildings now output WATER by [color=green]25%[/color] of their food production."
+
+[node name="Upgrade4" parent="DeviceFrame/TabContainer/Research/TechTree" instance=ExtResource("14_tb8vs")]
+layout_mode = 0
+offset_left = 202.0
+offset_top = 25.0
+offset_right = 241.0
+offset_bottom = 64.0
+upgrade_name = "Enhanced Spacedust Fertilizer"
+upgrade_description = "Increased output of FOOD by another [color=green]50%[/color]."
+upgrade_sprite = ExtResource("15_fhgbc")
+
+[node name="Upgrade5" parent="DeviceFrame/TabContainer/Research/TechTree" instance=ExtResource("14_tb8vs")]
+layout_mode = 0
+offset_left = 290.0
+offset_top = 25.0
+offset_right = 329.0
+offset_bottom = 64.0
+upgrade_name = "Harmonic Cycle"
+upgrade_description = "Food buildings now output water and air by [color=green]25%[/color] of their food production."
+
+[node name="Upgrade6" parent="DeviceFrame/TabContainer/Research/TechTree" instance=ExtResource("14_tb8vs")]
+layout_mode = 0
+offset_left = 290.0
+offset_top = 88.0
+offset_right = 329.0
+offset_bottom = 127.0
+upgrade_name = "Accelerated Growth"
+upgrade_description = "Encourage plants to growth faster and stronger with harsher environment and increased fertilizer.
+[color=green]50%[/color] chance for double yield and [color=red]20%[/color] chance for no yield."
+
+[node name="Upgrade7" parent="DeviceFrame/TabContainer/Research/TechTree" instance=ExtResource("14_tb8vs")]
+layout_mode = 0
+offset_left = 386.0
+offset_top = 23.0
+offset_right = 425.0
+offset_bottom = 62.0
+upgrade_name = "Optimized Design"
+upgrade_description = "Unlock [color=green]tier IV[/color] buildings for Food, Water and Air production buildings."
+
+[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Research/TechTree"]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 213.0
+offset_right = 256.0
+offset_bottom = 237.0
+text = "Proceed
+"
+
+[node name="UpgradeDescription" type="RichTextLabel" parent="DeviceFrame/TabContainer/Research/TechTree"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 140.0
+offset_right = 446.0
+offset_bottom = 214.0
+bbcode_enabled = true
+text = "[u]Upgrade name[/u]
+[font_size=12]Something something that increase building speed by [color=green]50%[/color].[/font_size]
+"
 
 [node name="Travel" type="TabBar" parent="DeviceFrame/TabContainer"]
 visible = false
@@ -399,225 +626,6 @@ offset_right = 298.0
 offset_bottom = 209.0
 text = "Improve ship hull
 (15 Metal)"
-
-[node name="Research" type="TabBar" parent="DeviceFrame/TabContainer"]
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Research"]
-self_modulate = Color(0.0352941, 0.0745098, 0.0823529, 1)
-offset_left = 2.0
-offset_top = 2.0
-offset_right = 451.0
-offset_bottom = 242.0
-texture = ExtResource("4_hkjqs")
-
-[node name="ChooseTech" type="Control" parent="DeviceFrame/TabContainer/Research"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
-layout_mode = 0
-offset_left = 172.0
-offset_top = 25.0
-offset_right = 260.0
-offset_bottom = 49.0
-text = "Navigation"
-
-[node name="Button2" type="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
-layout_mode = 0
-offset_left = 60.0
-offset_top = 66.0
-offset_right = 172.0
-offset_bottom = 90.0
-text = "Communication
-"
-
-[node name="Button3" type="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
-layout_mode = 0
-offset_left = 281.0
-offset_top = 119.0
-offset_right = 377.0
-offset_bottom = 143.0
-text = "Agriculture
-"
-
-[node name="Button4" type="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
-layout_mode = 0
-offset_left = 282.0
-offset_top = 63.0
-offset_right = 370.0
-offset_bottom = 87.0
-text = "Governing"
-
-[node name="Button5" type="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
-layout_mode = 0
-offset_left = 63.0
-offset_top = 118.0
-offset_right = 159.0
-offset_bottom = 142.0
-text = "Engineering
-"
-
-[node name="Button6" type="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
-layout_mode = 0
-offset_left = 97.0
-offset_top = 172.0
-offset_right = 185.0
-offset_bottom = 196.0
-text = "Medical
-"
-
-[node name="Button7" type="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
-layout_mode = 0
-offset_left = 268.0
-offset_top = 174.0
-offset_right = 356.0
-offset_bottom = 198.0
-text = "Xenology"
-
-[node name="TechTree" type="Control" parent="DeviceFrame/TabContainer/Research"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Line1-2" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
-position = Vector2(10, 7)
-points = PackedVector2Array(37, 39, 126, 39)
-width = 5.0
-default_color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="Line1-3" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
-position = Vector2(10, 7)
-points = PackedVector2Array(39, 40, 39, 104, 127, 104)
-width = 5.0
-default_color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="Line2-4" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
-position = Vector2(10, 7)
-points = PackedVector2Array(125, 37, 215, 37)
-width = 5.0
-default_color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="Line3-4" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
-position = Vector2(21.0204, 7)
-points = PackedVector2Array(125, 104, 190.98, 104, 190.98, 38)
-width = 5.0
-default_color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="Line4-5" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
-position = Vector2(10, 7)
-points = PackedVector2Array(213, 38, 304, 38)
-width = 5.0
-default_color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="Line4-6" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
-position = Vector2(10, 7)
-points = PackedVector2Array(223, 41, 223, 105, 303, 105)
-width = 5.0
-default_color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="Line5-7" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
-position = Vector2(10, 7)
-points = PackedVector2Array(301, 37, 398, 37)
-width = 5.0
-default_color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="Line6-7" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
-position = Vector2(10, 7)
-points = PackedVector2Array(305, 103, 397, 103, 397, 39)
-width = 5.0
-default_color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="Upgrade1" type="TextureRect" parent="DeviceFrame/TabContainer/Research/TechTree"]
-layout_mode = 0
-offset_left = 28.0
-offset_top = 25.0
-offset_right = 67.0
-offset_bottom = 64.0
-texture = ExtResource("4_hkjqs")
-expand_mode = 1
-
-[node name="Upgrade2" type="TextureRect" parent="DeviceFrame/TabContainer/Research/TechTree"]
-layout_mode = 0
-offset_left = 116.0
-offset_top = 24.0
-offset_right = 155.0
-offset_bottom = 63.0
-texture = ExtResource("4_hkjqs")
-expand_mode = 1
-
-[node name="Upgrade3" type="TextureRect" parent="DeviceFrame/TabContainer/Research/TechTree"]
-layout_mode = 0
-offset_left = 117.0
-offset_top = 87.0
-offset_right = 156.0
-offset_bottom = 126.0
-texture = ExtResource("4_hkjqs")
-expand_mode = 1
-
-[node name="Upgrade4" type="TextureRect" parent="DeviceFrame/TabContainer/Research/TechTree"]
-layout_mode = 0
-offset_left = 203.0
-offset_top = 24.0
-offset_right = 242.0
-offset_bottom = 63.0
-texture = ExtResource("4_hkjqs")
-expand_mode = 1
-
-[node name="Upgrade5" type="TextureRect" parent="DeviceFrame/TabContainer/Research/TechTree"]
-layout_mode = 0
-offset_left = 292.0
-offset_top = 24.0
-offset_right = 331.0
-offset_bottom = 63.0
-texture = ExtResource("4_hkjqs")
-expand_mode = 1
-
-[node name="Upgrade6" type="TextureRect" parent="DeviceFrame/TabContainer/Research/TechTree"]
-layout_mode = 0
-offset_left = 294.0
-offset_top = 90.0
-offset_right = 333.0
-offset_bottom = 129.0
-texture = ExtResource("4_hkjqs")
-expand_mode = 1
-
-[node name="Upgrade7" type="TextureRect" parent="DeviceFrame/TabContainer/Research/TechTree"]
-layout_mode = 0
-offset_left = 388.0
-offset_top = 24.0
-offset_right = 427.0
-offset_bottom = 63.0
-texture = ExtResource("4_hkjqs")
-expand_mode = 1
-
-[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Research/TechTree"]
-layout_mode = 0
-offset_left = 192.0
-offset_top = 213.0
-offset_right = 256.0
-offset_bottom = 237.0
-text = "Proceed
-"
-
-[node name="RichTextLabel" type="RichTextLabel" parent="DeviceFrame/TabContainer/Research/TechTree"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 140.0
-offset_right = 446.0
-offset_bottom = 214.0
-bbcode_enabled = true
-text = "[u]Upgrade name[/u]
-[font_size=12]Something something that increase building speed by [color=green]50%[/color].[/font_size]
-"
 
 [node name="ShowHideCommandScreen" type="Button" parent="DeviceFrame"]
 layout_mode = 0
