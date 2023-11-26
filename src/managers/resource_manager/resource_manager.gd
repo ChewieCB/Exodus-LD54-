@@ -92,6 +92,7 @@ enum RESOURCE_TYPE {
 }
 
 var current_officers = [EnumAutoload.Officer.PRESSLEY, EnumAutoload.Officer.TORGON]
+var current_upgrades = []
 
 # Resources to be managed
 # Pop/Worker
@@ -395,4 +396,5 @@ func reset_state():
 	current_air_modifier = 0
 	current_water_modifier = 0
 	current_officers = [EnumAutoload.Officer.PRESSLEY, EnumAutoload.Officer.TORGON]
+	current_upgrades = []
 	update_specialist_bonus()

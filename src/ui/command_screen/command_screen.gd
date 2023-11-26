@@ -24,8 +24,8 @@ class_name CommandScreen
 @onready var officer_desc_label = $DeviceFrame/TabContainer/Officers/OfficerDescMC/MarginContainer/OfficerDescLabel
 @onready var officer_portrait = $DeviceFrame/TabContainer/Officers/OfficerPortrait
 
-# Upgrade tab
-@onready var upgrade_desc_label: RichTextLabel = $DeviceFrame/TabContainer/Research/TechTree/UpgradeDescription
+@onready var research_tab: ResearchTab = $DeviceFrame/TabContainer/Research
+
 
 var trave_screen_open = false
 var chose_path_screen_open = false
@@ -122,19 +122,22 @@ func _on_show_hide_command_screen_toggled(button_pressed:bool) -> void:
 	update_officer_list()
 	officer_desc_label.visible = false
 	officer_portrait.visible = false
-	upgrade_desc_label.text = ""
+	research_tab.reset_stuff_on_tab()
 	if button_pressed:
 		show_hide_command_screen_button.text = "Hide command screen"
 		animation_player.play("show")
 		trave_screen_open = true
 		show_hide_command_screen_button.button_pressed = button_pressed
-
 	else:
 		show_hide_command_screen_button.text = "Show command screen"
 		animation_player.play("hide")
 		trave_screen_open = false
 		show_hide_command_screen_button.button_pressed = button_pressed
 
+func _on_tab_container_tab_changed(tab:int) -> void:
+	SoundManager.play_button_click_sfx()
+	ship_upgrade_warning_label.visible = false
+	research_tab.reset_stuff_on_tab()
 
 func hide_screen():
 	if trave_screen_open:
@@ -144,12 +147,6 @@ func hide_screen():
 func show_screen():
 	if not trave_screen_open:
 		_on_show_hide_command_screen_toggled(true)
-
-
-func _on_tab_container_tab_changed(tab:int) -> void:
-	SoundManager.play_button_click_sfx()
-	ship_upgrade_warning_label.visible = false
-	upgrade_desc_label.text = ""
 
 func _on_upgrade_hull_button_pressed() -> void:
 	SoundManager.play_button_click_sfx()
