@@ -20,6 +20,9 @@ var trave_screen_open = false
 var chose_path_screen_open = false
 var path_length
 
+var is_mouse_over_starmap: bool = false
+
+
 const WAKEUP_CITIZEN_WATER_COST = 15
 
 func _ready() -> void:
@@ -27,18 +30,12 @@ func _ready() -> void:
 	default_path_button.self_modulate = Color.GREEN
 	EventManager.chosen_path = EventManager.TRAVEL_PATH_TYPE.DEFAULT_PATH
 	desc_label.text = "Default path\nYou have equal chance to meet all type of events."
-	TickManager.tick.connect(_update_path_follow)
 
 
 func _input(event: InputEvent):
 	if event is InputEventMouseMotion or event is InputEventMouseButton:
-		$DeviceFrame/TabContainer/Travel/MarginContainer/SubViewport.push_input(event, false)
-
-
-func _update_path_follow():
-	var path_progress = float(EventManager.tick_passed_total) / EventManager.tick_to_victory
-	path_progress = clampf(path_progress, 0, 1)
-	path_follow.progress_ratio = path_progress
+		if is_mouse_over_starmap:
+			$DeviceFrame/TabContainer/Travel/MarginContainer/SubViewport.push_input(event, false)
 
 
 func _on_default_path_pressed() -> void:
@@ -144,3 +141,12 @@ func show_screen():
 func _on_tab_container_tab_changed(tab:int) -> void:
 	SoundManager.play_button_click_sfx()
 	wakeup_warning_label.visible = false
+
+
+func _on_starmap_area_mouse_entered():
+	is_mouse_over_starmap = true
+
+
+func _on_starmap_area_mouse_exited():
+	is_mouse_over_starmap = false
+

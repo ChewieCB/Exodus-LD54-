@@ -45,6 +45,10 @@ extends Node2D
 @export_range(0, 10000, 1) var negation_zone_radius: int = 256:
 	set(value):
 		negation_zone_radius = value
+		# FIXME - Update negation zone shader params
+#		var mapped_negation_radius = remap(negation_zone_radius, 0, circle_radius, 0, 0.7)
+#		if negation_zone_shader:
+#			negation_zone_shader.material.set_shader_parameter("circle_size", mapped_negation_radius)
 
 var points_to_draw: PackedVector2Array
 var stars: Array
@@ -75,6 +79,8 @@ static var shape_info: Dictionary
 @onready var starlane_scene = load("res://src/ui/star_map/starlane/Starlane.tscn")
 @onready var starlane_chevrons_scene = load("res://src/ui/star_map/starlane/StarlaneChevrons.tscn")
 var chevrons_instance
+
+@onready var negation_zone_shader = $NegationZone
 
 var viewport_has_focus: bool = false
 var target_zoom: float = 1.0
@@ -131,11 +137,6 @@ func _physics_process(delta):
 		if $ShipTracker.global_position.distance_to(next_star) < 1:
 			if chevrons_instance:
 				chevrons_instance.points = []
-
-
-#func _input(_event):
-#	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-#		pass
 
 
 func select_star_to_travel_to(star):
@@ -666,4 +667,5 @@ func _on_viewport_mouse_entered():
 
 func _on_viewport_mouse_exited():
 	viewport_has_focus = false
+	get_parent().gui_release_focus()
 

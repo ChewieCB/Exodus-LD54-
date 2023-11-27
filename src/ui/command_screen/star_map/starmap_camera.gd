@@ -29,8 +29,6 @@ func _physics_process(delta):
 
 
 func _input(event: InputEvent) -> void:
-#	if not get_parent().viewport_has_focus:
-#		return
 	if event is InputEventMouseMotion:
 		if event.button_mask == MOUSE_BUTTON_MASK_MIDDLE:
 			position -= event.relative / zoom * 0.35
@@ -41,16 +39,6 @@ func _input(event: InputEvent) -> void:
 			var right_edge = center.x + viewport_rect.size.x
 			var top_edge = center.y + viewport_rect.size.y
 			var bottom_edge = center.y - viewport_rect.size.y
-#			global_position.x = clamp(
-#				global_position.x, 
-#				-negation_zone_radius, 
-#				negation_zone_radius
-#			)
-#			global_position.y = clamp(
-#				global_position.y,
-#				-negation_zone_radius, 
-#				negation_zone_radius
-#			)
 	if event is InputEventMouseButton:
 		if event.is_pressed():
 			if event.button_index == MOUSE_BUTTON_WHEEL_UP:

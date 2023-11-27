@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://1dd0jvugd41x"]
+[gd_scene load_steps=15 format=3 uid="uid://1dd0jvugd41x"]
 
 [ext_resource type="Script" path="res://src/ui/command_screen/star_map/star_map.gd" id="1_eteq2"]
 [ext_resource type="Texture2D" uid="uid://ptj0v57gt0k7" path="res://assets/backgrounds/Space Background(1).png" id="2_70tav"]
@@ -7,6 +7,7 @@
 [ext_resource type="Shader" path="res://src/ui/command_screen/star_map/center_black_hole.gdshader" id="5_ihuh7"]
 [ext_resource type="Shader" path="res://src/ui/command_screen/star_map/crt_overlay.gdshader" id="6_n6u0w"]
 [ext_resource type="Shader" path="res://src/ui/command_screen/star_map/starnest.gdshader" id="6_unoj6"]
+[ext_resource type="Shader" path="res://src/ui/command_screen/star_map/negation_zone.gdshader" id="6_yeten"]
 [ext_resource type="Texture2D" uid="uid://ckoxrr26nrbmi" path="res://assets/sprite/ship_concept_side.png" id="7_pxyjt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ckex1"]
@@ -36,6 +37,18 @@ shader_parameter/step3 = 0.151
 shader_parameter/step4 = 0.174
 shader_parameter/step5 = 0.216
 shader_parameter/step6 = 0.274
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0d3cb"]
+shader = ExtResource("6_yeten")
+shader_parameter/circle_size = 0.378
+shader_parameter/screen_width = 720.0
+shader_parameter/screen_height = 720.0
+shader_parameter/color_gap = Color(0.545098, 0.137255, 0.172549, 0.392157)
+shader_parameter/color_stripe = Color(0.254902, 0.109804, 0.176471, 0.392157)
+shader_parameter/divisions = 32.0
+shader_parameter/stripe_bias = 2.0
+shader_parameter/speed = 0.01
+shader_parameter/angle = 0.7854
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_28fq1"]
 shader = ExtResource("4_qryj1")
@@ -87,9 +100,10 @@ galactic_center_connection_chance = 86.0
 galactic_center_connection_jitter = 0.56
 tertiary_connection_chance = 37.0
 tertiary_connection_jitter = 0.29
-negation_zone_radius = 291
+negation_zone_radius = 216
 
 [node name="TextureRect" type="TextureRect" parent="."]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -154,6 +168,17 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
+
+[node name="NegationZone" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_0d3cb")
+custom_minimum_size = Vector2(800, 800)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 layer = -1

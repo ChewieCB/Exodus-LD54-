@@ -1,20 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://b1xmgw2jwmunk"]
+[gd_scene load_steps=10 format=3 uid="uid://b1xmgw2jwmunk"]
 
 [ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="1_4qidw"]
 [ext_resource type="Script" path="res://src/ui/command_screen/command_screen.gd" id="1_rladp"]
 [ext_resource type="Texture2D" uid="uid://8m1r17nptfyg" path="res://assets/sprite/space_map.png" id="2_tgm10"]
-[ext_resource type="Texture2D" uid="uid://d3pj8wans2lr4" path="res://assets/sprite/circle.png" id="3_4kwp3"]
 [ext_resource type="PackedScene" uid="uid://1dd0jvugd41x" path="res://src/ui/command_screen/star_map/StarMap.tscn" id="3_jn7gj"]
 [ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="4_hkjqs"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ywpr8"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v161y"]
 size = Vector2(450, 235)
-
-[sub_resource type="Curve2D" id="Curve2D_ncuok"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 106, -63, 0, 0, 0, 0, 87, -78, 0, 0, 0, 0, 35, -60, 0, 0, 0, 0, -1, -14, 0, 0, 0, 0, -6, -3, 0, 0, 0, 0, 8, 38)
-}
-point_count = 6
 
 [sub_resource type="Animation" id="Animation_0rfvp"]
 resource_name = "hide"
@@ -62,8 +55,8 @@ script = ExtResource("1_rladp")
 
 [node name="DeviceFrame" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 595.0
-offset_right = 1253.0
+offset_left = 1119.0
+offset_right = 1777.0
 offset_bottom = 685.0
 mouse_filter = 2
 texture = ExtResource("1_4qidw")
@@ -106,12 +99,6 @@ grow_vertical = 2
 mouse_filter = 2
 stretch = true
 
-[node name="Area2D" type="Area2D" parent="DeviceFrame/TabContainer/Travel/MarginContainer"]
-position = Vector2(224.5, 117)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DeviceFrame/TabContainer/Travel/MarginContainer/Area2D"]
-shape = SubResource("RectangleShape2D_ywpr8")
-
 [node name="SubViewport" type="SubViewport" parent="DeviceFrame/TabContainer/Travel/MarginContainer"]
 handle_input_locally = false
 physics_object_picking = true
@@ -121,30 +108,20 @@ render_target_update_mode = 4
 [node name="StarMap" parent="DeviceFrame/TabContainer/Travel/MarginContainer/SubViewport" instance=ExtResource("3_jn7gj")]
 position = Vector2(1167.5, 224)
 
-[node name="ProgressView" type="Control" parent="DeviceFrame/TabContainer/Travel"]
-visible = false
-anchors_preset = 0
-offset_left = 289.0
-offset_top = 118.0
-offset_right = 289.0
-offset_bottom = 118.0
-mouse_filter = 2
+[node name="StarmapInputArea" type="MarginContainer" parent="DeviceFrame/TabContainer/Travel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Path2D" type="Path2D" parent="DeviceFrame/TabContainer/Travel/ProgressView"]
-position = Vector2(-7, 0)
-curve = SubResource("Curve2D_ncuok")
+[node name="Area2D" type="Area2D" parent="DeviceFrame/TabContainer/Travel/StarmapInputArea"]
 
-[node name="PathFollow2D" type="PathFollow2D" parent="DeviceFrame/TabContainer/Travel/ProgressView/Path2D"]
-position = Vector2(106, -63)
-rotation = -2.4733
-loop = false
-
-[node name="Sprite2D" type="Sprite2D" parent="DeviceFrame/TabContainer/Travel/ProgressView/Path2D/PathFollow2D"]
-modulate = Color(1, 0.0588235, 0, 1)
-position = Vector2(-0.707031, -0.707092)
-rotation = 2.35619
-scale = Vector2(0.15625, 0.15625)
-texture = ExtResource("3_4kwp3")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeviceFrame/TabContainer/Travel/StarmapInputArea/Area2D"]
+shape = SubResource("RectangleShape2D_v161y")
 
 [node name="PathChoiceView" type="Control" parent="DeviceFrame/TabContainer/Travel"]
 modulate = Color(1, 1, 1, 0)
@@ -307,8 +284,8 @@ libraries = {
 }
 
 [connection signal="tab_changed" from="DeviceFrame/TabContainer" to="." method="_on_tab_container_tab_changed"]
-[connection signal="mouse_entered" from="DeviceFrame/TabContainer/Travel/MarginContainer/Area2D" to="DeviceFrame/TabContainer/Travel/MarginContainer/SubViewport/StarMap" method="_on_viewport_mouse_entered"]
-[connection signal="mouse_exited" from="DeviceFrame/TabContainer/Travel/MarginContainer/Area2D" to="DeviceFrame/TabContainer/Travel/MarginContainer/SubViewport/StarMap" method="_on_viewport_mouse_exited"]
+[connection signal="mouse_entered" from="DeviceFrame/TabContainer/Travel/StarmapInputArea/Area2D" to="." method="_on_starmap_area_mouse_entered"]
+[connection signal="mouse_exited" from="DeviceFrame/TabContainer/Travel/StarmapInputArea/Area2D" to="." method="_on_starmap_area_mouse_exited"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button" to="." method="_on_default_path_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button2" to="." method="_on_intergalatic_route_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button3" to="." method="_on_asteroid_field_pressed"]
