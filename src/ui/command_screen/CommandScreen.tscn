@@ -57,14 +57,15 @@ _data = {
 [node name="CommandScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-mouse_filter = 1
+mouse_filter = 2
 script = ExtResource("1_rladp")
 
 [node name="DeviceFrame" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 1119.0
-offset_right = 1777.0
+offset_left = 595.0
+offset_right = 1253.0
 offset_bottom = 685.0
+mouse_filter = 2
 texture = ExtResource("1_4qidw")
 
 [node name="TabContainer" type="TabContainer" parent="DeviceFrame"]
@@ -73,10 +74,11 @@ offset_left = 47.0
 offset_top = 192.0
 offset_right = 500.0
 offset_bottom = 460.0
+mouse_filter = 2
 
 [node name="Travel" type="TabBar" parent="DeviceFrame/TabContainer"]
 layout_mode = 2
-mouse_filter = 1
+mouse_filter = 2
 
 [node name="SpaceMap" type="TextureRect" parent="DeviceFrame/TabContainer/Travel"]
 visible = false
@@ -84,6 +86,7 @@ layout_mode = 0
 offset_top = 1.0
 offset_right = 453.0
 offset_bottom = 236.0
+mouse_filter = 2
 texture = ExtResource("2_tgm10")
 
 [node name="MarginContainer" type="SubViewportContainer" parent="DeviceFrame/TabContainer/Travel"]
@@ -111,6 +114,7 @@ shape = SubResource("RectangleShape2D_ywpr8")
 
 [node name="SubViewport" type="SubViewport" parent="DeviceFrame/TabContainer/Travel/MarginContainer"]
 handle_input_locally = false
+physics_object_picking = true
 size = Vector2i(450, 235)
 render_target_update_mode = 4
 
@@ -124,6 +128,7 @@ offset_left = 289.0
 offset_top = 118.0
 offset_right = 289.0
 offset_bottom = 118.0
+mouse_filter = 2
 
 [node name="Path2D" type="Path2D" parent="DeviceFrame/TabContainer/Travel/ProgressView"]
 position = Vector2(-7, 0)
@@ -148,6 +153,7 @@ offset_left = 289.0
 offset_top = 118.0
 offset_right = 289.0
 offset_bottom = 118.0
+mouse_filter = 2
 
 [node name="Sprite2D2" type="TextureRect" parent="DeviceFrame/TabContainer/Travel/PathChoiceView"]
 self_modulate = Color(0.117647, 0.117647, 0.117647, 0.937255)
@@ -157,6 +163,7 @@ offset_top = -117.0
 offset_right = -222.0
 offset_bottom = -53.0
 scale = Vector2(7, 3.70312)
+mouse_filter = 2
 texture = ExtResource("4_hkjqs")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Travel/PathChoiceView"]
@@ -172,6 +179,7 @@ offset_right = -123.0
 offset_bottom = 68.0
 grow_horizontal = 0
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Button" type="Button" parent="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer"]
 layout_mode = 2
@@ -218,6 +226,7 @@ text = "Change path"
 [node name="Cryostasis Citizen" type="TabBar" parent="DeviceFrame/TabContainer"]
 visible = false
 layout_mode = 2
+mouse_filter = 2
 
 [node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]
 self_modulate = Color(0.0156863, 0.0784314, 0.152941, 1)
@@ -226,6 +235,7 @@ offset_left = 2.0
 offset_top = 2.0
 offset_right = 451.0
 offset_bottom = 235.0
+mouse_filter = 2
 texture = ExtResource("4_hkjqs")
 
 [node name="TitleLabel" type="Label" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]

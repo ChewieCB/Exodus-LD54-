@@ -16,14 +16,14 @@ var star_timespeed: float = 0.3
 var pickable: bool = false:
 	set(value):
 		pickable = value
-		if star_instance:
+		if star_instance != null:
 			star_instance._highlight.visible = pickable
 
 
 var has_signal: bool = false:
 	set(value):
 		has_signal = value
-		if star_instance:
+		if star_instance != null:
 			star_instance._signal.visible = has_signal
 
 

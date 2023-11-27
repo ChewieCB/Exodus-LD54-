@@ -144,15 +144,18 @@ func select_star_to_travel_to(star):
 			return
 		if $ShipTracker.global_position.distance_to(next_star) < 1:
 			var start_point = $ShipTracker.global_position - get_global_transform().origin
+			var offset_star_position = star.global_position - get_global_transform().origin
 			var connected_lanes = get_connected_starlanes(start_point)
 			for _lane in connected_lanes:
-				if star.global_position - get_global_transform().origin in _lane:
-					next_star = star.global_position
-					$ShipTracker.look_at(next_star - get_global_transform().origin)
-					chevrons_instance.points = [start_point, next_star - get_global_transform().origin]
-					#
-					if not zone_shrinking:
-						zone_shrinking = true
+				for _point in _lane.slice(0, 2):
+					if offset_star_position.is_equal_approx(_point):
+						next_star = star.global_position
+						$ShipTracker.look_at(next_star)
+						chevrons_instance.points = [start_point, next_star - get_global_transform().origin]
+						#
+						if not zone_shrinking:
+							zone_shrinking = true
+						return
 
 
 func get_connected_starlanes(start_point) -> Array:
