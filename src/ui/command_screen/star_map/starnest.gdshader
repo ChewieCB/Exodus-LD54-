@@ -1,5 +1,7 @@
 shader_type canvas_item;
 
+global uniform float timescale;
+
 uniform float ring_radius : hint_range(0.1, 0.5, 0.01) = 0.4;
 uniform float thickness_scalar : hint_range(0.0, 0.99, 0.05) = 0.7;
 uniform float oscillation_scalar : hint_range(0.0, 0.25, 0.005) = 0.025;
@@ -16,7 +18,7 @@ void fragment() {
 	float dist = distance(UV, vec2(0.5, 0.5));
 
 	// Add a slight oscillation to the size of the ring
-	float o = cos(TIME * speed);
+	float o = cos(TIME * timescale * speed);
 	float ring_size = ring_radius + o * oscillation_scalar;
 	
 	float inner_hardness = 0.0;

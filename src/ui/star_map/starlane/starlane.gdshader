@@ -8,6 +8,9 @@ the modified result to godotshaders.com.
 */
 
 shader_type canvas_item;
+
+global uniform float timescale;
+
 render_mode blend_add; // Remove this if you want to use HDR glow instead (use "Glow" and "Outline Glow" sliders)
 
 uniform int beams = 2; // How many beams the energy field should have
@@ -63,7 +66,7 @@ float fbm(vec2 uv, float time) {
 	float value = 0.0;
 	
     for(int i = 0; i < octaves; i++) {
-        value += amp * noise(freq * vec2(uv.x, uv.y + time));
+        value += amp * noise(freq * vec2(uv.x, uv.y + time * timescale));
         amp *= 0.5;
         freq *= 2.0;
     }
@@ -80,11 +83,11 @@ vec4 bolt(vec2 uv, float time, float i)
 	float falloff = smoothstep(0.0, fixed_edge_size, uv.x) * smoothstep(0.0, fixed_edge_size, 1.0 - uv.x);
 	
 	// Use Fractal Brownian Motion to create a "cloud texture" and use Difference blend mode to make the beam
-	vec4 clouds = vec4(fbm((uv + vec2(i) ) * noise_scale, time * speed)) * falloff;
+	vec4 clouds = vec4(fbm((uv + vec2(i) ) * noise_scale, time * timescale * speed)) * falloff;
 	vec4 diff_clouds = difference(clouds, vec4(uv.y - 0.5 + y_offset + (uv.y * falloff * 0.02 * energy * progress)));
 	
 	// Create a new noise to mask the beams on low "progress" values. To make a "turn-off" effect more visually interesting.
-	vec4 clouds2 = vec4(fbm((uv * 2.0) * noise_scale, time * 1.)) * 5.0;
+	vec4 clouds2 = vec4(fbm((uv * 2.0) * noise_scale, time * timescale * 1.)) * 5.0;
 	diff_clouds += smoothstep(0.0, 0.8, clouds2) * 0.1 * (1.-progress);
 	
 	// Set thickness of the beams. First beam is the Thickness size and all following beams are sized with beam_difference
@@ -106,7 +109,7 @@ void fragment()
 	vec4 beam = vec4(0.0);
 	
 	for (int i = 0; i < beams; i++){
-		beam = max(beam, bolt(UV, TIME, float(i)));
+		beam = max(beam, bolt(UV, TIME * timescale, float(i)));
 	}
 	
 	COLOR = beam;

@@ -9,6 +9,8 @@ the modified result to godotshaders.com.
 
 shader_type canvas_item;
 
+global uniform float timescale;
+
 //*** IMPORTANT! ***/ 
 // - If you are using this shader to affect the node it is applied to set 'overlay' to false (unchecked in the instepctor).
 // - If you are using this shader as an overlay, and want the shader to affect the nodes below in the Scene hierarchy,
@@ -115,9 +117,9 @@ void fragment()
 	if (roll || noise_opacity > 0.0)
 	{
 		// Create the areas/lines where the texture will be distorted.
-		roll_line = smoothstep(0.3, 0.9, sin(uv.y * roll_size - (time * roll_speed) ) );
+		roll_line = smoothstep(0.3, 0.9, sin(uv.y * roll_size - (time * timescale * roll_speed) ) );
 		// Create more lines of a different size and apply to the first set of lines. This creates a bit of variation.
-		roll_line *= roll_line * smoothstep(0.3, 0.9, sin(uv.y * roll_size * roll_variation - (time * roll_speed * roll_variation) ) );
+		roll_line *= roll_line * smoothstep(0.3, 0.9, sin(uv.y * roll_size * roll_variation - (time * timescale * roll_speed * roll_variation) ) );
 		// Distort the UV where where the lines are
 		roll_uv = vec2(( roll_line * distort_intensity * (1.-UV.x)), 0.0);
 	}
@@ -191,7 +193,7 @@ void fragment()
 		// the resolution value set in the inspector. If you don't like this look you can 
 		// change "ceil(uv * resolution) / resolution" to only "uv" to make it less pixelated. Or multiply resolution with som value
 		// greater than 1.0 to make them smaller.
-		roll_line *= noise * scanlines * clamp(random((ceil(uv * resolution) / resolution) + vec2(TIME * 0.8, 0.0)).x + 0.8, 0.0, 1.0);
+		roll_line *= noise * scanlines * clamp(random((ceil(uv * resolution) / resolution) + vec2(TIME * timescale * 0.8, 0.0)).x + 0.8, 0.0, 1.0);
 		// Add it to the texture based on noise_opacity
 		text.rgb = clamp(mix(text.rgb, text.rgb + roll_line, noise_opacity), vec3(0.0), vec3(1.0));
 	}
@@ -199,7 +201,7 @@ void fragment()
 	// Apply static noise by generating it over the whole screen in the same way as above
 	if (static_noise_intensity > 0.0)
 	{
-		text.rgb += clamp(random((ceil(uv * resolution) / resolution) + fract(TIME)).x, 0.0, 1.0) * static_noise_intensity;
+		text.rgb += clamp(random((ceil(uv * resolution) / resolution) + fract(TIME * timescale)).x, 0.0, 1.0) * static_noise_intensity;
 	}
 	
 	// Apply a black border to hide imperfections caused by the warping.

@@ -1,6 +1,8 @@
 shader_type canvas_item;
 render_mode blend_mix;
 
+global uniform float timescale;
+
 uniform float pixels : hint_range(10,100, 0.5);
 uniform float time_speed : hint_range(0.0, 1.0) = 0.05;
 uniform float time;
@@ -90,8 +92,8 @@ void fragment() {
 	pixelized = spherify(pixelized);
 	
 	// use two different sized cells for some variation
-	float n = Cells(pixelized - vec2(time * time_speed * 2.0, 0), 10);
-	n *= Cells(pixelized - vec2(time * time_speed * 1.0, 0), 20);
+	float n = Cells(pixelized - vec2(time * time_speed * timescale * 2.0, 0), 10);
+	n *= Cells(pixelized - vec2(time * time_speed * timescale * 1.0, 0), 20);
 
 	
 	// adjust cell value to get better looking stuff

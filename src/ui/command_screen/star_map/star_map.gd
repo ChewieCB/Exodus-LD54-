@@ -64,7 +64,7 @@ var negation_zone_center: Vector2 = Vector2.ZERO
 @onready var adjusted_center = negation_zone_center + get_global_transform().origin
 
 var next_star: Vector2
-const SHIP_MOVE_RATE: float = 10.0
+const SHIP_MOVE_RATE: float = 5.0
 
 var zone_shrinking: bool = false
 const NEGATION_FIELD_SHRINK_RATE: float = 1.0
@@ -133,7 +133,16 @@ func _process(_delta):
 func _physics_process(delta):
 	if next_star:
 		# TODO - get lerp working for this so we can ease it
-		$ShipTracker.global_position += (next_star - $ShipTracker.global_position).normalized() * SHIP_MOVE_RATE * delta
+		$ShipTracker.global_position += \
+			(next_star - $ShipTracker.global_position).normalized() * \
+			SHIP_MOVE_RATE * \
+			remap(
+				TickManager.current_tick_rate,
+				TickManager.PAUSED_TICK_SPEED, 
+				TickManager.FAST_TICK_SPEED,
+				0,
+				2
+			) * delta
 		if $ShipTracker.global_position.distance_to(next_star) < 1:
 			if chevrons_instance:
 				chevrons_instance.points = []

@@ -1,5 +1,7 @@
 shader_type canvas_item;
 
+global uniform float timescale;
+
 uniform vec4 color_signal : source_color = vec4 (1.0);
 uniform float size : hint_range(0.0, 1.0, 0.01) = 0.2;
 uniform float zoom : hint_range(0.0, 20, 1) = 8.0;
@@ -17,7 +19,7 @@ void fragment(){
 	// For idle color, delete "//" below :
 	vec4 color = vec4(color_signal.rgb,1.0);
 
-	d = sin(zoom*d - speed*TIME);
+	d = sin(zoom*d - speed*TIME * timescale);
 	d = abs(d);
 	d = size/d;
 	color *= d*t;

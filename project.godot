@@ -162,3 +162,10 @@ left_click={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+
+[shader_globals]
+
+timescale={
+"type": "float",
+"value": 1.0
+}
