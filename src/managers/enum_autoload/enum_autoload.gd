@@ -1,11 +1,12 @@
 extends Node
 
 enum Officer {
+	NONE,
 	PRESSLEY,
 	TORGON,
 	FAROQ_KHAN, # Boost food production
 	SAM_CARTER,
-	GOVERNOR, # Boost habitation capacity
+	GOVERNOR_JERREROD, # Boost habitation capacity
 	MARY_WATNEY,
 	DR_DORIAN
 }

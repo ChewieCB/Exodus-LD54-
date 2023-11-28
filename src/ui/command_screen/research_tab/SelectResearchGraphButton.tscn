@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6fnnntkibdna"]
+
+[ext_resource type="Script" path="res://src/ui/command_screen/research_tab/select_research_graph_button.gd" id="1_xa6g2"]
+
+[node name="Button" type="Button"]
+text = "Crew Supplies"
+script = ExtResource("1_xa6g2")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

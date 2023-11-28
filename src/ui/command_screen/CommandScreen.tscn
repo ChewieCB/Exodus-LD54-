@@ -1,26 +1,21 @@
-[gd_scene load_steps=26 format=3 uid="uid://b1xmgw2jwmunk"]
+[gd_scene load_steps=21 format=3 uid="uid://b1xmgw2jwmunk"]
 
 [ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="1_4qidw"]
 [ext_resource type="Script" path="res://src/ui/command_screen/command_screen.gd" id="1_rladp"]
 [ext_resource type="Texture2D" uid="uid://8m1r17nptfyg" path="res://assets/sprite/space_map.png" id="2_tgm10"]
 [ext_resource type="Texture2D" uid="uid://d3pj8wans2lr4" path="res://assets/sprite/circle.png" id="3_4kwp3"]
-[ext_resource type="Script" path="res://src/ui/command_screen/research_tab.gd" id="3_v75ll"]
+[ext_resource type="Script" path="res://src/ui/command_screen/research_tab/research_tab.gd" id="3_v75ll"]
 [ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="4_hkjqs"]
-[ext_resource type="Texture2D" uid="uid://b0iejd25d55tj" path="res://assets/ui/upgrades/plant_photosynthesis.png" id="6_nolfc"]
+[ext_resource type="PackedScene" uid="uid://c6fnnntkibdna" path="res://src/ui/command_screen/research_tab/SelectResearchGraphButton.tscn" id="5_fynyk"]
+[ext_resource type="PackedScene" uid="uid://h5xuge7sdvl5" path="res://src/ui/command_screen/research_tab/AgricultureResearch.tscn" id="5_i78t6"]
 [ext_resource type="Texture2D" uid="uid://cegl6af3k4xpo" path="res://assets/character/pressley.png" id="6_wk0bw"]
-[ext_resource type="Texture2D" uid="uid://bpjbwv3e5ohdb" path="res://assets/ui/upgrades/plant_extract_water.png" id="7_3b4ef"]
 [ext_resource type="PackedScene" uid="uid://lwk7nc56s8g8" path="res://src/ui/command_screen/OfficerLabel.tscn" id="7_rk483"]
-[ext_resource type="Texture2D" uid="uid://y78xxo035ys2" path="res://assets/ui/upgrades/harmonic_cycle.png" id="8_b03ds"]
 [ext_resource type="Texture2D" uid="uid://df0siiqlu7ln3" path="res://assets/character/torgon.png" id="8_jre42"]
 [ext_resource type="Texture2D" uid="uid://xor5ih5p1g3d" path="res://assets/character/faroq_khan.png" id="9_47m3x"]
-[ext_resource type="Texture2D" uid="uid://dqka5of55fgy1" path="res://assets/ui/upgrades/plant_accel_growth.png" id="9_w3tjd"]
 [ext_resource type="Texture2D" uid="uid://cox4fi3kfgyyo" path="res://assets/character/governor_jerrerod.png" id="10_0xedy"]
-[ext_resource type="Texture2D" uid="uid://y28fijmf0i6a" path="res://assets/ui/upgrades/optimized_design.png" id="10_n20d6"]
 [ext_resource type="Texture2D" uid="uid://dqwcek01e0v4k" path="res://assets/character/sam_carter.png" id="10_t33dg"]
 [ext_resource type="Texture2D" uid="uid://dxsiqg3h4gm0" path="res://assets/character/mary_watney.png" id="12_cymej"]
 [ext_resource type="Texture2D" uid="uid://bfqerbgujnq0s" path="res://assets/character/dr_dorian.png" id="13_xdugs"]
-[ext_resource type="PackedScene" uid="uid://duihto0qvkw2b" path="res://src/ui/command_screen/TechUpgradeButton.tscn" id="14_tb8vs"]
-[ext_resource type="Texture2D" uid="uid://b1j3jb7potb5d" path="res://assets/ui/upgrades/spacedust.png" id="15_fhgbc"]
 
 [sub_resource type="Curve2D" id="Curve2D_ncuok"]
 _data = {
@@ -99,7 +94,6 @@ offset_bottom = 242.0
 texture = ExtResource("4_hkjqs")
 
 [node name="ChooseTech" type="Control" parent="DeviceFrame/TabContainer/Research"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -107,227 +101,112 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
+[node name="Title" type="Label" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
 layout_mode = 0
-offset_left = 172.0
-offset_top = 25.0
-offset_right = 260.0
-offset_bottom = 49.0
-text = "Navigation"
+offset_left = 72.0
+offset_top = 12.0
+offset_right = 384.0
+offset_bottom = 31.0
+theme_override_font_sizes/font_size = 12
+text = "Please select a research field to start"
+horizontal_alignment = 1
+autowrap_mode = 2
 
-[node name="Button2" type="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
+[node name="GeneralResearch" type="VBoxContainer" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
+layout_mode = 2
+offset_left = 24.0
+offset_top = 36.0
+offset_right = 224.0
+offset_bottom = 144.0
+
+[node name="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+
+[node name="Button2" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Manufacturing"
+
+[node name="Button3" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Habitation & Medical"
+
+[node name="Button4" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Construction & Logistics"
+
+[node name="SpecialistResearch" type="VBoxContainer" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
 layout_mode = 0
-offset_left = 60.0
-offset_top = 66.0
-offset_right = 172.0
-offset_bottom = 90.0
-text = "Communication
+offset_left = 278.0
+offset_top = 35.0
+offset_right = 422.0
+offset_bottom = 227.0
+
+[node name="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Navigation
 "
+required_officer = 1
 
-[node name="Button3" type="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
-layout_mode = 0
-offset_left = 281.0
-offset_top = 119.0
-offset_right = 377.0
-offset_bottom = 143.0
-text = "Agriculture
-"
+[node name="Button2" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Communcation"
+required_officer = 2
 
-[node name="Button4" type="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
-layout_mode = 0
-offset_left = 282.0
-offset_top = 63.0
-offset_right = 370.0
-offset_bottom = 87.0
-text = "Governing"
+[node name="Button3" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Housing"
+required_officer = 5
 
-[node name="Button5" type="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
-layout_mode = 0
-offset_left = 63.0
-offset_top = 118.0
-offset_right = 159.0
-offset_bottom = 142.0
-text = "Engineering
-"
+[node name="Button4" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Agriculture"
+required_officer = 3
+research_graph_node_name = "AgricultureResearch"
 
-[node name="Button6" type="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
-layout_mode = 0
-offset_left = 97.0
-offset_top = 172.0
-offset_right = 185.0
-offset_bottom = 196.0
-text = "Medical
-"
+[node name="Button5" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Science"
+required_officer = 4
 
-[node name="Button7" type="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
-layout_mode = 0
-offset_left = 268.0
-offset_top = 174.0
-offset_right = 356.0
-offset_bottom = 198.0
-text = "Xenology"
+[node name="Button6" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Engineering"
+required_officer = 6
 
-[node name="TechTree" type="Control" parent="DeviceFrame/TabContainer/Research"]
+[node name="Button7" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Body Augmentation"
+required_officer = 7
+
+[node name="ResearchGraphView" type="Control" parent="DeviceFrame/TabContainer/Research"]
+visible = false
 anchors_preset = 0
 
-[node name="TreeLabel" type="Label" parent="DeviceFrame/TabContainer/Research/TechTree"]
+[node name="ResearchGraphHolder" type="Control" parent="DeviceFrame/TabContainer/Research/ResearchGraphView"]
+anchors_preset = 0
+offset_right = 450.0
+offset_bottom = 242.0
+
+[node name="AgricultureResearch" parent="DeviceFrame/TabContainer/Research/ResearchGraphView/ResearchGraphHolder" instance=ExtResource("5_i78t6")]
+
+[node name="UpgradeButton" type="Button" parent="DeviceFrame/TabContainer/Research/ResearchGraphView"]
 layout_mode = 0
-offset_left = 177.0
-offset_top = 3.0
-offset_right = 265.0
-offset_bottom = 22.0
-text = "Agriculture"
-
-[node name="Line1-2" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
-position = Vector2(10, 7)
-points = PackedVector2Array(37, 39, 126, 39)
-width = 5.0
-default_color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="Line1-3" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
-position = Vector2(10, 7)
-points = PackedVector2Array(39, 40, 39, 104, 127, 104)
-width = 5.0
-default_color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="Line2-4" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
-position = Vector2(10, 7)
-points = PackedVector2Array(125, 37, 215, 37)
-width = 5.0
-default_color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="Line3-4" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
-position = Vector2(21.0204, 7)
-points = PackedVector2Array(125, 104, 190.98, 104, 190.98, 38)
-width = 5.0
-default_color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="Line4-5" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
-position = Vector2(10, 7)
-points = PackedVector2Array(213, 38, 304, 38)
-width = 5.0
-default_color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="Line4-6" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
-position = Vector2(10, 7)
-points = PackedVector2Array(223, 41, 223, 105, 303, 105)
-width = 5.0
-default_color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="Line5-7" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
-position = Vector2(10, 7)
-points = PackedVector2Array(301, 37, 398, 37)
-width = 5.0
-default_color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="Line6-7" type="Line2D" parent="DeviceFrame/TabContainer/Research/TechTree"]
-position = Vector2(10, 7)
-points = PackedVector2Array(305, 103, 397, 103, 397, 39)
-width = 5.0
-default_color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="Upgrade1" parent="DeviceFrame/TabContainer/Research/TechTree" node_paths=PackedStringArray("connection_lines") instance=ExtResource("14_tb8vs")]
-layout_mode = 0
-offset_left = 28.0
-offset_top = 25.0
-offset_right = 67.0
-offset_bottom = 64.0
-upgrade_description = "Ultilize mineral-rich space dust to fertilize plants.
-Increased output of food by [color=green]25%[/color]."
-upgrade_id = 1
-upgrade_sprite = ExtResource("15_fhgbc")
-connection_lines = [NodePath("../Line1-2"), NodePath("../Line1-3")]
-
-[node name="Upgrade2" parent="DeviceFrame/TabContainer/Research/TechTree" node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("14_tb8vs")]
-layout_mode = 0
-offset_left = 116.0
-offset_top = 25.0
-offset_right = 155.0
-offset_bottom = 64.0
-upgrade_name = "Hyperphotosynthesis"
-upgrade_description = "We do a little genetic modification which make plant created significantly more air.
-Food buildings now also output air by [color=green]25%[/color] of their food production."
-upgrade_id = 2
-upgrade_sprite = ExtResource("6_nolfc")
-connection_lines = [NodePath("../Line2-4")]
-require_one_of_these_upgrades = [NodePath("../Upgrade1")]
-
-[node name="Upgrade3" parent="DeviceFrame/TabContainer/Research/TechTree" node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("14_tb8vs")]
-layout_mode = 0
-offset_left = 116.0
-offset_top = 86.0
-offset_right = 155.0
-offset_bottom = 125.0
-upgrade_name = "Fiber Extracted Fluid"
-upgrade_description = "Get a bit of water from vegetation.
-Food buildings now also output water by [color=green]25%[/color] of their food production."
-upgrade_id = 3
-upgrade_sprite = ExtResource("7_3b4ef")
-connection_lines = [NodePath("../Line3-4")]
-require_one_of_these_upgrades = [NodePath("../Upgrade1")]
-
-[node name="Upgrade4" parent="DeviceFrame/TabContainer/Research/TechTree" node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("14_tb8vs")]
-layout_mode = 0
-offset_left = 202.0
-offset_top = 25.0
-offset_right = 241.0
-offset_bottom = 64.0
-upgrade_name = "Enhanced Spacedust Fertilizer"
-upgrade_description = "Increased output of food buildings by another [color=green]50%[/color]."
-upgrade_id = 4
-upgrade_sprite = ExtResource("15_fhgbc")
-connection_lines = [NodePath("../Line4-5"), NodePath("../Line4-6")]
-require_one_of_these_upgrades = [NodePath("../Upgrade2"), NodePath("../Upgrade3")]
-
-[node name="Upgrade5" parent="DeviceFrame/TabContainer/Research/TechTree" node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("14_tb8vs")]
-layout_mode = 0
-offset_left = 290.0
-offset_top = 25.0
-offset_right = 329.0
-offset_bottom = 64.0
-upgrade_name = "Harmonic Cycle"
-upgrade_description = "Food buildings now also output water and air by [color=green]25%[/color] of their food production."
-upgrade_id = 5
-upgrade_sprite = ExtResource("8_b03ds")
-connection_lines = [NodePath("../Line5-7")]
-require_one_of_these_upgrades = [NodePath("../Upgrade4")]
-
-[node name="Upgrade6" parent="DeviceFrame/TabContainer/Research/TechTree" node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("14_tb8vs")]
-layout_mode = 0
-offset_left = 290.0
-offset_top = 88.0
-offset_right = 329.0
-offset_bottom = 127.0
-upgrade_name = "Accelerated Growth"
-upgrade_description = "Encourage plants to growth faster and stronger with harsher environment and increased fertilizer.
-[color=green]50%[/color] chance for double yield and [color=red]20%[/color] chance for no yield."
-upgrade_id = 6
-upgrade_sprite = ExtResource("9_w3tjd")
-connection_lines = [NodePath("../Line6-7")]
-require_one_of_these_upgrades = [NodePath("../Upgrade4")]
-
-[node name="Upgrade7" parent="DeviceFrame/TabContainer/Research/TechTree" node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("14_tb8vs")]
-layout_mode = 0
-offset_left = 386.0
-offset_top = 23.0
-offset_right = 425.0
-offset_bottom = 62.0
-upgrade_name = "Optimized Design"
-upgrade_description = "Unlock [color=green]tier IV[/color] buildings for food, water and air production buildings."
-upgrade_id = 7
-upgrade_sprite = ExtResource("10_n20d6")
-require_one_of_these_upgrades = [NodePath("../Upgrade5"), NodePath("../Upgrade6")]
-
-[node name="UpgradeButton" type="Button" parent="DeviceFrame/TabContainer/Research/TechTree"]
-layout_mode = 0
-offset_left = 192.0
+offset_left = 374.0
 offset_top = 213.0
-offset_right = 256.0
+offset_right = 438.0
 offset_bottom = 237.0
 text = "Proceed
 "
 
-[node name="UpgradeDescription" type="RichTextLabel" parent="DeviceFrame/TabContainer/Research/TechTree"]
+[node name="BackButton" type="Button" parent="DeviceFrame/TabContainer/Research/ResearchGraphView"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 213.0
+offset_right = 75.0
+offset_bottom = 237.0
+text = "Back"
+
+[node name="UpgradeDescription" type="RichTextLabel" parent="DeviceFrame/TabContainer/Research/ResearchGraphView"]
 layout_mode = 0
 offset_left = 8.0
 offset_top = 140.0
@@ -511,6 +390,7 @@ layout_mode = 2
 text = "Pressley 
 (Executive Officer)"
 portrait_sprite = ExtResource("6_wk0bw")
+officer = 1
 description = "Your dependable, trustworthy officer."
 portrait_texturerect = NodePath("../../../../../OfficerPortrait")
 desc_label = NodePath("../../../../../OfficerDescMC/MarginContainer/OfficerDescLabel")
@@ -520,7 +400,7 @@ layout_mode = 2
 text = "Torgon 
 (Intercom Officer)"
 portrait_sprite = ExtResource("8_jre42")
-officer = 1
+officer = 2
 description = "Maybe look a bit unreliable but he won't fail your trust."
 portrait_texturerect = NodePath("../../../../../OfficerPortrait")
 desc_label = NodePath("../../../../../OfficerDescMC/MarginContainer/OfficerDescLabel")
@@ -530,7 +410,7 @@ layout_mode = 2
 text = "Faroq Khan 
 (Agriculture Director)"
 portrait_sprite = ExtResource("9_47m3x")
-officer = 2
+officer = 3
 description = "Very good at farm stuff. Boost your food production by 50%."
 portrait_texturerect = NodePath("../../../../../OfficerPortrait")
 desc_label = NodePath("../../../../../OfficerDescMC/MarginContainer/OfficerDescLabel")
@@ -540,7 +420,7 @@ layout_mode = 2
 text = "Sam Carter 
 (Scientist)"
 portrait_sprite = ExtResource("10_t33dg")
-officer = 3
+officer = 4
 description = "Skilled in material science. Improved your metal output by 50%."
 portrait_texturerect = NodePath("../../../../../OfficerPortrait")
 desc_label = NodePath("../../../../../OfficerDescMC/MarginContainer/OfficerDescLabel")
@@ -550,7 +430,7 @@ layout_mode = 2
 text = "Governor Jerrerod 
 (Governor)"
 portrait_sprite = ExtResource("10_0xedy")
-officer = 4
+officer = 5
 description = "Very good at house stuff. Boost your housing capacity by 100%."
 portrait_texturerect = NodePath("../../../../../OfficerPortrait")
 desc_label = NodePath("../../../../../OfficerDescMC/MarginContainer/OfficerDescLabel")
@@ -560,7 +440,7 @@ layout_mode = 2
 text = "Mary Watney 
 (Engineer)"
 portrait_sprite = ExtResource("12_cymej")
-officer = 5
+officer = 6
 description = "A fast and capable engineer.  Helping you with your quest.
  
 [color=green]- Reduced construction time by 50%.[/color]
@@ -574,7 +454,7 @@ layout_mode = 2
 text = "Dr Dorian 
 (Doctor)"
 portrait_sprite = ExtResource("13_xdugs")
-officer = 6
+officer = 7
 description = "Scary yet talented doctor. Prevents sickness-related events from happening."
 portrait_texturerect = NodePath("../../../../../OfficerPortrait")
 desc_label = NodePath("../../../../../OfficerDescMC/MarginContainer/OfficerDescLabel")
@@ -678,7 +558,8 @@ libraries = {
 }
 
 [connection signal="tab_changed" from="DeviceFrame/TabContainer" to="." method="_on_tab_container_tab_changed"]
-[connection signal="pressed" from="DeviceFrame/TabContainer/Research/TechTree/UpgradeButton" to="DeviceFrame/TabContainer/Research" method="_on_upgrade_button_pressed"]
+[connection signal="pressed" from="DeviceFrame/TabContainer/Research/ResearchGraphView/UpgradeButton" to="DeviceFrame/TabContainer/Research" method="_on_upgrade_button_pressed"]
+[connection signal="pressed" from="DeviceFrame/TabContainer/Research/ResearchGraphView/BackButton" to="DeviceFrame/TabContainer/Research" method="_on_back_button_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button" to="." method="_on_default_path_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button2" to="." method="_on_intergalatic_route_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button3" to="." method="_on_asteroid_field_pressed"]
