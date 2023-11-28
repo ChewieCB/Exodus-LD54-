@@ -4,11 +4,21 @@ class_name StarNode
 signal star_selected(star)
 signal queue_star_selected(star)
 
-@onready var star_scene = load("res://assets/planets/Star/Star.tscn")
+@onready var star_red_scene = load("res://assets/planets/Star/StarRed.tscn")
+@onready var star_orange_scene = load("res://assets/planets/Star/StarOrange.tscn")
+@onready var star_yellow_scene = load("res://assets/planets/Star/StarYellow.tscn")
+@onready var star_white_scene = load("res://assets/planets/Star/StarWhite.tscn")
+@onready var star_blue_scene = load("res://assets/planets/Star/StarBlue.tscn")
+@onready var star_colours = [
+	star_red_scene, star_orange_scene, star_yellow_scene,
+	star_white_scene, star_blue_scene
+]
+# We choose a star colour on init of this scene
+var star_scene
+
 var star_instance = null
 var star_attributes = {}
 var star_seed: int = 0
-var star_colours: PackedColorArray = [] # TODO - cache these on generation so stars render consistently
 var star_size: float = 30.0
 var star_rotation: float = 1.40
 var star_tiles: int = 5
@@ -27,6 +37,11 @@ var has_signal: bool = false:
 		has_signal = value
 		if star_instance != null:
 			star_instance._signal.visible = has_signal
+
+
+func _ready():
+	var star_colour_idx = randi_range(0, 4)
+	star_scene = star_colours[star_colour_idx]
 
 
 func _input(event):
@@ -78,13 +93,13 @@ func _on_visible_on_screen_notifier_2d_screen_entered():
 	for _param in star_attributes.keys().slice(2):
 		star_instance.set_param(_param, star_attributes[_param])
 	
-	get_parent().get_parent().star_shaders_visible += 1
+#	get_parent().get_parent().star_shaders_visible += 1
 	add_child(star_instance)
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	star_instance.queue_free()
-	get_parent().get_parent().star_shaders_visible -= 1
+#	get_parent().get_parent().star_shaders_visible -= 1
 
 
 func _on_area_2d_mouse_entered():

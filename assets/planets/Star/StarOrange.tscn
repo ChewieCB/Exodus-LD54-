@@ -1,0 +1,209 @@
+[gd_scene load_steps=17 format=3 uid="uid://fvhqeqsbi0n3"]
+
+[ext_resource type="Script" path="res://assets/planets/Star/Star.gd" id="1_buq01"]
+[ext_resource type="Shader" path="res://assets/planets/Star/star_signal.gdshader" id="2_0b80n"]
+[ext_resource type="Shader" path="res://assets/planets/Star/Glow.gdshader" id="3_jpvuj"]
+[ext_resource type="Shader" path="res://assets/planets/Star/StarBlobs.gdshader" id="4_jexc3"]
+[ext_resource type="Shader" path="res://assets/planets/Star/Star.gdshader" id="5_fopae"]
+[ext_resource type="Shader" path="res://assets/planets/Star/StarFlares.gdshader" id="6_mkvpo"]
+[ext_resource type="Shader" path="res://assets/planets/Star/star_selected.gdshader" id="7_8w6mb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_03cad"]
+shader = ExtResource("2_0b80n")
+shader_parameter/color_signal = Color(0.321569, 1, 0.909804, 1)
+shader_parameter/size = 0.35
+shader_parameter/zoom = 16.0
+shader_parameter/speed = 2.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0cir6"]
+shader = ExtResource("3_jpvuj")
+shader_parameter/radius = 0.6
+shader_parameter/thickness = 0.39
+shader_parameter/color = Color(0.870588, 0.552941, 0.0784314, 1)
+shader_parameter/brightness = 1.84
+shader_parameter/angular_speed = 1.27
+shader_parameter/radial_speed = 1.56
+shader_parameter/alpha = 0.23
+
+[sub_resource type="ShaderMaterial" id="1"]
+resource_local_to_scene = true
+shader = ExtResource("4_jexc3")
+shader_parameter/pixels = 300.0
+shader_parameter/color = Color(0.929641, 0.588174, 0.082063, 1)
+shader_parameter/time_speed = 0.05
+shader_parameter/time = 2167.05
+shader_parameter/rotation = 0.0
+shader_parameter/seed = null
+shader_parameter/circle_amount = 2.0
+shader_parameter/circle_size = 1.0
+shader_parameter/size = 5.055
+shader_parameter/OCTAVES = 4
+
+[sub_resource type="Gradient" id="Gradient_fo81h"]
+offsets = PackedFloat32Array(0.0193237, 0.657005)
+colors = PackedColorArray(0.94, 0.38399, 0.0846, 1, 0.94, 0.611, 0.282, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_utib5"]
+gradient = SubResource("Gradient_fo81h")
+
+[sub_resource type="ShaderMaterial" id="4"]
+resource_local_to_scene = true
+shader = ExtResource("5_fopae")
+shader_parameter/pixels = 100.0
+shader_parameter/time_speed = 1.0
+shader_parameter/time = 325.058
+shader_parameter/rotation = 1.255
+shader_parameter/should_dither = true
+shader_parameter/seed = 6.427
+shader_parameter/size = 30.0
+shader_parameter/OCTAVES = 8
+shader_parameter/TILES = 9.0
+shader_parameter/colorramp = SubResource("GradientTexture2D_utib5")
+
+[sub_resource type="ShaderMaterial" id="7"]
+resource_local_to_scene = true
+shader = ExtResource("6_mkvpo")
+shader_parameter/pixels = 200.0
+shader_parameter/time_speed = 0.05
+shader_parameter/time = 32505.8
+shader_parameter/rotation = 0.0
+shader_parameter/should_dither = true
+shader_parameter/storm_width = 0.3
+shader_parameter/storm_dither_width = 0.07
+shader_parameter/scale = 1.0
+shader_parameter/seed = null
+shader_parameter/circle_amount = 5.0
+shader_parameter/circle_scale = 1.0
+shader_parameter/size = 50.0
+shader_parameter/OCTAVES = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x2wvv"]
+shader = ExtResource("7_8w6mb")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/size = 2.0
+shader_parameter/squishness = Vector2(1, 1)
+shader_parameter/color1 = Color(0.784314, 0.784314, 0.784314, 0.0941176)
+shader_parameter/color2 = Color(0.466667, 0.345098, 0.65098, 0.192157)
+shader_parameter/color3 = null
+shader_parameter/color4 = null
+shader_parameter/color5 = null
+shader_parameter/color6 = Color(0, 0, 0, 1)
+shader_parameter/step1 = 0.159
+shader_parameter/step2 = 0.182
+shader_parameter/step3 = 0.233
+shader_parameter/step4 = 0.264
+shader_parameter/step5 = 0.265
+shader_parameter/step6 = 0.266
+
+[sub_resource type="Environment" id="Environment_rbybe"]
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 2.35
+glow_strength = 1.08
+glow_blend_mode = 0
+glow_hdr_threshold = 0.63
+
+[node name="StarOrange" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_buq01")
+relative_scale = 2.0
+gui_zoom = 2.0
+
+[node name="Signal" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_03cad")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -6.0
+offset_top = -6.0
+offset_right = 6.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Glow" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_0cir6")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.5
+offset_top = -2.5
+offset_right = 3.5
+offset_bottom = 3.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Blobs" type="ColorRect" parent="."]
+visible = false
+material = SubResource("1")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Star" type="ColorRect" parent="."]
+material = SubResource("4")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StarFlares" type="ColorRect" parent="."]
+visible = false
+material = SubResource("7")
+layout_mode = 0
+
+[node name="Highlight" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_x2wvv")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -6.0
+offset_top = -6.0
+offset_right = 6.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_rbybe")
