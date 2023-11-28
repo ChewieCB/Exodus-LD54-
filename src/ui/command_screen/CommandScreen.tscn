@@ -9,6 +9,22 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v161y"]
 size = Vector2(450, 235)
 
+[sub_resource type="Animation" id="Animation_oatk6"]
+resource_name = "default"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1119, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_0rfvp"]
 resource_name = "hide"
 length = 0.6
@@ -39,22 +55,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(1119, 0), Vector2(595, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_oatk6"]
-resource_name = "default"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1119, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vxeel"]
@@ -120,7 +120,7 @@ stretch = true
 handle_input_locally = false
 physics_object_picking = true
 size = Vector2i(450, 235)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="StarMap" parent="DeviceFrame/TabContainer/Travel/MarginContainer/SubViewport" instance=ExtResource("3_jn7gj")]
 position = Vector2(1167.5, 224)

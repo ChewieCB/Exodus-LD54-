@@ -1,6 +1,8 @@
 extends Node2D
+class_name StarNode
 
 signal star_selected(star)
+signal queue_star_selected(star)
 
 @onready var star_scene = load("res://assets/planets/Star/Star.tscn")
 var star_instance = null
@@ -32,7 +34,10 @@ func _input(event):
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 			has_signal = !has_signal
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-			emit_signal("star_selected", self)
+			if Input.is_action_pressed("shift"):
+				emit_signal("queue_star_selected", self)
+			else:
+				emit_signal("star_selected", self)
 
 
 func _on_visible_on_screen_notifier_2d_screen_entered():

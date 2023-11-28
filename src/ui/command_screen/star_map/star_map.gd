@@ -51,19 +51,22 @@ extends Node2D
 #			negation_zone_shader.material.set_shader_parameter("circle_size", mapped_negation_radius)
 
 var points_to_draw: PackedVector2Array
+var edges_to_draw = []
+#
 var stars: Array
 var starmap_graph: Graph
-
-var edges_to_draw = []
+#
 var available_spawn_lanes = []
 var previous_star_lanes = []
-
-var adjacency_list = []
 
 var negation_zone_center: Vector2 = Vector2.ZERO
 @onready var adjusted_center = negation_zone_center + get_global_transform().origin
 
-var next_star: Vector2
+var previous_star: StarNode
+var next_star: StarNode
+var queued_stars: Array = []
+var chevrons_instance: Line2D
+var queued_chevrons: Array = []
 const SHIP_MOVE_RATE: float = 5.0
 var is_ship_travelling: bool = false
 
@@ -79,7 +82,6 @@ static var shape_info: Dictionary
 @onready var starlanes_parent = $Starlanes
 @onready var starlane_scene = load("res://src/ui/star_map/starlane/Starlane.tscn")
 @onready var starlane_chevrons_scene = load("res://src/ui/star_map/starlane/StarlaneChevrons.tscn")
-var chevrons_instance
 
 @onready var negation_zone_shader = $NegationZone
 
@@ -103,9 +105,10 @@ func _ready():
 	# Pick an outer star and place the ship tracker there
 	var outer_stars = get_outer_stars(star_positions)
 	var start_point = outer_stars[randi_range(0, outer_stars.size() - 1)]
-	next_star = start_point
-	chevrons_instance = starlane_chevrons_scene.instantiate()
-	starlanes_parent.add_child(chevrons_instance)
+	previous_star = stars.filter(
+		func(star): return star.global_position == start_point
+	).front()
+	# Move ship to start point
 	$ShipTracker.global_position = start_point
 
 
@@ -132,22 +135,43 @@ func _process(_delta):
 
 
 func _physics_process(delta):
-	if next_star:
-		# TODO - get lerp working for this so we can ease it
-		$ShipTracker.global_position += \
-			(next_star - $ShipTracker.global_position).normalized() * \
-			SHIP_MOVE_RATE * \
-			remap(
-				TickManager.current_tick_rate,
-				TickManager.PAUSED_TICK_SPEED, 
-				TickManager.FAST_TICK_SPEED,
-				0,
-				2
-			) * delta
-		if $ShipTracker.global_position.distance_to(next_star) < 1:
-			is_ship_travelling = false
-			if chevrons_instance:
-				chevrons_instance.points = []
+	# If we have a destination, move towards it
+	if is_ship_travelling:
+		if next_star:
+			# TODO - get lerp working for this so we can ease it
+			$ShipTracker.global_position += \
+				(next_star.global_position - $ShipTracker.global_position).normalized() * \
+				SHIP_MOVE_RATE * \
+				remap(
+					TickManager.current_tick_rate,
+					TickManager.PAUSED_TICK_SPEED, 
+					TickManager.FAST_TICK_SPEED,
+					0,
+					2
+				) * delta
+			
+			# Update the chevrons to move with the ship
+			if queued_chevrons:
+				queued_chevrons.front().points[0] = $ShipTracker.global_position
+		
+			# When the ship reaches a star
+#			if $ShipTracker.global_position.is_equal_approx(next_star.global_position):
+			if $ShipTracker.global_position.distance_to(next_star.global_position) < 1:
+				# Update relative stars
+				previous_star = next_star
+				next_star = null
+				queued_stars.pop_front()
+				
+				# Remove the active chevrons
+				if queued_chevrons:
+					queued_chevrons.pop_front().queue_free()
+				
+				# Keep moving to next star if there's a queue
+				if queued_stars.size() > 1:
+					next_star = queued_stars.front()
+					is_ship_travelling = true
+				else:
+					is_ship_travelling = false
 
 
 func _input(event):
@@ -155,123 +179,167 @@ func _input(event):
 		if is_ship_travelling:
 			# If the ship is mid-transit, remove the target and allow the 
 			# player to turn around
-			next_star = Vector2()
+			next_star = null
+			queued_stars = []
 			is_ship_travelling = false
-			if chevrons_instance:
-				chevrons_instance.points = []
+			for _instance in queued_chevrons:
+				_instance.queue_free()
+				queued_chevrons.erase(_instance)
 
 
-func select_star_to_travel_to(star):
+func add_star_to_travel_queue(star: StarNode, start_point: Vector2):
+	if queued_stars:
+		var last_star_in_queue = queued_stars[-1]
+		if is_star_connected(star, last_star_in_queue):
+			queued_stars.append(star)
+			var _chevron_instance = starlane_chevrons_scene.instantiate()
+			_chevron_instance.points = [
+				queued_stars[-2].global_position, queued_stars[-1].global_position
+			]
+			starlanes_parent.add_child(_chevron_instance)
+			queued_chevrons.append(_chevron_instance)
+	else:
+#		if is_star_connected(star, last_star_in_queue):
+		queued_stars.append(star)
+		var _chevron_instance = starlane_chevrons_scene.instantiate()
+		_chevron_instance.points = [
+			start_point, queued_stars[-1].global_position
+		]
+		starlanes_parent.add_child(_chevron_instance)
+		queued_chevrons.append(_chevron_instance)
+	
+	print(queued_stars)
+	print()
+
+
+func is_star_connected(destination_star: StarNode, starting_star: StarNode) -> bool:
+	if destination_star == starting_star:
+		return false
+	
+	var connected_lanes = get_connected_starlanes(starting_star.global_position)
+	for _lane in connected_lanes:
+		for _point in _lane.slice(0, 2):
+			if destination_star.global_position.is_equal_approx(_point):
+				return true
+	
+	return false
+
+
+func select_star_to_travel_to(star: StarNode):
 	if not is_ship_travelling:
-		if star.global_position - get_global_transform().origin == next_star:
-			return
-#		if $ShipTracker.global_position.distance_to(next_star) < 1:
-		var start_point = $ShipTracker.global_position - get_global_transform().origin
+		var current_ship_position = $ShipTracker.global_position - get_global_transform().origin
 		var offset_star_position = star.global_position - get_global_transform().origin
-		var connected_lanes = get_connected_starlanes(start_point)
+		
+		# Override any existing queue
+		queued_stars = []
+		for _instance in queued_chevrons:
+			_instance.queue_free()
+			queued_chevrons.erase(_instance)
+		
+		# Don't travel to a star if we're already at it
+		if star.global_position - get_global_transform().origin == current_ship_position:
+			return
+		
+		# Get available lanes
+		var connected_lanes = get_connected_starlanes(current_ship_position)
 		for _lane in connected_lanes:
 			for _point in _lane.slice(0, 2):
 				if offset_star_position.is_equal_approx(_point):
-					next_star = star.global_position
-					$ShipTracker.look_at(next_star)
-					chevrons_instance.points = [start_point, next_star - get_global_transform().origin]
-					#
-					if not zone_shrinking:
-						zone_shrinking = true
-					
-					is_ship_travelling = true
-					
+					add_star_to_travel_queue(star, current_ship_position)
+					# If this is the first star in the queue, set it as the next star
+					if not next_star:
+						next_star = queued_stars.front()
+						is_ship_travelling = true
 					return
-			# Fallback if we're in the middle of a starlane
+			
+			# Fallback - are we in the middle of a starlane?
 			if Geometry2D.get_closest_point_to_segment(
-				start_point,
+				current_ship_position,
 				_lane[0],
 				_lane[1]
-			).is_equal_approx(start_point):
-				next_star = star.global_position
-				$ShipTracker.look_at(next_star)
-				chevrons_instance.points = [start_point, next_star - get_global_transform().origin]
-				#
-				if not zone_shrinking:
-					zone_shrinking = true
-				
-				is_ship_travelling = true
-				
-				return
+			).distance_to(current_ship_position) < 1:
+				# We can only travel to either end of the active starlane
+				if star.global_position in _lane.slice(0, 2):
+					add_star_to_travel_queue(star, current_ship_position)
+					# If this is the first star in the queue, set it as the next star
+					if not next_star:
+						next_star = queued_stars.front()
+						is_ship_travelling = true
+					return
 
 
-func get_connected_starlanes(start_point) -> Array:
+func get_connected_starlanes(point: Vector2) -> Array:
 	var connected_lanes = edges_to_draw.duplicate()
 	# Filter out edges that don't connect to the start point
 	connected_lanes = connected_lanes.filter(
 		func(lane): 
-			return lane[0].distance_to(start_point) < 1 or \
-			lane[1].distance_to(start_point) < 1
+			return lane[0].is_equal_approx(point) or \
+			lane[1].is_equal_approx(point)
 	)
-	
+	# If we're in the middle of a starlane, find the lane we're on
 	if connected_lanes == []:
 		connected_lanes = edges_to_draw.duplicate()
 		connected_lanes = connected_lanes.filter(
 			func(lane):
 				return Geometry2D.get_closest_point_to_segment(
-					start_point,
+					point,
 					lane[0],
 					lane[1]
-				).distance_to(start_point) < 1
+				).distance_to(point) < 5
 		)
 	
 	return connected_lanes
 
 
-func get_next_star_center_path(start_point) -> Vector2:
-	available_spawn_lanes = edges_to_draw.duplicate()
-	# Filter out edges that don't connect to the start point
-	available_spawn_lanes = available_spawn_lanes.filter(
-		func(lane): 
-			return lane[0].distance_to(start_point) < 1 or lane[1].distance_to(start_point) < 1
-	)
-	# Sort by how closely the far vertex points to the galactic center
-	available_spawn_lanes.sort_custom(
-		func(a, b): 
-			# For each lane find which point is the start_point
-			# A
-			var close_vertex_a
-			var far_vertex_a
-			if a[0] == start_point:
-				close_vertex_a = a[0]
-				far_vertex_a = a[1]
-			else:
-				close_vertex_a = a[1]
-				far_vertex_a = a[0]
-			# B
-			var close_vertex_b
-			var far_vertex_b
-			if b[0] == start_point:
-				close_vertex_b = b[0]
-				far_vertex_b = b[1]
-			else:
-				close_vertex_b = b[1]
-				far_vertex_b = b[0]
-			
-			return far_vertex_a.distance_to(negation_zone_center) < far_vertex_b.distance_to(negation_zone_center) 
-	)
-#	# Sort by lane weight, this tells us how much the lane points towards the center.
-#	# The closer to 0 the weighting is the more the lane points towards the center.
-#	available_spawn_lanes.sort_custom(
-#		func(a, b):
-#			return abs(a[2]) < abs(b[2])
+#func get_next_star_center_path(start_point) -> Vector2:
+#	available_spawn_lanes = edges_to_draw.duplicate()
+#	# Filter out edges that don't connect to the start point
+#	available_spawn_lanes = available_spawn_lanes.filter(
+#		func(lane): 
+#			return lane[0].distance_to(start_point) < 1 or lane[1].distance_to(start_point) < 1
 #	)
-	#
-	var next_star
-	if available_spawn_lanes[0][0] == start_point:
-		next_star = available_spawn_lanes[0][1]
-	else:
-		next_star = available_spawn_lanes[0][0]
-	
-	# Append the lane to used so we don't loop back
-	previous_star_lanes.append(available_spawn_lanes[0])
-		
-	return next_star + get_global_transform().origin
+#	# Sort by how closely the far vertex points to the galactic center
+#	available_spawn_lanes.sort_custom(
+#		func(a, b): 
+#			# For each lane find which point is the start_point
+#			# A
+#			var close_vertex_a
+#			var far_vertex_a
+#			if a[0] == start_point:
+#				close_vertex_a = a[0]
+#				far_vertex_a = a[1]
+#			else:
+#				close_vertex_a = a[1]
+#				far_vertex_a = a[0]
+#			# B
+#			var close_vertex_b
+#			var far_vertex_b
+#			if b[0] == start_point:
+#				close_vertex_b = b[0]
+#				far_vertex_b = b[1]
+#			else:
+#				close_vertex_b = b[1]
+#				far_vertex_b = b[0]
+#
+#			return far_vertex_a.distance_to(negation_zone_center) < far_vertex_b.distance_to(negation_zone_center) 
+#	)
+##	# Sort by lane weight, this tells us how much the lane points towards the center.
+##	# The closer to 0 the weighting is the more the lane points towards the center.
+##	available_spawn_lanes.sort_custom(
+##		func(a, b):
+##			return abs(a[2]) < abs(b[2])
+##	)
+#	#
+#	var next_star
+#	if available_spawn_lanes[0][0] == start_point:
+#		next_star = available_spawn_lanes[0][1]
+#	else:
+#		next_star = available_spawn_lanes[0][0]
+#
+#	# Append the lane to used so we don't loop back
+#	previous_star_lanes.append(available_spawn_lanes[0])
+#
+#	return next_star + get_global_transform().origin
 
 
 func redraw_points() -> void:
@@ -580,6 +648,7 @@ func generate_stars(stars) -> Array:
 			var star_instance = star_node.instantiate()
 			#
 			star_instance.star_selected.connect(select_star_to_travel_to)
+			star_instance.queue_star_selected.connect(add_star_to_travel_queue)
 			star_instance.global_position = _point
 			stars_parent.add_child(star_instance)
 			stars.append(star_instance)
