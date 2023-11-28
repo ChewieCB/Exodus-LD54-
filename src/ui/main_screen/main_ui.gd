@@ -31,10 +31,11 @@ func _ready() -> void:
 	EventManager.finish_event.connect(_on_finish_event)
 	EventManager.request_change_objective_label.connect(change_objective_label)
 	EventManager.request_change_event_image.connect(change_event_image)
-	event_image = event_image_holder.get_node("EventImage")
-	event_planet_holder = event_image_holder.get_node("EventPlanetHolder")
+	if event_image_holder:
+		event_image = event_image_holder.get_node("EventImage")
+		event_planet_holder = event_image_holder.get_node("EventPlanetHolder")
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if build_menu_open:
 		# Zooming with mouse wheel
 		var zoom = camera.zoom
@@ -244,4 +245,3 @@ func _on_debug_event_menu_button_item_selected(index):
 	var event_name = debug_event_dropdown.get_item_text(index)
 	EventManager.play_event(EventManager.event_dict[id])
 	debug_event_dropdown.select(-1)
-

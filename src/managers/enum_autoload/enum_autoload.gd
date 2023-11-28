@@ -1,11 +1,23 @@
 extends Node
 
 enum Officer {
+	NONE,
 	PRESSLEY,
 	TORGON,
 	FAROQ_KHAN, # Boost food production
 	SAM_CARTER,
-	GOVERNOR, # Boost habitation capacity
+	GOVERNOR_JERREROD, # Boost habitation capacity
 	MARY_WATNEY,
 	DR_DORIAN
+}
+
+enum UpgradeId {
+	NONE,
+	AGRI_SPACEDUST,
+	AGRI_PHOTOSYNTHESIS,
+	AGRI_EXTRACT_FUILD,
+	AGRI_SPACEDUST_ENHANCED,
+	AGRI_HARMONIC_CYCLE,
+	AGRI_ACCEL_GROWTH,
+	AGRI_OPTIMIZED_DESIGN
 }

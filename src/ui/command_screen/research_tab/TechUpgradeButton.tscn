@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://duihto0qvkw2b"]
+
+[ext_resource type="Script" path="res://src/ui/command_screen/research_tab/tech_upgrade_button.gd" id="1_qdie2"]
+[ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="1_yd1l8"]
+[ext_resource type="Texture2D" uid="uid://b1j3jb7potb5d" path="res://assets/ui/upgrades/spacedust.png" id="3_5laeo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tdcdj"]
+
+[node name="TechUpgradeButton" type="Control"]
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 39.0
+offset_bottom = 39.0
+script = ExtResource("1_qdie2")
+upgrade_name = "Spacedust Fertilizer"
+upgrade_description = "Increased output of food by [color=green]25%[/color]."
+
+[node name="Border" type="TextureRect" parent="."]
+visible = false
+self_modulate = Color(0.101961, 1, 0.054902, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_yd1l8")
+expand_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_5laeo")
+expand_mode = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_tdcdj")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

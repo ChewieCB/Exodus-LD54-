@@ -92,6 +92,7 @@ enum RESOURCE_TYPE {
 }
 
 var current_officers = [EnumAutoload.Officer.PRESSLEY, EnumAutoload.Officer.TORGON]
+var current_upgrades = []
 
 # Resources to be managed
 # Pop/Worker
@@ -118,7 +119,7 @@ var worker_amount: int:
 				print(most_recent_building)
 				current_refund = most_recent_building.data.people_cost
 				worker_refund += current_refund
-				# 
+				#
 				if most_recent_building.is_constructing:
 					emit_signal("construction_cancelled_lack_of_workers", most_recent_building.data.name)
 					most_recent_building.cancel_building(true)
@@ -127,7 +128,7 @@ var worker_amount: int:
 					most_recent_building.cancel_building_remove(true)
 			# Assign the new value
 			value += worker_refund
-			
+
 		worker_amount = value
 		emit_signal("workers_changed", worker_amount)
 # Other resources
@@ -209,7 +210,7 @@ func calculate_resource_modifier(resource_type, population) -> void:
 			# of used and avaialble housing
 			for building in BuildingManager.buildings:
 				production += building.data.housing_prod
-			if EnumAutoload.Officer.GOVERNOR in current_officers and production > 0:
+			if EnumAutoload.Officer.GOVERNOR_JERREROD in current_officers and production > 0:
 				production = (int)(GOVERNOR_BONUS * production)
 			consumption = population_amount
 			#
@@ -239,15 +240,15 @@ func calculate_resource_modifier(resource_type, population) -> void:
 
 
 func update_resource_tick() -> void:
-	# When we receive a tick signal from the GameTickManager 
+	# When we receive a tick signal from the GameTickManager
 	# we update our resource levels.
 	food_amount = clamp(food_amount + current_food_modifier, 0, 999)
 	water_amount = clamp(water_amount + current_water_modifier, 0, 999)
 	air_amount = clamp(air_amount + current_air_modifier, 0, 999)
 	metal_amount = clamp(metal_amount + current_metal_modifier, 0, 999)
-	
+
 	# TODO - change resource UI colours over low threshold
-	
+
 	# Tick down loss counters
 	if is_starving and current_food_modifier < 0 :
 		starving_time_left -= 1
@@ -258,7 +259,7 @@ func update_resource_tick() -> void:
 	if is_suffocating and current_air_modifier < 0:
 		suffocating_time_left -= 1
 		print("Suffocating: " + str(suffocating_time_left) + " ticks left")
-	
+
 	# Reset loss counters if they've changed
 	is_starving = food_amount == 0 and current_food_modifier < 0
 	is_thirsty = water_amount == 0 and current_water_modifier < 0
@@ -287,7 +288,7 @@ func assign_workers(building: Building):
 	var metal_needed = building.data.metal_cost
 	if workers_needed > worker_amount or metal_needed > metal_amount:
 		return
-	
+
 	worker_amount -= workers_needed
 	metal_amount -= metal_needed
 
@@ -334,7 +335,7 @@ func change_specialist_from_event(operation: String, specialist_name: String):
 		"faroq_khan":
 			specialist = EnumAutoload.Officer.FAROQ_KHAN
 		"governor_jerrerod":
-			specialist = EnumAutoload.Officer.GOVERNOR
+			specialist = EnumAutoload.Officer.GOVERNOR_JERREROD
 		"dr_dorian":
 			specialist = EnumAutoload.Officer.DR_DORIAN
 		"mary_watney":
@@ -346,29 +347,18 @@ func change_specialist_from_event(operation: String, specialist_name: String):
 			add_specialist(specialist)
 		else:
 			remove_specialist(specialist)
-			
-
-func wake_up_citizen(water_cost) -> String:
-	if water_amount < 15:
-		return "fail_water"
-	if available_housing <= 0:
-		return "fail_housing"
-	population_amount += 1
-	water_amount -= water_cost
-	return "success"
-
 
 func add_specialist(specialist: EnumAutoload.Officer):
 	if specialist not in current_officers:
 		current_officers.append(specialist)
-	print("Add spaecialist")		
+	print("Add spaecialist")
 	update_specialist_bonus()
 
 func remove_specialist(specialist: EnumAutoload.Officer):
 	if specialist in current_officers:
 		current_officers.erase(specialist)
 	update_specialist_bonus()
-	print("Remove spaecialist")		
+	print("Remove spaecialist")
 
 func update_specialist_bonus():
 	return
@@ -395,4 +385,5 @@ func reset_state():
 	current_air_modifier = 0
 	current_water_modifier = 0
 	current_officers = [EnumAutoload.Officer.PRESSLEY, EnumAutoload.Officer.TORGON]
+	current_upgrades = []
 	update_specialist_bonus()
