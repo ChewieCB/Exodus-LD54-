@@ -180,14 +180,15 @@ func _input(event):
 			# If the ship is mid-transit, remove the target and allow the 
 			# player to turn around
 			next_star = null
+			previous_star = null
 			queued_stars = []
 			is_ship_travelling = false
 			for _instance in queued_chevrons:
-				_instance.queue_free()
 				queued_chevrons.erase(_instance)
+				_instance.queue_free()
 
 
-func add_star_to_travel_queue(star: StarNode, start_point: Vector2):
+func add_star_to_travel_queue(star: StarNode, start_point: Vector2 = $ShipTracker.global_position):
 	if queued_stars:
 		var last_star_in_queue = queued_stars[-1]
 		if is_star_connected(star, last_star_in_queue):
@@ -199,7 +200,6 @@ func add_star_to_travel_queue(star: StarNode, start_point: Vector2):
 			starlanes_parent.add_child(_chevron_instance)
 			queued_chevrons.append(_chevron_instance)
 	else:
-#		if is_star_connected(star, last_star_in_queue):
 		queued_stars.append(star)
 		var _chevron_instance = starlane_chevrons_scene.instantiate()
 		_chevron_instance.points = [
@@ -208,8 +208,10 @@ func add_star_to_travel_queue(star: StarNode, start_point: Vector2):
 		starlanes_parent.add_child(_chevron_instance)
 		queued_chevrons.append(_chevron_instance)
 	
-	print(queued_stars)
-	print()
+	# If this is the first star in the queue, set it as the next star
+	if not next_star:
+		next_star = queued_stars.front()
+		is_ship_travelling = true
 
 
 func is_star_connected(destination_star: StarNode, starting_star: StarNode) -> bool:
