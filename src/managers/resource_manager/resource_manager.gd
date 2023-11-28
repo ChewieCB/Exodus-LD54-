@@ -348,17 +348,6 @@ func change_specialist_from_event(operation: String, specialist_name: String):
 		else:
 			remove_specialist(specialist)
 
-
-func wake_up_citizen(water_cost) -> String:
-	if water_amount < 15:
-		return "fail_water"
-	if available_housing <= 0:
-		return "fail_housing"
-	population_amount += 1
-	water_amount -= water_cost
-	return "success"
-
-
 func add_specialist(specialist: EnumAutoload.Officer):
 	if specialist not in current_officers:
 		current_officers.append(specialist)

@@ -80,7 +80,222 @@ offset_top = 192.0
 offset_right = 500.0
 offset_bottom = 460.0
 
+[node name="Crewmates" type="TabBar" parent="DeviceFrame/TabContainer"]
+layout_mode = 2
+
+[node name="Background" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates"]
+self_modulate = Color(0.0823529, 0.0705882, 0.0392157, 1)
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 451.0
+offset_bottom = 242.0
+texture = ExtResource("4_hkjqs")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="DeviceFrame/TabContainer/Crewmates"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 141.0
+offset_bottom = 236.0
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "First Last"
+
+[node name="Button2" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "First Last"
+
+[node name="Button3" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "First Last"
+
+[node name="Button4" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "First Last"
+
+[node name="Button5" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "First Last"
+
+[node name="Button6" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "First Last"
+
+[node name="Button7" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "First Last"
+
+[node name="Button8" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "First Last"
+
+[node name="Button9" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "First Last"
+
+[node name="Button10" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "First Last"
+
+[node name="Button11" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "First Last"
+
+[node name="Portrait" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates"]
+layout_mode = 0
+offset_left = 165.0
+offset_top = 20.0
+offset_right = 229.0
+offset_bottom = 84.0
+texture = ExtResource("4_hkjqs")
+
+[node name="BasicInfo" type="RichTextLabel" parent="DeviceFrame/TabContainer/Crewmates"]
+layout_mode = 0
+offset_left = 244.0
+offset_top = 20.0
+offset_right = 428.0
+offset_bottom = 86.0
+bbcode_enabled = true
+text = "Name: First Last
+Age: 46
+Date joined: 12"
+
+[node name="Backstory" type="Label" parent="DeviceFrame/TabContainer/Crewmates"]
+layout_mode = 0
+offset_left = 158.0
+offset_top = 107.0
+offset_right = 438.0
+offset_bottom = 164.0
+theme_override_font_sizes/font_size = 12
+text = "Raised in a bustling city. Escaped from a life of crime. On a quest to find a legendary artifact.w"
+autowrap_mode = 2
+
+[node name="Travel" type="TabBar" parent="DeviceFrame/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="SpaceMap" type="TextureRect" parent="DeviceFrame/TabContainer/Travel"]
+layout_mode = 0
+offset_top = 1.0
+offset_right = 453.0
+offset_bottom = 243.0
+texture = ExtResource("2_tgm10")
+
+[node name="ProgressView" type="Control" parent="DeviceFrame/TabContainer/Travel"]
+anchors_preset = 0
+offset_left = 289.0
+offset_top = 118.0
+offset_right = 289.0
+offset_bottom = 118.0
+
+[node name="Path2D" type="Path2D" parent="DeviceFrame/TabContainer/Travel/ProgressView"]
+position = Vector2(-7, 0)
+curve = SubResource("Curve2D_ncuok")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="DeviceFrame/TabContainer/Travel/ProgressView/Path2D"]
+position = Vector2(105, -62)
+rotation = -2.41861
+loop = false
+
+[node name="Sprite2D" type="Sprite2D" parent="DeviceFrame/TabContainer/Travel/ProgressView/Path2D/PathFollow2D"]
+modulate = Color(1, 0.0588235, 0, 1)
+position = Vector2(-0.707031, -0.707092)
+rotation = 2.35619
+scale = Vector2(0.15625, 0.15625)
+texture = ExtResource("3_4kwp3")
+
+[node name="PathChoiceView" type="Control" parent="DeviceFrame/TabContainer/Travel"]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 0
+offset_left = 289.0
+offset_top = 118.0
+offset_right = 289.0
+offset_bottom = 118.0
+
+[node name="Sprite2D2" type="TextureRect" parent="DeviceFrame/TabContainer/Travel/PathChoiceView"]
+self_modulate = Color(0.117647, 0.117647, 0.117647, 0.937255)
+layout_mode = 0
+offset_left = -286.0
+offset_top = -117.0
+offset_right = -222.0
+offset_bottom = -53.0
+scale = Vector2(7, 3.70312)
+texture = ExtResource("4_hkjqs")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Travel/PathChoiceView"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -266.0
+offset_top = -68.0
+offset_right = -123.0
+offset_bottom = 68.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer"]
+layout_mode = 2
+text = "Default path"
+
+[node name="Button2" type="Button" parent="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer"]
+layout_mode = 2
+text = "Intergalatic route"
+
+[node name="Button3" type="Button" parent="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer"]
+layout_mode = 2
+text = "Asteroid field"
+
+[node name="Button4" type="Button" parent="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer"]
+layout_mode = 2
+text = "Void field"
+
+[node name="DescLabel" type="Label" parent="DeviceFrame/TabContainer/Travel/PathChoiceView"]
+layout_mode = 0
+offset_left = -99.0
+offset_top = -70.0
+offset_right = 144.0
+offset_bottom = 70.0
+text = "Intergalatic route:
+Chosen this path will make it more likely to meet other travellers."
+autowrap_mode = 2
+
+[node name="ChangePathButton" type="Button" parent="DeviceFrame/TabContainer/Travel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -53.0
+offset_top = -41.0
+offset_right = 53.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+toggle_mode = true
+text = "Change path"
+
 [node name="Research" type="TabBar" parent="DeviceFrame/TabContainer"]
+visible = false
 layout_mode = 2
 script = ExtResource("3_v75ll")
 
@@ -216,114 +431,6 @@ bbcode_enabled = true
 text = "[u]Upgrade name[/u]
 [font_size=12]Something something that increase building speed by [color=green]50%[/color].[/font_size]
 "
-
-[node name="Travel" type="TabBar" parent="DeviceFrame/TabContainer"]
-visible = false
-layout_mode = 2
-
-[node name="SpaceMap" type="TextureRect" parent="DeviceFrame/TabContainer/Travel"]
-layout_mode = 0
-offset_top = 1.0
-offset_right = 453.0
-offset_bottom = 243.0
-texture = ExtResource("2_tgm10")
-
-[node name="ProgressView" type="Control" parent="DeviceFrame/TabContainer/Travel"]
-anchors_preset = 0
-offset_left = 289.0
-offset_top = 118.0
-offset_right = 289.0
-offset_bottom = 118.0
-
-[node name="Path2D" type="Path2D" parent="DeviceFrame/TabContainer/Travel/ProgressView"]
-position = Vector2(-7, 0)
-curve = SubResource("Curve2D_ncuok")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="DeviceFrame/TabContainer/Travel/ProgressView/Path2D"]
-position = Vector2(105, -62)
-rotation = -2.41861
-loop = false
-
-[node name="Sprite2D" type="Sprite2D" parent="DeviceFrame/TabContainer/Travel/ProgressView/Path2D/PathFollow2D"]
-modulate = Color(1, 0.0588235, 0, 1)
-position = Vector2(-0.707031, -0.707092)
-rotation = 2.35619
-scale = Vector2(0.15625, 0.15625)
-texture = ExtResource("3_4kwp3")
-
-[node name="PathChoiceView" type="Control" parent="DeviceFrame/TabContainer/Travel"]
-modulate = Color(1, 1, 1, 0)
-anchors_preset = 0
-offset_left = 289.0
-offset_top = 118.0
-offset_right = 289.0
-offset_bottom = 118.0
-
-[node name="Sprite2D2" type="TextureRect" parent="DeviceFrame/TabContainer/Travel/PathChoiceView"]
-self_modulate = Color(0.117647, 0.117647, 0.117647, 0.937255)
-layout_mode = 0
-offset_left = -286.0
-offset_top = -117.0
-offset_right = -222.0
-offset_bottom = -53.0
-scale = Vector2(7, 3.70312)
-texture = ExtResource("4_hkjqs")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Travel/PathChoiceView"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -266.0
-offset_top = -68.0
-offset_right = -123.0
-offset_bottom = 68.0
-grow_horizontal = 0
-grow_vertical = 2
-
-[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer"]
-layout_mode = 2
-text = "Default path"
-
-[node name="Button2" type="Button" parent="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer"]
-layout_mode = 2
-text = "Intergalatic route"
-
-[node name="Button3" type="Button" parent="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer"]
-layout_mode = 2
-text = "Asteroid field"
-
-[node name="Button4" type="Button" parent="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer"]
-layout_mode = 2
-text = "Void field"
-
-[node name="DescLabel" type="Label" parent="DeviceFrame/TabContainer/Travel/PathChoiceView"]
-layout_mode = 0
-offset_left = -99.0
-offset_top = -70.0
-offset_right = 144.0
-offset_bottom = 70.0
-text = "Intergalatic route:
-Chosen this path will make it more likely to meet other travellers."
-autowrap_mode = 2
-
-[node name="ChangePathButton" type="Button" parent="DeviceFrame/TabContainer/Travel"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -53.0
-offset_top = -41.0
-offset_right = 53.0
-offset_bottom = -10.0
-grow_horizontal = 2
-grow_vertical = 0
-toggle_mode = true
-text = "Change path"
 
 [node name="Officers" type="TabBar" parent="DeviceFrame/TabContainer"]
 visible = false
@@ -558,12 +665,12 @@ libraries = {
 }
 
 [connection signal="tab_changed" from="DeviceFrame/TabContainer" to="." method="_on_tab_container_tab_changed"]
-[connection signal="pressed" from="DeviceFrame/TabContainer/Research/ResearchGraphView/UpgradeButton" to="DeviceFrame/TabContainer/Research" method="_on_upgrade_button_pressed"]
-[connection signal="pressed" from="DeviceFrame/TabContainer/Research/ResearchGraphView/BackButton" to="DeviceFrame/TabContainer/Research" method="_on_back_button_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button" to="." method="_on_default_path_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button2" to="." method="_on_intergalatic_route_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button3" to="." method="_on_asteroid_field_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button4" to="." method="_on_void_field_pressed"]
 [connection signal="toggled" from="DeviceFrame/TabContainer/Travel/ChangePathButton" to="." method="_on_change_path_button_toggled"]
+[connection signal="pressed" from="DeviceFrame/TabContainer/Research/ResearchGraphView/UpgradeButton" to="DeviceFrame/TabContainer/Research" method="_on_upgrade_button_pressed"]
+[connection signal="pressed" from="DeviceFrame/TabContainer/Research/ResearchGraphView/BackButton" to="DeviceFrame/TabContainer/Research" method="_on_back_button_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Ship/UpgradeHullButton" to="." method="_on_upgrade_hull_button_pressed"]
 [connection signal="toggled" from="DeviceFrame/ShowHideCommandScreen" to="." method="_on_show_hide_command_screen_toggled"]
