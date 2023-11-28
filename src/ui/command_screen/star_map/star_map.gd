@@ -190,8 +190,8 @@ func _input(event):
 			queued_stars = []
 			is_ship_travelling = false
 			for _instance in queued_chevrons:
-				queued_chevrons.erase(_instance)
 				_instance.queue_free()
+				queued_chevrons.erase(_instance)
 
 
 func add_star_to_travel_queue(star: StarNode, start_point: Vector2 = $ShipTracker.global_position):
@@ -199,20 +199,43 @@ func add_star_to_travel_queue(star: StarNode, start_point: Vector2 = $ShipTracke
 		var last_star_in_queue = queued_stars[-1]
 		if is_star_connected(star, last_star_in_queue):
 			queued_stars.append(star)
-			var _chevron_instance = starlane_chevrons_scene.instantiate()
-			_chevron_instance.points = [
-				queued_stars[-2].global_position, queued_stars[-1].global_position
-			]
-			starlanes_parent.add_child(_chevron_instance)
-			queued_chevrons.append(_chevron_instance)
+			_update_queued_travel_path(
+				queued_stars[-2].global_position, 
+				queued_stars[-1].global_position
+			)
 	else:
-		queued_stars.append(star)
-		var _chevron_instance = starlane_chevrons_scene.instantiate()
-		_chevron_instance.points = [
-			start_point, queued_stars[-1].global_position
-		]
-		starlanes_parent.add_child(_chevron_instance)
-		queued_chevrons.append(_chevron_instance)
+		var current_ship_position = $ShipTracker.global_position - get_global_transform().origin
+		var connected_lanes = get_connected_starlanes(current_ship_position)
+		for _lane in connected_lanes:
+			for _point in _lane.slice(0, 2):
+				if star.global_position.is_equal_approx(_point):
+					queued_stars.append(star)
+					_update_queued_travel_path(
+						start_point, 
+						queued_stars[-1].global_position
+					)
+					return
+			# Fallback - are we in the middle of a starlane?
+			if Geometry2D.get_closest_point_to_segment(
+				start_point,
+				_lane[0],
+				_lane[1]
+			).distance_to(start_point) < 1:
+				# We can only travel to either end of the active starlane
+				if star.global_position in _lane.slice(0, 2):
+					queued_stars.append(star)
+					_update_queued_travel_path(
+						start_point, 
+						queued_stars[-1].global_position
+					)
+					return
+
+
+func _update_queued_travel_path(start_position: Vector2, end_position: Vector2):
+	var _chevron_instance = starlane_chevrons_scene.instantiate()
+	_chevron_instance.points = [start_position, end_position]
+	starlanes_parent.add_child(_chevron_instance)
+	queued_chevrons.append(_chevron_instance)
 	
 	# If this is the first star in the queue, set it as the next star
 	if not next_star:
