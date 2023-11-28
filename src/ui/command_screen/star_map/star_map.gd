@@ -150,6 +150,12 @@ func _physics_process(delta):
 					2
 				) * delta
 			
+			$ShipTracker.global_rotation = lerp_angle(
+				$ShipTracker.global_rotation, 
+				$ShipTracker.global_rotation + $ShipTracker.get_angle_to(next_star.global_position), 
+				delta * 2
+			)
+			
 			# Update the chevrons to move with the ship
 			if queued_chevrons:
 				queued_chevrons.front().points[0] = $ShipTracker.global_position
@@ -167,7 +173,7 @@ func _physics_process(delta):
 					queued_chevrons.pop_front().queue_free()
 				
 				# Keep moving to next star if there's a queue
-				if queued_stars.size() > 1:
+				if queued_stars:
 					next_star = queued_stars.front()
 					is_ship_travelling = true
 				else:

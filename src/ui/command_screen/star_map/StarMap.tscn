@@ -211,7 +211,6 @@ mouse_filter = 2
 
 [node name="ShipTracker" type="Node2D" parent="."]
 position = Vector2(133.568, 235.083)
-rotation = 4.8029
 
 [node name="Sprite2D" type="Sprite2D" parent="ShipTracker"]
 scale = Vector2(0.008, 0.008)
