@@ -17,6 +17,7 @@ offset_bottom = 138.0
 
 [node name="TextureRect" type="TextureRect" parent="."]
 self_modulate = Color(0, 1, 0.32549, 0.0627451)
+layout_mode = 0
 offset_left = 7.0
 offset_top = 8.0
 offset_right = 446.0

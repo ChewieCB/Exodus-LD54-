@@ -35,7 +35,7 @@ func _ready() -> void:
 		event_image = event_image_holder.get_node("EventImage")
 		event_planet_holder = event_image_holder.get_node("EventPlanetHolder")
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if build_menu_open:
 		# Zooming with mouse wheel
 		var zoom = camera.zoom
@@ -245,4 +245,3 @@ func _on_debug_event_menu_button_item_selected(index):
 	var event_name = debug_event_dropdown.get_item_text(index)
 	EventManager.play_event(EventManager.event_dict[id])
 	debug_event_dropdown.select(-1)
-
