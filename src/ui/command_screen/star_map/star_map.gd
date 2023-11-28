@@ -65,6 +65,7 @@ var negation_zone_center: Vector2 = Vector2.ZERO
 
 var next_star: Vector2
 const SHIP_MOVE_RATE: float = 5.0
+var is_ship_travelling: bool = false
 
 var zone_shrinking: bool = false
 const NEGATION_FIELD_SHRINK_RATE: float = 1.0
@@ -144,28 +145,59 @@ func _physics_process(delta):
 				2
 			) * delta
 		if $ShipTracker.global_position.distance_to(next_star) < 1:
+			is_ship_travelling = false
+			if chevrons_instance:
+				chevrons_instance.points = []
+
+
+func _input(event):
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+		if is_ship_travelling:
+			# If the ship is mid-transit, remove the target and allow the 
+			# player to turn around
+			next_star = Vector2()
+			is_ship_travelling = false
 			if chevrons_instance:
 				chevrons_instance.points = []
 
 
 func select_star_to_travel_to(star):
-	if next_star:
+	if not is_ship_travelling:
 		if star.global_position - get_global_transform().origin == next_star:
 			return
-		if $ShipTracker.global_position.distance_to(next_star) < 1:
-			var start_point = $ShipTracker.global_position - get_global_transform().origin
-			var offset_star_position = star.global_position - get_global_transform().origin
-			var connected_lanes = get_connected_starlanes(start_point)
-			for _lane in connected_lanes:
-				for _point in _lane.slice(0, 2):
-					if offset_star_position.is_equal_approx(_point):
-						next_star = star.global_position
-						$ShipTracker.look_at(next_star)
-						chevrons_instance.points = [start_point, next_star - get_global_transform().origin]
-						#
-						if not zone_shrinking:
-							zone_shrinking = true
-						return
+#		if $ShipTracker.global_position.distance_to(next_star) < 1:
+		var start_point = $ShipTracker.global_position - get_global_transform().origin
+		var offset_star_position = star.global_position - get_global_transform().origin
+		var connected_lanes = get_connected_starlanes(start_point)
+		for _lane in connected_lanes:
+			for _point in _lane.slice(0, 2):
+				if offset_star_position.is_equal_approx(_point):
+					next_star = star.global_position
+					$ShipTracker.look_at(next_star)
+					chevrons_instance.points = [start_point, next_star - get_global_transform().origin]
+					#
+					if not zone_shrinking:
+						zone_shrinking = true
+					
+					is_ship_travelling = true
+					
+					return
+			# Fallback if we're in the middle of a starlane
+			if Geometry2D.get_closest_point_to_segment(
+				start_point,
+				_lane[0],
+				_lane[1]
+			).is_equal_approx(start_point):
+				next_star = star.global_position
+				$ShipTracker.look_at(next_star)
+				chevrons_instance.points = [start_point, next_star - get_global_transform().origin]
+				#
+				if not zone_shrinking:
+					zone_shrinking = true
+				
+				is_ship_travelling = true
+				
+				return
 
 
 func get_connected_starlanes(start_point) -> Array:
@@ -173,8 +205,20 @@ func get_connected_starlanes(start_point) -> Array:
 	# Filter out edges that don't connect to the start point
 	connected_lanes = connected_lanes.filter(
 		func(lane): 
-			return lane[0].distance_to(start_point) < 1 or lane[1].distance_to(start_point) < 1
+			return lane[0].distance_to(start_point) < 1 or \
+			lane[1].distance_to(start_point) < 1
 	)
+	
+	if connected_lanes == []:
+		connected_lanes = edges_to_draw.duplicate()
+		connected_lanes = connected_lanes.filter(
+			func(lane):
+				return Geometry2D.get_closest_point_to_segment(
+					start_point,
+					lane[0],
+					lane[1]
+				).distance_to(start_point) < 1
+		)
 	
 	return connected_lanes
 
