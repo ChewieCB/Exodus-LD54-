@@ -3,6 +3,7 @@ class_name CommandScreen
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var show_hide_command_screen_button: Button = $DeviceFrame/ShowHideCommandScreen
+@onready var tab_container: TabContainer = $DeviceFrame/TabContainer
 
 # Travel tab
 @onready var desc_label: Label = $DeviceFrame/TabContainer/Travel/PathChoiceView/DescLabel
@@ -26,6 +27,7 @@ class_name CommandScreen
 
 @onready var research_tab: ResearchTab = $DeviceFrame/TabContainer/Research
 
+@onready var crewmate_tab: CrewmateTab = $DeviceFrame/TabContainer/Crewmates
 
 var trave_screen_open = false
 var chose_path_screen_open = false
@@ -123,6 +125,7 @@ func _on_show_hide_command_screen_toggled(button_pressed:bool) -> void:
 	officer_desc_label.visible = false
 	officer_portrait.visible = false
 	research_tab.reset_stuff_on_tab()
+	crewmate_tab.reset_stuff_on_tab()
 	if button_pressed:
 		show_hide_command_screen_button.text = "Hide command screen"
 		animation_player.play("show")
@@ -137,7 +140,10 @@ func _on_show_hide_command_screen_toggled(button_pressed:bool) -> void:
 func _on_tab_container_tab_changed(tab:int) -> void:
 	SoundManager.play_button_click_sfx()
 	ship_upgrade_warning_label.visible = false
-	research_tab.reset_stuff_on_tab()
+	if tab_container.get_child(tab).name == research_tab.name:
+		research_tab.reset_stuff_on_tab()
+	if tab_container.get_child(tab).name == crewmate_tab.name:
+		crewmate_tab.reset_stuff_on_tab()
 
 func hide_screen():
 	if trave_screen_open:

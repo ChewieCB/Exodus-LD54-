@@ -19,7 +19,7 @@ var current_crewmates: Array[CrewmateData] = []
 
 func _ready() -> void:
 	ResourceManager.population_changed.connect(update_current_crewmates)
-
+	reset_state()
 
 func generate_a_random_crewmate(joined_date: int = 0):
 	randomize()

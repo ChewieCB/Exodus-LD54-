@@ -1,11 +1,13 @@
-[gd_scene load_steps=21 format=3 uid="uid://b1xmgw2jwmunk"]
+[gd_scene load_steps=23 format=3 uid="uid://b1xmgw2jwmunk"]
 
 [ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="1_4qidw"]
 [ext_resource type="Script" path="res://src/ui/command_screen/command_screen.gd" id="1_rladp"]
 [ext_resource type="Texture2D" uid="uid://8m1r17nptfyg" path="res://assets/sprite/space_map.png" id="2_tgm10"]
 [ext_resource type="Texture2D" uid="uid://d3pj8wans2lr4" path="res://assets/sprite/circle.png" id="3_4kwp3"]
+[ext_resource type="Script" path="res://src/ui/command_screen/crewmate_tab/crewmate_tab.gd" id="3_ffkt0"]
 [ext_resource type="Script" path="res://src/ui/command_screen/research_tab/research_tab.gd" id="3_v75ll"]
 [ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="4_hkjqs"]
+[ext_resource type="PackedScene" uid="uid://b7bouq455qx0b" path="res://src/ui/command_screen/crewmate_tab/CrewmateButton.tscn" id="4_vsvdc"]
 [ext_resource type="PackedScene" uid="uid://c6fnnntkibdna" path="res://src/ui/command_screen/research_tab/SelectResearchGraphButton.tscn" id="5_fynyk"]
 [ext_resource type="PackedScene" uid="uid://h5xuge7sdvl5" path="res://src/ui/command_screen/research_tab/AgricultureResearch.tscn" id="5_i78t6"]
 [ext_resource type="Texture2D" uid="uid://cegl6af3k4xpo" path="res://assets/character/pressley.png" id="6_wk0bw"]
@@ -82,9 +84,12 @@ offset_bottom = 460.0
 
 [node name="Crewmates" type="TabBar" parent="DeviceFrame/TabContainer"]
 layout_mode = 2
+script = ExtResource("3_ffkt0")
+crewmate_button = ExtResource("4_vsvdc")
 
 [node name="Background" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates"]
 self_modulate = Color(0.0823529, 0.0705882, 0.0392157, 1)
+layout_mode = 0
 offset_left = 2.0
 offset_top = 2.0
 offset_right = 451.0
@@ -101,61 +106,6 @@ horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer"]
 layout_mode = 2
-
-[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "First Last"
-
-[node name="Button2" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "First Last"
-
-[node name="Button3" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "First Last"
-
-[node name="Button4" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "First Last"
-
-[node name="Button5" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "First Last"
-
-[node name="Button6" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "First Last"
-
-[node name="Button7" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "First Last"
-
-[node name="Button8" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "First Last"
-
-[node name="Button9" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "First Last"
-
-[node name="Button10" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "First Last"
-
-[node name="Button11" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "First Last"
 
 [node name="Portrait" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates"]
 layout_mode = 0
@@ -174,7 +124,7 @@ offset_bottom = 86.0
 bbcode_enabled = true
 text = "Name: First Last
 Age: 46
-Date joined: 12"
+Joined date: 12"
 
 [node name="Backstory" type="Label" parent="DeviceFrame/TabContainer/Crewmates"]
 layout_mode = 0
