@@ -158,6 +158,25 @@ bbcode_enabled = true
 text = "[center]\"As I float through the sterile corridors of this metallic behemoth, I can't help but marvel at the vastness of space beyond the cold, unyielding walls .\"[/center]"
 autowrap_mode = 2
 
+[node name="YeetButton" type="Button" parent="DeviceFrame/TabContainer/Crewmates"]
+self_modulate = Color(1, 0.105882, 0.0705882, 1)
+layout_mode = 0
+offset_left = 369.0
+offset_top = 204.0
+offset_right = 441.0
+offset_bottom = 228.0
+text = "Jettison"
+
+[node name="ConfirmYeetButton" type="Button" parent="DeviceFrame/TabContainer/Crewmates"]
+visible = false
+self_modulate = Color(1, 0.105882, 0.0705882, 1)
+layout_mode = 0
+offset_left = 259.0
+offset_top = 204.0
+offset_right = 347.0
+offset_bottom = 228.0
+text = "Confirmed?"
+
 [node name="Travel" type="TabBar" parent="DeviceFrame/TabContainer"]
 visible = false
 layout_mode = 2
@@ -637,6 +656,8 @@ libraries = {
 }
 
 [connection signal="tab_changed" from="DeviceFrame/TabContainer" to="." method="_on_tab_container_tab_changed"]
+[connection signal="pressed" from="DeviceFrame/TabContainer/Crewmates/YeetButton" to="DeviceFrame/TabContainer/Crewmates" method="_on_yeet_button_pressed"]
+[connection signal="pressed" from="DeviceFrame/TabContainer/Crewmates/ConfirmYeetButton" to="DeviceFrame/TabContainer/Crewmates" method="_on_confirm_yeet_button_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button" to="." method="_on_default_path_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button2" to="." method="_on_intergalatic_route_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button3" to="." method="_on_asteroid_field_pressed"]

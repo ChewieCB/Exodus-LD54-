@@ -3,6 +3,7 @@ extends Node
 var first_name_list: Array[String] = []
 var last_name_list: Array[String] = []
 var random_thoughts_list: Array[String] = []
+var yeet_thoughts_list: Array[String] = []
 var portrait_list: Array[Resource] = []
 
 var current_crewmates: Array[CrewmateData] = []
@@ -62,7 +63,12 @@ func update_current_crewmates(n: int):
 func update_random_thoughts():
 	for cm in current_crewmates:
 		cm.random_thought = random_thoughts_list[randi() % random_thoughts_list.size()]
-		
+
+func set_yeet_thought(fullname: String):
+	for crewmate in current_crewmates:
+		if crewmate.crewmate_name == fullname:
+			crewmate.random_thought = yeet_thoughts_list[randi() % yeet_thoughts_list.size()]
+
 func load_resources():
 	# First name
 	var file = FileAccess.open("res://src/managers/crewmate_manager/first_name.txt", FileAccess.READ)
@@ -89,6 +95,15 @@ func load_resources():
 		while !file.eof_reached():
 			var line = file.get_line()
 			random_thoughts_list.append(line)
+		file.close()
+
+	# Yeet thoughts
+	file = FileAccess.open("res://src/managers/crewmate_manager/yeet_thoughts.txt", FileAccess.READ)
+	if file.is_open():
+		# Read the file line by line
+		while !file.eof_reached():
+			var line = file.get_line()
+			yeet_thoughts_list.append(line)
 		file.close()
 
 	# Portraits
