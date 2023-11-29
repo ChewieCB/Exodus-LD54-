@@ -1,20 +1,7 @@
 extends Node
 
-var first_name_list: Array[String] = ["Aiden", "Sofia", "Ahmed", "Mei", "Alejandro", "Priya", "Luca", "Fatima", "Gabriel", "Aisha", "Hiroshi", 
-	"Isabella", "Raj", "Zara", "Mateo", "Leila", "Juan", "Aaliyah", "Chen", "Amir", "Nia", "Rafael", "Amina", "Thiago", "Freya", "Diego", "Amara", "Anton", 
-	"Lila", "Carlos", "Ananya", "Niko", "Sana", "Kai", "Surya", "Sofia", "Arjun", "Layla", "Sebastian", "Yara", "Felix", "Fatima", "Matteo", "Aisha", "Hugo", 
-	"Zainab", "Emilia", "Jamal", "Maya", "Elina", "Santiago", "Anya", "Kian", "Zoya", "Leo", "Mei", "Owen", "Inara", "Lucas", "Kavi", "Emma", "Arnav", "Grace", 
-	"Eliana", "Amir", "Eva", "Jayden", "Ayesha", "Adrian", "Lam", "Leo", "Aria", "Rafael", "Suri", "Ethan", "Anaya", "Isaac", "Priya", "Maya", "Nolan", "Amara", 
-	"Kaden", "Alia", "Samuel", "Nyla", "Dylan", "Nur", "Elara", "Luka", "Selma", "Jonah", "Dalia", "Milan", "Amira", "Caleb", "Safiya", "Jasper", "Layla", "Oliver", "Amina"]
-
-var last_name_list: Array[String] = ["Smith", "Kim", "Patel", "Yamamoto", "Rodriguez", "Gupta", "Rossi", "Ali", "Hernandez", "Chen", "Novak", 
-	"Nguyen", "Khan", "Ivanov", "Martinez", "Kowalski", "Brown", "Silva", "Singh", "Tanaka", "Mendoza", "Schmidt", "Lee", "Almeida", "Sato", "Gonzalez", "Wu", 
-	"Fernandez", "Dubois", "Lopez", "Jansen", "Cohen", "Kaur", "Johnson", "Oliveira", "Costa", "Kimura", "Taylor", "Park", "Anderson", "Garcia", "Yamada", "Adams", 
-	"Kobayashi", "Reyes", "Nascimento", "Wilson", "Santos", "Nowak", "Thomas", "Mishra", "Fischer", "Abreu", "Kim", "Becker", "Ramos", "Li", "Pereira", "Smith", "Das", 
-	"Morales", "Taylor", "Ahmed", "Oliveira", "Walker", "Khan", "Dubois", "Rodriguez", "Patel", "Yilmaz", "Garcia", "Santos", "Smith", "Chen", "Nascimento", "Tan", 
-	"Gonzalez", "Kimura", "Kumar", "Williams", "Ito", "Lee", "Alves", "Suzuki", "Park", "Fernandez", "Yamamoto", "Lee", "Wang", "Rodriguez", "Lima", "Kim", "Lopez", 
-	"Sato", "Dubois", "Das", "Park", "Martinez"]
-
+var first_name_list: Array[String] = []
+var last_name_list: Array[String] = []
 var random_thoughts_list: Array[String] = []
 var portrait_list: Array[Resource] = []
 
@@ -70,10 +57,31 @@ func update_current_crewmates(n: int):
 	elif n < len(current_crewmates):
 		remove_random_n_crewmates(len(current_crewmates) - n)
 
-
+func update_random_thoughts():
+	for cm in current_crewmates:
+		cm.random_thought = random_thoughts_list[randi() % random_thoughts_list.size()]
+		
 func load_resources():
+	# First name
+	var file = FileAccess.open("res://src/managers/crewmate_manager/first_name.txt", FileAccess.READ)
+	if file.is_open():
+		# Read the file line by line
+		while !file.eof_reached():
+			var line = file.get_line()
+			first_name_list.append(line)
+		file.close()
+
+	# Last name
+	file = FileAccess.open("res://src/managers/crewmate_manager/last_name.txt", FileAccess.READ)
+	if file.is_open():
+		# Read the file line by line
+		while !file.eof_reached():
+			var line = file.get_line()
+			last_name_list.append(line)
+		file.close()
+
 	# Random thoughts
-	var file = FileAccess.open("res://src/managers/crewmate_manager/random_thoughts.txt", FileAccess.READ)
+	file = FileAccess.open("res://src/managers/crewmate_manager/random_thoughts.txt", FileAccess.READ)
 	if file.is_open():
 		# Read the file line by line
 		while !file.eof_reached():
@@ -97,6 +105,4 @@ func load_resources():
 		file_name = dir.get_next()
 
 	
-func update_random_thoughts():
-	for cm in current_crewmates:
-		cm.random_thought = random_thoughts_list[randi() % random_thoughts_list.size()]
+
