@@ -10,8 +10,16 @@ const PAN_RETURN_RATE: float = 2.5
 var pan_wait: float = 1.6
 var is_pan_returning: bool = true
 
+var negation_zone_camera_limit_buffer: int = 32
 @onready var negation_zone_radius = get_parent().negation_zone_radius
 @onready var pan_wait_timer = $PanWaitTimer
+
+
+func _ready():
+	limit_bottom = negation_zone_radius + negation_zone_camera_limit_buffer
+	limit_top = -negation_zone_radius - negation_zone_camera_limit_buffer
+	limit_left = -negation_zone_radius - negation_zone_camera_limit_buffer
+	limit_right = negation_zone_radius + negation_zone_camera_limit_buffer
 
 
 func _physics_process(delta):
