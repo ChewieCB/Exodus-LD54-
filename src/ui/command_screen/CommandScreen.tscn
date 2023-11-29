@@ -88,7 +88,7 @@ script = ExtResource("3_ffkt0")
 crewmate_button = ExtResource("4_vsvdc")
 
 [node name="Background" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates"]
-self_modulate = Color(0.0823529, 0.0705882, 0.0392157, 1)
+self_modulate = Color(0.0470588, 0.0392157, 0.0235294, 1)
 layout_mode = 0
 offset_left = 2.0
 offset_top = 2.0
@@ -107,6 +107,15 @@ horizontal_scroll_mode = 0
 [node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer"]
 layout_mode = 2
 
+[node name="PortraitBackground" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates"]
+layout_mode = 0
+offset_left = 165.0
+offset_top = 20.0
+offset_right = 229.0
+offset_bottom = 84.0
+texture = ExtResource("4_hkjqs")
+expand_mode = 1
+
 [node name="Portrait" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates"]
 layout_mode = 0
 offset_left = 165.0
@@ -114,6 +123,7 @@ offset_top = 20.0
 offset_right = 229.0
 offset_bottom = 84.0
 texture = ExtResource("4_hkjqs")
+expand_mode = 1
 
 [node name="BasicInfo" type="RichTextLabel" parent="DeviceFrame/TabContainer/Crewmates"]
 layout_mode = 0
@@ -121,19 +131,47 @@ offset_left = 244.0
 offset_top = 20.0
 offset_right = 428.0
 offset_bottom = 86.0
+theme_override_font_sizes/normal_font_size = 14
 bbcode_enabled = true
 text = "Name: First Last
 Age: 46
 Joined date: 12"
 
-[node name="Backstory" type="Label" parent="DeviceFrame/TabContainer/Crewmates"]
+[node name="RandomThoughtContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Crewmates"]
 layout_mode = 0
-offset_left = 158.0
-offset_top = 107.0
-offset_right = 438.0
-offset_bottom = 164.0
-theme_override_font_sizes/font_size = 12
-text = "Raised in a bustling city. Escaped from a life of crime. On a quest to find a legendary artifact.w"
+offset_left = 166.0
+offset_top = 90.0
+offset_right = 441.0
+offset_bottom = 155.0
+
+[node name="Background" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates/RandomThoughtContainer"]
+self_modulate = Color(0.109804, 0.109804, 0.105882, 1)
+layout_mode = 2
+texture = ExtResource("4_hkjqs")
+
+[node name="RandomThought" type="RichTextLabel" parent="DeviceFrame/TabContainer/Crewmates/RandomThoughtContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "[center]\"As I float through the sterile corridors of this metallic behemoth, I can't help but marvel at the vastness of space beyond the cold, unyielding walls .\"[/center]"
+autowrap_mode = 2
+
+[node name="BackstoryContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Crewmates"]
+layout_mode = 0
+offset_left = 166.0
+offset_top = 169.0
+offset_right = 441.0
+offset_bottom = 234.0
+
+[node name="Background" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates/BackstoryContainer"]
+self_modulate = Color(0.109804, 0.109804, 0.105882, 1)
+layout_mode = 2
+texture = ExtResource("4_hkjqs")
+
+[node name="Backstory" type="RichTextLabel" parent="DeviceFrame/TabContainer/Crewmates/BackstoryContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 12
+text = "Raised in a bustling city. Escaped from a life of crime. On a quest to find a legendary artifact."
 autowrap_mode = 2
 
 [node name="Travel" type="TabBar" parent="DeviceFrame/TabContainer"]
