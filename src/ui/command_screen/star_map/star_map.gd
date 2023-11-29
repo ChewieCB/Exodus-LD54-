@@ -85,6 +85,8 @@ static var shape_info: Dictionary
 
 @onready var negation_zone_shader = $NegationZone
 
+@onready var current_ship_position: Vector2 = $ShipTracker.global_position
+
 var viewport_has_focus: bool = false
 var target_zoom: float = 1.0
 var star_shaders_visible = 0:
@@ -98,6 +100,7 @@ func _ready():
 	# TODO - figure out why we need that extra 32 pixels on the sizes 
 	$GalacticCenter.size = Vector2(galactic_center_radius * 2 + 32, galactic_center_radius * 2 + 32)
 	$GalacticCenter.set_anchors_and_offsets_preset(Control.PRESET_CENTER, Control.PRESET_MODE_KEEP_SIZE)
+	#
 	$BlackHole.size = Vector2(galactic_center_radius/2 + 32, galactic_center_radius/2 + 32)
 	$BlackHole.set_anchors_and_offsets_preset(Control.PRESET_CENTER, Control.PRESET_MODE_KEEP_SIZE)
 	# Add star shaders
@@ -158,10 +161,10 @@ func _physics_process(delta):
 			
 			# Update the chevrons to move with the ship
 			if queued_chevrons:
-				queued_chevrons.front().points[0] = $ShipTracker.global_position
+				queued_chevrons.front().points[0] = _screen_to_viewport($ShipTracker.global_position)
 		
 			# When the ship reaches a star
-#			if $ShipTracker.global_position.is_equal_approx(next_star.global_position):
+			# Tried using is_equal_approx() for this but it needs a slightly wider margin of error
 			if $ShipTracker.global_position.distance_to(next_star.global_position) < 1:
 				# Update relative stars
 				previous_star = next_star
@@ -194,25 +197,34 @@ func _input(event):
 				queued_chevrons.erase(_instance)
 
 
+func _viewport_to_screen(_position: Vector2) -> Vector2:
+	return _position + get_global_transform().origin
+
+
+func _screen_to_viewport(_position: Vector2) -> Vector2:
+	return _position - get_global_transform().origin
+
+
 func add_star_to_travel_queue(star: StarNode, start_point: Vector2 = $ShipTracker.global_position):
 	if queued_stars:
 		var last_star_in_queue = queued_stars[-1]
 		if is_star_connected(star, last_star_in_queue):
 			queued_stars.append(star)
 			_update_queued_travel_path(
-				queued_stars[-2].global_position, 
-				queued_stars[-1].global_position
+				_screen_to_viewport(queued_stars[-2].global_position), 
+				_screen_to_viewport(queued_stars[-1].global_position)
 			)
 	else:
-		var current_ship_position = $ShipTracker.global_position - get_global_transform().origin
+		var current_ship_position = _screen_to_viewport($ShipTracker.global_position)
 		var connected_lanes = get_connected_starlanes(current_ship_position)
 		for _lane in connected_lanes:
 			for _point in _lane.slice(0, 2):
-				if star.global_position.is_equal_approx(_point):
+				var test0 = _screen_to_viewport(star.global_position)
+				if _screen_to_viewport(star.global_position).is_equal_approx(_point):
 					queued_stars.append(star)
 					_update_queued_travel_path(
 						start_point, 
-						queued_stars[-1].global_position
+						_screen_to_viewport(queued_stars[-1].global_position)
 					)
 					return
 			# Fallback - are we in the middle of a starlane?
@@ -222,11 +234,12 @@ func add_star_to_travel_queue(star: StarNode, start_point: Vector2 = $ShipTracke
 				_lane[1]
 			).distance_to(start_point) < 1:
 				# We can only travel to either end of the active starlane
-				if star.global_position in _lane.slice(0, 2):
+				var test1 = _screen_to_viewport(star.global_position)
+				if _screen_to_viewport(star.global_position) in _lane.slice(0, 2):
 					queued_stars.append(star)
 					_update_queued_travel_path(
 						start_point, 
-						queued_stars[-1].global_position
+						_screen_to_viewport(queued_stars[-1].global_position)
 					)
 					return
 
@@ -247,10 +260,12 @@ func is_star_connected(destination_star: StarNode, starting_star: StarNode) -> b
 	if destination_star == starting_star:
 		return false
 	
-	var connected_lanes = get_connected_starlanes(starting_star.global_position)
+	var connected_lanes = get_connected_starlanes(
+		_screen_to_viewport(starting_star.global_position)
+	)
 	for _lane in connected_lanes:
 		for _point in _lane.slice(0, 2):
-			if destination_star.global_position.is_equal_approx(_point):
+			if _screen_to_viewport(destination_star.global_position).is_equal_approx(_point):
 				return true
 	
 	return false
@@ -258,8 +273,8 @@ func is_star_connected(destination_star: StarNode, starting_star: StarNode) -> b
 
 func select_star_to_travel_to(star: StarNode):
 	if not is_ship_travelling:
-		var current_ship_position = $ShipTracker.global_position - get_global_transform().origin
-		var offset_star_position = star.global_position - get_global_transform().origin
+		var current_ship_position = _screen_to_viewport($ShipTracker.global_position)
+		var star_position = _screen_to_viewport(star.global_position)
 		
 		# Override any existing queue
 		queued_stars = []
@@ -268,14 +283,14 @@ func select_star_to_travel_to(star: StarNode):
 			queued_chevrons.erase(_instance)
 		
 		# Don't travel to a star if we're already at it
-		if star.global_position - get_global_transform().origin == current_ship_position:
+		if star_position == current_ship_position:
 			return
 		
 		# Get available lanes
 		var connected_lanes = get_connected_starlanes(current_ship_position)
 		for _lane in connected_lanes:
 			for _point in _lane.slice(0, 2):
-				if offset_star_position.is_equal_approx(_point):
+				if star_position.is_equal_approx(_point):
 					add_star_to_travel_queue(star, current_ship_position)
 					# If this is the first star in the queue, set it as the next star
 					if not next_star:
