@@ -133,9 +133,10 @@ offset_right = 428.0
 offset_bottom = 86.0
 theme_override_font_sizes/normal_font_size = 14
 bbcode_enabled = true
-text = "Name: First Last
+text = "[u]Name: First Last[/u]
 Age: 46
-Joined date: 12"
+Joined date: 12
+Status: [color=green]Healthy[/color]"
 
 [node name="RandomThoughtContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Crewmates"]
 layout_mode = 0
@@ -154,24 +155,6 @@ layout_mode = 2
 theme_override_font_sizes/normal_font_size = 12
 bbcode_enabled = true
 text = "[center]\"As I float through the sterile corridors of this metallic behemoth, I can't help but marvel at the vastness of space beyond the cold, unyielding walls .\"[/center]"
-autowrap_mode = 2
-
-[node name="BackstoryContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Crewmates"]
-layout_mode = 0
-offset_left = 166.0
-offset_top = 169.0
-offset_right = 441.0
-offset_bottom = 234.0
-
-[node name="Background" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates/BackstoryContainer"]
-self_modulate = Color(0.109804, 0.109804, 0.105882, 1)
-layout_mode = 2
-texture = ExtResource("4_hkjqs")
-
-[node name="Backstory" type="RichTextLabel" parent="DeviceFrame/TabContainer/Crewmates/BackstoryContainer"]
-layout_mode = 2
-theme_override_font_sizes/normal_font_size = 12
-text = "Raised in a bustling city. Escaped from a life of crime. On a quest to find a legendary artifact."
 autowrap_mode = 2
 
 [node name="Travel" type="TabBar" parent="DeviceFrame/TabContainer"]

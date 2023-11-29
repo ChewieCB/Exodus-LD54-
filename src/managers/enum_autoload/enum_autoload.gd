@@ -11,6 +11,13 @@ enum Officer {
 	DR_DORIAN
 }
 
+enum CrewmateStatus {
+	HEALTHY,
+	INFECTED,
+	INJURED,
+	CRITICAL,
+}
+
 enum UpgradeId {
 	NONE,
 	AGRI_SPACEDUST,

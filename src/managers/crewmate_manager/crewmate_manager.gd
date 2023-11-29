@@ -7,6 +7,9 @@ var portrait_list: Array[Resource] = []
 
 var current_crewmates: Array[CrewmateData] = []
 
+const MIN_AGE = 20
+const MAX_AGE = 50
+
 func _ready() -> void:
 	ResourceManager.population_changed.connect(update_current_crewmates)
 	load_resources()
@@ -20,8 +23,7 @@ func generate_a_random_crewmate(joined_date: int = 0):
 	var last_name = first_name_list[randi() % first_name_list.size()]
 	new_crewmate.crewmate_name = first_name + " " + last_name
 	new_crewmate.portrait = portrait_list[randi() % portrait_list.size()]
-	new_crewmate.age = randi_range(20, 50)
-	new_crewmate.backstory = "Backstory go here..."
+	new_crewmate.age = randi_range(MIN_AGE, MAX_AGE)
 	new_crewmate.joined_date = joined_date
 	new_crewmate.random_thought = random_thoughts_list[randi() % random_thoughts_list.size()]
 	return new_crewmate
