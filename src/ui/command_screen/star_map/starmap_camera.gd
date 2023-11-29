@@ -7,7 +7,7 @@ const ZOOM_RATE: float = 16.0
 var _target_zoom: float = 8.0
 
 const PAN_RETURN_RATE: float = 2.5
-var pan_wait: float = 0.6
+var pan_wait: float = 1.6
 var is_pan_returning: bool = true
 
 @onready var negation_zone_radius = get_parent().negation_zone_radius

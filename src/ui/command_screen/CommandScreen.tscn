@@ -141,6 +141,7 @@ grow_vertical = 2
 shape = SubResource("RectangleShape2D_v161y")
 
 [node name="PathChoiceView" type="Control" parent="DeviceFrame/TabContainer/Travel"]
+visible = false
 modulate = Color(1, 1, 1, 0)
 anchors_preset = 0
 offset_left = 289.0
@@ -202,6 +203,7 @@ Chosen this path will make it more likely to meet other travellers."
 autowrap_mode = 2
 
 [node name="ChangePathButton" type="Button" parent="DeviceFrame/TabContainer/Travel"]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5

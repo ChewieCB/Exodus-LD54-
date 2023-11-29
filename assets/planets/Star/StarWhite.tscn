@@ -31,7 +31,7 @@ shader = ExtResource("4_2pdtn")
 shader_parameter/pixels = 300.0
 shader_parameter/color = Color(0.929641, 0.588174, 0.082063, 1)
 shader_parameter/time_speed = 0.05
-shader_parameter/time = 2213.42
+shader_parameter/time = 2008.84
 shader_parameter/rotation = 0.0
 shader_parameter/seed = null
 shader_parameter/circle_amount = 2.0
@@ -51,7 +51,7 @@ resource_local_to_scene = true
 shader = ExtResource("5_68t6u")
 shader_parameter/pixels = 100.0
 shader_parameter/time_speed = 1.0
-shader_parameter/time = 332.013
+shader_parameter/time = 301.326
 shader_parameter/rotation = 1.255
 shader_parameter/should_dither = true
 shader_parameter/seed = 6.427
@@ -65,7 +65,7 @@ resource_local_to_scene = true
 shader = ExtResource("6_yiwx2")
 shader_parameter/pixels = 200.0
 shader_parameter/time_speed = 0.05
-shader_parameter/time = 33201.3
+shader_parameter/time = 30132.6
 shader_parameter/rotation = 0.0
 shader_parameter/should_dither = true
 shader_parameter/storm_width = 0.3
@@ -118,6 +118,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 script = ExtResource("1_cdcud")
 relative_scale = 2.0
 gui_zoom = 2.0
@@ -137,6 +138,7 @@ offset_right = 6.0
 offset_bottom = 6.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Glow" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_0cir6")
@@ -152,6 +154,7 @@ offset_right = 3.5
 offset_bottom = 3.5
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Blobs" type="ColorRect" parent="."]
 visible = false
@@ -168,6 +171,7 @@ offset_right = 100.0
 offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Star" type="ColorRect" parent="."]
 material = SubResource("4")
@@ -183,11 +187,13 @@ offset_right = 2.0
 offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="StarFlares" type="ColorRect" parent="."]
 visible = false
 material = SubResource("7")
 layout_mode = 0
+mouse_filter = 2
 
 [node name="Highlight" type="ColorRect" parent="."]
 visible = false
@@ -204,6 +210,7 @@ offset_right = 6.0
 offset_bottom = 6.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_rbybe")

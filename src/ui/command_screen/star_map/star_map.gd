@@ -82,6 +82,7 @@ static var shape_info: Dictionary
 @onready var starlanes_parent = $Starlanes
 @onready var starlane_scene = load("res://src/ui/star_map/starlane/Starlane.tscn")
 @onready var starlane_chevrons_scene = load("res://src/ui/star_map/starlane/StarlaneChevrons.tscn")
+@onready var chevrons_parent = $Chevrons
 
 @onready var negation_zone_shader = $NegationZone
 
@@ -192,9 +193,10 @@ func _input(event):
 			previous_star = null
 			queued_stars = []
 			is_ship_travelling = false
-			for _instance in queued_chevrons:
+			for idx in range(queued_chevrons.size()):
+				var _instance = queued_chevrons[idx]
 				_instance.queue_free()
-				queued_chevrons.erase(_instance)
+			queued_chevrons = []
 
 
 func _viewport_to_screen(_position: Vector2) -> Vector2:
@@ -247,7 +249,7 @@ func add_star_to_travel_queue(star: StarNode, start_point: Vector2 = $ShipTracke
 func _update_queued_travel_path(start_position: Vector2, end_position: Vector2):
 	var _chevron_instance = starlane_chevrons_scene.instantiate()
 	_chevron_instance.points = [start_position, end_position]
-	starlanes_parent.add_child(_chevron_instance)
+	chevrons_parent.add_child(_chevron_instance)
 	queued_chevrons.append(_chevron_instance)
 	
 	# If this is the first star in the queue, set it as the next star

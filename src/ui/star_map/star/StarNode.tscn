@@ -12,6 +12,7 @@ script = ExtResource("1_ae73x")
 rect = Rect2(-8, -8, 16, 16)
 
 [node name="Area2D" type="Area2D" parent="."]
+priority = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_t8eav")

@@ -209,6 +209,8 @@ mouse_filter = 2
 
 [node name="Starlanes" type="Node2D" parent="."]
 
+[node name="Chevrons" type="Node2D" parent="."]
+
 [node name="Stars" type="Node2D" parent="."]
 
 [node name="ShipTracker" type="Node2D" parent="."]

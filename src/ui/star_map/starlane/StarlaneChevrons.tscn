@@ -5,7 +5,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3dbbe"]
 shader = ExtResource("1_fqnr8")
-shader_parameter/color = Color(1, 0.909804, 0.470588, 0.756863)
+shader_parameter/color = Color(1, 0.909804, 0.470588, 0.254902)
 shader_parameter/speed = 2.0
 
 [node name="StarlaneChevrons" type="Line2D"]

@@ -5,7 +5,6 @@ class_name BuildingResource
 @export var name: String
 @export var type: Building.TYPES
 @export var sprite: Texture2D
-@export var collision_data: CollisionShape2D
 @export_group("Economy")
 @export var housing_prod: int
 @export var food_prod: int
@@ -29,7 +28,7 @@ class_name BuildingResource
 
 func _init(
 	p_name = "BUILDING_NAME_MISSING", p_type = Building.TYPES.HabBuilding,
-	p_sprite = null, p_collision_data = [],
+	p_sprite = null,
 	p_housing_prod = 0, p_food_prod = 0, p_water_prod = 0, p_air_prod = 0,
 	p_people_cost = 0, p_construction_time = 0, p_destruction_time = 0
 ):
