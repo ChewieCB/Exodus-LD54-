@@ -77,6 +77,7 @@ enum ShapeType {CIRCLE, POLYGON}
 static var shape_info: Dictionary
 
 @onready var camera = $Camera2D
+
 @onready var stars_parent = $Stars
 @onready var star_node = preload("res://src/ui/star_map/star/StarNode.tscn")
 @onready var starlanes_parent = $Starlanes
@@ -114,6 +115,8 @@ func _ready():
 	).front()
 	# Move ship to start point
 	$ShipTracker.global_position = start_point
+	# Connect negation zone radius to tick
+	TickManager.tick.connect(_on_tick)
 
 
 func _draw():
@@ -830,6 +833,10 @@ func draw_circle_donut_poly(center, inner_radius, outer_radius, angle_from, angl
 		points_arc.push_back(center + Vector2(cos(deg_to_rad(angle_point)), sin(deg_to_rad(angle_point))) * inner_radius)  
 	draw_polygon(points_arc, colors)  
 
+
+func _on_tick():
+	pass
+#	negation_zone_radius -= 1
 
 func _on_viewport_mouse_entered():
 	viewport_has_focus = true

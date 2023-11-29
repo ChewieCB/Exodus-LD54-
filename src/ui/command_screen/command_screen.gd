@@ -8,7 +8,6 @@ class_name CommandScreen
 @onready var void_field_button: Button = $DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button4
 @onready var path_choice_view = $DeviceFrame/TabContainer/Travel/PathChoiceView
 @onready var change_path_button: Button = $DeviceFrame/TabContainer/Travel/ChangePathButton
-#@onready var path_follow: PathFollow2D = $DeviceFrame/TabContainer/Travel/ProgressView/Path2D/PathFollow2D
 
 @onready var wakeup_warning_label: Label = get_node("DeviceFrame/TabContainer/Cryostasis Citizen/WarningLabel")
 @onready var count_wakeup_label: Label = get_node("DeviceFrame/TabContainer/Cryostasis Citizen/CountLabel")

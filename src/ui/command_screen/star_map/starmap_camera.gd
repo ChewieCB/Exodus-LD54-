@@ -15,13 +15,6 @@ var negation_zone_camera_limit_buffer: int = 32
 @onready var pan_wait_timer = $PanWaitTimer
 
 
-func _ready():
-	limit_bottom = negation_zone_radius + negation_zone_camera_limit_buffer
-	limit_top = -negation_zone_radius - negation_zone_camera_limit_buffer
-	limit_left = -negation_zone_radius - negation_zone_camera_limit_buffer
-	limit_right = negation_zone_radius + negation_zone_camera_limit_buffer
-
-
 func _physics_process(delta):
 	zoom = lerp(
 		zoom, _target_zoom * Vector2.ONE,
