@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b1xmgw2jwmunk"]
+[gd_scene load_steps=24 format=3 uid="uid://b1xmgw2jwmunk"]
 
 [ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="1_4qidw"]
 [ext_resource type="Script" path="res://src/ui/command_screen/command_screen.gd" id="1_rladp"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://b7bouq455qx0b" path="res://src/ui/command_screen/crewmate_tab/CrewmateButton.tscn" id="4_vsvdc"]
 [ext_resource type="PackedScene" uid="uid://c6fnnntkibdna" path="res://src/ui/command_screen/research_tab/SelectResearchGraphButton.tscn" id="5_fynyk"]
 [ext_resource type="PackedScene" uid="uid://h5xuge7sdvl5" path="res://src/ui/command_screen/research_tab/AgricultureResearch.tscn" id="5_i78t6"]
+[ext_resource type="Texture2D" uid="uid://crwutx701neym" path="res://assets/character/crewmates/image1x1.png" id="6_uofd5"]
 [ext_resource type="Texture2D" uid="uid://cegl6af3k4xpo" path="res://assets/character/pressley.png" id="6_wk0bw"]
 [ext_resource type="PackedScene" uid="uid://lwk7nc56s8g8" path="res://src/ui/command_screen/OfficerLabel.tscn" id="7_rk483"]
 [ext_resource type="Texture2D" uid="uid://df0siiqlu7ln3" path="res://assets/character/torgon.png" id="8_jre42"]
@@ -122,7 +123,7 @@ offset_left = 165.0
 offset_top = 20.0
 offset_right = 229.0
 offset_bottom = 84.0
-texture = ExtResource("4_hkjqs")
+texture = ExtResource("6_uofd5")
 expand_mode = 1
 
 [node name="BasicInfo" type="RichTextLabel" parent="DeviceFrame/TabContainer/Crewmates"]
@@ -141,9 +142,9 @@ Status: [color=green]Healthy[/color]"
 [node name="RandomThoughtContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Crewmates"]
 layout_mode = 0
 offset_left = 166.0
-offset_top = 90.0
+offset_top = 100.0
 offset_right = 441.0
-offset_bottom = 155.0
+offset_bottom = 181.0
 
 [node name="Background" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates/RandomThoughtContainer"]
 self_modulate = Color(0.109804, 0.109804, 0.105882, 1)

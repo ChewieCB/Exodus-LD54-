@@ -237,9 +237,9 @@ autowrap_mode = 2
 [node name="BuildControlLabel" type="Label" parent="."]
 layout_mode = 0
 offset_left = 229.0
-offset_top = 17.0
+offset_top = -107.0
 offset_right = 472.0
-offset_bottom = 95.0
+offset_bottom = -29.0
 text = "Q, E to rotate building.
 Left-click to Build.
 Right-click to Destroy"

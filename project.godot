@@ -43,6 +43,7 @@ variables={
 "choice2_check": "false",
 "choice3_check": "false",
 "choice4_check": "false",
+"finished_select_crewmate": "false",
 "food": "0",
 "metal": "0",
 "population": "0",
