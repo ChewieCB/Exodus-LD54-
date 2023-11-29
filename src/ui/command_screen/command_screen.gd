@@ -34,7 +34,10 @@ func _ready() -> void:
 
 func _input(event: InputEvent):
 	if event is InputEventMouseMotion or event is InputEventMouseButton:
-		if is_mouse_over_starmap:
+		if is_mouse_over_starmap or \
+		# Exception for panning so we can trigger the pan return if the mouse 
+		# moves out of the viewport when panning
+		(event is InputEventMouseButton and event.is_released() and event.button_index == MOUSE_BUTTON_MIDDLE):
 			$DeviceFrame/TabContainer/Travel/MarginContainer/SubViewport.push_input(event, false)
 
 

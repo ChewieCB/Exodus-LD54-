@@ -120,6 +120,8 @@ stretch_mode = 1
 zoom = Vector2(8, 8)
 script = ExtResource("2_k456u")
 
+[node name="PanWaitTimer" type="Timer" parent="Camera2D"]
+
 [node name="GalacticCenter" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_ckex1")
 anchors_preset = 8
