@@ -24,6 +24,7 @@ func reset_stuff_on_tab() -> void:
 	random_thought.text = ""
 	selected_crewmate_name = ""
 	reset_yeet_decision()
+	yeet_button.visible = false
 	refresh_button_list()
 	if do_update_thoughts:
 		CrewmateManager.update_random_thoughts()
@@ -78,6 +79,8 @@ func reset_yeet_decision():
 				cb.crewmate_data.random_thought = "[color=yellow]...[/color]"
 	yeet_button.visible = true
 	confirm_yeet_button.visible = false
+	if len(CrewmateManager.current_crewmates) <= 1:
+		yeet_button.visible = false
 
 
 func _on_yeet_button_pressed() -> void:
@@ -88,7 +91,6 @@ func _on_yeet_button_pressed() -> void:
 		var cb = child as CrewmateButton
 		if cb.crewmate_data.crewmate_name == selected_crewmate_name:
 			random_thought.text = "[color=red][center]" + cb.crewmate_data.random_thought + "[/center][/color]"
-
 
 
 func _on_confirm_yeet_button_pressed() -> void:

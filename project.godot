@@ -19,6 +19,7 @@ config/icon="res://assets/sprite/game_avatar.png"
 [autoload]
 
 EnumAutoload="*res://src/managers/enum_autoload/enum_autoload.gd"
+CrewmateManager="*res://src/managers/crewmate_manager/CrewmateManager.tscn"
 ScreenTransitionManager="*res://src/ui/ScreenTransitionManager.tscn"
 Dialogic="*res://addons/dialogic/Other/DialogicGameHandler.gd"
 ResourceManager="*res://src/managers/resource_manager/ResourceManager.tscn"
@@ -26,7 +27,6 @@ BuildingManager="*res://src/managers/building_manager/BuildingManger.tscn"
 EventManager="*res://src/managers/event_manager/EventManager.tscn"
 TickManager="*res://src/managers/tick_manager/TickManager.tscn"
 SoundManager="*res://addons/sound_manager/sound_manager.gd"
-CrewmateManager="*res://src/managers/crewmate_manager/CrewmateManager.tscn"
 
 [debug]
 

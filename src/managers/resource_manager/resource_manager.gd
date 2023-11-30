@@ -105,6 +105,7 @@ var population_amount: int:
 		# we lose pop mid-construction
 		worker_amount += diff
 		available_housing += diff
+		CrewmateManager.update_current_crewmates(value)
 
 var worker_amount: int:
 	set(value):

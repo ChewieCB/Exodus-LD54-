@@ -1,4 +1,5 @@
 extends Node
+# MAKE SURE THIS SCRIPT LOAD BEFORE RESOURCE_MANAGER IN PROJECT AUTOLOAD SETTINGS
 
 var first_name_list: Array[String] = []
 var last_name_list: Array[String] = []
@@ -7,15 +8,16 @@ var yeet_thoughts_list: Array[String] = []
 var portrait_list: Array[Resource] = []
 
 var current_crewmates: Array[CrewmateData] = []
+var already_removed_crewmate = false
 
 const MIN_AGE = 20
 const MAX_AGE = 50
 
 func _ready() -> void:
-	ResourceManager.population_changed.connect(update_current_crewmates)
+	# MAKE SURE THIS SCRIPT LOAD BEFORE RESOURCE_MANAGER IN PROJECT AUTOLOAD SETTINGS
 	load_resources()
 	reset_state()
-	
+
 
 func generate_a_random_crewmate(joined_date: int = 0):
 	randomize()
@@ -39,11 +41,12 @@ func remove_crewmates_by_name(fullname: String):
 	for crewmate in current_crewmates:
 		if crewmate.crewmate_name == fullname:
 			current_crewmates.erase(crewmate)
+	ResourceManager.population_amount -= 1
 
 func remove_random_n_crewmates(n: int = 0):
 	if n > len(current_crewmates):
 		# It gonna be Game Over so it probably doesn't matter that much
-		n = len(current_crewmates) 
+		n = len(current_crewmates)
 
 	for i in range(n):
 		var x = randi()%len(current_crewmates)
@@ -112,7 +115,7 @@ func load_resources():
 	dir.list_dir_begin()
 	var file_name = dir.get_next()
 
-	while(file_name != ""): 
+	while(file_name != ""):
 		if file_name.ends_with(".png"):
 			if dir.current_is_dir():
 				pass
@@ -121,5 +124,5 @@ func load_resources():
 				portrait_list.append(portrait)
 		file_name = dir.get_next()
 
-	
+
 
