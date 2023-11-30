@@ -113,46 +113,26 @@ func spawn_resource_change_popup(change_amount: int, parent_node: Node):
 func _on_worker_ui_mouse_entered():
 	ResourceManager.emit_signal("ui_hover_show", "Available Crew members")
 
-
-func _on_worker_ui_mouse_exited():
+func _on_resource_ui_mouse_exited():
 	ResourceManager.emit_signal("ui_hover_hide")
-
 
 func _on_pop_ui_mouse_entered():
 	ResourceManager.emit_signal("ui_hover_show", "Total Crew memebers")
 
-
-func _on_pop_ui_mouse_exited():
-	ResourceManager.emit_signal("ui_hover_hide")
-
-
 func _on_hab_ui_mouse_entered():
 	ResourceManager.emit_signal("ui_hover_show", "Housing (Available Housing)\nNegative available housing will cause unrest and unfortunate events more likely to happen")
-
-
-func _on_hab_ui_mouse_exited():
-	ResourceManager.emit_signal("ui_hover_hide")
-
 
 func _on_food_ui_mouse_entered():
 	ResourceManager.emit_signal("ui_hover_show", "Food (Food per Day)")
 
-
-func _on_food_ui_mouse_exited():
-	ResourceManager.emit_signal("ui_hover_hide")
-
-
 func _on_water_ui_mouse_entered():
 	ResourceManager.emit_signal("ui_hover_show", "Water (Water per Day)")
-
-
-func _on_water_ui_mouse_exited():
-	ResourceManager.emit_signal("ui_hover_hide")
-
 
 func _on_air_ui_mouse_entered():
 	ResourceManager.emit_signal("ui_hover_show", "Oxygen (Oxygen per Day)")
 
+func _on_metal_ui_mouse_entered():
+	ResourceManager.emit_signal("ui_hover_show", "Metal (Metal per Day)")
 
-func _on_air_ui_mouse_exited():
-	ResourceManager.emit_signal("ui_hover_hide")
+
+	

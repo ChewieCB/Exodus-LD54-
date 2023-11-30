@@ -1,13 +1,16 @@
-[gd_scene load_steps=21 format=3 uid="uid://b1xmgw2jwmunk"]
+[gd_scene load_steps=24 format=3 uid="uid://b1xmgw2jwmunk"]
 
 [ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="1_4qidw"]
 [ext_resource type="Script" path="res://src/ui/command_screen/command_screen.gd" id="1_rladp"]
 [ext_resource type="Texture2D" uid="uid://8m1r17nptfyg" path="res://assets/sprite/space_map.png" id="2_tgm10"]
 [ext_resource type="Texture2D" uid="uid://d3pj8wans2lr4" path="res://assets/sprite/circle.png" id="3_4kwp3"]
+[ext_resource type="Script" path="res://src/ui/command_screen/crewmate_tab/crewmate_tab.gd" id="3_ffkt0"]
 [ext_resource type="Script" path="res://src/ui/command_screen/research_tab/research_tab.gd" id="3_v75ll"]
 [ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="4_hkjqs"]
+[ext_resource type="PackedScene" uid="uid://b7bouq455qx0b" path="res://src/ui/command_screen/crewmate_tab/CrewmateButton.tscn" id="4_vsvdc"]
 [ext_resource type="PackedScene" uid="uid://c6fnnntkibdna" path="res://src/ui/command_screen/research_tab/SelectResearchGraphButton.tscn" id="5_fynyk"]
 [ext_resource type="PackedScene" uid="uid://h5xuge7sdvl5" path="res://src/ui/command_screen/research_tab/AgricultureResearch.tscn" id="5_i78t6"]
+[ext_resource type="Texture2D" uid="uid://crwutx701neym" path="res://assets/character/crewmates/image1x1.png" id="6_uofd5"]
 [ext_resource type="Texture2D" uid="uid://cegl6af3k4xpo" path="res://assets/character/pressley.png" id="6_wk0bw"]
 [ext_resource type="PackedScene" uid="uid://lwk7nc56s8g8" path="res://src/ui/command_screen/OfficerLabel.tscn" id="7_rk483"]
 [ext_resource type="Texture2D" uid="uid://df0siiqlu7ln3" path="res://assets/character/torgon.png" id="8_jre42"]
@@ -82,9 +85,12 @@ offset_bottom = 460.0
 
 [node name="Crewmates" type="TabBar" parent="DeviceFrame/TabContainer"]
 layout_mode = 2
+script = ExtResource("3_ffkt0")
+crewmate_button = ExtResource("4_vsvdc")
 
 [node name="Background" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates"]
-self_modulate = Color(0.0823529, 0.0705882, 0.0392157, 1)
+self_modulate = Color(0.0470588, 0.0392157, 0.0235294, 1)
+layout_mode = 0
 offset_left = 2.0
 offset_top = 2.0
 offset_right = 451.0
@@ -102,60 +108,14 @@ horizontal_scroll_mode = 0
 [node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "First Last"
-
-[node name="Button2" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "First Last"
-
-[node name="Button3" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "First Last"
-
-[node name="Button4" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "First Last"
-
-[node name="Button5" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "First Last"
-
-[node name="Button6" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "First Last"
-
-[node name="Button7" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "First Last"
-
-[node name="Button8" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "First Last"
-
-[node name="Button9" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "First Last"
-
-[node name="Button10" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "First Last"
-
-[node name="Button11" type="Button" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "First Last"
+[node name="PortraitBackground" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates"]
+layout_mode = 0
+offset_left = 165.0
+offset_top = 20.0
+offset_right = 229.0
+offset_bottom = 84.0
+texture = ExtResource("4_hkjqs")
+expand_mode = 1
 
 [node name="Portrait" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates"]
 layout_mode = 0
@@ -163,7 +123,8 @@ offset_left = 165.0
 offset_top = 20.0
 offset_right = 229.0
 offset_bottom = 84.0
-texture = ExtResource("4_hkjqs")
+texture = ExtResource("6_uofd5")
+expand_mode = 1
 
 [node name="BasicInfo" type="RichTextLabel" parent="DeviceFrame/TabContainer/Crewmates"]
 layout_mode = 0
@@ -171,20 +132,50 @@ offset_left = 244.0
 offset_top = 20.0
 offset_right = 428.0
 offset_bottom = 86.0
+theme_override_font_sizes/normal_font_size = 14
 bbcode_enabled = true
-text = "Name: First Last
+text = "[u]Name: First Last[/u]
 Age: 46
-Date joined: 12"
+Joined date: 12
+Status: [color=green]Healthy[/color]"
 
-[node name="Backstory" type="Label" parent="DeviceFrame/TabContainer/Crewmates"]
+[node name="RandomThoughtContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Crewmates"]
 layout_mode = 0
-offset_left = 158.0
-offset_top = 107.0
-offset_right = 438.0
-offset_bottom = 164.0
-theme_override_font_sizes/font_size = 12
-text = "Raised in a bustling city. Escaped from a life of crime. On a quest to find a legendary artifact.w"
+offset_left = 166.0
+offset_top = 100.0
+offset_right = 441.0
+offset_bottom = 181.0
+
+[node name="Background" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates/RandomThoughtContainer"]
+self_modulate = Color(0.109804, 0.109804, 0.105882, 1)
+layout_mode = 2
+texture = ExtResource("4_hkjqs")
+
+[node name="RandomThought" type="RichTextLabel" parent="DeviceFrame/TabContainer/Crewmates/RandomThoughtContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "[center]\"As I float through the sterile corridors of this metallic behemoth, I can't help but marvel at the vastness of space beyond the cold, unyielding walls .\"[/center]"
 autowrap_mode = 2
+
+[node name="YeetButton" type="Button" parent="DeviceFrame/TabContainer/Crewmates"]
+self_modulate = Color(1, 0.105882, 0.0705882, 1)
+layout_mode = 0
+offset_left = 369.0
+offset_top = 204.0
+offset_right = 441.0
+offset_bottom = 228.0
+text = "Jettison"
+
+[node name="ConfirmYeetButton" type="Button" parent="DeviceFrame/TabContainer/Crewmates"]
+visible = false
+self_modulate = Color(1, 0.105882, 0.0705882, 1)
+layout_mode = 0
+offset_left = 259.0
+offset_top = 204.0
+offset_right = 347.0
+offset_bottom = 228.0
+text = "Confirmed?"
 
 [node name="Travel" type="TabBar" parent="DeviceFrame/TabContainer"]
 visible = false
@@ -665,6 +656,8 @@ libraries = {
 }
 
 [connection signal="tab_changed" from="DeviceFrame/TabContainer" to="." method="_on_tab_container_tab_changed"]
+[connection signal="pressed" from="DeviceFrame/TabContainer/Crewmates/YeetButton" to="DeviceFrame/TabContainer/Crewmates" method="_on_yeet_button_pressed"]
+[connection signal="pressed" from="DeviceFrame/TabContainer/Crewmates/ConfirmYeetButton" to="DeviceFrame/TabContainer/Crewmates" method="_on_confirm_yeet_button_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button" to="." method="_on_default_path_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button2" to="." method="_on_intergalatic_route_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button3" to="." method="_on_asteroid_field_pressed"]
