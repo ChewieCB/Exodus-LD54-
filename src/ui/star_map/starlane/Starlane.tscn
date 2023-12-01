@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cd8jv562e8xdi"]
+[gd_scene load_steps=4 format=3 uid="uid://cd8jv562e8xdi"]
 
 [ext_resource type="Shader" path="res://src/ui/star_map/starlane/starlane.gdshader" id="1_nao2e"]
+[ext_resource type="Script" path="res://src/ui/star_map/starlane/starlane.gd" id="2_i7o5m"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ck10c"]
 resource_local_to_scene = true
@@ -27,5 +28,6 @@ material = SubResource("ShaderMaterial_ck10c")
 points = PackedVector2Array(0, 0, 100, 20, 140, 70, 250, 145)
 width = 20.0
 texture_mode = 2
+script = ExtResource("2_i7o5m")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]

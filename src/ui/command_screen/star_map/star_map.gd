@@ -1,4 +1,3 @@
-@tool
 extends Node2D
 
 @export_group("Poisson Disc")
@@ -42,13 +41,25 @@ extends Node2D
 		generate_starlanes()
 
 @export_group("Negation Zone")
-@export_range(0, 10000, 1) var negation_zone_radius: int = 256:
+@export_range(0, 10000, 1) var negation_zone_radius: float = 256:
 	set(value):
+		# Cache previous value for lerping
+		previous_negation_zone_radius = negation_zone_radius
 		negation_zone_radius = value
-		# FIXME - Update negation zone shader params
-#		var mapped_negation_radius = remap(negation_zone_radius, 0, circle_radius, 0, 0.7)
-#		if negation_zone_shader:
-#			negation_zone_shader.material.set_shader_parameter("circle_size", mapped_negation_radius)
+		# Update collider
+		if safe_zone_collider_shape:
+			safe_zone_collider_shape.shape.radius = negation_zone_radius
+		# Mapping for shader size
+		if mapped_negation_radius:
+			# Update negation zone shader params
+			mapped_negation_radius = remap(
+				negation_zone_radius, 
+				0, initial_negation_zone_radius,
+				0, 0.5
+			)
+@onready var initial_negation_zone_radius: float = negation_zone_radius
+var previous_negation_zone_radius: float
+
 
 var points_to_draw: PackedVector2Array
 var edges_to_draw = []
@@ -67,11 +78,15 @@ var next_star: StarNode
 var queued_stars: Array = []
 var chevrons_instance: Line2D
 var queued_chevrons: Array = []
-const SHIP_MOVE_RATE: float = 5.0
+
+const SHIP_MOVE_RATE: float = 2.0
 var is_ship_travelling: bool = false
 
 var zone_shrinking: bool = false
-const NEGATION_FIELD_SHRINK_RATE: float = 1.0
+var NEGATION_FIELD_SHRINK_RATE: float = 1.0
+@onready var mapped_negation_radius: float = 0.5
+@onready var safe_zone_collider: Area2D = $SafeZoneArea
+@onready var safe_zone_collider_shape: CollisionShape2D = $SafeZoneArea/SafeZoneCollider
 
 enum ShapeType {CIRCLE, POLYGON}
 static var shape_info: Dictionary
@@ -103,12 +118,18 @@ func _ready():
 	$GalacticCenter.size = Vector2(galactic_center_radius * 2 + 32, galactic_center_radius * 2 + 32)
 	$GalacticCenter.set_anchors_and_offsets_preset(Control.PRESET_CENTER, Control.PRESET_MODE_KEEP_SIZE)
 	#
-	$BlackHole.size = Vector2(galactic_center_radius/2 + 32, galactic_center_radius/2 + 32)
+	$BlackHole.size = Vector2(galactic_center_radius/2, galactic_center_radius/2)
 	$BlackHole.set_anchors_and_offsets_preset(Control.PRESET_CENTER, Control.PRESET_MODE_KEEP_SIZE)
+	#
+	$NegationZone.size = Vector2(negation_zone_radius * 2, negation_zone_radius * 2)
+	$NegationZone.set_anchors_and_offsets_preset(Control.PRESET_CENTER, Control.PRESET_MODE_KEEP_SIZE)
+	negation_zone_shader.material.set_shader_parameter("circle_size", 0.5)
+	safe_zone_collider_shape.shape.radius = negation_zone_radius
+	
 	# Add star shaders
 	var star_positions = generate_stars(stars)
 	# Pick an outer star and place the ship tracker there
-	var outer_stars = get_outer_stars(star_positions)
+	var outer_stars = get_outer_stars(star_positions, 32, 64)
 	var start_point = outer_stars[randi_range(0, outer_stars.size() - 1)]
 	previous_star = stars.filter(
 		func(star): return star.global_position == start_point
@@ -130,11 +151,11 @@ func _draw():
 		negation_zone_center, negation_zone_radius, negation_zone_radius + 2, 
 		0, 360, Color.ORANGE
 	)
-	# Negation Zone backfill
-	draw_circle_donut_poly(
-		negation_zone_center, negation_zone_radius, 720, 
-		0, 360, Color(1, 0, 0, 0.5)
-	)
+#	# Negation Zone backfill
+#	draw_circle_donut_poly(
+#		negation_zone_center, negation_zone_radius, 720, 
+#		0, 360, Color(1, 0, 0, 0.5)
+#	)
 
 
 func _process(_delta):
@@ -707,7 +728,7 @@ func generate_stars(stars) -> Array:
 	return star_positions
 
 
-func get_outer_stars(stars, min_distance=16, max_distance=32) -> Array:
+func get_outer_stars(stars, min_distance=64, max_distance=128) -> Array:
 	# We need to offset the center point here based on the origin of this scene
 	# for when we run it as a SubViewport within the UI
 	var outer_stars = Array(stars).filter(
@@ -835,8 +856,59 @@ func draw_circle_donut_poly(center, inner_radius, outer_radius, angle_from, angl
 
 
 func _on_tick():
-	pass
-#	negation_zone_radius -= 1
+	negation_zone_radius -= 4
+	# Update negation radius shader
+	negation_zone_shader.material.set_shader_parameter("circle_size", mapped_negation_radius)
+	# Remove stars now within negation zone
+	var negated_stars = Array(stars).filter(
+		func(star): 
+			return star.global_position.distance_to(adjusted_center) >= negation_zone_radius - 1
+	)
+	for _star in negated_stars:
+		stars.erase(_star)
+		_star.queue_free()
+	
+	# Updated edge case starlanes
+	var starlanes_in_negation_zone = starlanes_parent.get_children().filter(
+		func(lane):
+			var points = lane.points
+			return points[0].distance_to(negation_zone_center) >= negation_zone_radius \
+			or points[1].distance_to(negation_zone_center) >= negation_zone_radius
+	)
+	# Find which vertex is cut off by the negation zone
+	for _lane in starlanes_in_negation_zone:
+		var negated_vertex
+		var safe_vertex
+		if _lane.points[0].distance_to(negation_zone_center) >= negation_zone_radius:
+			negated_vertex = 0
+			safe_vertex = 1
+		elif _lane.points[1].distance_to(negation_zone_center) >= negation_zone_radius:
+			negated_vertex = 1
+			safe_vertex = 0
+		else:
+			return
+		
+		# Update the point in the negation zone to point in the same direction,
+		# but cut off at the current edge of the negation zone
+		var intersection_ratio: float = Geometry2D.segment_intersects_circle(
+			_lane.points[safe_vertex],
+			_lane.points[negated_vertex],
+			negation_zone_center,
+			negation_zone_radius - 1
+		)
+		var lane_vector = (
+			_lane.points[negated_vertex] - _lane.points[safe_vertex]
+		)
+		var intersection_offset = lane_vector.normalized() * lane_vector.length() * intersection_ratio
+		var intersection_point = _lane.points[safe_vertex] + intersection_offset
+		
+		_lane.points[negated_vertex] = intersection_point
+		
+		if _lane.cached_original_points[0].distance_to(negation_zone_center) >= negation_zone_radius - 1 \
+		and _lane.cached_original_points[1].distance_to(negation_zone_center) >= negation_zone_radius - 1:
+			_lane.queue_free()
+			starlanes_in_negation_zone.erase(_lane)
+
 
 func _on_viewport_mouse_entered():
 	viewport_has_focus = true
@@ -846,3 +918,10 @@ func _on_viewport_mouse_exited():
 	viewport_has_focus = false
 	get_parent().gui_release_focus()
 
+
+func _on_safe_zone_area_body_exited(body):
+	if body is StarNode:
+		body.queue_free()
+	elif body is Line2D:
+		print()
+		pass
