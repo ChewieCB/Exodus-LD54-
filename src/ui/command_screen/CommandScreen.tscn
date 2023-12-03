@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://b1xmgw2jwmunk"]
+[gd_scene load_steps=27 format=3 uid="uid://b1xmgw2jwmunk"]
 
 [ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="1_4qidw"]
 [ext_resource type="Script" path="res://src/ui/command_screen/command_screen.gd" id="1_rladp"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://lwk7nc56s8g8" path="res://src/ui/command_screen/OfficerLabel.tscn" id="7_rk483"]
 [ext_resource type="Texture2D" uid="uid://df0siiqlu7ln3" path="res://assets/character/torgon.png" id="8_jre42"]
 [ext_resource type="Texture2D" uid="uid://xor5ih5p1g3d" path="res://assets/character/faroq_khan.png" id="9_47m3x"]
+[ext_resource type="PackedScene" uid="uid://ce5dg57vaxm3d" path="res://src/ui/command_screen/research_tab/ConstructionLogisticResearch.tscn" id="9_iekhi"]
 [ext_resource type="Texture2D" uid="uid://cox4fi3kfgyyo" path="res://assets/character/governor_jerrerod.png" id="10_0xedy"]
 [ext_resource type="Texture2D" uid="uid://dqwcek01e0v4k" path="res://assets/character/sam_carter.png" id="10_t33dg"]
 [ext_resource type="Texture2D" uid="uid://dxsiqg3h4gm0" path="res://assets/character/mary_watney.png" id="12_cymej"]
@@ -141,6 +142,7 @@ research_graph_scene = ExtResource("7_cq70m")
 [node name="Button4" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
 layout_mode = 2
 text = "Construction & Logistics"
+research_graph_scene = ExtResource("9_iekhi")
 
 [node name="Button5" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
 layout_mode = 2
