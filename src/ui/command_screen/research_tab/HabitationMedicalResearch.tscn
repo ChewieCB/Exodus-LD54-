@@ -58,29 +58,28 @@ offset_bottom = 136.0
 texture = ExtResource("1_hglfk")
 
 [node name="Line1-2" type="Line2D" parent="."]
-position = Vector2(10, 13)
+position = Vector2(8, 16)
 points = PackedVector2Array(37, 39, 126, 39)
 width = 5.0
 default_color = Color(0.2, 0.2, 0.2, 1)
 
 [node name="Line3-4" type="Line2D" parent="."]
-position = Vector2(0, 1)
 points = PackedVector2Array(39, 104, 127, 104)
 width = 5.0
 default_color = Color(0.2, 0.2, 0.2, 1)
 
 [node name="Line4-5" type="Line2D" parent="."]
-position = Vector2(98, 1)
+position = Vector2(96, 0)
 points = PackedVector2Array(39, 104, 127, 104)
 width = 5.0
 default_color = Color(0.2, 0.2, 0.2, 1)
 
 [node name="Upgrade1" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_maogv")]
 layout_mode = 0
-offset_left = 34.0
-offset_top = 37.0
-offset_right = 66.0
-offset_bottom = 69.0
+offset_left = 32.0
+offset_top = 40.0
+offset_right = 64.0
+offset_bottom = 72.0
 upgrade_name = "Dormitory"
 upgrade_description = "Unlock [color=green]tier II[/color] habitation production building."
 upgrade_id = 7
@@ -90,10 +89,10 @@ connection_lines = [NodePath("../Line1-2")]
 
 [node name="Upgrade2" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_maogv")]
 layout_mode = 0
-offset_left = 122.0
-offset_top = 37.0
-offset_right = 154.0
-offset_bottom = 69.0
+offset_left = 120.0
+offset_top = 40.0
+offset_right = 152.0
+offset_bottom = 72.0
 upgrade_name = "Megablock"
 upgrade_description = "Unlock [color=green]tier III[/color] food production building."
 upgrade_id = 8
@@ -103,10 +102,10 @@ require_one_of_these_upgrades = [NodePath("../Upgrade1")]
 
 [node name="Upgrade3" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_maogv")]
 layout_mode = 0
-offset_left = 34.0
-offset_top = 90.0
-offset_right = 66.0
-offset_bottom = 122.0
+offset_left = 32.0
+offset_top = 88.0
+offset_right = 64.0
+offset_bottom = 120.0
 upgrade_name = "Infirmary"
 upgrade_description = "Unlock [color=green]tier I[/color] clinic building."
 upgrade_id = 9
@@ -116,10 +115,10 @@ connection_lines = [NodePath("../Line3-4")]
 
 [node name="Upgrade4" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("2_maogv")]
 layout_mode = 0
-offset_left = 121.0
-offset_top = 91.0
-offset_right = 153.0
-offset_bottom = 123.0
+offset_left = 120.0
+offset_top = 88.0
+offset_right = 152.0
+offset_bottom = 120.0
 upgrade_name = "Health Clinic"
 upgrade_description = "Unlock [color=green]tier II[/color] clinic building."
 upgrade_id = 10
@@ -130,10 +129,10 @@ require_one_of_these_upgrades = [NodePath("../Upgrade3")]
 
 [node name="Upgrade5" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_maogv")]
 layout_mode = 0
-offset_left = 207.0
-offset_top = 90.0
-offset_right = 239.0
-offset_bottom = 122.0
+offset_left = 208.0
+offset_top = 88.0
+offset_right = 240.0
+offset_bottom = 120.0
 upgrade_name = "Trauma Center"
 upgrade_description = "Unlock [color=green]tier III[/color] clinic building."
 upgrade_id = 11
@@ -152,3 +151,4 @@ offset_right = 88.0
 offset_bottom = 29.0
 grow_horizontal = 2
 text = "Habitation and Medical"
+horizontal_alignment = 1

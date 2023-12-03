@@ -68,29 +68,29 @@ offset_bottom = 136.0
 texture = ExtResource("1_afl24")
 
 [node name="Line1-2" type="Line2D" parent="."]
-position = Vector2(10, 13)
+position = Vector2(24, 16)
 points = PackedVector2Array(37, 39, 126, 39)
 width = 5.0
 default_color = Color(0.2, 0.2, 0.2, 1)
 
 [node name="Line3-4" type="Line2D" parent="."]
-position = Vector2(0, 1)
-points = PackedVector2Array(39, 104, 127, 104)
+position = Vector2(16, 8)
+points = PackedVector2Array(48, 104, 136, 104)
 width = 5.0
 default_color = Color(0.2, 0.2, 0.2, 1)
 
 [node name="Line5-6" type="Line2D" parent="."]
-position = Vector2(182, -54)
-points = PackedVector2Array(39, 104, 127, 104)
+position = Vector2(248, -48)
+points = PackedVector2Array(39, 104, 120, 104)
 width = 5.0
 default_color = Color(0.2, 0.2, 0.2, 1)
 
 [node name="Upgrade1" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_g3kk2")]
 layout_mode = 0
-offset_left = 34.0
-offset_top = 37.0
-offset_right = 66.0
-offset_bottom = 69.0
+offset_left = 48.0
+offset_top = 40.0
+offset_right = 80.0
+offset_bottom = 72.0
 upgrade_name = "Hydroponics Bay"
 upgrade_description = "Implement a system where we can grow food without soil, which is more efficient than traditional soil-based systems.
 Unlock [color=green]tier II[/color] food production building."
@@ -101,10 +101,10 @@ connection_lines = [NodePath("../Line1-2")]
 
 [node name="Upgrade2" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_g3kk2")]
 layout_mode = 0
-offset_left = 115.0
-offset_top = 30.0
-offset_right = 165.0
-offset_bottom = 80.0
+offset_left = 128.0
+offset_top = 32.0
+offset_right = 178.0
+offset_bottom = 82.0
 upgrade_name = "Nutrition Reclamation Plant"
 upgrade_description = "Food waste will be recycled into pure nutritional packs, further improved food production.
 Unlock [color=green]tier III[/color] food production building."
@@ -115,10 +115,10 @@ require_one_of_these_upgrades = [NodePath("../Upgrade1")]
 
 [node name="Upgrade3" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_g3kk2")]
 layout_mode = 0
-offset_left = 34.0
-offset_top = 90.0
-offset_right = 66.0
-offset_bottom = 122.0
+offset_left = 48.0
+offset_top = 96.0
+offset_right = 80.0
+offset_bottom = 128.0
 upgrade_name = "Refiltration Center"
 upgrade_description = "Unlock [color=green]tier II[/color] water production building."
 upgrade_id = 3
@@ -128,10 +128,10 @@ connection_lines = [NodePath("../Line3-4")]
 
 [node name="Upgrade4" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_g3kk2")]
 layout_mode = 0
-offset_left = 115.0
-offset_top = 91.0
-offset_right = 166.0
-offset_bottom = 123.0
+offset_left = 128.0
+offset_top = 96.0
+offset_right = 179.0
+offset_bottom = 128.0
 upgrade_name = "Desalination Plant"
 upgrade_description = "Unlock [color=green]tier III[/color] water production building."
 upgrade_id = 4
@@ -141,10 +141,10 @@ require_one_of_these_upgrades = [NodePath("../Upgrade3")]
 
 [node name="Upgrade5" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_g3kk2")]
 layout_mode = 0
-offset_left = 210.0
-offset_top = 35.0
-offset_right = 242.0
-offset_bottom = 67.0
+offset_left = 272.0
+offset_top = 40.0
+offset_right = 304.0
+offset_bottom = 72.0
 upgrade_name = "Recirculator"
 upgrade_description = "Unlock [color=green]tier II[/color] air production building."
 upgrade_id = 5
@@ -154,10 +154,10 @@ connection_lines = [NodePath("../Line5-6")]
 
 [node name="Upgrade6" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_g3kk2")]
 layout_mode = 0
-offset_left = 287.0
-offset_top = 35.0
-offset_right = 319.0
-offset_bottom = 67.0
+offset_left = 352.0
+offset_top = 40.0
+offset_right = 384.0
+offset_bottom = 72.0
 upgrade_name = "Oxygen Synthesiser"
 upgrade_description = "Unlock [color=green]tier III[/color] air production building."
 upgrade_id = 6
@@ -176,3 +176,4 @@ offset_right = 52.0
 offset_bottom = 27.0
 grow_horizontal = 2
 text = "Crew Supplies"
+horizontal_alignment = 1
