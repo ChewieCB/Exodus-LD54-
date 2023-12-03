@@ -43,7 +43,6 @@ theme_override_constants/margin_right = 32
 layout_mode = 2
 
 [node name="Habitation" type="TabBar" parent="MarginContainer2/TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/TabContainer/Habitation"]
@@ -72,10 +71,12 @@ building_object = ExtResource("13_rymv3")
 [node name="BuildingButton2" parent="MarginContainer2/TabContainer/Habitation/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
 layout_mode = 2
 building_object = ExtResource("14_iyyrq")
+require_upgrade_id = 7
 
 [node name="BuildingButton3" parent="MarginContainer2/TabContainer/Habitation/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
 layout_mode = 2
 building_object = ExtResource("15_pi5gv")
+require_upgrade_id = 8
 
 [node name="Food" type="TabBar" parent="MarginContainer2/TabContainer"]
 visible = false
@@ -189,6 +190,7 @@ building_object = ExtResource("14_th1qt")
 require_upgrade_id = 6
 
 [node name="Metal" type="TabBar" parent="MarginContainer2/TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/TabContainer/Metal"]

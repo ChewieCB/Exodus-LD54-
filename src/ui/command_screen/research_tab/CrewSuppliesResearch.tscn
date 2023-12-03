@@ -166,9 +166,13 @@ cost = SubResource("Resource_dngwj")
 require_one_of_these_upgrades = [NodePath("../Upgrade5")]
 
 [node name="TreeLabel" type="Label" parent="."]
-layout_mode = 0
-offset_left = 177.0
-offset_top = 9.0
-offset_right = 265.0
-offset_bottom = 28.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -52.0
+offset_top = 8.0
+offset_right = 52.0
+offset_bottom = 27.0
+grow_horizontal = 2
 text = "Crew Supplies"

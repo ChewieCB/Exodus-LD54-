@@ -1,0 +1,154 @@
+[gd_scene load_steps=12 format=3 uid="uid://diawc60skh6ii"]
+
+[ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="1_hglfk"]
+[ext_resource type="PackedScene" uid="uid://duihto0qvkw2b" path="res://src/ui/command_screen/research_tab/TechUpgradeButton.tscn" id="2_maogv"]
+[ext_resource type="Texture2D" uid="uid://b6sj6dbisqutw" path="res://assets/buildings/hab_2.png" id="3_5utac"]
+[ext_resource type="Script" path="res://src/common/resource_cost.gd" id="4_0lfw4"]
+[ext_resource type="Texture2D" uid="uid://d1w5fvl2ohit8" path="res://assets/buildings/hab_3.png" id="5_mscjs"]
+[ext_resource type="Texture2D" uid="uid://c8jp51mebn7q3" path="res://assets/ui/upgrades/common_upgrade.png" id="6_kniqc"]
+
+[sub_resource type="Resource" id="Resource_y5g2s"]
+script = ExtResource("4_0lfw4")
+food = 0
+water = 0
+air = 0
+metal = 15
+
+[sub_resource type="Resource" id="Resource_hgv0c"]
+script = ExtResource("4_0lfw4")
+food = 10
+water = 10
+air = 10
+metal = 40
+
+[sub_resource type="Resource" id="Resource_ujy8f"]
+script = ExtResource("4_0lfw4")
+food = 0
+water = 5
+air = 5
+metal = 15
+
+[sub_resource type="Resource" id="Resource_06g7x"]
+script = ExtResource("4_0lfw4")
+food = 10
+water = 10
+air = 10
+metal = 25
+
+[sub_resource type="Resource" id="Resource_2xk1s"]
+script = ExtResource("4_0lfw4")
+food = 30
+water = 30
+air = 30
+metal = 50
+
+[node name="HabitationMedicalResearch" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 451.0
+offset_bottom = 138.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0, 1, 0.32549, 0.0627451)
+layout_mode = 0
+offset_left = 7.0
+offset_top = 8.0
+offset_right = 446.0
+offset_bottom = 136.0
+texture = ExtResource("1_hglfk")
+
+[node name="Line1-2" type="Line2D" parent="."]
+position = Vector2(10, 13)
+points = PackedVector2Array(37, 39, 126, 39)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line3-4" type="Line2D" parent="."]
+position = Vector2(0, 1)
+points = PackedVector2Array(39, 104, 127, 104)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line4-5" type="Line2D" parent="."]
+position = Vector2(98, 1)
+points = PackedVector2Array(39, 104, 127, 104)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Upgrade1" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_maogv")]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 37.0
+offset_right = 66.0
+offset_bottom = 69.0
+upgrade_name = "Dormitory"
+upgrade_description = "Unlock [color=green]tier II[/color] habitation production building."
+upgrade_id = 7
+upgrade_sprite = ExtResource("3_5utac")
+cost = SubResource("Resource_y5g2s")
+connection_lines = [NodePath("../Line1-2")]
+
+[node name="Upgrade2" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_maogv")]
+layout_mode = 0
+offset_left = 122.0
+offset_top = 37.0
+offset_right = 154.0
+offset_bottom = 69.0
+upgrade_name = "Megablock"
+upgrade_description = "Unlock [color=green]tier III[/color] food production building."
+upgrade_id = 8
+upgrade_sprite = ExtResource("5_mscjs")
+cost = SubResource("Resource_hgv0c")
+require_one_of_these_upgrades = [NodePath("../Upgrade1")]
+
+[node name="Upgrade3" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_maogv")]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 90.0
+offset_right = 66.0
+offset_bottom = 122.0
+upgrade_name = "Infirmary"
+upgrade_description = "Unlock [color=green]tier I[/color] clinic building."
+upgrade_id = 9
+upgrade_sprite = ExtResource("6_kniqc")
+cost = SubResource("Resource_ujy8f")
+connection_lines = [NodePath("../Line3-4")]
+
+[node name="Upgrade4" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("2_maogv")]
+layout_mode = 0
+offset_left = 121.0
+offset_top = 91.0
+offset_right = 153.0
+offset_bottom = 123.0
+upgrade_name = "Health Clinic"
+upgrade_description = "Unlock [color=green]tier II[/color] clinic building."
+upgrade_id = 10
+upgrade_sprite = ExtResource("6_kniqc")
+cost = SubResource("Resource_06g7x")
+connection_lines = [NodePath("../Line4-5")]
+require_one_of_these_upgrades = [NodePath("../Upgrade3")]
+
+[node name="Upgrade5" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_maogv")]
+layout_mode = 0
+offset_left = 207.0
+offset_top = 90.0
+offset_right = 239.0
+offset_bottom = 122.0
+upgrade_name = "Trauma Center"
+upgrade_description = "Unlock [color=green]tier III[/color] clinic building."
+upgrade_id = 11
+upgrade_sprite = ExtResource("6_kniqc")
+cost = SubResource("Resource_2xk1s")
+require_one_of_these_upgrades = [NodePath("../Upgrade4")]
+
+[node name="TreeLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -88.0
+offset_top = 10.0
+offset_right = 88.0
+offset_bottom = 29.0
+grow_horizontal = 2
+text = "Habitation and Medical"

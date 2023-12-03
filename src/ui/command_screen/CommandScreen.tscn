@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://b1xmgw2jwmunk"]
+[gd_scene load_steps=25 format=3 uid="uid://b1xmgw2jwmunk"]
 
 [ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="1_4qidw"]
 [ext_resource type="Script" path="res://src/ui/command_screen/command_screen.gd" id="1_rladp"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://c6fnnntkibdna" path="res://src/ui/command_screen/research_tab/SelectResearchGraphButton.tscn" id="5_fynyk"]
 [ext_resource type="Texture2D" uid="uid://crwutx701neym" path="res://assets/character/crewmates/image1x1.png" id="6_uofd5"]
 [ext_resource type="Texture2D" uid="uid://cegl6af3k4xpo" path="res://assets/character/pressley.png" id="6_wk0bw"]
+[ext_resource type="PackedScene" uid="uid://diawc60skh6ii" path="res://src/ui/command_screen/research_tab/HabitationMedicalResearch.tscn" id="7_cq70m"]
 [ext_resource type="PackedScene" uid="uid://btjkgkmeros7p" path="res://src/ui/command_screen/research_tab/CrewSuppliesResearch.tscn" id="7_qusv6"]
 [ext_resource type="PackedScene" uid="uid://lwk7nc56s8g8" path="res://src/ui/command_screen/OfficerLabel.tscn" id="7_rk483"]
 [ext_resource type="Texture2D" uid="uid://df0siiqlu7ln3" path="res://assets/character/torgon.png" id="8_jre42"]
@@ -97,7 +98,6 @@ offset_bottom = 242.0
 texture = ExtResource("4_hkjqs")
 
 [node name="ChooseTech" type="Control" parent="DeviceFrame/TabContainer/Research"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -134,6 +134,7 @@ text = "Manufacturing"
 [node name="Button3" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
 layout_mode = 2
 text = "Habitation & Medical"
+research_graph_scene = ExtResource("7_cq70m")
 
 [node name="Button4" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
 layout_mode = 2
@@ -188,6 +189,7 @@ text = "Body Augmentation"
 required_officer = 7
 
 [node name="ResearchGraphView" type="Control" parent="DeviceFrame/TabContainer/Research"]
+visible = false
 anchors_preset = 0
 
 [node name="ResearchGraphHolder" type="Control" parent="DeviceFrame/TabContainer/Research/ResearchGraphView"]
@@ -195,7 +197,7 @@ anchors_preset = 0
 offset_right = 450.0
 offset_bottom = 242.0
 
-[node name="CrewSuppliesResearch" parent="DeviceFrame/TabContainer/Research/ResearchGraphView/ResearchGraphHolder" instance=ExtResource("7_qusv6")]
+[node name="HabitationMedicalResearch" parent="DeviceFrame/TabContainer/Research/ResearchGraphView/ResearchGraphHolder" instance=ExtResource("7_cq70m")]
 
 [node name="UpgradeButton" type="Button" parent="DeviceFrame/TabContainer/Research/ResearchGraphView"]
 layout_mode = 0
