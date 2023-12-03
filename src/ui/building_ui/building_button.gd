@@ -2,6 +2,7 @@
 extends MarginContainer
 
 @export var building_object: PackedScene
+@export var require_upgrade_id: EnumAutoload.UpgradeId = EnumAutoload.UpgradeId.NONE
 
 @onready var name_label = $CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/NameContainer/BuildingName
 @onready var worker_cost_label = $%RequirementsContainer/WorkersContainer/HBoxContainer/WorkerCost
@@ -28,6 +29,9 @@ func _ready():
 
 	if not Engine.is_editor_hint():
 		ResourceManager.workers_changed.connect(_update_status)
+		ResourceManager.upgrade_acquired.connect(_update_availability)
+
+	_update_availability()
 
 	var production
 	var prod_type_string
@@ -57,7 +61,6 @@ func _ready():
 	production_label.text = "+{0}".format([production])
 	production_icon.texture = prod_type_icon
 
-
 func _update_status(available_workers):
 	# FIXME - this doesn't disable buttons that are too expensive
 	if building_cost:
@@ -68,10 +71,17 @@ func _update_status(available_workers):
 		button.disabled = false
 		self.modulate = Color(1, 1, 1)
 
-
-
 func _on_button_pressed():
 	SoundManager.play_button_click_sfx()
 	BuildingManager.start_building(building_object)
 	button.release_focus()
 
+func _update_availability():
+	if require_upgrade_id == EnumAutoload.UpgradeId.NONE:
+		visible = true
+		return
+	
+	if require_upgrade_id in ResourceManager.current_upgrades:
+		visible = true
+	else:
+		visible = false
