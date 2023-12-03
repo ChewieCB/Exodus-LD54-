@@ -198,6 +198,7 @@ upgrade_sprite = ExtResource("3_04mtn")
 cost = SubResource("Resource_hh64u")
 connection_lines = [NodePath("../Line4-5")]
 require_one_of_these_upgrades = [NodePath("../Upgrade2")]
+disabled = true
 
 [node name="Upgrade5" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_3jq7e")]
 layout_mode = 0
@@ -211,6 +212,7 @@ upgrade_id = 26
 upgrade_sprite = ExtResource("3_04mtn")
 cost = SubResource("Resource_a8sva")
 require_one_of_these_upgrades = [NodePath("../Upgrade4")]
+disabled = true
 
 [node name="Upgrade6" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_3jq7e")]
 layout_mode = 0

@@ -112,6 +112,7 @@ upgrade_id = 9
 upgrade_sprite = ExtResource("6_kniqc")
 cost = SubResource("Resource_ujy8f")
 connection_lines = [NodePath("../Line3-4")]
+disabled = true
 
 [node name="Upgrade4" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("2_maogv")]
 layout_mode = 0
@@ -126,6 +127,7 @@ upgrade_sprite = ExtResource("6_kniqc")
 cost = SubResource("Resource_06g7x")
 connection_lines = [NodePath("../Line4-5")]
 require_one_of_these_upgrades = [NodePath("../Upgrade3")]
+disabled = true
 
 [node name="Upgrade5" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_maogv")]
 layout_mode = 0
@@ -139,6 +141,7 @@ upgrade_id = 11
 upgrade_sprite = ExtResource("6_kniqc")
 cost = SubResource("Resource_2xk1s")
 require_one_of_these_upgrades = [NodePath("../Upgrade4")]
+disabled = true
 
 [node name="TreeLabel" type="Label" parent="."]
 layout_mode = 1

@@ -176,6 +176,7 @@ upgrade_id = 12
 upgrade_sprite = ExtResource("6_2q1wm")
 cost = SubResource("Resource_kxi2x")
 connection_lines = [NodePath("../Line1-2")]
+disabled = true
 
 [node name="Upgrade2" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("2_biil3")]
 layout_mode = 0
@@ -190,6 +191,7 @@ upgrade_sprite = ExtResource("6_2q1wm")
 cost = SubResource("Resource_j5oe7")
 connection_lines = [NodePath("../Line2-3"), NodePath("../Line2-7")]
 require_one_of_these_upgrades = [NodePath("../Upgrade1")]
+disabled = true
 
 [node name="Upgrade3" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_biil3")]
 layout_mode = 0
@@ -203,6 +205,7 @@ upgrade_id = 14
 upgrade_sprite = ExtResource("6_2q1wm")
 cost = SubResource("Resource_gkol3")
 require_one_of_these_upgrades = [NodePath("../Upgrade2")]
+disabled = true
 
 [node name="Upgrade4" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_biil3")]
 layout_mode = 0
@@ -216,6 +219,7 @@ upgrade_id = 15
 upgrade_sprite = ExtResource("6_2q1wm")
 cost = SubResource("Resource_bg1c6")
 connection_lines = [NodePath("../Line4-5")]
+disabled = true
 
 [node name="Upgrade5" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("2_biil3")]
 layout_mode = 0
@@ -230,6 +234,7 @@ upgrade_sprite = ExtResource("6_2q1wm")
 cost = SubResource("Resource_qdpnc")
 connection_lines = [NodePath("../Line5-6"), NodePath("../Line5-10")]
 require_one_of_these_upgrades = [NodePath("../Upgrade4")]
+disabled = true
 
 [node name="Upgrade6" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_biil3")]
 layout_mode = 0
@@ -243,6 +248,7 @@ upgrade_id = 17
 upgrade_sprite = ExtResource("6_2q1wm")
 cost = SubResource("Resource_wyn55")
 require_one_of_these_upgrades = [NodePath("../Upgrade5")]
+disabled = true
 
 [node name="Upgrade7" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("2_biil3")]
 layout_mode = 0
@@ -257,6 +263,7 @@ upgrade_sprite = ExtResource("6_2q1wm")
 cost = SubResource("Resource_2rut3")
 connection_lines = [NodePath("../Line7-8")]
 require_one_of_these_upgrades = [NodePath("../Upgrade2")]
+disabled = true
 
 [node name="Upgrade8" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("2_biil3")]
 layout_mode = 0
@@ -271,6 +278,7 @@ upgrade_sprite = ExtResource("6_2q1wm")
 cost = SubResource("Resource_p5jqb")
 connection_lines = [NodePath("../Line8-9")]
 require_one_of_these_upgrades = [NodePath("../Upgrade7")]
+disabled = true
 
 [node name="Upgrade9" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_biil3")]
 layout_mode = 0
@@ -284,6 +292,7 @@ upgrade_id = 20
 upgrade_sprite = ExtResource("6_2q1wm")
 cost = SubResource("Resource_raguh")
 require_one_of_these_upgrades = [NodePath("../Upgrade8")]
+disabled = true
 
 [node name="Upgrade10" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("2_biil3")]
 layout_mode = 0
@@ -298,6 +307,7 @@ upgrade_sprite = ExtResource("6_2q1wm")
 cost = SubResource("Resource_mswhw")
 connection_lines = [NodePath("../Line10-11")]
 require_one_of_these_upgrades = [NodePath("../Upgrade5")]
+disabled = true
 
 [node name="Upgrade11" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("2_biil3")]
 layout_mode = 0
@@ -312,6 +322,7 @@ upgrade_sprite = ExtResource("6_2q1wm")
 cost = SubResource("Resource_kuxqr")
 connection_lines = [NodePath("../Line11-12")]
 require_one_of_these_upgrades = [NodePath("../Upgrade10")]
+disabled = true
 
 [node name="Upgrade12" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_biil3")]
 layout_mode = 0
@@ -325,6 +336,7 @@ upgrade_id = 23
 upgrade_sprite = ExtResource("6_2q1wm")
 cost = SubResource("Resource_66v8n")
 require_one_of_these_upgrades = [NodePath("../Upgrade11")]
+disabled = true
 
 [node name="TreeLabel" type="Label" parent="."]
 layout_mode = 1
