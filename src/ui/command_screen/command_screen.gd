@@ -165,3 +165,4 @@ func _on_upgrade_hull_button_pressed() -> void:
 	else:
 		ship_upgrade_warning_label.text = "Warning: Not enough resource"
 		ship_upgrade_warning_label.visible = true
+

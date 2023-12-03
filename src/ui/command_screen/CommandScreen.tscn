@@ -9,9 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="4_hkjqs"]
 [ext_resource type="PackedScene" uid="uid://b7bouq455qx0b" path="res://src/ui/command_screen/crewmate_tab/CrewmateButton.tscn" id="4_vsvdc"]
 [ext_resource type="PackedScene" uid="uid://c6fnnntkibdna" path="res://src/ui/command_screen/research_tab/SelectResearchGraphButton.tscn" id="5_fynyk"]
-[ext_resource type="PackedScene" uid="uid://h5xuge7sdvl5" path="res://src/ui/command_screen/research_tab/AgricultureResearch.tscn" id="5_i78t6"]
 [ext_resource type="Texture2D" uid="uid://crwutx701neym" path="res://assets/character/crewmates/image1x1.png" id="6_uofd5"]
 [ext_resource type="Texture2D" uid="uid://cegl6af3k4xpo" path="res://assets/character/pressley.png" id="6_wk0bw"]
+[ext_resource type="PackedScene" uid="uid://btjkgkmeros7p" path="res://src/ui/command_screen/research_tab/CrewSuppliesResearch.tscn" id="7_qusv6"]
 [ext_resource type="PackedScene" uid="uid://lwk7nc56s8g8" path="res://src/ui/command_screen/OfficerLabel.tscn" id="7_rk483"]
 [ext_resource type="Texture2D" uid="uid://df0siiqlu7ln3" path="res://assets/character/torgon.png" id="8_jre42"]
 [ext_resource type="Texture2D" uid="uid://xor5ih5p1g3d" path="res://assets/character/faroq_khan.png" id="9_47m3x"]
@@ -83,13 +83,12 @@ offset_top = 192.0
 offset_right = 500.0
 offset_bottom = 460.0
 
-[node name="Crewmates" type="TabBar" parent="DeviceFrame/TabContainer"]
+[node name="Research" type="TabBar" parent="DeviceFrame/TabContainer"]
 layout_mode = 2
-script = ExtResource("3_ffkt0")
-crewmate_button = ExtResource("4_vsvdc")
+script = ExtResource("3_v75ll")
 
-[node name="Background" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates"]
-self_modulate = Color(0.0470588, 0.0392157, 0.0235294, 1)
+[node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Research"]
+self_modulate = Color(0.0352941, 0.0745098, 0.0823529, 1)
 layout_mode = 0
 offset_left = 2.0
 offset_top = 2.0
@@ -97,85 +96,147 @@ offset_right = 451.0
 offset_bottom = 242.0
 texture = ExtResource("4_hkjqs")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="DeviceFrame/TabContainer/Crewmates"]
+[node name="ChooseTech" type="Control" parent="DeviceFrame/TabContainer/Research"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
 layout_mode = 0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 141.0
-offset_bottom = 236.0
-horizontal_scroll_mode = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer"]
-layout_mode = 2
-
-[node name="PortraitBackground" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates"]
-layout_mode = 0
-offset_left = 165.0
-offset_top = 20.0
-offset_right = 229.0
-offset_bottom = 84.0
-texture = ExtResource("4_hkjqs")
-expand_mode = 1
-
-[node name="Portrait" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates"]
-layout_mode = 0
-offset_left = 165.0
-offset_top = 20.0
-offset_right = 229.0
-offset_bottom = 84.0
-texture = ExtResource("6_uofd5")
-expand_mode = 1
-
-[node name="BasicInfo" type="RichTextLabel" parent="DeviceFrame/TabContainer/Crewmates"]
-layout_mode = 0
-offset_left = 244.0
-offset_top = 20.0
-offset_right = 428.0
-offset_bottom = 86.0
-theme_override_font_sizes/normal_font_size = 14
-bbcode_enabled = true
-text = "[u]Name: First Last[/u]
-Age: 46
-Joined date: 12
-Status: [color=green]Healthy[/color]"
-
-[node name="RandomThoughtContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Crewmates"]
-layout_mode = 0
-offset_left = 166.0
-offset_top = 100.0
-offset_right = 441.0
-offset_bottom = 181.0
-
-[node name="Background" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates/RandomThoughtContainer"]
-self_modulate = Color(0.109804, 0.109804, 0.105882, 1)
-layout_mode = 2
-texture = ExtResource("4_hkjqs")
-
-[node name="RandomThought" type="RichTextLabel" parent="DeviceFrame/TabContainer/Crewmates/RandomThoughtContainer"]
-layout_mode = 2
-theme_override_font_sizes/normal_font_size = 12
-bbcode_enabled = true
-text = "[center]\"As I float through the sterile corridors of this metallic behemoth, I can't help but marvel at the vastness of space beyond the cold, unyielding walls .\"[/center]"
+offset_left = 72.0
+offset_top = 12.0
+offset_right = 384.0
+offset_bottom = 31.0
+theme_override_font_sizes/font_size = 12
+text = "Please select a research field to start"
+horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="YeetButton" type="Button" parent="DeviceFrame/TabContainer/Crewmates"]
-self_modulate = Color(1, 0.105882, 0.0705882, 1)
-layout_mode = 0
-offset_left = 369.0
-offset_top = 204.0
-offset_right = 441.0
-offset_bottom = 228.0
-text = "Jettison"
+[node name="GeneralResearch" type="VBoxContainer" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
+layout_mode = 2
+offset_left = 24.0
+offset_top = 36.0
+offset_right = 224.0
+offset_bottom = 144.0
 
-[node name="ConfirmYeetButton" type="Button" parent="DeviceFrame/TabContainer/Crewmates"]
+[node name="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+research_graph_scene = ExtResource("7_qusv6")
+
+[node name="Button2" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Manufacturing"
+
+[node name="Button3" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Habitation & Medical"
+
+[node name="Button4" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Construction & Logistics"
+
+[node name="Button5" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Ship Infrastructure"
+
+[node name="SpecialistResearch" type="VBoxContainer" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
 visible = false
-self_modulate = Color(1, 0.105882, 0.0705882, 1)
 layout_mode = 0
-offset_left = 259.0
-offset_top = 204.0
-offset_right = 347.0
-offset_bottom = 228.0
-text = "Confirmed?"
+offset_left = 278.0
+offset_top = 35.0
+offset_right = 422.0
+offset_bottom = 227.0
+
+[node name="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Navigation
+"
+required_officer = 1
+
+[node name="Button2" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Communcation"
+required_officer = 2
+
+[node name="Button3" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Housing"
+required_officer = 5
+
+[node name="Button4" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Agriculture"
+required_officer = 3
+
+[node name="Button5" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Science"
+required_officer = 4
+
+[node name="Button6" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Engineering"
+required_officer = 6
+
+[node name="Button7" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Body Augmentation"
+required_officer = 7
+
+[node name="ResearchGraphView" type="Control" parent="DeviceFrame/TabContainer/Research"]
+anchors_preset = 0
+
+[node name="ResearchGraphHolder" type="Control" parent="DeviceFrame/TabContainer/Research/ResearchGraphView"]
+anchors_preset = 0
+offset_right = 450.0
+offset_bottom = 242.0
+
+[node name="CrewSuppliesResearch" parent="DeviceFrame/TabContainer/Research/ResearchGraphView/ResearchGraphHolder" instance=ExtResource("7_qusv6")]
+
+[node name="UpgradeButton" type="Button" parent="DeviceFrame/TabContainer/Research/ResearchGraphView"]
+layout_mode = 0
+offset_left = 374.0
+offset_top = 213.0
+offset_right = 438.0
+offset_bottom = 237.0
+text = "Proceed
+"
+
+[node name="BackButton" type="Button" parent="DeviceFrame/TabContainer/Research/ResearchGraphView"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 213.0
+offset_right = 75.0
+offset_bottom = 237.0
+text = "Back"
+
+[node name="UpgradeDescription" type="RichTextLabel" parent="DeviceFrame/TabContainer/Research/ResearchGraphView"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 137.0
+offset_right = 446.0
+offset_bottom = 211.0
+bbcode_enabled = true
+text = "[u]Upgrade name[/u]
+[font_size=12]Something something that increase building speed by [color=green]50%[/color].[/font_size]
+"
+
+[node name="CostLabel" type="RichTextLabel" parent="DeviceFrame/TabContainer/Research/ResearchGraphView"]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 214.0
+offset_right = 369.0
+offset_bottom = 241.0
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "[center]Cost: 30 food, 5 water, 5 metal, 5 air, 5 prefabs, 100 dark matter capsule, 7749 gold[/center]"
+
+[node name="NotEnoughResourceTimer" type="Timer" parent="DeviceFrame/TabContainer/Research"]
+one_shot = true
 
 [node name="Travel" type="TabBar" parent="DeviceFrame/TabContainer"]
 visible = false
@@ -285,13 +346,14 @@ grow_vertical = 0
 toggle_mode = true
 text = "Change path"
 
-[node name="Research" type="TabBar" parent="DeviceFrame/TabContainer"]
+[node name="Crewmates" type="TabBar" parent="DeviceFrame/TabContainer"]
 visible = false
 layout_mode = 2
-script = ExtResource("3_v75ll")
+script = ExtResource("3_ffkt0")
+crewmate_button = ExtResource("4_vsvdc")
 
-[node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Research"]
-self_modulate = Color(0.0352941, 0.0745098, 0.0823529, 1)
+[node name="Background" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates"]
+self_modulate = Color(0.0470588, 0.0392157, 0.0235294, 1)
 layout_mode = 0
 offset_left = 2.0
 offset_top = 2.0
@@ -299,129 +361,85 @@ offset_right = 451.0
 offset_bottom = 242.0
 texture = ExtResource("4_hkjqs")
 
-[node name="ChooseTech" type="Control" parent="DeviceFrame/TabContainer/Research"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Title" type="Label" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
+[node name="ScrollContainer" type="ScrollContainer" parent="DeviceFrame/TabContainer/Crewmates"]
 layout_mode = 0
-offset_left = 72.0
-offset_top = 12.0
-offset_right = 384.0
-offset_bottom = 31.0
-theme_override_font_sizes/font_size = 12
-text = "Please select a research field to start"
-horizontal_alignment = 1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 141.0
+offset_bottom = 236.0
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer"]
+layout_mode = 2
+
+[node name="PortraitBackground" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates"]
+layout_mode = 0
+offset_left = 165.0
+offset_top = 20.0
+offset_right = 229.0
+offset_bottom = 84.0
+texture = ExtResource("4_hkjqs")
+expand_mode = 1
+
+[node name="Portrait" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates"]
+layout_mode = 0
+offset_left = 165.0
+offset_top = 20.0
+offset_right = 229.0
+offset_bottom = 84.0
+texture = ExtResource("6_uofd5")
+expand_mode = 1
+
+[node name="BasicInfo" type="RichTextLabel" parent="DeviceFrame/TabContainer/Crewmates"]
+layout_mode = 0
+offset_left = 244.0
+offset_top = 20.0
+offset_right = 428.0
+offset_bottom = 86.0
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "[u]Name: First Last[/u]
+Age: 46
+Joined date: 12
+Status: [color=green]Healthy[/color]"
+
+[node name="RandomThoughtContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Crewmates"]
+layout_mode = 0
+offset_left = 166.0
+offset_top = 100.0
+offset_right = 441.0
+offset_bottom = 181.0
+
+[node name="Background" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates/RandomThoughtContainer"]
+self_modulate = Color(0.109804, 0.109804, 0.105882, 1)
+layout_mode = 2
+texture = ExtResource("4_hkjqs")
+
+[node name="RandomThought" type="RichTextLabel" parent="DeviceFrame/TabContainer/Crewmates/RandomThoughtContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "[center]\"As I float through the sterile corridors of this metallic behemoth, I can't help but marvel at the vastness of space beyond the cold, unyielding walls .\"[/center]"
 autowrap_mode = 2
 
-[node name="GeneralResearch" type="VBoxContainer" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
-layout_mode = 2
-offset_left = 24.0
-offset_top = 36.0
-offset_right = 224.0
-offset_bottom = 144.0
-
-[node name="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
-layout_mode = 2
-
-[node name="Button2" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
-layout_mode = 2
-text = "Manufacturing"
-
-[node name="Button3" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
-layout_mode = 2
-text = "Habitation & Medical"
-
-[node name="Button4" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
-layout_mode = 2
-text = "Construction & Logistics"
-
-[node name="SpecialistResearch" type="VBoxContainer" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
+[node name="YeetButton" type="Button" parent="DeviceFrame/TabContainer/Crewmates"]
+self_modulate = Color(1, 0.105882, 0.0705882, 1)
 layout_mode = 0
-offset_left = 278.0
-offset_top = 35.0
-offset_right = 422.0
-offset_bottom = 227.0
+offset_left = 369.0
+offset_top = 204.0
+offset_right = 441.0
+offset_bottom = 228.0
+text = "Jettison"
 
-[node name="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
-layout_mode = 2
-text = "Navigation
-"
-required_officer = 1
-
-[node name="Button2" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
-layout_mode = 2
-text = "Communcation"
-required_officer = 2
-
-[node name="Button3" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
-layout_mode = 2
-text = "Housing"
-required_officer = 5
-
-[node name="Button4" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
-layout_mode = 2
-text = "Agriculture"
-required_officer = 3
-research_graph_node_name = "AgricultureResearch"
-
-[node name="Button5" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
-layout_mode = 2
-text = "Science"
-required_officer = 4
-
-[node name="Button6" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
-layout_mode = 2
-text = "Engineering"
-required_officer = 6
-
-[node name="Button7" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
-layout_mode = 2
-text = "Body Augmentation"
-required_officer = 7
-
-[node name="ResearchGraphView" type="Control" parent="DeviceFrame/TabContainer/Research"]
+[node name="ConfirmYeetButton" type="Button" parent="DeviceFrame/TabContainer/Crewmates"]
 visible = false
-anchors_preset = 0
-
-[node name="ResearchGraphHolder" type="Control" parent="DeviceFrame/TabContainer/Research/ResearchGraphView"]
-anchors_preset = 0
-offset_right = 450.0
-offset_bottom = 242.0
-
-[node name="AgricultureResearch" parent="DeviceFrame/TabContainer/Research/ResearchGraphView/ResearchGraphHolder" instance=ExtResource("5_i78t6")]
-
-[node name="UpgradeButton" type="Button" parent="DeviceFrame/TabContainer/Research/ResearchGraphView"]
+self_modulate = Color(1, 0.105882, 0.0705882, 1)
 layout_mode = 0
-offset_left = 374.0
-offset_top = 213.0
-offset_right = 438.0
-offset_bottom = 237.0
-text = "Proceed
-"
-
-[node name="BackButton" type="Button" parent="DeviceFrame/TabContainer/Research/ResearchGraphView"]
-layout_mode = 0
-offset_left = 11.0
-offset_top = 213.0
-offset_right = 75.0
-offset_bottom = 237.0
-text = "Back"
-
-[node name="UpgradeDescription" type="RichTextLabel" parent="DeviceFrame/TabContainer/Research/ResearchGraphView"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 140.0
-offset_right = 446.0
-offset_bottom = 214.0
-bbcode_enabled = true
-text = "[u]Upgrade name[/u]
-[font_size=12]Something something that increase building speed by [color=green]50%[/color].[/font_size]
-"
+offset_left = 259.0
+offset_top = 204.0
+offset_right = 347.0
+offset_bottom = 228.0
+text = "Confirmed?"
 
 [node name="Officers" type="TabBar" parent="DeviceFrame/TabContainer"]
 visible = false
@@ -656,14 +674,15 @@ libraries = {
 }
 
 [connection signal="tab_changed" from="DeviceFrame/TabContainer" to="." method="_on_tab_container_tab_changed"]
-[connection signal="pressed" from="DeviceFrame/TabContainer/Crewmates/YeetButton" to="DeviceFrame/TabContainer/Crewmates" method="_on_yeet_button_pressed"]
-[connection signal="pressed" from="DeviceFrame/TabContainer/Crewmates/ConfirmYeetButton" to="DeviceFrame/TabContainer/Crewmates" method="_on_confirm_yeet_button_pressed"]
+[connection signal="pressed" from="DeviceFrame/TabContainer/Research/ResearchGraphView/UpgradeButton" to="DeviceFrame/TabContainer/Research" method="_on_upgrade_button_pressed"]
+[connection signal="pressed" from="DeviceFrame/TabContainer/Research/ResearchGraphView/BackButton" to="DeviceFrame/TabContainer/Research" method="_on_back_button_pressed"]
+[connection signal="timeout" from="DeviceFrame/TabContainer/Research/NotEnoughResourceTimer" to="DeviceFrame/TabContainer/Research" method="_on_not_enough_resource_timer_timeout"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button" to="." method="_on_default_path_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button2" to="." method="_on_intergalatic_route_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button3" to="." method="_on_asteroid_field_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button4" to="." method="_on_void_field_pressed"]
 [connection signal="toggled" from="DeviceFrame/TabContainer/Travel/ChangePathButton" to="." method="_on_change_path_button_toggled"]
-[connection signal="pressed" from="DeviceFrame/TabContainer/Research/ResearchGraphView/UpgradeButton" to="DeviceFrame/TabContainer/Research" method="_on_upgrade_button_pressed"]
-[connection signal="pressed" from="DeviceFrame/TabContainer/Research/ResearchGraphView/BackButton" to="DeviceFrame/TabContainer/Research" method="_on_back_button_pressed"]
+[connection signal="pressed" from="DeviceFrame/TabContainer/Crewmates/YeetButton" to="DeviceFrame/TabContainer/Crewmates" method="_on_yeet_button_pressed"]
+[connection signal="pressed" from="DeviceFrame/TabContainer/Crewmates/ConfirmYeetButton" to="DeviceFrame/TabContainer/Crewmates" method="_on_confirm_yeet_button_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Ship/UpgradeHullButton" to="." method="_on_upgrade_hull_button_pressed"]
 [connection signal="toggled" from="DeviceFrame/ShowHideCommandScreen" to="." method="_on_show_hide_command_screen_toggled"]

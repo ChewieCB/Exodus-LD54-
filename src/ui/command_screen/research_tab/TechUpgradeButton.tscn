@@ -7,11 +7,11 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tdcdj"]
 
 [node name="TechUpgradeButton" type="Control"]
-custom_minimum_size = Vector2(5, 5)
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 39.0
-offset_bottom = 39.0
+offset_right = 32.0
+offset_bottom = 32.0
 script = ExtResource("1_qdie2")
 upgrade_name = "Spacedust Fertilizer"
 upgrade_description = "Increased output of food by [color=green]25%[/color]."

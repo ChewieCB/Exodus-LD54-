@@ -1,0 +1,174 @@
+[gd_scene load_steps=16 format=3 uid="uid://btjkgkmeros7p"]
+
+[ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="1_afl24"]
+[ext_resource type="PackedScene" uid="uid://duihto0qvkw2b" path="res://src/ui/command_screen/research_tab/TechUpgradeButton.tscn" id="2_g3kk2"]
+[ext_resource type="Texture2D" uid="uid://bmrisjkpambuj" path="res://assets/buildings/food_2.png" id="3_6w3wc"]
+[ext_resource type="Script" path="res://src/common/resource_cost.gd" id="4_1aj72"]
+[ext_resource type="Texture2D" uid="uid://dvnp348xbjcyg" path="res://assets/buildings/food_3.png" id="4_a0sdx"]
+[ext_resource type="Texture2D" uid="uid://ftoh02i7rxu2" path="res://assets/buildings/water_2.png" id="5_vkkaw"]
+[ext_resource type="Texture2D" uid="uid://fpjlep711shg" path="res://assets/buildings/water_3.png" id="6_cbu72"]
+[ext_resource type="Texture2D" uid="uid://dsma76iaa0bge" path="res://assets/buildings/air_2.png" id="7_3bdwd"]
+[ext_resource type="Texture2D" uid="uid://cd5fu0tqd45wm" path="res://assets/buildings/air_3.png" id="8_qgahd"]
+
+[sub_resource type="Resource" id="Resource_rp7ij"]
+script = ExtResource("4_1aj72")
+food = 10
+water = 5
+air = 0
+metal = 3
+
+[sub_resource type="Resource" id="Resource_b5u8v"]
+script = ExtResource("4_1aj72")
+food = 50
+water = 30
+air = 0
+metal = 20
+
+[sub_resource type="Resource" id="Resource_q06r1"]
+script = ExtResource("4_1aj72")
+food = 0
+water = 10
+air = 5
+metal = 3
+
+[sub_resource type="Resource" id="Resource_ruf0p"]
+script = ExtResource("4_1aj72")
+food = 0
+water = 50
+air = 25
+metal = 20
+
+[sub_resource type="Resource" id="Resource_12tym"]
+script = ExtResource("4_1aj72")
+food = 0
+water = 4
+air = 10
+metal = 4
+
+[sub_resource type="Resource" id="Resource_dngwj"]
+script = ExtResource("4_1aj72")
+food = 0
+water = 25
+air = 50
+metal = 30
+
+[node name="CrewSuppliesResearch" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 451.0
+offset_bottom = 138.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0, 1, 0.32549, 0.0627451)
+layout_mode = 0
+offset_left = 7.0
+offset_top = 8.0
+offset_right = 446.0
+offset_bottom = 136.0
+texture = ExtResource("1_afl24")
+
+[node name="Line1-2" type="Line2D" parent="."]
+position = Vector2(10, 13)
+points = PackedVector2Array(37, 39, 126, 39)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line3-4" type="Line2D" parent="."]
+position = Vector2(0, 1)
+points = PackedVector2Array(39, 104, 127, 104)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line5-6" type="Line2D" parent="."]
+position = Vector2(182, -54)
+points = PackedVector2Array(39, 104, 127, 104)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Upgrade1" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_g3kk2")]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 37.0
+offset_right = 66.0
+offset_bottom = 69.0
+upgrade_name = "Hydroponics Bay"
+upgrade_description = "Implement a system where we can grow food without soil, which is more efficient than traditional soil-based systems.
+Unlock [color=green]tier II[/color] food production building."
+upgrade_id = 1
+upgrade_sprite = ExtResource("3_6w3wc")
+cost = SubResource("Resource_rp7ij")
+connection_lines = [NodePath("../Line1-2")]
+
+[node name="Upgrade2" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_g3kk2")]
+layout_mode = 0
+offset_left = 115.0
+offset_top = 30.0
+offset_right = 165.0
+offset_bottom = 80.0
+upgrade_name = "Nutrition Reclamation Plant"
+upgrade_description = "Food waste will be recycled into pure nutritional packs, further improved food production.
+Unlock [color=green]tier III[/color] food production building."
+upgrade_id = 2
+upgrade_sprite = ExtResource("4_a0sdx")
+cost = SubResource("Resource_b5u8v")
+require_one_of_these_upgrades = [NodePath("../Upgrade1")]
+
+[node name="Upgrade3" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_g3kk2")]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 90.0
+offset_right = 66.0
+offset_bottom = 122.0
+upgrade_name = "Refiltration Center"
+upgrade_description = "Unlock [color=green]tier II[/color] water production building."
+upgrade_id = 3
+upgrade_sprite = ExtResource("5_vkkaw")
+cost = SubResource("Resource_q06r1")
+connection_lines = [NodePath("../Line3-4")]
+
+[node name="Upgrade4" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_g3kk2")]
+layout_mode = 0
+offset_left = 115.0
+offset_top = 91.0
+offset_right = 166.0
+offset_bottom = 123.0
+upgrade_name = "Desalination Plant"
+upgrade_description = "Unlock [color=green]tier III[/color] water production building."
+upgrade_id = 4
+upgrade_sprite = ExtResource("6_cbu72")
+cost = SubResource("Resource_ruf0p")
+require_one_of_these_upgrades = [NodePath("../Upgrade3")]
+
+[node name="Upgrade5" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_g3kk2")]
+layout_mode = 0
+offset_left = 210.0
+offset_top = 35.0
+offset_right = 242.0
+offset_bottom = 67.0
+upgrade_name = "Recirculator"
+upgrade_description = "Unlock [color=green]tier II[/color] air production building."
+upgrade_id = 5
+upgrade_sprite = ExtResource("7_3bdwd")
+cost = SubResource("Resource_12tym")
+connection_lines = [NodePath("../Line5-6")]
+
+[node name="Upgrade6" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_g3kk2")]
+layout_mode = 0
+offset_left = 287.0
+offset_top = 35.0
+offset_right = 319.0
+offset_bottom = 67.0
+upgrade_name = "Oxygen Synthesiser"
+upgrade_description = "Unlock [color=green]tier III[/color] air production building."
+upgrade_id = 6
+upgrade_sprite = ExtResource("8_qgahd")
+cost = SubResource("Resource_dngwj")
+require_one_of_these_upgrades = [NodePath("../Upgrade5")]
+
+[node name="TreeLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 177.0
+offset_top = 9.0
+offset_right = 265.0
+offset_bottom = 28.0
+text = "Crew Supplies"

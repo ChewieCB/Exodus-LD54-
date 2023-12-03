@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_4t3np")
-name = "DesalinationPlant"
+name = "Desalination Plant"
 type = 2
 sprite = ExtResource("2_l6etv")
 housing_prod = 0
