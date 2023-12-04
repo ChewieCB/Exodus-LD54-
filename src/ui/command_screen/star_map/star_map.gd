@@ -136,6 +136,10 @@ func _ready():
 	).front()
 	# Move ship to start point
 	$ShipTracker.global_position = start_point
+	# TODO Pick a destination point
+	# var inner_stars 
+	# var goal_point
+	
 	# Connect negation zone radius to tick
 	TickManager.tick.connect(_on_tick)
 
@@ -151,11 +155,6 @@ func _draw():
 		negation_zone_center, negation_zone_radius, negation_zone_radius + 2, 
 		0, 360, Color.ORANGE
 	)
-#	# Negation Zone backfill
-#	draw_circle_donut_poly(
-#		negation_zone_center, negation_zone_radius, 720, 
-#		0, 360, Color(1, 0, 0, 0.5)
-#	)
 
 
 func _process(_delta):
@@ -217,10 +216,7 @@ func _input(event):
 			previous_star = null
 			queued_stars = []
 			is_ship_travelling = false
-			for idx in range(queued_chevrons.size()):
-				var _instance = queued_chevrons[idx]
-				_instance.queue_free()
-			queued_chevrons = []
+			clear_chevrons()
 
 
 func _viewport_to_screen(_position: Vector2) -> Vector2:
@@ -260,7 +256,6 @@ func add_star_to_travel_queue(star: StarNode, start_point: Vector2 = $ShipTracke
 				_lane[1]
 			).distance_to(start_point) < 1:
 				# We can only travel to either end of the active starlane
-				var test1 = _screen_to_viewport(star.global_position)
 				if _screen_to_viewport(star.global_position) in _lane.slice(0, 2):
 					queued_stars.append(star)
 					_update_queued_travel_path(
@@ -304,10 +299,7 @@ func select_star_to_travel_to(star: StarNode):
 		
 		# Override any existing queue
 		queued_stars = []
-		for _instance in queued_chevrons:
-			_instance.queue_free()
-			queued_chevrons.erase(_instance)
-		
+		clear_chevrons()
 		# Don't travel to a star if we're already at it
 		if star_position == current_ship_position:
 			return
@@ -363,57 +355,6 @@ func get_connected_starlanes(point: Vector2) -> Array:
 	return connected_lanes
 
 
-#func get_next_star_center_path(start_point) -> Vector2:
-#	available_spawn_lanes = edges_to_draw.duplicate()
-#	# Filter out edges that don't connect to the start point
-#	available_spawn_lanes = available_spawn_lanes.filter(
-#		func(lane): 
-#			return lane[0].distance_to(start_point) < 1 or lane[1].distance_to(start_point) < 1
-#	)
-#	# Sort by how closely the far vertex points to the galactic center
-#	available_spawn_lanes.sort_custom(
-#		func(a, b): 
-#			# For each lane find which point is the start_point
-#			# A
-#			var close_vertex_a
-#			var far_vertex_a
-#			if a[0] == start_point:
-#				close_vertex_a = a[0]
-#				far_vertex_a = a[1]
-#			else:
-#				close_vertex_a = a[1]
-#				far_vertex_a = a[0]
-#			# B
-#			var close_vertex_b
-#			var far_vertex_b
-#			if b[0] == start_point:
-#				close_vertex_b = b[0]
-#				far_vertex_b = b[1]
-#			else:
-#				close_vertex_b = b[1]
-#				far_vertex_b = b[0]
-#
-#			return far_vertex_a.distance_to(negation_zone_center) < far_vertex_b.distance_to(negation_zone_center) 
-#	)
-##	# Sort by lane weight, this tells us how much the lane points towards the center.
-##	# The closer to 0 the weighting is the more the lane points towards the center.
-##	available_spawn_lanes.sort_custom(
-##		func(a, b):
-##			return abs(a[2]) < abs(b[2])
-##	)
-#	#
-#	var next_star
-#	if available_spawn_lanes[0][0] == start_point:
-#		next_star = available_spawn_lanes[0][1]
-#	else:
-#		next_star = available_spawn_lanes[0][0]
-#
-#	# Append the lane to used so we don't loop back
-#	previous_star_lanes.append(available_spawn_lanes[0])
-#
-#	return next_star + get_global_transform().origin
-
-
 func redraw_points() -> void:
 	var valid_points = generate_points_for_circle(Vector2.ZERO, circle_radius, poisson_radius, retries)
 	# Remove any points that would cross the black hole at the center
@@ -424,6 +365,7 @@ func redraw_points() -> void:
 			)
 	)
 
+# <-------- v DIJKSTRA GRAPH CLASS - MOVE OUT INTO UTILS v -------->
 
 class Graph:
 	var vertices
@@ -575,6 +517,7 @@ class Graph:
 					distances[neigbor_index] = distances[vert_index] + w
 					set.append([distances[neigbor_index], neigbor_index])
 
+# <-------- ^ DIJKSTRA GRAPH CLASS - MOVE OUT INTO UTILS ^ -------->
 
 func _weight_toward_centre(a: Vector2, b: Vector2) -> float:
 	var close_vertex
@@ -739,6 +682,7 @@ func get_outer_stars(stars, min_distance=64, max_distance=128) -> Array:
 	
 	return outer_stars
 
+# <-------- v POISSON DISTRIBUTION METHODS - MOVE OUT INTO UTILS v -------->
 
 static func generate_points_for_circle(circle_position: Vector2, circle_radius: float, poisson_radius: float, retries: int, start_point := Vector2.INF) -> PackedVector2Array:
 	var sample_region_rect = Rect2(circle_position.x - circle_radius, circle_position.y - circle_radius, circle_radius * 2, circle_radius * 2)
@@ -827,6 +771,9 @@ static func _is_point_in_sample_region(sample: Vector2, shape: int) -> bool:
 	else:
 		return false
 
+# <-------- ^ POISSON DISTRIBUTION METHODS - MOVE OUT INTO UTILS ^ -------->
+
+# <-------- v DRAWING METHODS - MOVE OUT INTO UTILS v -------->
 
 func draw_circle_arc(center, radius, angle_from, angle_to, color):
 	var nb_points = 32
@@ -854,20 +801,43 @@ func draw_circle_donut_poly(center, inner_radius, outer_radius, angle_from, angl
 		points_arc.push_back(center + Vector2(cos(deg_to_rad(angle_point)), sin(deg_to_rad(angle_point))) * inner_radius)  
 	draw_polygon(points_arc, colors)  
 
+# <-------- ^ DRAWING METHODS - MOVE OUT INTO UTILS ^ -------->
 
-func _on_tick():
-	negation_zone_radius -= 4
-	# Update negation radius shader
-	negation_zone_shader.material.set_shader_parameter("circle_size", mapped_negation_radius)
-	# Remove stars now within negation zone
+
+func clear_chevrons(start_idx: int = 0, end_idx: int = 0x7FFFFFFF):
+	var chevrons_to_clear = queued_chevrons.slice(start_idx, end_idx)
+	for _chevron in chevrons_to_clear:
+		_chevron.queue_free()
+		if _chevron in queued_chevrons:
+			queued_chevrons.erase(_chevron)
+
+
+func clear_negated_stars():
+	# Find any stars that are inside the negation zone
 	var negated_stars = Array(stars).filter(
-		func(star): 
+		func(star):
 			return star.global_position.distance_to(adjusted_center) >= negation_zone_radius - 1
 	)
 	for _star in negated_stars:
+		# Cancel travel to the next star if it gets negated
+		if _star == next_star:
+			next_star = null
+		# Clear the star and chevron queues from the removed star onward
+		var star_idx = queued_stars.find(_star)
+		if star_idx != -1:
+			# Cut off the queues at the negated star index
+			if star_idx == 0:
+				clear_chevrons()
+				queued_stars = []
+			else:
+				clear_chevrons(star_idx)
+				queued_stars = queued_stars.slice(0, star_idx)
+		# Remove the star as it is negated
 		stars.erase(_star)
 		_star.queue_free()
-	
+
+
+func handle_negated_starlanes():
 	# Updated edge case starlanes
 	var starlanes_in_negation_zone = starlanes_parent.get_children().filter(
 		func(lane):
@@ -888,6 +858,8 @@ func _on_tick():
 		else:
 			return
 		
+		# FIXME - this isn't quite cutting off at the negation zone for some reason.
+		#
 		# Update the point in the negation zone to point in the same direction,
 		# but cut off at the current edge of the negation zone
 		var intersection_ratio: float = Geometry2D.segment_intersects_circle(
@@ -910,6 +882,18 @@ func _on_tick():
 			starlanes_in_negation_zone.erase(_lane)
 
 
+func _on_tick():
+	negation_zone_radius -= 4
+	# Update negation radius shader
+	negation_zone_shader.material.set_shader_parameter("circle_size", mapped_negation_radius)
+	# Update starmap
+	clear_negated_stars()
+	handle_negated_starlanes()
+
+
+# FIXME - I don't think the following 3 methods are connected to anything
+# anymore, check and remove them.
+
 func _on_viewport_mouse_entered():
 	viewport_has_focus = true
 
@@ -923,5 +907,4 @@ func _on_safe_zone_area_body_exited(body):
 	if body is StarNode:
 		body.queue_free()
 	elif body is Line2D:
-		print()
 		pass
