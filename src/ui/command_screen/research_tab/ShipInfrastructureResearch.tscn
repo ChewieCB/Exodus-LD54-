@@ -278,7 +278,7 @@ offset_top = 40.0
 offset_right = 368.0
 offset_bottom = 72.0
 upgrade_name = "Hull Upgrading Expertise"
-upgrade_description = "Unlock spaceship hull integrity upgrade."
+upgrade_description = "Unlock spaceship hull integrity upgrade (can be access in Status screen)."
 upgrade_id = 43
 upgrade_sprite = ExtResource("3_j8s4g")
 cost = SubResource("Resource_fh41k")
@@ -319,7 +319,7 @@ offset_top = 84.0
 offset_right = 412.0
 offset_bottom = 116.0
 upgrade_name = "Modular Hull Plates"
-upgrade_description = "Reduce cost for repairing and upgrading ship hull by  [color=green]50%[/color]."
+upgrade_description = "Reduce cost for repairing and upgrading ship hull by [color=green]50%[/color]."
 upgrade_id = 46
 upgrade_sprite = ExtResource("3_j8s4g")
 cost = SubResource("Resource_4k5fw")
