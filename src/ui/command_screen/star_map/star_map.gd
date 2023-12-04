@@ -57,6 +57,7 @@ extends Node2D
 				0, initial_negation_zone_radius,
 				0, 0.5
 			)
+@export_range(0, 5, 0.1) var NEGATION_ZONE_RATE: float = 2.5
 @onready var initial_negation_zone_radius: float = negation_zone_radius
 var previous_negation_zone_radius: float
 
@@ -124,7 +125,6 @@ func _ready():
 	$NegationZone.size = Vector2(negation_zone_radius * 2, negation_zone_radius * 2)
 	$NegationZone.set_anchors_and_offsets_preset(Control.PRESET_CENTER, Control.PRESET_MODE_KEEP_SIZE)
 	negation_zone_shader.material.set_shader_parameter("circle_size", 0.5)
-	safe_zone_collider_shape.shape.radius = negation_zone_radius
 	
 	# Add star shaders
 	var star_positions = generate_stars(stars)
@@ -883,19 +883,25 @@ func handle_negated_starlanes():
 
 
 func _on_tick():
-	negation_zone_radius -= 4
+	negation_zone_radius -= NEGATION_ZONE_RATE
 	# Update negation radius shader
 	negation_zone_shader.material.set_shader_parameter("circle_size", mapped_negation_radius)
 	# Update starmap
 	clear_negated_stars()
 	handle_negated_starlanes()
+	#
+	var ship_distance = $ShipTracker.global_position.distance_to(adjusted_center)
+	# TODO - parameterize the negation_zone reduction
+	var ticks_until_negation = floor((negation_zone_radius + 1 - ship_distance) / NEGATION_ZONE_RATE)
+	print(ticks_until_negation)
+	EventManager.emit_signal("proximity_alert", ticks_until_negation)
 	# TODO - make negation zone shader draw OVER ship sprite
 	# Check if player is fully in negation zone, game over if they are
 	if $ShipTracker.global_position.distance_to(adjusted_center) >= negation_zone_radius + 1:
 		EventManager.emit_signal("negation_zone")
 
 
-# FIXME - I don't think the following 3 methods are connected to anything
+# FIXME - I don't think the following methods are connected to anything
 # anymore, check and remove them.
 
 func _on_viewport_mouse_entered():
@@ -905,10 +911,3 @@ func _on_viewport_mouse_entered():
 func _on_viewport_mouse_exited():
 	viewport_has_focus = false
 	get_parent().gui_release_focus()
-
-
-func _on_safe_zone_area_body_exited(body):
-	if body is StarNode:
-		body.queue_free()
-	elif body is Line2D:
-		pass

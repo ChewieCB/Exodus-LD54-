@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://1dd0jvugd41x"]
+[gd_scene load_steps=15 format=3 uid="uid://1dd0jvugd41x"]
 
 [ext_resource type="Script" path="res://src/ui/command_screen/star_map/star_map.gd" id="1_eteq2"]
 [ext_resource type="Texture2D" uid="uid://ptj0v57gt0k7" path="res://assets/backgrounds/Space Background(1).png" id="2_70tav"]
@@ -37,16 +37,6 @@ shader_parameter/step3 = 0.151
 shader_parameter/step4 = 0.174
 shader_parameter/step5 = 0.216
 shader_parameter/step6 = 0.274
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0d3cb"]
-shader = ExtResource("6_yeten")
-shader_parameter/circle_size = 0.5
-shader_parameter/color_gap = Color(0.545098, 0.137255, 0.172549, 0.392157)
-shader_parameter/color_stripe = Color(0.254902, 0.109804, 0.176471, 0.392157)
-shader_parameter/divisions = 32.0
-shader_parameter/stripe_bias = 2.0
-shader_parameter/speed = 0.01
-shader_parameter/angle = 0.7854
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_28fq1"]
 shader = ExtResource("4_qryj1")
@@ -89,8 +79,15 @@ shader_parameter/clip_warp = false
 shader_parameter/vignette_intensity = 0.72
 shader_parameter/vignette_opacity = 0.254
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_yoexl"]
-radius = 400.0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0d3cb"]
+shader = ExtResource("6_yeten")
+shader_parameter/circle_size = 0.5
+shader_parameter/color_gap = Color(0.545098, 0.137255, 0.172549, 0.392157)
+shader_parameter/color_stripe = Color(0.254902, 0.109804, 0.176471, 0.392157)
+shader_parameter/divisions = 32.0
+shader_parameter/stripe_bias = 2.0
+shader_parameter/speed = 0.01
+shader_parameter/angle = 0.7854
 
 [node name="StarMap" type="Node2D"]
 script = ExtResource("1_eteq2")
@@ -173,23 +170,6 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
 
-[node name="NegationZone" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_0d3cb")
-clip_contents = true
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -216.0
-offset_top = -216.0
-offset_right = 216.0
-offset_bottom = 216.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 layer = -1
 
@@ -227,9 +207,19 @@ position = Vector2(133.568, 235.083)
 scale = Vector2(0.008, 0.008)
 texture = ExtResource("7_pxyjt")
 
-[node name="SafeZoneArea" type="Area2D" parent="."]
-
-[node name="SafeZoneCollider" type="CollisionShape2D" parent="SafeZoneArea"]
-shape = SubResource("CircleShape2D_yoexl")
-
-[connection signal="body_exited" from="SafeZoneArea" to="." method="_on_safe_zone_area_body_exited"]
+[node name="NegationZone" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_0d3cb")
+clip_contents = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -216.0
+offset_top = -216.0
+offset_right = 216.0
+offset_bottom = 216.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3

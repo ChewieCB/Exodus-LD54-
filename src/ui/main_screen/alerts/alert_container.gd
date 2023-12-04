@@ -1,6 +1,7 @@
 extends MarginContainer
 class_name Alert
 
+@onready var panel = $VBoxContainer/MarginContainer/PanelContainer
 @onready var icon = $VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/IconContainer/Icon
 @onready var label = $VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/DescContainer/Description
 @onready var countdown_sep = $VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/VSeparator2
@@ -14,7 +15,8 @@ enum TYPE {
 	WORKER,
 	FOOD,
 	WATER,
-	AIR
+	AIR,
+	PROXIMITY
 }
 
 @export var type: TYPE:
@@ -31,6 +33,8 @@ enum TYPE {
 				icon.texture = load("res://assets/ui/icons/final_icons/water_icon.png")
 			TYPE.AIR:
 				icon.texture = load("res://assets/ui/icons/final_icons/air_icon.png")
+#			TYPE.PROXIMITY:
+#				icon.texture = null
 		
 @export var alert_text: String = "":
 	set(value):
@@ -63,6 +67,12 @@ func _ready():
 			icon.texture = load("res://assets/ui/icons/final_icons/water_icon.png")
 		TYPE.AIR:
 			icon.texture = load("res://assets/ui/icons/final_icons/air_icon.png")
+		TYPE.PROXIMITY:
+			icon.texture = null
+			# FIXME - Make the proximity alert red
+			var new_stylebox = panel.get_theme_stylebox("normal").duplicate()
+			new_stylebox.bg_color = Color.DARK_RED
+			panel.add_theme_stylebox_override("normal", new_stylebox)
 	
 	label.text = alert_text
 	
