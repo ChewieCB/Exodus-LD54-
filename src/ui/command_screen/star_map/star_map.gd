@@ -46,16 +46,13 @@ extends Node2D
 		# Cache previous value for lerping
 		previous_negation_zone_radius = negation_zone_radius
 		negation_zone_radius = value
-		# Update collider
-		if safe_zone_collider_shape:
-			safe_zone_collider_shape.shape.radius = negation_zone_radius
 		# Mapping for shader size
 		if mapped_negation_radius:
 			# Update negation zone shader params
 			mapped_negation_radius = remap(
 				negation_zone_radius, 
 				0, initial_negation_zone_radius,
-				0, 0.5
+				0, 0.25
 			)
 @export_range(0, 5, 0.1) var NEGATION_ZONE_RATE: float = 2.5
 @onready var initial_negation_zone_radius: float = negation_zone_radius
@@ -85,9 +82,7 @@ var is_ship_travelling: bool = false
 
 var zone_shrinking: bool = false
 var NEGATION_FIELD_SHRINK_RATE: float = 1.0
-@onready var mapped_negation_radius: float = 0.5
-@onready var safe_zone_collider: Area2D = $SafeZoneArea
-@onready var safe_zone_collider_shape: CollisionShape2D = $SafeZoneArea/SafeZoneCollider
+@onready var mapped_negation_radius: float = 0.25
 
 enum ShapeType {CIRCLE, POLYGON}
 static var shape_info: Dictionary
@@ -102,6 +97,7 @@ static var shape_info: Dictionary
 @onready var chevrons_parent = $Chevrons
 
 @onready var negation_zone_shader = $NegationZone
+@onready var negation_zone_edge_shader = $NegationZoneEdge
 
 @onready var current_ship_position: Vector2 = $ShipTracker.global_position
 
@@ -122,9 +118,12 @@ func _ready():
 	$BlackHole.size = Vector2(galactic_center_radius/2, galactic_center_radius/2)
 	$BlackHole.set_anchors_and_offsets_preset(Control.PRESET_CENTER, Control.PRESET_MODE_KEEP_SIZE)
 	#
-	$NegationZone.size = Vector2(negation_zone_radius * 2, negation_zone_radius * 2)
-	$NegationZone.set_anchors_and_offsets_preset(Control.PRESET_CENTER, Control.PRESET_MODE_KEEP_SIZE)
-	negation_zone_shader.material.set_shader_parameter("circle_size", 0.5)
+	negation_zone_shader.size = Vector2(negation_zone_radius * 4, negation_zone_radius * 4)
+	negation_zone_shader.set_anchors_and_offsets_preset(Control.PRESET_CENTER, Control.PRESET_MODE_KEEP_SIZE)
+	negation_zone_shader.material.set_shader_parameter("circle_size", 0.25)
+	negation_zone_edge_shader.size = Vector2(negation_zone_radius * 4, negation_zone_radius * 4)
+	negation_zone_edge_shader.set_anchors_and_offsets_preset(Control.PRESET_CENTER, Control.PRESET_MODE_KEEP_SIZE)
+	negation_zone_edge_shader.material.set_shader_parameter("radius", 0.5)
 	
 	# Add star shaders
 	var star_positions = generate_stars(stars)
@@ -152,8 +151,8 @@ func _draw():
 				draw_circle(point, 2, Color.WHITE)
 	# Negation Zone edge
 	draw_circle_donut_poly(
-		negation_zone_center, negation_zone_radius, negation_zone_radius + 2, 
-		0, 360, Color.ORANGE
+		negation_zone_center, negation_zone_radius, negation_zone_radius + 4, 
+		0, 360, Color(1, 0.647059, 0, 0.5)
 	)
 
 
@@ -788,7 +787,7 @@ func draw_circle_arc(center, radius, angle_from, angle_to, color):
 
 
 func draw_circle_donut_poly(center, inner_radius, outer_radius, angle_from, angle_to, color):  
-	var nb_points = 32  
+	var nb_points = 64 
 	var points_arc = PackedVector2Array()  
 	var points_arc2 = PackedVector2Array()  
 	var colors = PackedColorArray([color])  
@@ -866,7 +865,7 @@ func handle_negated_starlanes():
 			_lane.points[safe_vertex],
 			_lane.points[negated_vertex],
 			negation_zone_center,
-			negation_zone_radius - 1
+			negation_zone_radius
 		)
 		var lane_vector = (
 			_lane.points[negated_vertex] - _lane.points[safe_vertex]
@@ -876,8 +875,8 @@ func handle_negated_starlanes():
 		
 		_lane.points[negated_vertex] = intersection_point
 		
-		if _lane.cached_original_points[0].distance_to(negation_zone_center) >= negation_zone_radius - 1 \
-		and _lane.cached_original_points[1].distance_to(negation_zone_center) >= negation_zone_radius - 1:
+		if _lane.cached_original_points[0].distance_to(negation_zone_center) >= negation_zone_radius \
+		and _lane.cached_original_points[1].distance_to(negation_zone_center) >= negation_zone_radius:
 			_lane.queue_free()
 			starlanes_in_negation_zone.erase(_lane)
 
@@ -886,6 +885,7 @@ func _on_tick():
 	negation_zone_radius -= NEGATION_ZONE_RATE
 	# Update negation radius shader
 	negation_zone_shader.material.set_shader_parameter("circle_size", mapped_negation_radius)
+	negation_zone_edge_shader.material.set_shader_parameter("radius", mapped_negation_radius * 2)
 	# Update starmap
 	clear_negated_stars()
 	handle_negated_starlanes()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://1dd0jvugd41x"]
+[gd_scene load_steps=18 format=3 uid="uid://1dd0jvugd41x"]
 
 [ext_resource type="Script" path="res://src/ui/command_screen/star_map/star_map.gd" id="1_eteq2"]
 [ext_resource type="Texture2D" uid="uid://ptj0v57gt0k7" path="res://assets/backgrounds/Space Background(1).png" id="2_70tav"]
@@ -9,6 +9,7 @@
 [ext_resource type="Shader" path="res://src/ui/command_screen/star_map/starnest.gdshader" id="6_unoj6"]
 [ext_resource type="Shader" path="res://src/ui/command_screen/star_map/negation_zone.gdshader" id="6_yeten"]
 [ext_resource type="Texture2D" uid="uid://ckoxrr26nrbmi" path="res://assets/sprite/ship_concept_side.png" id="7_pxyjt"]
+[ext_resource type="Shader" path="res://src/ui/command_screen/star_map/negation_zone_edge.gdshader" id="10_1swdo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ckex1"]
 shader = ExtResource("6_unoj6")
@@ -88,6 +89,22 @@ shader_parameter/divisions = 32.0
 shader_parameter/stripe_bias = 2.0
 shader_parameter/speed = 0.01
 shader_parameter/angle = 0.7854
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_n1f61"]
+width = 8192
+height = 8192
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7r7fl"]
+shader = ExtResource("10_1swdo")
+shader_parameter/radius = 1.0
+shader_parameter/thickness = 0.03
+shader_parameter/color = Color(0.341176, 0.145098, 0.0235294, 1)
+shader_parameter/brightness = 5.0
+shader_parameter/angular_speed = 2.5
+shader_parameter/radial_speed = 4.43
+shader_parameter/alpha = 0.63
+shader_parameter/noise = SubResource("NoiseTexture2D_n1f61")
 
 [node name="StarMap" type="Node2D"]
 script = ExtResource("1_eteq2")
@@ -215,11 +232,25 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -216.0
-offset_top = -216.0
-offset_right = 216.0
-offset_bottom = 216.0
+offset_left = -432.0
+offset_top = -432.0
+offset_right = 432.0
+offset_bottom = 432.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="NegationZoneEdge" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_7r7fl")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -432.0
+offset_top = -432.0
+offset_right = 432.0
+offset_bottom = 432.0
+grow_horizontal = 2
+grow_vertical = 2
