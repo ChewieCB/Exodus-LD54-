@@ -120,6 +120,7 @@ func _on_back_button_pressed() -> void:
 	SoundManager.play_button_click_sfx()
 	research_graph_view.visible = false
 	choose_tech_view.visible = true
+	reset_stuff_on_tab()
 
 
 func update_all_specialist_research_graph_buttons():
