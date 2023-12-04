@@ -14,13 +14,15 @@ extends MarginContainer
 @onready var button = $CenterContainer/HBoxContainer/MarginContainer2/Button
 @onready var production_label_2 = $CenterContainer/HBoxContainer/VBoxContainer/MarginContainer3/HBoxContainer/BuildingProd2
 
-var building_cost
+var building: Building
+
+const Utils = preload("res://src/common/exodus_utils.gd")
 
 func _ready():
 	if building_object == null:
 		return
 
-	var building = building_object.instantiate()
+	building = building_object.instantiate()
 	name_label.text = str(building.data.name)
 	worker_cost_label.text = str(building.data.people_cost)
 	metal_cost_label.text = str(building.data.metal_cost)
@@ -29,8 +31,8 @@ func _ready():
 
 	if not Engine.is_editor_hint():
 		ResourceManager.workers_changed.connect(_update_status)
-		ResourceManager.upgrade_acquired.connect(_update_availability)
-		_update_availability()
+		ResourceManager.upgrade_acquired.connect(_update_info_after_upgrade)
+		_update_info_after_upgrade()
 
 	var production
 	var prod_type_string
@@ -61,11 +63,9 @@ func _ready():
 	production_icon.texture = prod_type_icon
 
 func _update_status(available_workers):
-	# FIXME - this doesn't disable buttons that are too expensive
-	if building_cost:
-		if available_workers < building_cost:
-			button.disabled = true
-			self.modulate = Color(0.7, 0.7, 0.7)
+	if available_workers < building.data.people_cost:
+		button.disabled = true
+		self.modulate = Color(0.7, 0.7, 0.7)
 	else:
 		button.disabled = false
 		self.modulate = Color(1, 1, 1)
@@ -75,7 +75,10 @@ func _on_button_pressed():
 	BuildingManager.start_building(building_object)
 	button.release_focus()
 
-func _update_availability():
+func _update_info_after_upgrade():
+	metal_cost_label.text = str(Utils.calculate_build_cost_with_upgrade(building.data.metal_cost))
+	time_cost_label.text = str(Utils.calculate_build_time_with_upgrade(building.data.construction_time))
+
 	if require_upgrade_id == EnumAutoload.UpgradeId.NONE:
 		visible = true
 		return
@@ -84,3 +87,5 @@ func _update_availability():
 		visible = true
 	else:
 		visible = false
+
+	

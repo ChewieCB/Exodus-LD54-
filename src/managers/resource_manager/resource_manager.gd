@@ -288,12 +288,7 @@ func remove_building(building: Building):
 
 func assign_workers(building: Building):
 	var workers_needed = building.data.people_cost
-	var metal_needed = building.data.metal_cost
-	if workers_needed > worker_amount or metal_needed > metal_amount:
-		return
-
 	worker_amount -= workers_needed
-	metal_amount -= metal_needed
 
 
 func retrieve_workers(building: Building):
