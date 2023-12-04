@@ -26,6 +26,7 @@ signal start_event
 signal finish_event
 signal request_change_event_image
 signal request_change_objective_label
+signal negation_zone
 signal victory
 
 @export var event_resources: Array[ExodusEvent]

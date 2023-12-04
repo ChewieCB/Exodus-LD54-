@@ -889,6 +889,10 @@ func _on_tick():
 	# Update starmap
 	clear_negated_stars()
 	handle_negated_starlanes()
+	# TODO - make negation zone shader draw OVER ship sprite
+	# Check if player is fully in negation zone, game over if they are
+	if $ShipTracker.global_position.distance_to(adjusted_center) >= negation_zone_radius + 1:
+		EventManager.emit_signal("negation_zone")
 
 
 # FIXME - I don't think the following 3 methods are connected to anything
