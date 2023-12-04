@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://b1xmgw2jwmunk"]
+[gd_scene load_steps=28 format=3 uid="uid://b1xmgw2jwmunk"]
 
 [ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="1_4qidw"]
 [ext_resource type="Script" path="res://src/ui/command_screen/command_screen.gd" id="1_rladp"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://xor5ih5p1g3d" path="res://assets/character/faroq_khan.png" id="9_47m3x"]
 [ext_resource type="PackedScene" uid="uid://ce5dg57vaxm3d" path="res://src/ui/command_screen/research_tab/ConstructionLogisticResearch.tscn" id="9_iekhi"]
 [ext_resource type="Texture2D" uid="uid://cox4fi3kfgyyo" path="res://assets/character/governor_jerrerod.png" id="10_0xedy"]
+[ext_resource type="PackedScene" uid="uid://doioc1jac620x" path="res://src/ui/command_screen/research_tab/ShipInfrastructureResearch.tscn" id="10_nmkce"]
 [ext_resource type="Texture2D" uid="uid://dqwcek01e0v4k" path="res://assets/character/sam_carter.png" id="10_t33dg"]
 [ext_resource type="Texture2D" uid="uid://dxsiqg3h4gm0" path="res://assets/character/mary_watney.png" id="12_cymej"]
 [ext_resource type="Texture2D" uid="uid://bfqerbgujnq0s" path="res://assets/character/dr_dorian.png" id="13_xdugs"]
@@ -121,9 +122,9 @@ autowrap_mode = 2
 [node name="GeneralResearch" type="VBoxContainer" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
 layout_mode = 2
 offset_left = 24.0
-offset_top = 36.0
+offset_top = 42.0
 offset_right = 224.0
-offset_bottom = 144.0
+offset_bottom = 178.0
 
 [node name="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
 layout_mode = 2
@@ -147,6 +148,7 @@ research_graph_scene = ExtResource("9_iekhi")
 [node name="Button5" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
 layout_mode = 2
 text = "Ship Infrastructure"
+research_graph_scene = ExtResource("10_nmkce")
 
 [node name="SpecialistResearch" type="VBoxContainer" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
 visible = false

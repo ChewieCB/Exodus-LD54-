@@ -30,8 +30,7 @@ func _ready():
 	if not Engine.is_editor_hint():
 		ResourceManager.workers_changed.connect(_update_status)
 		ResourceManager.upgrade_acquired.connect(_update_availability)
-
-	_update_availability()
+		_update_availability()
 
 	var production
 	var prod_type_string

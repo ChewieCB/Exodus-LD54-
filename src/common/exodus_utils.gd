@@ -1,5 +1,4 @@
 static func check_if_enough_resource(cost: ResourceCost) -> bool:
-    return true
     if ResourceManager.food_amount < cost.food:
         return false
     if ResourceManager.water_amount < cost.water:
