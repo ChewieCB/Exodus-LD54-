@@ -36,16 +36,6 @@ var ticks_left_to_delete: int
 var is_displaying_info_panel = false
 
 
-enum TYPES {
-	HabBuilding,
-	FoodBuilding,
-	WaterBuilding,
-	AirBuilding,
-	CryoPod,
-	MiningBuilding,
-}
-
-
 func _ready():
 	set_original_color()
 	build_timer_ui.visible = false
@@ -145,7 +135,7 @@ func remove_building():
 	self.queue_free()
 
 func deconstructed_refund_resource():
-	if type == Building.TYPES.CryoPod:
+	if type == EnumAutoload.BuildingType.CRYO_POD:
 		ResourceManager.population_amount += data.refund_population
 
 func start_constructing():

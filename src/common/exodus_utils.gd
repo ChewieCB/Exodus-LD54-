@@ -1,4 +1,4 @@
-static func check_if_enough_resource(cost: ResourceCost) -> bool:
+static func check_if_enough_resource(cost: ResourceData) -> bool:
     # return true
     if ResourceManager.food_amount < cost.food:
         return false
@@ -11,7 +11,7 @@ static func check_if_enough_resource(cost: ResourceCost) -> bool:
     return true
 
 
-static func apply_resource_cost(cost: ResourceCost) -> void:
+static func apply_resource_cost(cost: ResourceData) -> void:
     # return
     ResourceManager.food_amount -= cost.food
     ResourceManager.water_amount -= cost.water
@@ -39,3 +39,12 @@ static func calculate_build_cost_with_upgrade(base_cost: int) ->int:
     if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_AI_GENERATED_SCHEMATICS in ResourceManager.current_upgrades:
         reduction_perc += 0.25
     return ceil(base_cost * (1 - reduction_perc))
+
+
+static func calculate_storage_with_upgrade(base_storage: int) ->int:
+    var bonus_perc = 0
+    if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_ADV_SORTERS in ResourceManager.current_upgrades:
+        bonus_perc += 0.25
+    if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_AUTOMATED_WAREHOUSES in ResourceManager.current_upgrades:
+        bonus_perc += 0.50
+    return ceil(base_storage * (1 + bonus_perc))

@@ -7,6 +7,7 @@ signal food_changed(value)
 signal water_changed(value)
 signal air_changed(value)
 signal metal_changed(value)
+signal storage_changed(value)
 #
 signal food_modifier_changed(total, modifier)
 signal water_modifier_changed(total, modifier)
@@ -36,6 +37,9 @@ var air_alert_shown = false
 
 const FAROQ_KHAN_BONUS = 1.5
 const GOVERNOR_BONUS = 2
+const BASE_STORAGE = 500
+
+const Utils = preload("res://src/common/exodus_utils.gd")
 
 # How many ticks/days/turns each endgame flag can go on for before you lose
 var starving_time: int = 9
@@ -45,7 +49,7 @@ var starving_time_left = starving_time:
 		if is_starving:
 			emit_signal("starving", starving_time_left)
 			if starving_time_left == 0:
-				emit_signal("game_over", RESOURCE_TYPE.FOOD)
+				emit_signal("game_over", EnumAutoload.ResourceType.FOOD)
 var thirsty_time: int = 6
 var thirsty_time_left = thirsty_time:
 	set(value):
@@ -53,7 +57,7 @@ var thirsty_time_left = thirsty_time:
 		if is_thirsty:
 			emit_signal("dehydrated", thirsty_time_left)
 			if thirsty_time_left == 0:
-				emit_signal("game_over", RESOURCE_TYPE.WATER)
+				emit_signal("game_over", EnumAutoload.ResourceType.WATER)
 var suffocating_time: int = 3
 var suffocating_time_left = suffocating_time:
 	set(value):
@@ -61,7 +65,7 @@ var suffocating_time_left = suffocating_time:
 		if is_suffocating:
 			emit_signal("suffocating", suffocating_time_left)
 			if suffocating_time_left == 0:
-				emit_signal("game_over", RESOURCE_TYPE.AIR)
+				emit_signal("game_over", EnumAutoload.ResourceType.AIR)
 
 # Endgame flags, if any of these last too long its game over
 var is_starving = false:
@@ -84,14 +88,7 @@ var is_suffocating = false:
 		emit_signal("suffocating", suffocating_time)
 
 
-enum RESOURCE_TYPE {
-	POPULATION,
-	HOUSING,
-	FOOD,
-	WATER,
-	AIR,
-	METAL
-}
+
 
 var current_officers = [EnumAutoload.Officer.PRESSLEY, EnumAutoload.Officer.TORGON]
 var current_upgrades = []
@@ -143,6 +140,11 @@ var housing_amount: int:
 		housing_amount = value
 		emit_signal("housing_changed", housing_amount, available_housing)
 var available_housing: int = housing_amount - population_amount
+
+var storage_amount: int:
+	set(value):
+		storage_amount = value
+		emit_signal("storage_changed", storage_amount)
 #
 #
 #
@@ -187,20 +189,16 @@ func _ready() -> void:
 
 # TODO: Can be optimized, only run on build/tick event, not every frame
 func _physics_process(delta):
-	for idx in range(0, 6):
+	for idx in range(0, 7):
 		calculate_resource_modifier(idx, population_amount)
 		match idx:
-			RESOURCE_TYPE.POPULATION:
-				pass
-			RESOURCE_TYPE.HOUSING:
-				pass
-			RESOURCE_TYPE.FOOD:
+			EnumAutoload.ResourceType.FOOD:
 				emit_signal("food_modifier_changed", food_amount, current_food_modifier)
-			RESOURCE_TYPE.WATER:
+			EnumAutoload.ResourceType.WATER:
 				emit_signal("water_modifier_changed", water_amount, current_water_modifier)
-			RESOURCE_TYPE.AIR:
+			EnumAutoload.ResourceType.AIR:
 				emit_signal("air_modifier_changed", air_amount, current_air_modifier)
-			RESOURCE_TYPE.METAL:
+			EnumAutoload.ResourceType.METAL:
 				emit_signal("metal_modifier_changed", metal_amount, current_metal_modifier)
 
 func calculate_resource_modifier(resource_type, population) -> void:
@@ -208,35 +206,40 @@ func calculate_resource_modifier(resource_type, population) -> void:
 	var consumption = 0
 	var modifier = 0
 	match resource_type:
-		RESOURCE_TYPE.HOUSING:
+		EnumAutoload.ResourceType.HOUSING:
 			# Housing is an outlier, we don't update per turn we just keep track
 			# of used and avaialble housing
 			for building in BuildingManager.buildings:
 				production += building.data.housing_prod
-			if EnumAutoload.Officer.GOVERNOR_JERREROD in current_officers and production > 0:
-				production = (int)(GOVERNOR_BONUS * production)
+			# if EnumAutoload.Officer.GOVERNOR_JERREROD in current_officers and production > 0:
+			# 	production = (int)(GOVERNOR_BONUS * production)
 			consumption = population_amount
 			#
 			housing_amount = production
 			available_housing = production - consumption
-		RESOURCE_TYPE.FOOD:
+		EnumAutoload.ResourceType.STORAGE:
+			for building in BuildingManager.buildings:
+				production += building.data.storage_prod
+				production = Utils.calculate_storage_with_upgrade(production)
+				storage_amount = BASE_STORAGE + production
+		EnumAutoload.ResourceType.FOOD:
 			for building in BuildingManager.buildings:
 				production += building.data.food_prod
-			if EnumAutoload.Officer.FAROQ_KHAN in current_officers and production > 0:
-				production = (int)(FAROQ_KHAN_BONUS * production)
+			# if EnumAutoload.Officer.FAROQ_KHAN in current_officers and production > 0:
+			# 	production = (int)(FAROQ_KHAN_BONUS * production)
 			consumption = population * pop_food_cost
 			current_food_modifier = production - consumption
-		RESOURCE_TYPE.WATER:
+		EnumAutoload.ResourceType.WATER:
 			for building in BuildingManager.buildings:
 				production += building.data.water_prod
 			consumption = population * pop_water_cost
 			current_water_modifier = production - consumption
-		RESOURCE_TYPE.AIR:
+		EnumAutoload.ResourceType.AIR:
 			for building in BuildingManager.buildings:
 				production += building.data.air_prod
 			consumption = population * pop_air_cost
 			current_air_modifier = production - consumption
-		RESOURCE_TYPE.METAL:
+		EnumAutoload.ResourceType.METAL:
 			for building in BuildingManager.buildings:
 				production += building.data.metal_prod
 			current_metal_modifier = production
@@ -245,10 +248,10 @@ func calculate_resource_modifier(resource_type, population) -> void:
 func update_resource_tick() -> void:
 	# When we receive a tick signal from the GameTickManager
 	# we update our resource levels.
-	food_amount = clamp(food_amount + current_food_modifier, 0, 999)
-	water_amount = clamp(water_amount + current_water_modifier, 0, 999)
-	air_amount = clamp(air_amount + current_air_modifier, 0, 999)
-	metal_amount = clamp(metal_amount + current_metal_modifier, 0, 999)
+	food_amount = clamp(food_amount + current_food_modifier, 0, storage_amount)
+	water_amount = clamp(water_amount + current_water_modifier, 0, storage_amount)
+	air_amount = clamp(air_amount + current_air_modifier, 0, storage_amount)
+	metal_amount = clamp(metal_amount + current_metal_modifier, 0, storage_amount)
 
 	# TODO - change resource UI colours over low threshold
 
@@ -303,20 +306,20 @@ func _on_tick():
 func check_if_all_crew_died():
 	if population_amount <= 0:
 		population_amount = 0
-		emit_signal("game_over", RESOURCE_TYPE.POPULATION)
+		emit_signal("game_over", EnumAutoload.ResourceType.POPULATION)
 
 
 func change_resource_from_event(resource: String, amount_str: String):
 	var amount = int(amount_str)
 	match resource:
 		"food":
-			food_amount += amount
+			food_amount = clamp(food_amount + amount, 0, storage_amount)
 		"water":
-			water_amount += amount
+			water_amount = clamp(water_amount + amount, 0, storage_amount)
 		"air":
-			air_amount += amount
+			air_amount = clamp(air_amount + amount, 0, storage_amount)
 		"metal":
-			metal_amount += amount
+			metal_amount = clamp(metal_amount + amount, 0, storage_amount)
 		"population":
 			if amount > 0:
 				var empty_spot = housing_amount - population_amount
@@ -373,6 +376,7 @@ func reset_state():
 	water_amount = 250
 	air_amount = 200
 	metal_amount = 10
+	storage_amount = BASE_STORAGE
 
 	food_alert_shown = false
 	water_alert_shown = false

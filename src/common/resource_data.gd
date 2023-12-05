@@ -1,5 +1,5 @@
 extends Resource
-class_name ResourceCost
+class_name ResourceData
 
 @export var food: int
 @export var water: int

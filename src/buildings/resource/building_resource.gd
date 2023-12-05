@@ -3,7 +3,7 @@ class_name BuildingResource
 
 @export_group("Display")
 @export var name: String
-@export var type: Building.TYPES
+@export var type: EnumAutoload.BuildingType
 @export var sprite: Texture2D
 @export_group("Economy")
 @export var housing_prod: int
@@ -11,6 +11,7 @@ class_name BuildingResource
 @export var water_prod: int
 @export var air_prod: int
 @export var metal_prod: int
+@export var storage_prod: int
 @export_group("Construction")
 @export_subgroup("Building")
 @export var food_cost: int
@@ -30,7 +31,7 @@ class_name BuildingResource
 
 
 func _init(
-	p_name = "BUILDING_NAME_MISSING", p_type = Building.TYPES.HabBuilding,
+	p_name = "BUILDING_NAME_MISSING", p_type = EnumAutoload.BuildingType.HAB,
 	p_sprite = null,
 	p_housing_prod = 0, p_food_prod = 0, p_water_prod = 0, p_air_prod = 0,
 	p_people_cost = 0, p_construction_time = 0, p_destruction_time = 0

@@ -27,14 +27,14 @@ func _ready():
 	get_node("UI").visible = true
 
 
-func tutorial_tracker(type: Building.TYPES):
+func tutorial_tracker(type: EnumAutoload.BuildingType):
 	if EventManager.tutorial_progress >= 2 or EventManager.tutorial_progress <= -1 :
 		return
 
 	match type:
-		Building.TYPES.HabBuilding:
+		EnumAutoload.BuildingType.HAB:
 			n_hab_built += 1
-		Building.TYPES.FoodBuilding:
+		EnumAutoload.BuildingType.FOOD:
 			n_food_built += 1
 
 	if n_food_built >= 2 and EventManager.tutorial_progress == 0:

@@ -18,6 +18,30 @@ enum CrewmateStatus {
 	CRITICAL,
 }
 
+enum BuildingType {
+	HAB,
+	FOOD,
+	WATER,
+	AIR,
+	CRYO_POD,
+	METAL,
+	STORAGE
+}
+
+enum ResourceType {
+	POPULATION,
+	HOUSING,
+	FOOD,
+	WATER,
+	AIR,
+	METAL,
+	STORAGE
+}
+
+
+# Do not add id mid-array, always add it at the end, even if it
+# look messy. Add mid-array will break the research trees.
+# We will do a refactor when this look messy enough.
 enum UpgradeId {
 	NONE,
 	CREW_SUPPLIES_FOOD_2,

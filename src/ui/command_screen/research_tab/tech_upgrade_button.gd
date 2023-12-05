@@ -6,7 +6,7 @@ class_name TechUpgradeButton
 @export_multiline var upgrade_description: String
 @export var upgrade_id: EnumAutoload.UpgradeId = EnumAutoload.UpgradeId.NONE
 @export var upgrade_sprite: Texture2D
-@export var cost: ResourceCost
+@export var cost: ResourceData
 
 @export var connection_lines: Array[Line2D] = []
 @export var require_one_of_these_upgrades: Array[TechUpgradeButton] = [] # Must have one of these, not all of these

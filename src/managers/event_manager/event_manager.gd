@@ -85,16 +85,16 @@ func _ready() -> void:
 		tick_to_event += 5
 
 
-func finished_building(type: Building.TYPES):
+func finished_building(type: EnumAutoload.BuildingType):
 	emit_signal("building_finished", type)
 	match type:
-		Building.TYPES.HabBuilding:
+		EnumAutoload.BuildingType.HAB:
 			n_hab_building += 1
-		Building.TYPES.FoodBuilding:
+		EnumAutoload.BuildingType.FOOD:
 			n_food_building += 1
-		Building.TYPES.WaterBuilding:
+		EnumAutoload.BuildingType.WATER:
 			n_water_building += 1
-		Building.TYPES.AirBuilding:
+		EnumAutoload.BuildingType.AIR:
 			n_air_building += 1
 
 

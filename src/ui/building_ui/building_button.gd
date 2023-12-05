@@ -39,27 +39,31 @@ func _ready():
 	var prod_type_string
 	var prod_type_icon
 	match building.data.type:
-		Building.TYPES.HabBuilding:
+		EnumAutoload.BuildingType.HAB:
 			production = building.data.housing_prod
 			prod_type_string = "housing"
 			prod_type_icon = load("res://assets/ui/icons/16/Home.png")
 			production_label_2.text = ""
-		Building.TYPES.FoodBuilding:
+		EnumAutoload.BuildingType.FOOD:
 			production = building.data.food_prod
 			prod_type_string = "food"
 			prod_type_icon = load("res://assets/ui/icons/food_icon.png")
-		Building.TYPES.WaterBuilding:
+		EnumAutoload.BuildingType.WATER:
 			production = building.data.water_prod
 			prod_type_string = "water"
 			prod_type_icon = load("res://assets/ui/icons/water_icon.png")
-		Building.TYPES.AirBuilding:
+		EnumAutoload.BuildingType.AIR:
 			production = building.data.air_prod
 			prod_type_string = "air"
 			prod_type_icon = load("res://assets/ui/icons/air_icon.png")
-		Building.TYPES.MiningBuilding:
+		EnumAutoload.BuildingType.METAL:
 			production = building.data.metal_prod
 			prod_type_string = "metal"
 			prod_type_icon = load("res://assets/ui/icons/metal_icon.png")
+		EnumAutoload.BuildingType.STORAGE:
+			production = building.data.storage_prod
+			prod_type_string = "storage"
+			prod_type_icon = load("res://assets/ui/icons/storage_icon.png")
 	production_label.text = "+{0}".format([production])
 	production_icon.texture = prod_type_icon
 
@@ -80,6 +84,10 @@ func _update_info_after_upgrade():
 	metal_cost_label.text = str(Utils.calculate_build_cost_with_upgrade(building.data.metal_cost))
 	time_cost_label.text = str(Utils.calculate_build_time_with_upgrade(building.data.construction_time))
 
+	if building.data.type == EnumAutoload.BuildingType.STORAGE:
+		var production = Utils.calculate_storage_with_upgrade(building.data.storage_prod)
+		production_label.text = "+{0}".format([production])
+
 	if require_upgrade_id == EnumAutoload.UpgradeId.NONE:
 		visible = true
 		return
@@ -93,18 +101,20 @@ func _update_info_after_upgrade():
 func set_tooltip():
 	var tmp_text = ""
 	match building.data.type:
-		Building.TYPES.HabBuilding:
+		EnumAutoload.BuildingType.HAB:
 			tmp_text = "Can house {n_house} crew members.".format({"n_house": building.data.housing_prod})
-		Building.TYPES.FoodBuilding:
+		EnumAutoload.BuildingType.FOOD:
 			tmp_text = "Can produce {n_food} units of Food per day.".format({"n_food": building.data.food_prod})
-		Building.TYPES.WaterBuilding:
+		EnumAutoload.BuildingType.WATER:
 			tmp_text = "Can produce {n_water} units of Water per day.".format({"n_water": building.data.water_prod})
-		Building.TYPES.AirBuilding:
+		EnumAutoload.BuildingType.AIR:
 			tmp_text = "Can produce {n_air} units of Oxygen per day.".format({"n_air": building.data.air_prod})
-		Building.TYPES.MiningBuilding:
+		EnumAutoload.BuildingType.METAL:
 			tmp_text = "Can produce {n_metal} units of Metal per day.".format({"n_metal": building.data.metal_prod})
-		Building.TYPES.CryoPod:
-			tmp_text = "Can be deconstructed to wake up {n_pop} crew member(s).".format({"n_pop": building.data.refund_population})
+		EnumAutoload.BuildingType.CRYO_POD:
+			tmp_text = "Can be deconstructed to wake up {n_pop} crew members.".format({"n_pop": building.data.refund_population})
+		EnumAutoload.BuildingType.CRYO_POD:
+			tmp_text = "Increased max storage capacity by {n_storage} units.".format({"n_storage": Utils.calculate_storage_with_upgrade(building.data.storage_prod)})
 	tmp_text += "\nConstruction time: {n_day} day(s)".format({"n_day": Utils.calculate_build_time_with_upgrade(building.data.construction_time)})
 	tmp_text += "\nWorkers required: {n_pop} crewmate(s)".format({"n_pop": building.data.people_cost})
 	tmp_text += "\nMetal required: {n_metal} unit(s)".format({"n_metal": Utils.calculate_build_cost_with_upgrade(building.data.metal_cost)})
