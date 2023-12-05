@@ -33,6 +33,7 @@ func _ready():
 		ResourceManager.workers_changed.connect(_update_status)
 		ResourceManager.upgrade_acquired.connect(_update_info_after_upgrade)
 		_update_info_after_upgrade()
+		set_tooltip()
 
 	var production
 	var prod_type_string
@@ -87,5 +88,26 @@ func _update_info_after_upgrade():
 		visible = true
 	else:
 		visible = false
+
+
+func set_tooltip():
+	var tmp_text = ""
+	match building.data.type:
+		Building.TYPES.HabBuilding:
+			tmp_text = "Can house {n_house} crew members.".format({"n_house": building.data.housing_prod})
+		Building.TYPES.FoodBuilding:
+			tmp_text = "Can produce {n_food} units of Food per day.".format({"n_food": building.data.food_prod})
+		Building.TYPES.WaterBuilding:
+			tmp_text = "Can produce {n_water} units of Water per day.".format({"n_water": building.data.water_prod})
+		Building.TYPES.AirBuilding:
+			tmp_text = "Can produce {n_air} units of Oxygen per day.".format({"n_air": building.data.air_prod})
+		Building.TYPES.MiningBuilding:
+			tmp_text = "Can produce {n_metal} units of Metal per day.".format({"n_metal": building.data.metal_prod})
+		Building.TYPES.CryoPod:
+			tmp_text = "Can be deconstructed to wake up {n_pop} crew member(s).".format({"n_pop": building.data.refund_population})
+	tmp_text += "\nConstruction time: {n_day} day(s)".format({"n_day": Utils.calculate_build_time_with_upgrade(building.data.construction_time)})
+	tmp_text += "\nWorkers required: {n_pop} crewmate(s)".format({"n_pop": building.data.people_cost})
+	tmp_text += "\nMetal required: {n_metal} unit(s)".format({"n_metal": Utils.calculate_build_cost_with_upgrade(building.data.metal_cost)})
+	get_node("CenterContainer/HBoxContainer/VBoxContainer/Tooltip").tooltip_text = tmp_text
 
 	
