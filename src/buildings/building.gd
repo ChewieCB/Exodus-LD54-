@@ -13,6 +13,8 @@ class_name Building
 @onready var build_finish_sfx = preload("res://assets/audio/sfx/Building_Finish.mp3")
 @onready var cant_place_sfx = preload("res://assets/audio/sfx/Cant_Place_Building_There.mp3")
 
+const Utils = preload("res://src/common/exodus_utils.gd")
+
 # Build menu vars
 var preview = false
 var outside_gridmap = false
@@ -146,21 +148,20 @@ func deconstructed_refund_resource():
 	if type == Building.TYPES.CryoPod:
 		ResourceManager.population_amount += data.refund_population
 
-func set_building_placed():
+func start_constructing():
 	is_constructing = true
 	placed = true
 	preview = false
-	#
 	ResourceManager.assign_workers(self)
+	ResourceManager.metal_amount -= Utils.calculate_build_cost_with_upgrade(data.metal_cost)
 	# Restore the building's true colour outside of preview UI
 	color_sprite(original_color.r, original_color.g, original_color.b, original_color.a)
 	# Update build timer/construction effects
-	ticks_left_to_build = data.construction_time
+	ticks_left_to_build = Utils.calculate_build_time_with_upgrade(data.construction_time)
 	build_timer_ui.label.text = str(ticks_left_to_build)
 	build_timer_ui.visible = true
 	build_in_progress()
 	SoundManager.play_sound(build_start_sfx, "SFX")
-
 
 func set_building_remove():
 	if ResourceManager.worker_amount >= data.people_cost:
@@ -168,7 +169,7 @@ func set_building_remove():
 		# Costs workers to deconstruct
 		ResourceManager.assign_workers(self)
 		# Update build timer/construction effects
-		ticks_left_to_delete = data.destruction_time
+		ticks_left_to_delete = Utils.calculate_build_time_with_upgrade(data.destruction_time)
 		build_timer_ui.label.text = str(ticks_left_to_delete)
 		build_timer_ui.visible = true
 		deconstruct_in_progress()
@@ -177,14 +178,13 @@ func set_building_remove():
 		BuildingManager.emit_signal("not_enough_workers")
 		SoundManager.play_sound(cant_place_sfx, "SFX")
 
-
 # Cancel a building that is constructing
 func cancel_building(no_refund=false):
 	is_constructing = false
 	build_timer_ui.visible = false
 	if not no_refund:
 		ResourceManager.retrieve_workers(self)
-		ResourceManager.metal_amount += data.metal_cost
+		ResourceManager.metal_amount += Utils.calculate_build_cost_with_upgrade(data.metal_cost)
 	BuildingManager.construction_queue.erase(self)
 	SoundManager.play_sound(build_finish_sfx, "SFX")
 	self.queue_free()

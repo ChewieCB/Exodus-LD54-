@@ -6,6 +6,8 @@ class_name TechUpgradeButton
 @export_multiline var upgrade_description: String
 @export var upgrade_id: EnumAutoload.UpgradeId = EnumAutoload.UpgradeId.NONE
 @export var upgrade_sprite: Texture2D
+@export var cost: ResourceCost
+
 @export var connection_lines: Array[Line2D] = []
 @export var require_one_of_these_upgrades: Array[TechUpgradeButton] = [] # Must have one of these, not all of these
 @export var conflict_one_of_these_upgrades: Array[TechUpgradeButton] = [] # Must NOT have one of these
@@ -15,11 +17,17 @@ class_name TechUpgradeButton
 
 var research_tab: ResearchTab = null
 var activated = false
-var disabled = false
+@export var disabled = false
 
 func _ready() -> void:
 	if upgrade_sprite:
 		texture_rect.texture = upgrade_sprite
+		if disabled:
+			texture_rect.self_modulate = Color(0.2, 0.2, 0.2)
+			border.visible = true
+			border.self_modulate = Color(1, 0.1, 0.1)
+			for line in connection_lines:
+				line.default_color = Color(0.2, 0.2, 0.2)
 	if not Engine.is_editor_hint():
 		update_status()
 		research_tab = get_parent().get_parent().get_parent().get_parent()

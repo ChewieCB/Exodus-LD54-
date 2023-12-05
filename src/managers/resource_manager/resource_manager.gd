@@ -28,6 +28,8 @@ signal ui_hover_hide
 
 signal construction_cancelled_lack_of_workers(building_name)
 
+signal upgrade_acquired
+
 var food_alert_shown = false
 var water_alert_shown = false
 var air_alert_shown = false
@@ -286,12 +288,7 @@ func remove_building(building: Building):
 
 func assign_workers(building: Building):
 	var workers_needed = building.data.people_cost
-	var metal_needed = building.data.metal_cost
-	if workers_needed > worker_amount or metal_needed > metal_amount:
-		return
-
 	worker_amount -= workers_needed
-	metal_amount -= metal_needed
 
 
 func retrieve_workers(building: Building):
@@ -352,17 +349,21 @@ func change_specialist_from_event(operation: String, specialist_name: String):
 func add_specialist(specialist: EnumAutoload.Officer):
 	if specialist not in current_officers:
 		current_officers.append(specialist)
-	print("Add spaecialist")
+	print("Add specialist")
 	update_specialist_bonus()
 
 func remove_specialist(specialist: EnumAutoload.Officer):
 	if specialist in current_officers:
 		current_officers.erase(specialist)
 	update_specialist_bonus()
-	print("Remove spaecialist")
+	print("Remove specialist")
 
 func update_specialist_bonus():
 	return
+
+func add_upgrade(upgrade_id: EnumAutoload.UpgradeId):
+	current_upgrades.append(upgrade_id)
+	emit_signal("upgrade_acquired")
 
 func reset_state():
 	# TODO - load initial values from file for difficulty settings

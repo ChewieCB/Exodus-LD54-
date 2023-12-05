@@ -15,10 +15,6 @@ class_name CommandScreen
 @onready var change_path_button: Button = $DeviceFrame/TabContainer/Travel/ChangePathButton
 @onready var path_follow: PathFollow2D = $DeviceFrame/TabContainer/Travel/ProgressView/Path2D/PathFollow2D
 
-# Ship tab
-@onready var ship_status_label: Label = $DeviceFrame/TabContainer/Ship/ShipStatusLabel
-@onready var ship_upgrade_warning_label: Label = $DeviceFrame/TabContainer/Ship/WarningLabel
-@onready var ship_hull_upgrade_button: Button = $DeviceFrame/TabContainer/Ship/UpgradeHullButton
 
 # Officer tab
 @onready var officer_container = $DeviceFrame/TabContainer/Officers/OfficerListMC/ScrollContainer/MarginContainer/VBoxContainer
@@ -26,15 +22,12 @@ class_name CommandScreen
 @onready var officer_portrait = $DeviceFrame/TabContainer/Officers/OfficerPortrait
 
 @onready var research_tab: ResearchTab = $DeviceFrame/TabContainer/Research
-
 @onready var crewmate_tab: CrewmateTab = $DeviceFrame/TabContainer/Crewmates
+@onready var status_tab: StatusTab = $DeviceFrame/TabContainer/Status
 
 var trave_screen_open = false
 var chose_path_screen_open = false
 var path_length
-
-const WAKEUP_CITIZEN_WATER_COST = 15
-const SHIP_HULL_METAL_COST_PER_LV = 10
 
 func _ready() -> void:
 	reset_color_all_buttons()
@@ -57,13 +50,6 @@ func update_officer_list():
 		else:
 			officer_label.visible = false
 
-
-func update_ship_status_screen():
-	var upgrade_hull_metal_cost = EventManager.ship_hull_level * SHIP_HULL_METAL_COST_PER_LV
-	ship_hull_upgrade_button.text = "Improve ship hull\n({cost} Metal)".format({"cost": upgrade_hull_metal_cost})
-	ship_status_label.text = "Ship hull Lv. {ship_hull_lv}\nSpeed: ~{ship_speed} LY / day".format(
-		{"ship_hull_lv": EventManager.ship_hull_level, "ship_speed": 1})
-
 func _on_default_path_pressed() -> void:
 	SoundManager.play_button_click_sfx()
 	if chose_path_screen_open:
@@ -71,7 +57,6 @@ func _on_default_path_pressed() -> void:
 		default_path_button.self_modulate = Color.GREEN
 		EventManager.chosen_path = EventManager.TRAVEL_PATH_TYPE.DEFAULT_PATH
 		desc_label.text = "Default path\nYou have equal chance to meet all type of events."
-
 
 func _on_intergalatic_route_pressed() -> void:
 	SoundManager.play_button_click_sfx()
@@ -81,7 +66,6 @@ func _on_intergalatic_route_pressed() -> void:
 		EventManager.chosen_path = EventManager.TRAVEL_PATH_TYPE.INTERGALATIC_ROUTE
 		desc_label.text = "Intergalatic route\nYou are more likely to meet other travellers and refugees."
 
-
 func _on_asteroid_field_pressed() -> void:
 	SoundManager.play_button_click_sfx()
 	if chose_path_screen_open:
@@ -89,7 +73,6 @@ func _on_asteroid_field_pressed() -> void:
 		asteroid_field_button.self_modulate = Color.GREEN
 		EventManager.chosen_path = EventManager.TRAVEL_PATH_TYPE.ASTEROID_FIELD
 		desc_label.text = "Asteroid field\nYou are more likely to get asteroid and planet related events."
-
 
 func _on_void_field_pressed() -> void:
 	SoundManager.play_button_click_sfx()
@@ -99,13 +82,11 @@ func _on_void_field_pressed() -> void:
 		EventManager.chosen_path = EventManager.TRAVEL_PATH_TYPE.VOID_FIELD
 		desc_label.text = "Void field\nThere are rarely anything happened out there. But if you encounter something, you gonna have a bad time...."
 
-
 func reset_color_all_buttons():
 	default_path_button.self_modulate = Color.WHITE
 	intergalatic_route_button.self_modulate = Color.WHITE
 	asteroid_field_button.self_modulate = Color.WHITE
 	void_field_button.self_modulate = Color.WHITE
-
 
 func _on_change_path_button_toggled(button_pressed:bool) -> void:
 	SoundManager.play_button_click_sfx()
@@ -119,13 +100,13 @@ func _on_change_path_button_toggled(button_pressed:bool) -> void:
 		tween.parallel().tween_property(path_choice_view, "modulate:a", 0, 0.5).set_trans(Tween.TRANS_LINEAR)
 		chose_path_screen_open = false
 
-
 func _on_show_hide_command_screen_toggled(button_pressed:bool) -> void:
 	update_officer_list()
 	officer_desc_label.visible = false
 	officer_portrait.visible = false
 	research_tab.reset_stuff_on_tab()
 	crewmate_tab.reset_stuff_on_tab()
+	status_tab.reset_stuff_on_tab()
 	if button_pressed:
 		show_hide_command_screen_button.text = "Hide command screen"
 		animation_player.play("show")
@@ -139,29 +120,20 @@ func _on_show_hide_command_screen_toggled(button_pressed:bool) -> void:
 
 func _on_tab_container_tab_changed(tab:int) -> void:
 	SoundManager.play_button_click_sfx()
-	ship_upgrade_warning_label.visible = false
 	if tab_container.get_child(tab).name == research_tab.name:
 		research_tab.reset_stuff_on_tab()
 	if tab_container.get_child(tab).name == crewmate_tab.name:
 		crewmate_tab.reset_stuff_on_tab()
+	if tab_container.get_child(tab).name == status_tab.name:
+		status_tab.reset_stuff_on_tab()
 
 func hide_screen():
 	if trave_screen_open:
 		_on_show_hide_command_screen_toggled(false)
 
-
 func show_screen():
 	if not trave_screen_open:
 		_on_show_hide_command_screen_toggled(true)
 
-func _on_upgrade_hull_button_pressed() -> void:
-	SoundManager.play_button_click_sfx()
-	var upgrade_hull_metal_cost = EventManager.ship_hull_level * SHIP_HULL_METAL_COST_PER_LV
-	if ResourceManager.metal_amount >= upgrade_hull_metal_cost:
-		ResourceManager.metal_amount -= upgrade_hull_metal_cost
-		ship_upgrade_warning_label.visible = false
-		EventManager.ship_hull_level += 1
-		update_ship_status_screen()
-	else:
-		ship_upgrade_warning_label.text = "Warning: Not enough resource"
-		ship_upgrade_warning_label.visible = true
+
+

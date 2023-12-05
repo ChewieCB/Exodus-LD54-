@@ -2,8 +2,8 @@ extends Button
 class_name SelectResearchGraphButton
 
 @export var required_officer: EnumAutoload.Officer = EnumAutoload.Officer.NONE
-@export var research_graph_node_name: String
-@export var original_button_text: String
+@export var research_graph_scene: PackedScene
+var original_button_text: String
 
 var research_tab: ResearchTab = null
 
@@ -12,4 +12,4 @@ func _ready() -> void:
 	original_button_text = text
 
 func _on_pressed() -> void:
-	research_tab.open_research_graph(research_graph_node_name)
+	research_tab.open_research_graph(research_graph_scene)

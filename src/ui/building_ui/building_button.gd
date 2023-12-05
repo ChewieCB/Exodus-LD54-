@@ -2,6 +2,7 @@
 extends MarginContainer
 
 @export var building_object: PackedScene
+@export var require_upgrade_id: EnumAutoload.UpgradeId = EnumAutoload.UpgradeId.NONE
 
 @onready var name_label = $CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/NameContainer/BuildingName
 @onready var worker_cost_label = $%RequirementsContainer/WorkersContainer/HBoxContainer/WorkerCost
@@ -13,13 +14,15 @@ extends MarginContainer
 @onready var button = $CenterContainer/HBoxContainer/MarginContainer2/Button
 @onready var production_label_2 = $CenterContainer/HBoxContainer/VBoxContainer/MarginContainer3/HBoxContainer/BuildingProd2
 
-var building_cost
+var building: Building
+
+const Utils = preload("res://src/common/exodus_utils.gd")
 
 func _ready():
 	if building_object == null:
 		return
 
-	var building = building_object.instantiate()
+	building = building_object.instantiate()
 	name_label.text = str(building.data.name)
 	worker_cost_label.text = str(building.data.people_cost)
 	metal_cost_label.text = str(building.data.metal_cost)
@@ -28,6 +31,9 @@ func _ready():
 
 	if not Engine.is_editor_hint():
 		ResourceManager.workers_changed.connect(_update_status)
+		ResourceManager.upgrade_acquired.connect(_update_info_after_upgrade)
+		_update_info_after_upgrade()
+		set_tooltip()
 
 	var production
 	var prod_type_string
@@ -57,21 +63,51 @@ func _ready():
 	production_label.text = "+{0}".format([production])
 	production_icon.texture = prod_type_icon
 
-
 func _update_status(available_workers):
-	# FIXME - this doesn't disable buttons that are too expensive
-	if building_cost:
-		if available_workers < building_cost:
-			button.disabled = true
-			self.modulate = Color(0.7, 0.7, 0.7)
+	if available_workers < building.data.people_cost:
+		button.disabled = true
+		self.modulate = Color(0.7, 0.7, 0.7)
 	else:
 		button.disabled = false
 		self.modulate = Color(1, 1, 1)
-
-
 
 func _on_button_pressed():
 	SoundManager.play_button_click_sfx()
 	BuildingManager.start_building(building_object)
 	button.release_focus()
 
+func _update_info_after_upgrade():
+	metal_cost_label.text = str(Utils.calculate_build_cost_with_upgrade(building.data.metal_cost))
+	time_cost_label.text = str(Utils.calculate_build_time_with_upgrade(building.data.construction_time))
+
+	if require_upgrade_id == EnumAutoload.UpgradeId.NONE:
+		visible = true
+		return
+	
+	if require_upgrade_id in ResourceManager.current_upgrades:
+		visible = true
+	else:
+		visible = false
+
+
+func set_tooltip():
+	var tmp_text = ""
+	match building.data.type:
+		Building.TYPES.HabBuilding:
+			tmp_text = "Can house {n_house} crew members.".format({"n_house": building.data.housing_prod})
+		Building.TYPES.FoodBuilding:
+			tmp_text = "Can produce {n_food} units of Food per day.".format({"n_food": building.data.food_prod})
+		Building.TYPES.WaterBuilding:
+			tmp_text = "Can produce {n_water} units of Water per day.".format({"n_water": building.data.water_prod})
+		Building.TYPES.AirBuilding:
+			tmp_text = "Can produce {n_air} units of Oxygen per day.".format({"n_air": building.data.air_prod})
+		Building.TYPES.MiningBuilding:
+			tmp_text = "Can produce {n_metal} units of Metal per day.".format({"n_metal": building.data.metal_prod})
+		Building.TYPES.CryoPod:
+			tmp_text = "Can be deconstructed to wake up {n_pop} crew member(s).".format({"n_pop": building.data.refund_population})
+	tmp_text += "\nConstruction time: {n_day} day(s)".format({"n_day": Utils.calculate_build_time_with_upgrade(building.data.construction_time)})
+	tmp_text += "\nWorkers required: {n_pop} crewmate(s)".format({"n_pop": building.data.people_cost})
+	tmp_text += "\nMetal required: {n_metal} unit(s)".format({"n_metal": Utils.calculate_build_cost_with_upgrade(building.data.metal_cost)})
+	get_node("CenterContainer/HBoxContainer/VBoxContainer/Tooltip").tooltip_text = tmp_text
+
+	

@@ -1,6 +1,12 @@
 Debug menu, choose an action to perform:
 - Resource
 	Choose resource to change.
+	- Give me a bunch of everything
+		You get 999 food, water, air and metal.
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "999"]" single_use="true"]
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "999"]" single_use="true"]
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "999"]" single_use="true"]
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["metal", "999"]" single_use="true"]
 	- Population
 		Choose an amount.
 		- +{pop_reward_1} Population
@@ -69,7 +75,7 @@ Debug menu, choose an action to perform:
 		- +{air_reward_2} Air
 			You get {air_reward_2} Air
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "{air_reward_2}"]" single_use="true"]
-		- +{air_reward_3} Population
+		- +{air_reward_3} Air
 			You get {air_reward_3} Air
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "{air_reward_3}"]" single_use="true"]
 		- -{air_cost_1} Air
@@ -78,9 +84,29 @@ Debug menu, choose an action to perform:
 		- -{air_cost_2} Air
 			You lose {air_cost_2} Air
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "-{air_cost_2}"]" single_use="true"]
-		- -{air_cost_3} Population
+		- -{air_cost_3} Air
 			You lose {air_cost_3} Air
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "-{air_cost_3}"]" single_use="true"]
+	- Metal
+		Choose an amount.
+		- +{metal_reward_1} Metal
+			You get {metal_reward_1} metal
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["metal", "{metal_reward_1}"]" single_use="true"]
+		- +{metal_reward_2} Metal
+			You get {metal_reward_2} metal
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["metal", "{metal_reward_2}"]" single_use="true"]
+		- +{metal_reward_3} Metal
+			You get {metal_reward_3} metal
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["metal", "{metal_reward_3}"]" single_use="true"]
+		- -{metal_cost_1} metal
+			You lose {metal_cost_1} metal
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["metal", "-{metal_cost_1}"]" single_use="true"]
+		- -{metal_cost_2} metal
+			You lose {metal_cost_2} metal
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["metal", "-{metal_cost_2}"]" single_use="true"]
+		- -{metal_cost_3} Metal
+			You lose {metal_cost_3} metal
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["metal", "-{air_cost_3}"]" single_use="true"]
 - Officers
 	Choose action.
 	- Add Officier

@@ -116,7 +116,7 @@ func place_building():
 		SoundManager.play_sound(cant_place_sfx, "SFX")
 		return
 
-	current_building.set_building_placed()
+	current_building.start_constructing()
 	var tmp_building = current_building
 	previous_rotation = current_building.rotation
 	current_building.build_timer_ui.update_rotation()

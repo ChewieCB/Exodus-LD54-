@@ -63,20 +63,20 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
-theme_override_constants/separation = 80
 
 [node name="BuildingButton" parent="MarginContainer2/TabContainer/Habitation/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
 layout_mode = 2
-theme_override_constants/margin_top = 48
 building_object = ExtResource("13_rymv3")
 
 [node name="BuildingButton2" parent="MarginContainer2/TabContainer/Habitation/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
 layout_mode = 2
 building_object = ExtResource("14_iyyrq")
+require_upgrade_id = 7
 
 [node name="BuildingButton3" parent="MarginContainer2/TabContainer/Habitation/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
 layout_mode = 2
 building_object = ExtResource("15_pi5gv")
+require_upgrade_id = 8
 
 [node name="Food" type="TabBar" parent="MarginContainer2/TabContainer"]
 visible = false
@@ -100,20 +100,20 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
-theme_override_constants/separation = 80
 
 [node name="BuildingButton" parent="MarginContainer2/TabContainer/Food/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
 layout_mode = 2
-theme_override_constants/margin_top = 48
 building_object = ExtResource("16_7mq1p")
 
 [node name="BuildingButton2" parent="MarginContainer2/TabContainer/Food/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
 layout_mode = 2
 building_object = ExtResource("17_hojxr")
+require_upgrade_id = 1
 
 [node name="BuildingButton3" parent="MarginContainer2/TabContainer/Food/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
 layout_mode = 2
 building_object = ExtResource("18_e2gxg")
+require_upgrade_id = 2
 
 [node name="Water" type="TabBar" parent="MarginContainer2/TabContainer"]
 visible = false
@@ -137,20 +137,20 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
-theme_override_constants/separation = 80
-
-[node name="BuildingButton3" parent="MarginContainer2/TabContainer/Water/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
-layout_mode = 2
-theme_override_constants/margin_top = 48
-building_object = ExtResource("19_v3p7n")
 
 [node name="BuildingButton" parent="MarginContainer2/TabContainer/Water/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
 layout_mode = 2
-building_object = ExtResource("20_a3s7v")
+building_object = ExtResource("19_v3p7n")
 
 [node name="BuildingButton2" parent="MarginContainer2/TabContainer/Water/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
 layout_mode = 2
+building_object = ExtResource("20_a3s7v")
+require_upgrade_id = 3
+
+[node name="BuildingButton3" parent="MarginContainer2/TabContainer/Water/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
+layout_mode = 2
 building_object = ExtResource("11_21mgq")
+require_upgrade_id = 4
 
 [node name="Air" type="TabBar" parent="MarginContainer2/TabContainer"]
 visible = false
@@ -174,20 +174,20 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
-theme_override_constants/separation = 80
 
 [node name="BuildingButton" parent="MarginContainer2/TabContainer/Air/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
 layout_mode = 2
-theme_override_constants/margin_top = 48
 building_object = ExtResource("21_bwk41")
 
 [node name="BuildingButton2" parent="MarginContainer2/TabContainer/Air/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
 layout_mode = 2
 building_object = ExtResource("22_wi86k")
+require_upgrade_id = 5
 
 [node name="BuildingButton3" parent="MarginContainer2/TabContainer/Air/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
 layout_mode = 2
 building_object = ExtResource("14_th1qt")
+require_upgrade_id = 6
 
 [node name="Metal" type="TabBar" parent="MarginContainer2/TabContainer"]
 visible = false
@@ -211,14 +211,43 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
-theme_override_constants/separation = 80
 
 [node name="BuildingButton" parent="MarginContainer2/TabContainer/Metal/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
 layout_mode = 2
-theme_override_constants/margin_top = 48
 building_object = ExtResource("15_oucui")
 
 [node name="BuildingButton2" parent="MarginContainer2/TabContainer/Metal/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
+layout_mode = 2
+building_object = ExtResource("16_3adho")
+
+[node name="Misc" type="TabBar" parent="MarginContainer2/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/TabContainer/Misc"]
+layout_mode = 0
+offset_right = 328.0
+offset_bottom = 481.0
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 8
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer2/TabContainer/Misc/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/TabContainer/Misc/MarginContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/TabContainer/Misc/MarginContainer/ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="BuildingButton" parent="MarginContainer2/TabContainer/Misc/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
+layout_mode = 2
+building_object = ExtResource("15_oucui")
+
+[node name="BuildingButton2" parent="MarginContainer2/TabContainer/Misc/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("12_3jb5p")]
 layout_mode = 2
 building_object = ExtResource("16_3adho")
 

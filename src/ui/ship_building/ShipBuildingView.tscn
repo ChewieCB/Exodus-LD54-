@@ -185,22 +185,22 @@ position = Vector2(-15.1451, -8.7738e-05)
 shape = SubResource("RectangleShape2D_vcsk8")
 
 [node name="Hab1" parent="ShipSprite/ShipGrid" instance=ExtResource("7_8yr63")]
-position = Vector2(65.9999, -95.9997)
+position = Vector2(63.9999, -95.9998)
 placed = true
 building_complete = true
 
 [node name="Hab2" parent="ShipSprite/ShipGrid" instance=ExtResource("7_8yr63")]
-position = Vector2(129, -95.9998)
+position = Vector2(95.9998, -95.9998)
 placed = true
 building_complete = true
 
 [node name="Hab3" parent="ShipSprite/ShipGrid" instance=ExtResource("7_8yr63")]
-position = Vector2(97.9998, -96.9998)
+position = Vector2(128, -95.9998)
 placed = true
 building_complete = true
 
 [node name="Miner" parent="ShipSprite/ShipGrid" instance=ExtResource("11_iprk5")]
-position = Vector2(129, 32.9999)
+position = Vector2(128, 31.9999)
 placed = true
 building_complete = true
 
@@ -215,12 +215,12 @@ placed = true
 building_complete = true
 
 [node name="CryoPodArray" parent="ShipSprite/ShipGrid" instance=ExtResource("12_acf3b")]
-position = Vector2(192, 30.9999)
+position = Vector2(192, 31.9999)
 placed = true
 building_complete = true
 
 [node name="CryoPodHub" parent="ShipSprite/ShipGrid" instance=ExtResource("13_2b3d8")]
-position = Vector2(175, 272.999)
+position = Vector2(175.999, 271.999)
 placed = true
 building_complete = true
 
