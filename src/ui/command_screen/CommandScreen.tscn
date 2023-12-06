@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="1_4qidw"]
 [ext_resource type="Script" path="res://src/ui/command_screen/command_screen.gd" id="1_rladp"]
 [ext_resource type="Texture2D" uid="uid://8m1r17nptfyg" path="res://assets/sprite/space_map.png" id="2_tgm10"]
+[ext_resource type="PackedScene" uid="uid://1dd0jvugd41x" path="res://src/ui/command_screen/star_map/StarMap.tscn" id="3_jn7gj"]
 [ext_resource type="Texture2D" uid="uid://d3pj8wans2lr4" path="res://assets/sprite/circle.png" id="3_4kwp3"]
 [ext_resource type="Script" path="res://src/ui/command_screen/crewmate_tab/crewmate_tab.gd" id="3_ffkt0"]
 [ext_resource type="Script" path="res://src/ui/command_screen/research_tab/research_tab.gd" id="3_v75ll"]
@@ -25,11 +26,27 @@
 [ext_resource type="Texture2D" uid="uid://bfqerbgujnq0s" path="res://assets/character/dr_dorian.png" id="13_xdugs"]
 [ext_resource type="Script" path="res://src/ui/command_screen/status_tab/status_tab.gd" id="24_fwbaf"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v161y"]
+size = Vector2(450, 235)
+
+[sub_resource type="Animation" id="Animation_oatk6"]
+resource_name = "default"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1119, 0)]
 [sub_resource type="Curve2D" id="Curve2D_ncuok"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 105, -62, 0, 0, 0, 0, 88, -77, 0, 0, 0, 0, 35, -58, 0, 0, 0, 0, -1, -11, 0, 0, 0, 0, -5, 0, 0, 0, 0, 0, 8, 44)
 }
-point_count = 6
 
 [sub_resource type="Animation" id="Animation_0rfvp"]
 resource_name = "hide"
@@ -65,6 +82,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vxeel"]
 _data = {
+"default": SubResource("Animation_oatk6"),
 "hide": SubResource("Animation_0rfvp"),
 "show": SubResource("Animation_uvmic")
 }
@@ -72,6 +90,7 @@ _data = {
 [node name="CommandScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+mouse_filter = 2
 script = ExtResource("1_rladp")
 
 [node name="DeviceFrame" type="TextureRect" parent="."]
@@ -79,6 +98,7 @@ layout_mode = 0
 offset_left = 1119.0
 offset_right = 1777.0
 offset_bottom = 685.0
+mouse_filter = 2
 texture = ExtResource("1_4qidw")
 
 [node name="TabContainer" type="TabContainer" parent="DeviceFrame"]
@@ -87,6 +107,7 @@ offset_left = 47.0
 offset_top = 192.0
 offset_right = 500.0
 offset_bottom = 460.0
+mouse_filter = 2
 
 [node name="Research" type="TabBar" parent="DeviceFrame/TabContainer"]
 visible = false
@@ -249,46 +270,68 @@ text = "[center]Cost: 30 food, 5 water, 5 metal, 5 air, 5 prefabs, 100 dark matt
 one_shot = true
 
 [node name="Travel" type="TabBar" parent="DeviceFrame/TabContainer"]
-visible = false
 layout_mode = 2
+mouse_filter = 2
 
 [node name="SpaceMap" type="TextureRect" parent="DeviceFrame/TabContainer/Travel"]
+visible = false
 layout_mode = 0
 offset_top = 1.0
 offset_right = 453.0
-offset_bottom = 243.0
+offset_bottom = 236.0
+mouse_filter = 2
 texture = ExtResource("2_tgm10")
 
-[node name="ProgressView" type="Control" parent="DeviceFrame/TabContainer/Travel"]
-anchors_preset = 0
-offset_left = 289.0
-offset_top = 118.0
-offset_right = 289.0
-offset_bottom = 118.0
+[node name="MarginContainer" type="SubViewportContainer" parent="DeviceFrame/TabContainer/Travel"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -225.0
+offset_top = -117.5
+offset_right = 225.0
+offset_bottom = 117.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch = true
 
-[node name="Path2D" type="Path2D" parent="DeviceFrame/TabContainer/Travel/ProgressView"]
-position = Vector2(-7, 0)
-curve = SubResource("Curve2D_ncuok")
+[node name="SubViewport" type="SubViewport" parent="DeviceFrame/TabContainer/Travel/MarginContainer"]
+handle_input_locally = false
+physics_object_picking = true
+size = Vector2i(450, 235)
+render_target_update_mode = 4
 
-[node name="PathFollow2D" type="PathFollow2D" parent="DeviceFrame/TabContainer/Travel/ProgressView/Path2D"]
-position = Vector2(105, -62)
-rotation = -2.41861
-loop = false
+[node name="StarMap" parent="DeviceFrame/TabContainer/Travel/MarginContainer/SubViewport" instance=ExtResource("3_jn7gj")]
+position = Vector2(1167.5, 224)
 
-[node name="Sprite2D" type="Sprite2D" parent="DeviceFrame/TabContainer/Travel/ProgressView/Path2D/PathFollow2D"]
-modulate = Color(1, 0.0588235, 0, 1)
-position = Vector2(-0.707031, -0.707092)
-rotation = 2.35619
-scale = Vector2(0.15625, 0.15625)
-texture = ExtResource("3_4kwp3")
+[node name="StarmapInputArea" type="MarginContainer" parent="DeviceFrame/TabContainer/Travel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Area2D" type="Area2D" parent="DeviceFrame/TabContainer/Travel/StarmapInputArea"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeviceFrame/TabContainer/Travel/StarmapInputArea/Area2D"]
+shape = SubResource("RectangleShape2D_v161y")
 
 [node name="PathChoiceView" type="Control" parent="DeviceFrame/TabContainer/Travel"]
+visible = false
 modulate = Color(1, 1, 1, 0)
 anchors_preset = 0
 offset_left = 289.0
 offset_top = 118.0
 offset_right = 289.0
 offset_bottom = 118.0
+mouse_filter = 2
 
 [node name="Sprite2D2" type="TextureRect" parent="DeviceFrame/TabContainer/Travel/PathChoiceView"]
 self_modulate = Color(0.117647, 0.117647, 0.117647, 0.937255)
@@ -298,6 +341,7 @@ offset_top = -117.0
 offset_right = -222.0
 offset_bottom = -53.0
 scale = Vector2(7, 3.70312)
+mouse_filter = 2
 texture = ExtResource("4_hkjqs")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Travel/PathChoiceView"]
@@ -313,6 +357,7 @@ offset_right = -123.0
 offset_bottom = 68.0
 grow_horizontal = 0
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Button" type="Button" parent="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer"]
 layout_mode = 2
@@ -341,6 +386,7 @@ Chosen this path will make it more likely to meet other travellers."
 autowrap_mode = 2
 
 [node name="ChangePathButton" type="Button" parent="DeviceFrame/TabContainer/Travel"]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -356,6 +402,11 @@ grow_vertical = 0
 toggle_mode = true
 text = "Change path"
 
+[node name="Cryostasis Citizen" type="TabBar" parent="DeviceFrame/TabContainer"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+
 [node name="Crewmates" type="TabBar" parent="DeviceFrame/TabContainer"]
 visible = false
 layout_mode = 2
@@ -368,7 +419,8 @@ layout_mode = 0
 offset_left = 2.0
 offset_top = 2.0
 offset_right = 451.0
-offset_bottom = 242.0
+offset_bottom = 235.0
+mouse_filter = 2
 texture = ExtResource("4_hkjqs")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="DeviceFrame/TabContainer/Crewmates"]
@@ -680,11 +732,14 @@ text = "Show Command Screen"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../DeviceFrame")
+autoplay = "default"
 libraries = {
 "": SubResource("AnimationLibrary_vxeel")
 }
 
 [connection signal="tab_changed" from="DeviceFrame/TabContainer" to="." method="_on_tab_container_tab_changed"]
+[connection signal="mouse_entered" from="DeviceFrame/TabContainer/Travel/StarmapInputArea/Area2D" to="." method="_on_starmap_area_mouse_entered"]
+[connection signal="mouse_exited" from="DeviceFrame/TabContainer/Travel/StarmapInputArea/Area2D" to="." method="_on_starmap_area_mouse_exited"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Research/ResearchGraphView/UpgradeButton" to="DeviceFrame/TabContainer/Research" method="_on_upgrade_button_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Research/ResearchGraphView/BackButton" to="DeviceFrame/TabContainer/Research" method="_on_back_button_pressed"]
 [connection signal="timeout" from="DeviceFrame/TabContainer/Research/NotEnoughResourceTimer" to="DeviceFrame/TabContainer/Research" method="_on_not_enough_resource_timer_timeout"]

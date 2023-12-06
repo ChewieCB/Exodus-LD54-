@@ -8,8 +8,8 @@ class_name BuildingInfoPanel
 const Utils = preload("res://src/common/exodus_utils.gd")
 
 func _ready() -> void:
-    BuildingManager.show_info_panel.connect(show_info_panel)
-    BuildingManager.hide_info_panel.connect(hide_info_panel)
+	BuildingManager.show_info_panel.connect(show_info_panel)
+	BuildingManager.hide_info_panel.connect(hide_info_panel)
 
 func show_info_panel(pos: Vector2, building_data: BuildingResource):
     global_position = get_global_mouse_position()
@@ -32,5 +32,6 @@ func show_info_panel(pos: Vector2, building_data: BuildingResource):
     stat_label.text += "\nWorkers required: {n_des_pop} crewmate(s)".format({"n_des_pop": building_data.people_cost})
     visible = true
 
+
 func hide_info_panel():
-    visible = false
+	visible = false

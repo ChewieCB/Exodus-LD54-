@@ -5,6 +5,7 @@ signal tick_changed(tick_speed, is_paused)
 
 @onready var tick_timer = $Timer
 
+const PAUSED_TICK_SPEED = 10.0
 const SLOW_TICK_SPEED = 5.0
 const FAST_TICK_SPEED = 1.25
 var current_tick_rate = SLOW_TICK_SPEED
@@ -22,7 +23,19 @@ func start_ticks():
 
 func stop_ticks():
 	tick_timer.set_paused(true)
+	current_tick_rate = PAUSED_TICK_SPEED
 	emit_signal("tick_changed", current_tick_rate, true)
+	
+	RenderingServer.global_shader_parameter_set(
+		"timescale", 
+		remap(
+			current_tick_rate,
+			PAUSED_TICK_SPEED,
+			FAST_TICK_SPEED,
+			0.0,
+			2.0
+		)
+	)
 
 
 func _set_tick_rate(new_tick_rate: float):
@@ -43,6 +56,17 @@ func _set_tick_rate(new_tick_rate: float):
 	emit_signal("tick_changed", current_tick_rate, false)
 	tick_timer.set_paused(false)
 	tick_timer.start(remapped_time_left)
+	
+	RenderingServer.global_shader_parameter_set(
+		"timescale", 
+		remap(
+			current_tick_rate,
+			PAUSED_TICK_SPEED,
+			FAST_TICK_SPEED,
+			0.0,
+			2.0
+		)
+	)
 
 
 func _on_timer_timeout():
