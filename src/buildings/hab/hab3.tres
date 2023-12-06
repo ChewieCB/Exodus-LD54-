@@ -1,24 +1,27 @@
 [gd_resource type="Resource" script_class="BuildingResource" load_steps=3 format=3 uid="uid://duea0wrd00fil"]
 
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_erjft"]
-[ext_resource type="Texture2D" uid="uid://d1w5fvl2ohit8" path="res://assets/buildings/new/hab_3.png" id="2_7xb5t"]
+[ext_resource type="Texture2D" uid="uid://d1w5fvl2ohit8" path="res://assets/buildings/hab_3.png" id="2_kfkc4"]
 
 [resource]
 script = ExtResource("1_erjft")
 name = "Megablock"
 type = 0
-sprite = ExtResource("2_7xb5t")
-housing_prod = 6
+sprite = ExtResource("2_kfkc4")
+housing_prod = 10
 food_prod = 0
 water_prod = 0
 air_prod = 0
+metal_prod = 0
 food_cost = 0
 air_cost = 0
 water_cost = 0
+metal_cost = 60
 people_cost = 4
 refund_food = 0
 refund_air = 0
 refund_water = 0
+refund_metal = 0
 refund_population = 0
-construction_time = 0
+construction_time = 8
 destruction_time = 4

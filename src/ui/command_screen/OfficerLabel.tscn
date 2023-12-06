@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://lwk7nc56s8g8"]
+
+[ext_resource type="Script" path="res://src/ui/command_screen/officer_button.gd" id="1_wucs8"]
+
+[node name="OfficerButton" type="Button"]
+offset_right = 188.0
+offset_bottom = 24.0
+mouse_filter = 1
+text = "Pressley (Executive Officer)"
+alignment = 0
+script = ExtResource("1_wucs8")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

@@ -125,9 +125,9 @@ text = "Build Menu"
 
 [node name="ResourceUI" parent="." instance=ExtResource("1_4u51x")]
 layout_mode = 1
-offset_left = -299.5
+offset_left = -346.5
 offset_top = -72.0
-offset_right = 299.5
+offset_right = 346.5
 
 [node name="BuildingAlerts" parent="." instance=ExtResource("7_r6nxt")]
 layout_mode = 1
@@ -143,15 +143,16 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -32.0
-offset_right = 40.0
-offset_bottom = 32.0
+offset_top = -54.0
+offset_right = 66.0
+offset_bottom = 47.0
 grow_vertical = 2
 theme_override_constants/margin_left = -450
 theme_override_constants/margin_top = 64
 
 [node name="BuildingUI" parent="BuildMenu" instance=ExtResource("1_hyvdy")]
 layout_mode = 2
+mouse_force_pass_scroll_events = false
 
 [node name="MousePopup" parent="." instance=ExtResource("4_eo2jl")]
 
@@ -167,7 +168,7 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -384.0
+offset_left = -247.0
 offset_top = -128.0
 grow_horizontal = 0
 grow_vertical = 0
@@ -236,9 +237,9 @@ autowrap_mode = 2
 [node name="BuildControlLabel" type="Label" parent="."]
 layout_mode = 0
 offset_left = 229.0
-offset_top = -100.0
+offset_top = -107.0
 offset_right = 472.0
-offset_bottom = -22.0
+offset_bottom = -29.0
 text = "Q, E to rotate building.
 Left-click to Build.
 Right-click to Destroy"

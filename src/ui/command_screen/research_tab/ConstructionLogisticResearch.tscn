@@ -1,0 +1,311 @@
+[gd_scene load_steps=16 format=3 uid="uid://ce5dg57vaxm3d"]
+
+[ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="1_rnfvl"]
+[ext_resource type="PackedScene" uid="uid://duihto0qvkw2b" path="res://src/ui/command_screen/research_tab/TechUpgradeButton.tscn" id="2_3jq7e"]
+[ext_resource type="Texture2D" uid="uid://c8jp51mebn7q3" path="res://assets/ui/upgrades/common_upgrade.png" id="3_04mtn"]
+[ext_resource type="Script" path="res://src/common/resource_cost.gd" id="4_0kthj"]
+
+[sub_resource type="Resource" id="Resource_rwmse"]
+script = ExtResource("4_0kthj")
+food = 5
+water = 5
+air = 5
+metal = 15
+
+[sub_resource type="Resource" id="Resource_pppth"]
+script = ExtResource("4_0kthj")
+food = 20
+water = 20
+air = 20
+metal = 40
+
+[sub_resource type="Resource" id="Resource_ha0or"]
+script = ExtResource("4_0kthj")
+food = 80
+water = 80
+air = 80
+metal = 100
+
+[sub_resource type="Resource" id="Resource_hh64u"]
+script = ExtResource("4_0kthj")
+food = 20
+water = 20
+air = 20
+metal = 20
+
+[sub_resource type="Resource" id="Resource_a8sva"]
+script = ExtResource("4_0kthj")
+food = 40
+water = 40
+air = 40
+metal = 25
+
+[sub_resource type="Resource" id="Resource_710nv"]
+script = ExtResource("4_0kthj")
+food = 15
+water = 15
+air = 0
+metal = 0
+
+[sub_resource type="Resource" id="Resource_4cu52"]
+script = ExtResource("4_0kthj")
+food = 50
+water = 50
+air = 0
+metal = 0
+
+[sub_resource type="Resource" id="Resource_kay1w"]
+script = ExtResource("4_0kthj")
+food = 0
+water = 25
+air = 0
+metal = 200
+
+[sub_resource type="Resource" id="Resource_cnwfa"]
+script = ExtResource("4_0kthj")
+food = 20
+water = 20
+air = 0
+metal = 15
+
+[sub_resource type="Resource" id="Resource_lwcel"]
+script = ExtResource("4_0kthj")
+food = 30
+water = 30
+air = 0
+metal = 25
+
+[sub_resource type="Resource" id="Resource_fm134"]
+script = ExtResource("4_0kthj")
+food = 80
+water = 80
+air = 0
+metal = 60
+
+[node name="HabitationMedicalResearch" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 451.0
+offset_bottom = 138.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0, 1, 0.32549, 0.0627451)
+layout_mode = 0
+offset_left = 7.0
+offset_top = 8.0
+offset_right = 446.0
+offset_bottom = 136.0
+texture = ExtResource("1_rnfvl")
+
+[node name="Line1-2" type="Line2D" parent="."]
+position = Vector2(29, 17)
+points = PackedVector2Array(39, 39, 79, 39)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line2-3" type="Line2D" parent="."]
+position = Vector2(85, 17)
+points = PackedVector2Array(39, 39, 79, 39)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line2-4" type="Line2D" parent="."]
+position = Vector2(80, 20)
+points = PackedVector2Array(39, 39, 39, 75)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line4-5" type="Line2D" parent="."]
+position = Vector2(80, 20)
+points = PackedVector2Array(40, 84, 88, 84)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line6-7" type="Line2D" parent="."]
+position = Vector2(240, 16)
+points = PackedVector2Array(40, 40, 84, 40)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line7-8" type="Line2D" parent="."]
+position = Vector2(296, 16)
+points = PackedVector2Array(40, 40, 84, 40)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line9-10" type="Line2D" parent="."]
+position = Vector2(236, 64)
+points = PackedVector2Array(40, 40, 84, 40)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line10-11" type="Line2D" parent="."]
+position = Vector2(292, 64)
+points = PackedVector2Array(40, 40, 84, 40)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Upgrade1" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_3jq7e")]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 40.0
+offset_right = 88.0
+offset_bottom = 72.0
+upgrade_name = "Warehouse"
+upgrade_description = "Unlock Warehouse building."
+upgrade_id = 24
+upgrade_sprite = ExtResource("3_04mtn")
+cost = SubResource("Resource_rwmse")
+connection_lines = [NodePath("../Line1-2")]
+disabled = true
+
+[node name="Upgrade2" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("2_3jq7e")]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 40.0
+offset_right = 136.0
+offset_bottom = 72.0
+upgrade_name = "Advanced Sorter"
+upgrade_description = "Increase storage capacity of Warehouses by [color=green]25%[/color]."
+upgrade_id = 27
+upgrade_sprite = ExtResource("3_04mtn")
+cost = SubResource("Resource_pppth")
+connection_lines = [NodePath("../Line2-3"), NodePath("../Line2-4")]
+require_one_of_these_upgrades = [NodePath("../Upgrade1")]
+disabled = true
+
+[node name="Upgrade3" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_3jq7e")]
+layout_mode = 0
+offset_left = 152.0
+offset_top = 41.0
+offset_right = 184.0
+offset_bottom = 73.0
+upgrade_name = "Automated Warehouse"
+upgrade_description = "Increase storage capacity of Warehouses by another [color=green]50%[/color]."
+upgrade_id = 28
+upgrade_sprite = ExtResource("3_04mtn")
+cost = SubResource("Resource_ha0or")
+require_one_of_these_upgrades = [NodePath("../Upgrade2")]
+disabled = true
+
+[node name="Upgrade4" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("2_3jq7e")]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 88.0
+offset_right = 136.0
+offset_bottom = 120.0
+upgrade_name = "Advanced Logistics"
+upgrade_description = "Increase range of Warehouses by [color=green]25%[/color]."
+upgrade_id = 25
+upgrade_sprite = ExtResource("3_04mtn")
+cost = SubResource("Resource_hh64u")
+connection_lines = [NodePath("../Line4-5")]
+require_one_of_these_upgrades = [NodePath("../Upgrade2")]
+disabled = true
+
+[node name="Upgrade5" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_3jq7e")]
+layout_mode = 0
+offset_left = 152.0
+offset_top = 88.0
+offset_right = 184.0
+offset_bottom = 120.0
+upgrade_name = "Stock Analysis Protocol"
+upgrade_description = "Increase range of Warehouses by another [color=green]50%[/color]."
+upgrade_id = 26
+upgrade_sprite = ExtResource("3_04mtn")
+cost = SubResource("Resource_a8sva")
+require_one_of_these_upgrades = [NodePath("../Upgrade4")]
+disabled = true
+
+[node name="Upgrade6" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_3jq7e")]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 40.0
+offset_right = 288.0
+offset_bottom = 72.0
+upgrade_name = "Crew Chief Training"
+upgrade_description = "Reduce construction time by [color=green]10%[/color]."
+upgrade_id = 29
+upgrade_sprite = ExtResource("3_04mtn")
+cost = SubResource("Resource_710nv")
+connection_lines = [NodePath("../Line6-7")]
+
+[node name="Upgrade7" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("2_3jq7e")]
+layout_mode = 0
+offset_left = 312.0
+offset_top = 40.0
+offset_right = 344.0
+offset_bottom = 72.0
+upgrade_name = "Deep Space Training"
+upgrade_description = "Reduce construction time by another [color=green]15%[/color]."
+upgrade_id = 30
+upgrade_sprite = ExtResource("3_04mtn")
+cost = SubResource("Resource_4cu52")
+connection_lines = [NodePath("../Line7-8")]
+require_one_of_these_upgrades = [NodePath("../Upgrade6")]
+
+[node name="Upgrade8" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_3jq7e")]
+layout_mode = 0
+offset_left = 368.0
+offset_top = 40.0
+offset_right = 400.0
+offset_bottom = 72.0
+upgrade_name = "Construction Drone"
+upgrade_description = "Reduce construction time by another [color=green]25%[/color]."
+upgrade_id = 31
+upgrade_sprite = ExtResource("3_04mtn")
+cost = SubResource("Resource_kay1w")
+require_one_of_these_upgrades = [NodePath("../Upgrade7")]
+
+[node name="Upgrade9" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_3jq7e")]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 88.0
+offset_right = 288.0
+offset_bottom = 120.0
+upgrade_name = "Improved Schematics"
+upgrade_description = "Reduce construction cost by [color=green]10%[/color]."
+upgrade_id = 32
+upgrade_sprite = ExtResource("3_04mtn")
+cost = SubResource("Resource_cnwfa")
+connection_lines = [NodePath("../Line9-10")]
+
+[node name="Upgrade10" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("2_3jq7e")]
+layout_mode = 0
+offset_left = 312.0
+offset_top = 88.0
+offset_right = 344.0
+offset_bottom = 120.0
+upgrade_name = "AI-enhanced Schematics"
+upgrade_description = "Reduce construction cost by another [color=green]15%[/color]."
+upgrade_id = 33
+upgrade_sprite = ExtResource("3_04mtn")
+cost = SubResource("Resource_lwcel")
+connection_lines = [NodePath("../Line10-11")]
+require_one_of_these_upgrades = [NodePath("../Upgrade9")]
+
+[node name="Upgrade11" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_3jq7e")]
+layout_mode = 0
+offset_left = 368.0
+offset_top = 88.0
+offset_right = 400.0
+offset_bottom = 120.0
+upgrade_name = "AI-generated Schematics"
+upgrade_description = "Reduce construction cost by another [color=green]25%[/color]."
+upgrade_id = 34
+upgrade_sprite = ExtResource("3_04mtn")
+cost = SubResource("Resource_fm134")
+require_one_of_these_upgrades = [NodePath("../Upgrade10")]
+
+[node name="TreeLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -88.0
+offset_top = 10.0
+offset_right = 88.0
+offset_bottom = 29.0
+grow_horizontal = 2
+text = "Construction and Logistic"
+horizontal_alignment = 1

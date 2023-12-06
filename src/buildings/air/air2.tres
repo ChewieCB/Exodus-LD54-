@@ -1,24 +1,27 @@
 [gd_resource type="Resource" script_class="BuildingResource" load_steps=3 format=3 uid="uid://cyu3befc6demc"]
 
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_ywndv"]
-[ext_resource type="Texture2D" uid="uid://dsma76iaa0bge" path="res://assets/buildings/new/air_2.png" id="2_g2dmu"]
+[ext_resource type="Texture2D" uid="uid://dsma76iaa0bge" path="res://assets/buildings/air_2.png" id="2_fmacp"]
 
 [resource]
 script = ExtResource("1_ywndv")
 name = "Recirculator"
 type = 3
-sprite = ExtResource("2_g2dmu")
+sprite = ExtResource("2_fmacp")
 housing_prod = 0
 food_prod = 0
 water_prod = 0
-air_prod = 4
+air_prod = 5
+metal_prod = 0
 food_cost = 0
 air_cost = 0
 water_cost = 0
+metal_cost = 40
 people_cost = 5
 refund_food = 0
 refund_air = 0
 refund_water = 0
+refund_metal = 0
 refund_population = 0
-construction_time = 0
+construction_time = 5
 destruction_time = 3

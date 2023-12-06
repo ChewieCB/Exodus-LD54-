@@ -6,10 +6,12 @@ signal housing_changed(total, available)
 signal food_changed(value)
 signal water_changed(value)
 signal air_changed(value)
+signal metal_changed(value)
 #
 signal food_modifier_changed(total, modifier)
 signal water_modifier_changed(total, modifier)
 signal air_modifier_changed(total, modifier)
+signal metal_modifier_changed(total, modifier)
 #
 signal starving(ticks_left)
 signal dehydrated(ticks_left)
@@ -26,10 +28,14 @@ signal ui_hover_hide
 
 signal construction_cancelled_lack_of_workers(building_name)
 
-var housing_alert_shown = false
+signal upgrade_acquired
+
 var food_alert_shown = false
 var water_alert_shown = false
 var air_alert_shown = false
+
+const FAROQ_KHAN_BONUS = 1.5
+const GOVERNOR_BONUS = 2
 
 # How many ticks/days/turns each endgame flag can go on for before you lose
 var starving_time: int = 9
@@ -83,8 +89,12 @@ enum RESOURCE_TYPE {
 	HOUSING,
 	FOOD,
 	WATER,
-	AIR
+	AIR,
+	METAL
 }
+
+var current_officers = [EnumAutoload.Officer.PRESSLEY, EnumAutoload.Officer.TORGON]
+var current_upgrades = []
 
 # Resources to be managed
 # Pop/Worker
@@ -97,6 +107,7 @@ var population_amount: int:
 		# we lose pop mid-construction
 		worker_amount += diff
 		available_housing += diff
+		CrewmateManager.update_current_crewmates(value)
 
 var worker_amount: int:
 	set(value):
@@ -111,7 +122,7 @@ var worker_amount: int:
 				print(most_recent_building)
 				current_refund = most_recent_building.data.people_cost
 				worker_refund += current_refund
-				# 
+				#
 				if most_recent_building.is_constructing:
 					emit_signal("construction_cancelled_lack_of_workers", most_recent_building.data.name)
 					most_recent_building.cancel_building(true)
@@ -120,7 +131,7 @@ var worker_amount: int:
 					most_recent_building.cancel_building_remove(true)
 			# Assign the new value
 			value += worker_refund
-			
+
 		worker_amount = value
 		emit_signal("workers_changed", worker_amount)
 # Other resources
@@ -147,24 +158,21 @@ var air_amount: int:
 	set(value):
 		air_amount = value
 		emit_signal("air_changed", air_amount)
+var metal_amount: int:
+	set(value):
+		metal_amount = value
+		emit_signal("metal_changed", metal_amount)
 
 var current_food_modifier: int = 0
 var current_air_modifier: int = 0
 var current_water_modifier: int = 0
+var current_metal_modifier: int = 0
 
 # How many resources-per-tick does one person cost?
 var pop_housing_cost: int = 1
 var pop_food_cost: int = 2
 var pop_water_cost: int = 3
 var pop_air_cost: int = 1
-#
-var housing_low_threshold: int = 2
-var food_low_threshold: int = 2
-var water_low_threshold: int = 3
-var air_low_threshold: int = 2
-# 
-var buildings = []
-
 
 func _ready() -> void:
 	TickManager.tick.connect(_on_tick)
@@ -176,15 +184,10 @@ func _ready() -> void:
 	pop_water_cost = 2
 	pop_air_cost = 1
 
-	# Thresholds to alert the player to low resource
-	housing_low_threshold = 0
-	food_low_threshold = 10
-	water_low_threshold = 10
-	air_low_threshold = 10
 
-
+# TODO: Can be optimized, only run on build/tick event, not every frame
 func _physics_process(delta):
-	for idx in range(0, 5):
+	for idx in range(0, 6):
 		calculate_resource_modifier(idx, population_amount)
 		match idx:
 			RESOURCE_TYPE.POPULATION:
@@ -197,7 +200,8 @@ func _physics_process(delta):
 				emit_signal("water_modifier_changed", water_amount, current_water_modifier)
 			RESOURCE_TYPE.AIR:
 				emit_signal("air_modifier_changed", air_amount, current_air_modifier)
-
+			RESOURCE_TYPE.METAL:
+				emit_signal("metal_modifier_changed", metal_amount, current_metal_modifier)
 
 func calculate_resource_modifier(resource_type, population) -> void:
 	var production = 0
@@ -207,38 +211,47 @@ func calculate_resource_modifier(resource_type, population) -> void:
 		RESOURCE_TYPE.HOUSING:
 			# Housing is an outlier, we don't update per turn we just keep track
 			# of used and avaialble housing
-			for building in buildings:
+			for building in BuildingManager.buildings:
 				production += building.data.housing_prod
+			if EnumAutoload.Officer.GOVERNOR_JERREROD in current_officers and production > 0:
+				production = (int)(GOVERNOR_BONUS * production)
 			consumption = population_amount
 			#
 			housing_amount = production
 			available_housing = production - consumption
 		RESOURCE_TYPE.FOOD:
-			for building in buildings:
+			for building in BuildingManager.buildings:
 				production += building.data.food_prod
+			if EnumAutoload.Officer.FAROQ_KHAN in current_officers and production > 0:
+				production = (int)(FAROQ_KHAN_BONUS * production)
 			consumption = population * pop_food_cost
 			current_food_modifier = production - consumption
 		RESOURCE_TYPE.WATER:
-			for building in buildings:
+			for building in BuildingManager.buildings:
 				production += building.data.water_prod
 			consumption = population * pop_water_cost
 			current_water_modifier = production - consumption
 		RESOURCE_TYPE.AIR:
-			for building in buildings:
+			for building in BuildingManager.buildings:
 				production += building.data.air_prod
 			consumption = population * pop_air_cost
 			current_air_modifier = production - consumption
+		RESOURCE_TYPE.METAL:
+			for building in BuildingManager.buildings:
+				production += building.data.metal_prod
+			current_metal_modifier = production
 
 
 func update_resource_tick() -> void:
-	# When we receive a tick signal from the GameTickManager 
+	# When we receive a tick signal from the GameTickManager
 	# we update our resource levels.
 	food_amount = clamp(food_amount + current_food_modifier, 0, 999)
 	water_amount = clamp(water_amount + current_water_modifier, 0, 999)
 	air_amount = clamp(air_amount + current_air_modifier, 0, 999)
-	
+	metal_amount = clamp(metal_amount + current_metal_modifier, 0, 999)
+
 	# TODO - change resource UI colours over low threshold
-	
+
 	# Tick down loss counters
 	if is_starving and current_food_modifier < 0 :
 		starving_time_left -= 1
@@ -249,7 +262,7 @@ func update_resource_tick() -> void:
 	if is_suffocating and current_air_modifier < 0:
 		suffocating_time_left -= 1
 		print("Suffocating: " + str(suffocating_time_left) + " ticks left")
-	
+
 	# Reset loss counters if they've changed
 	is_starving = food_amount == 0 and current_food_modifier < 0
 	is_thirsty = water_amount == 0 and current_water_modifier < 0
@@ -263,27 +276,22 @@ func can_add_population(value) -> bool:
 	else:
 		return false
 
-func add_building(building):
-	if building not in buildings:
-		buildings.append(building)
+func add_building(building: Building):
+	if building not in BuildingManager.buildings:
+		BuildingManager.buildings.append(building)
 
 
-func remove_building(building):
-	if building in buildings:
-		buildings.erase(building)
+func remove_building(building: Building):
+	if building in BuildingManager.buildings:
+		BuildingManager.buildings.erase(building)
 
 
-func assign_workers(building):
-	# TODO - we can also handle material cost here
+func assign_workers(building: Building):
 	var workers_needed = building.data.people_cost
-	# Check that there are {number_of_workers} free in the current worker pool
-	if workers_needed > worker_amount:
-		return 
-	# Update the worker pool
 	worker_amount -= workers_needed
 
 
-func retrieve_workers(building):
+func retrieve_workers(building: Building):
 	# Refund X workers assigned to a completed building from the building's cost data
 	worker_amount += building.data.people_cost
 
@@ -307,6 +315,8 @@ func change_resource_from_event(resource: String, amount_str: String):
 			water_amount += amount
 		"air":
 			air_amount += amount
+		"metal":
+			metal_amount += amount
 		"population":
 			if amount > 0:
 				var empty_spot = housing_amount - population_amount
@@ -314,16 +324,46 @@ func change_resource_from_event(resource: String, amount_str: String):
 					population_amount += amount
 			else:
 				population_amount += amount
+		"population_forced":
+			population_amount += amount
 
+func change_specialist_from_event(operation: String, specialist_name: String):
+	var specialist = null
+	match specialist_name:
+		"faroq_khan":
+			specialist = EnumAutoload.Officer.FAROQ_KHAN
+		"governor_jerrerod":
+			specialist = EnumAutoload.Officer.GOVERNOR_JERREROD
+		"dr_dorian":
+			specialist = EnumAutoload.Officer.DR_DORIAN
+		"mary_watney":
+			specialist = EnumAutoload.Officer.MARY_WATNEY
+		"sam_carter":
+			specialist = EnumAutoload.Officer.SAM_CARTER
+	if specialist != null:
+		if operation == "add":
+			add_specialist(specialist)
+		else:
+			remove_specialist(specialist)
 
-func wake_up_citizen(water_cost) -> String:
-	if water_amount < 15:
-		return "fail_water"
-	if available_housing <= 0:
-		return "fail_housing"
-	population_amount += 1
-	water_amount -= water_cost
-	return "success"
+func add_specialist(specialist: EnumAutoload.Officer):
+	if specialist not in current_officers:
+		current_officers.append(specialist)
+	print("Add specialist")
+	update_specialist_bonus()
+
+func remove_specialist(specialist: EnumAutoload.Officer):
+	if specialist in current_officers:
+		current_officers.erase(specialist)
+	update_specialist_bonus()
+	print("Remove specialist")
+
+func update_specialist_bonus():
+	return
+
+func add_upgrade(upgrade_id: EnumAutoload.UpgradeId):
+	current_upgrades.append(upgrade_id)
+	emit_signal("upgrade_acquired")
 
 func reset_state():
 	# TODO - load initial values from file for difficulty settings
@@ -332,8 +372,8 @@ func reset_state():
 	food_amount = 150
 	water_amount = 250
 	air_amount = 200
+	metal_amount = 10
 
-	housing_alert_shown = false
 	food_alert_shown = false
 	water_alert_shown = false
 	air_alert_shown = false
@@ -346,4 +386,6 @@ func reset_state():
 	current_food_modifier = 0
 	current_air_modifier = 0
 	current_water_modifier = 0
-	buildings = []
+	current_officers = [EnumAutoload.Officer.PRESSLEY, EnumAutoload.Officer.TORGON]
+	current_upgrades = []
+	update_specialist_bonus()

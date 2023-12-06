@@ -2,10 +2,12 @@ extends Control
 
 @onready var population_counter = $MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer/HBoxContainer/PopLabel
 @onready var worker_counter = $MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer/HBoxContainer/WorkerLabel
-@onready var debug_hab = $MarginContainer/HBoxContainer/MarginContainer5/HBoxContainer/HabDebug
-@onready var debug_food = $MarginContainer/HBoxContainer/MarginContainer2/HBoxContainer/FoodDebug
-@onready var debug_water = $MarginContainer/HBoxContainer/MarginContainer3/HBoxContainer/WaterDebug
-@onready var debug_air = $MarginContainer/HBoxContainer/MarginContainer4/HBoxContainer/AirDebug
+@onready var hab_label: Label = $MarginContainer/HBoxContainer/MarginContainer5/HBoxContainer/HabDebug
+@onready var food_label: Label = $MarginContainer/HBoxContainer/MarginContainer2/HBoxContainer/FoodDebug
+@onready var water_label: Label = $MarginContainer/HBoxContainer/MarginContainer3/HBoxContainer/WaterDebug
+@onready var air_label: Label = $MarginContainer/HBoxContainer/MarginContainer4/HBoxContainer/AirDebug
+@onready var metal_label: Label = $MarginContainer/HBoxContainer/MarginContainer6/HBoxContainer/MetalLabel
+
 
 @export var resource_change_popup: PackedScene
 
@@ -14,6 +16,7 @@ var old_housing_value = 0
 var old_food_value = 0
 var old_water_value = 0
 var old_air_value = 0
+var old_metal_value = 0
 
 func _ready():
 	ResourceManager.population_changed.connect(_update_pop_ui)
@@ -23,6 +26,7 @@ func _ready():
 	ResourceManager.food_modifier_changed.connect(_update_debug_food)
 	ResourceManager.water_modifier_changed.connect(_update_debug_water)
 	ResourceManager.air_modifier_changed.connect(_update_debug_air)
+	ResourceManager.metal_modifier_changed.connect(_update_debug_metal)
 
 	# This is fucking stupid, but it's 1AM, i'm tired, and it fixes the UI update problem
 	ResourceManager.population_amount = ResourceManager.population_amount
@@ -33,6 +37,7 @@ func _ready():
 	old_food_value = ResourceManager.food_amount
 	old_water_value = ResourceManager.water_amount
 	old_air_value = ResourceManager.air_amount
+	old_metal_value = ResourceManager.metal_amount
 
 
 func animate_bar(bar, value) -> void:
@@ -52,8 +57,8 @@ func _update_worker_ui(value):
 
 
 func _update_housing_ui(total, available):
-	debug_hab.text = "{0} ({1})".format([str(total), str(available)])
-	spawn_resource_change_popup(total - old_housing_value, debug_hab)
+	hab_label.text = "{0} ({1})".format([str(total), str(available)])
+	spawn_resource_change_popup(total - old_housing_value, hab_label)
 	old_housing_value = total
 
 func _update_debug_food(total, modifier):
@@ -61,8 +66,8 @@ func _update_debug_food(total, modifier):
 	var modifier_prefix = ""
 	if modifier > 0:
 		modifier_prefix = "+"
-	debug_food.text = "{0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
-	spawn_resource_change_popup(total - old_food_value, debug_food)
+	food_label.text = "{0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
+	spawn_resource_change_popup(total - old_food_value, food_label)
 	old_food_value = total
 
 func _update_debug_water(total, modifier):
@@ -70,8 +75,8 @@ func _update_debug_water(total, modifier):
 	var modifier_prefix = ""
 	if modifier > 0:
 		modifier_prefix = "+"
-	debug_water.text = "{0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
-	spawn_resource_change_popup(total - old_water_value, debug_water)
+	water_label.text = "{0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
+	spawn_resource_change_popup(total - old_water_value, water_label)
 	old_water_value = total
 
 func _update_debug_air(total, modifier):
@@ -79,9 +84,18 @@ func _update_debug_air(total, modifier):
 	var modifier_prefix = ""
 	if modifier > 0:
 		modifier_prefix = "+"
-	debug_air.text = "{0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
-	spawn_resource_change_popup(total - old_air_value, debug_air)
+	air_label.text = "{0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
+	spawn_resource_change_popup(total - old_air_value, air_label)
 	old_air_value = total
+
+func _update_debug_metal(total, modifier):
+	var modifier_str = str(round(modifier))
+	var modifier_prefix = ""
+	if modifier > 0:
+		modifier_prefix = "+"
+	metal_label.text = "{0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
+	spawn_resource_change_popup(total - old_metal_value, metal_label)
+	old_metal_value = total
 
 func spawn_resource_change_popup(change_amount: int, parent_node: Node):
 	if change_amount == 0:
@@ -99,46 +113,26 @@ func spawn_resource_change_popup(change_amount: int, parent_node: Node):
 func _on_worker_ui_mouse_entered():
 	ResourceManager.emit_signal("ui_hover_show", "Available Crew members")
 
-
-func _on_worker_ui_mouse_exited():
+func _on_resource_ui_mouse_exited():
 	ResourceManager.emit_signal("ui_hover_hide")
-
 
 func _on_pop_ui_mouse_entered():
 	ResourceManager.emit_signal("ui_hover_show", "Total Crew memebers")
 
-
-func _on_pop_ui_mouse_exited():
-	ResourceManager.emit_signal("ui_hover_hide")
-
-
 func _on_hab_ui_mouse_entered():
 	ResourceManager.emit_signal("ui_hover_show", "Housing (Available Housing)\nNegative available housing will cause unrest and unfortunate events more likely to happen")
-
-
-func _on_hab_ui_mouse_exited():
-	ResourceManager.emit_signal("ui_hover_hide")
-
 
 func _on_food_ui_mouse_entered():
 	ResourceManager.emit_signal("ui_hover_show", "Food (Food per Day)")
 
-
-func _on_food_ui_mouse_exited():
-	ResourceManager.emit_signal("ui_hover_hide")
-
-
 func _on_water_ui_mouse_entered():
 	ResourceManager.emit_signal("ui_hover_show", "Water (Water per Day)")
-
-
-func _on_water_ui_mouse_exited():
-	ResourceManager.emit_signal("ui_hover_hide")
-
 
 func _on_air_ui_mouse_entered():
 	ResourceManager.emit_signal("ui_hover_show", "Oxygen (Oxygen per Day)")
 
+func _on_metal_ui_mouse_entered():
+	ResourceManager.emit_signal("ui_hover_show", "Metal (Metal per Day)")
 
-func _on_air_ui_mouse_exited():
-	ResourceManager.emit_signal("ui_hover_hide")
+
+	

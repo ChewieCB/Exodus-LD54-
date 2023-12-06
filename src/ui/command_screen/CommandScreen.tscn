@@ -1,10 +1,30 @@
-[gd_scene load_steps=11 format=3 uid="uid://b1xmgw2jwmunk"]
+[gd_scene load_steps=29 format=3 uid="uid://b1xmgw2jwmunk"]
 
 [ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="1_4qidw"]
 [ext_resource type="Script" path="res://src/ui/command_screen/command_screen.gd" id="1_rladp"]
 [ext_resource type="Texture2D" uid="uid://8m1r17nptfyg" path="res://assets/sprite/space_map.png" id="2_tgm10"]
 [ext_resource type="PackedScene" uid="uid://1dd0jvugd41x" path="res://src/ui/command_screen/star_map/StarMap.tscn" id="3_jn7gj"]
+[ext_resource type="Texture2D" uid="uid://d3pj8wans2lr4" path="res://assets/sprite/circle.png" id="3_4kwp3"]
+[ext_resource type="Script" path="res://src/ui/command_screen/crewmate_tab/crewmate_tab.gd" id="3_ffkt0"]
+[ext_resource type="Script" path="res://src/ui/command_screen/research_tab/research_tab.gd" id="3_v75ll"]
 [ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="4_hkjqs"]
+[ext_resource type="PackedScene" uid="uid://b7bouq455qx0b" path="res://src/ui/command_screen/crewmate_tab/CrewmateButton.tscn" id="4_vsvdc"]
+[ext_resource type="PackedScene" uid="uid://c6fnnntkibdna" path="res://src/ui/command_screen/research_tab/SelectResearchGraphButton.tscn" id="5_fynyk"]
+[ext_resource type="Texture2D" uid="uid://crwutx701neym" path="res://assets/character/crewmates/image1x1.png" id="6_uofd5"]
+[ext_resource type="Texture2D" uid="uid://cegl6af3k4xpo" path="res://assets/character/pressley.png" id="6_wk0bw"]
+[ext_resource type="PackedScene" uid="uid://diawc60skh6ii" path="res://src/ui/command_screen/research_tab/HabitationMedicalResearch.tscn" id="7_cq70m"]
+[ext_resource type="PackedScene" uid="uid://b0j5locyowwo2" path="res://src/ui/command_screen/research_tab/ManufacturingResearch.tscn" id="7_da66k"]
+[ext_resource type="PackedScene" uid="uid://btjkgkmeros7p" path="res://src/ui/command_screen/research_tab/CrewSuppliesResearch.tscn" id="7_qusv6"]
+[ext_resource type="PackedScene" uid="uid://lwk7nc56s8g8" path="res://src/ui/command_screen/OfficerLabel.tscn" id="7_rk483"]
+[ext_resource type="Texture2D" uid="uid://df0siiqlu7ln3" path="res://assets/character/torgon.png" id="8_jre42"]
+[ext_resource type="Texture2D" uid="uid://xor5ih5p1g3d" path="res://assets/character/faroq_khan.png" id="9_47m3x"]
+[ext_resource type="PackedScene" uid="uid://ce5dg57vaxm3d" path="res://src/ui/command_screen/research_tab/ConstructionLogisticResearch.tscn" id="9_iekhi"]
+[ext_resource type="Texture2D" uid="uid://cox4fi3kfgyyo" path="res://assets/character/governor_jerrerod.png" id="10_0xedy"]
+[ext_resource type="PackedScene" uid="uid://doioc1jac620x" path="res://src/ui/command_screen/research_tab/ShipInfrastructureResearch.tscn" id="10_nmkce"]
+[ext_resource type="Texture2D" uid="uid://dqwcek01e0v4k" path="res://assets/character/sam_carter.png" id="10_t33dg"]
+[ext_resource type="Texture2D" uid="uid://dxsiqg3h4gm0" path="res://assets/character/mary_watney.png" id="12_cymej"]
+[ext_resource type="Texture2D" uid="uid://bfqerbgujnq0s" path="res://assets/character/dr_dorian.png" id="13_xdugs"]
+[ext_resource type="Script" path="res://src/ui/command_screen/status_tab/status_tab.gd" id="24_fwbaf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v161y"]
 size = Vector2(450, 235)
@@ -23,6 +43,9 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(1119, 0)]
+[sub_resource type="Curve2D" id="Curve2D_ncuok"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 105, -62, 0, 0, 0, 0, 88, -77, 0, 0, 0, 0, 35, -58, 0, 0, 0, 0, -1, -11, 0, 0, 0, 0, -5, 0, 0, 0, 0, 0, 8, 44)
 }
 
 [sub_resource type="Animation" id="Animation_0rfvp"]
@@ -85,6 +108,166 @@ offset_top = 192.0
 offset_right = 500.0
 offset_bottom = 460.0
 mouse_filter = 2
+
+[node name="Research" type="TabBar" parent="DeviceFrame/TabContainer"]
+visible = false
+layout_mode = 2
+script = ExtResource("3_v75ll")
+
+[node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Research"]
+self_modulate = Color(0.0352941, 0.0745098, 0.0823529, 1)
+layout_mode = 0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 451.0
+offset_bottom = 242.0
+texture = ExtResource("4_hkjqs")
+
+[node name="ChooseTech" type="Control" parent="DeviceFrame/TabContainer/Research"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 12.0
+offset_right = 384.0
+offset_bottom = 31.0
+theme_override_font_sizes/font_size = 12
+text = "Please select a research field to start"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="GeneralResearch" type="VBoxContainer" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
+layout_mode = 2
+offset_left = 24.0
+offset_top = 42.0
+offset_right = 224.0
+offset_bottom = 178.0
+
+[node name="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+research_graph_scene = ExtResource("7_qusv6")
+
+[node name="Button2" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Manufacturing"
+research_graph_scene = ExtResource("7_da66k")
+
+[node name="Button3" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Habitation & Medical"
+research_graph_scene = ExtResource("7_cq70m")
+
+[node name="Button4" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Construction & Logistics"
+research_graph_scene = ExtResource("9_iekhi")
+
+[node name="Button5" parent="DeviceFrame/TabContainer/Research/ChooseTech/GeneralResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Ship Infrastructure"
+research_graph_scene = ExtResource("10_nmkce")
+
+[node name="SpecialistResearch" type="VBoxContainer" parent="DeviceFrame/TabContainer/Research/ChooseTech"]
+visible = false
+layout_mode = 0
+offset_left = 278.0
+offset_top = 35.0
+offset_right = 422.0
+offset_bottom = 227.0
+
+[node name="Button" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Navigation
+"
+required_officer = 1
+
+[node name="Button2" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Communcation"
+required_officer = 2
+
+[node name="Button3" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Housing"
+required_officer = 5
+
+[node name="Button4" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Agriculture"
+required_officer = 3
+
+[node name="Button5" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Science"
+required_officer = 4
+
+[node name="Button6" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Engineering"
+required_officer = 6
+
+[node name="Button7" parent="DeviceFrame/TabContainer/Research/ChooseTech/SpecialistResearch" instance=ExtResource("5_fynyk")]
+layout_mode = 2
+text = "Body Augmentation"
+required_officer = 7
+
+[node name="ResearchGraphView" type="Control" parent="DeviceFrame/TabContainer/Research"]
+visible = false
+anchors_preset = 0
+
+[node name="ResearchGraphHolder" type="Control" parent="DeviceFrame/TabContainer/Research/ResearchGraphView"]
+anchors_preset = 0
+offset_right = 450.0
+offset_bottom = 242.0
+
+[node name="HabitationMedicalResearch" parent="DeviceFrame/TabContainer/Research/ResearchGraphView/ResearchGraphHolder" instance=ExtResource("7_cq70m")]
+
+[node name="UpgradeButton" type="Button" parent="DeviceFrame/TabContainer/Research/ResearchGraphView"]
+layout_mode = 0
+offset_left = 374.0
+offset_top = 213.0
+offset_right = 438.0
+offset_bottom = 237.0
+text = "Proceed
+"
+
+[node name="BackButton" type="Button" parent="DeviceFrame/TabContainer/Research/ResearchGraphView"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 213.0
+offset_right = 75.0
+offset_bottom = 237.0
+text = "Back"
+
+[node name="UpgradeDescription" type="RichTextLabel" parent="DeviceFrame/TabContainer/Research/ResearchGraphView"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 137.0
+offset_right = 446.0
+offset_bottom = 211.0
+bbcode_enabled = true
+text = "[u]Upgrade name[/u]
+[font_size=12]Something something that increase building speed by [color=green]50%[/color].[/font_size]
+"
+
+[node name="CostLabel" type="RichTextLabel" parent="DeviceFrame/TabContainer/Research/ResearchGraphView"]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 214.0
+offset_right = 369.0
+offset_bottom = 241.0
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "[center]Cost: 30 food, 5 water, 5 metal, 5 air, 5 prefabs, 100 dark matter capsule, 7749 gold[/center]"
+
+[node name="NotEnoughResourceTimer" type="Timer" parent="DeviceFrame/TabContainer/Research"]
+one_shot = true
 
 [node name="Travel" type="TabBar" parent="DeviceFrame/TabContainer"]
 layout_mode = 2
@@ -224,8 +407,14 @@ visible = false
 layout_mode = 2
 mouse_filter = 2
 
-[node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]
-self_modulate = Color(0.0156863, 0.0784314, 0.152941, 1)
+[node name="Crewmates" type="TabBar" parent="DeviceFrame/TabContainer"]
+visible = false
+layout_mode = 2
+script = ExtResource("3_ffkt0")
+crewmate_button = ExtResource("4_vsvdc")
+
+[node name="Background" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates"]
+self_modulate = Color(0.0470588, 0.0392157, 0.0235294, 1)
 layout_mode = 0
 offset_left = 2.0
 offset_top = 2.0
@@ -234,57 +423,302 @@ offset_bottom = 235.0
 mouse_filter = 2
 texture = ExtResource("4_hkjqs")
 
-[node name="TitleLabel" type="Label" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]
+[node name="ScrollContainer" type="ScrollContainer" parent="DeviceFrame/TabContainer/Crewmates"]
 layout_mode = 0
-offset_left = 59.0
-offset_top = 15.0
-offset_right = 386.0
-offset_bottom = 67.0
-text = "Wake up hibernating citizen to get more crew member"
-horizontal_alignment = 1
-autowrap_mode = 2
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 141.0
+offset_bottom = 236.0
+horizontal_scroll_mode = 0
 
-[node name="CountLabel" type="Label" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -68.0
-offset_top = -28.0
-offset_right = 68.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "Woke up 0 citizen"
-horizontal_alignment = 1
-autowrap_mode = 2
+[node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Crewmates/ScrollContainer"]
+layout_mode = 2
 
-[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]
+[node name="PortraitBackground" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates"]
 layout_mode = 0
-offset_left = 140.0
-offset_top = 128.0
-offset_right = 303.0
-offset_bottom = 159.0
-text = "Wake up 1 citzen"
+offset_left = 165.0
+offset_top = 20.0
+offset_right = 229.0
+offset_bottom = 84.0
+texture = ExtResource("4_hkjqs")
+expand_mode = 1
 
-[node name="CostLabel" type="Label" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]
+[node name="Portrait" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates"]
+layout_mode = 0
+offset_left = 165.0
+offset_top = 20.0
+offset_right = 229.0
+offset_bottom = 84.0
+texture = ExtResource("6_uofd5")
+expand_mode = 1
+
+[node name="BasicInfo" type="RichTextLabel" parent="DeviceFrame/TabContainer/Crewmates"]
+layout_mode = 0
+offset_left = 244.0
+offset_top = 20.0
+offset_right = 428.0
+offset_bottom = 86.0
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "[u]Name: First Last[/u]
+Age: 46
+Joined date: 12
+Status: [color=green]Healthy[/color]"
+
+[node name="RandomThoughtContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Crewmates"]
 layout_mode = 0
 offset_left = 166.0
-offset_top = 103.0
-offset_right = 276.0
-offset_bottom = 129.0
-text = "Cost: 15 water"
+offset_top = 100.0
+offset_right = 441.0
+offset_bottom = 181.0
 
-[node name="WarningLabel" type="Label" parent="DeviceFrame/TabContainer/Cryostasis Citizen"]
+[node name="Background" type="TextureRect" parent="DeviceFrame/TabContainer/Crewmates/RandomThoughtContainer"]
+self_modulate = Color(0.109804, 0.109804, 0.105882, 1)
+layout_mode = 2
+texture = ExtResource("4_hkjqs")
+
+[node name="RandomThought" type="RichTextLabel" parent="DeviceFrame/TabContainer/Crewmates/RandomThoughtContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "[center]\"As I float through the sterile corridors of this metallic behemoth, I can't help but marvel at the vastness of space beyond the cold, unyielding walls .\"[/center]"
+autowrap_mode = 2
+
+[node name="YeetButton" type="Button" parent="DeviceFrame/TabContainer/Crewmates"]
+self_modulate = Color(1, 0.105882, 0.0705882, 1)
+layout_mode = 0
+offset_left = 369.0
+offset_top = 204.0
+offset_right = 441.0
+offset_bottom = 228.0
+text = "Jettison"
+
+[node name="ConfirmYeetButton" type="Button" parent="DeviceFrame/TabContainer/Crewmates"]
+visible = false
+self_modulate = Color(1, 0.105882, 0.0705882, 1)
+layout_mode = 0
+offset_left = 259.0
+offset_top = 204.0
+offset_right = 347.0
+offset_bottom = 228.0
+text = "Confirmed?"
+
+[node name="Officers" type="TabBar" parent="DeviceFrame/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Officers"]
+self_modulate = Color(0.109804, 0.109804, 0.105882, 1)
+layout_mode = 0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 451.0
+offset_bottom = 242.0
+texture = ExtResource("4_hkjqs")
+
+[node name="TitleLabel" type="Label" parent="DeviceFrame/TabContainer/Officers"]
+layout_mode = 0
+offset_left = 186.0
+offset_top = 7.0
+offset_right = 282.0
+offset_bottom = 34.0
+theme_override_font_sizes/font_size = 24
+text = "Officers"
+
+[node name="OfficerPortrait" type="TextureRect" parent="DeviceFrame/TabContainer/Officers"]
+visible = false
+modulate = Color(0.501961, 0.501961, 0.501961, 0.54902)
+layout_mode = 2
+offset_left = 277.0
+offset_top = 45.0
+offset_right = 378.0
+offset_bottom = 185.0
+texture = ExtResource("6_wk0bw")
+expand_mode = 3
+
+[node name="OfficerListMC" type="MarginContainer" parent="DeviceFrame/TabContainer/Officers"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 46.0
+offset_right = 218.0
+offset_bottom = 232.0
+
+[node name="Background" type="TextureRect" parent="DeviceFrame/TabContainer/Officers/OfficerListMC"]
+self_modulate = Color(0.2, 0.2, 0.192157, 0.537255)
+layout_mode = 2
+texture = ExtResource("4_hkjqs")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="DeviceFrame/TabContainer/Officers/OfficerListMC"]
+layout_mode = 2
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Officers/OfficerListMC/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Officers/OfficerListMC/ScrollContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="OfficerButton" parent="DeviceFrame/TabContainer/Officers/OfficerListMC/ScrollContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("portrait_texturerect", "desc_label") instance=ExtResource("7_rk483")]
+layout_mode = 2
+text = "Pressley 
+(Executive Officer)"
+portrait_sprite = ExtResource("6_wk0bw")
+officer = 1
+description = "Your dependable, trustworthy officer."
+portrait_texturerect = NodePath("../../../../../OfficerPortrait")
+desc_label = NodePath("../../../../../OfficerDescMC/MarginContainer/OfficerDescLabel")
+
+[node name="OfficerButton2" parent="DeviceFrame/TabContainer/Officers/OfficerListMC/ScrollContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("portrait_texturerect", "desc_label") instance=ExtResource("7_rk483")]
+layout_mode = 2
+text = "Torgon 
+(Intercom Officer)"
+portrait_sprite = ExtResource("8_jre42")
+officer = 2
+description = "Maybe look a bit unreliable but he won't fail your trust."
+portrait_texturerect = NodePath("../../../../../OfficerPortrait")
+desc_label = NodePath("../../../../../OfficerDescMC/MarginContainer/OfficerDescLabel")
+
+[node name="OfficerButton3" parent="DeviceFrame/TabContainer/Officers/OfficerListMC/ScrollContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("portrait_texturerect", "desc_label") instance=ExtResource("7_rk483")]
+layout_mode = 2
+text = "Faroq Khan 
+(Agriculture Director)"
+portrait_sprite = ExtResource("9_47m3x")
+officer = 3
+description = "Very good at farm stuff. Boost your food production by 50%."
+portrait_texturerect = NodePath("../../../../../OfficerPortrait")
+desc_label = NodePath("../../../../../OfficerDescMC/MarginContainer/OfficerDescLabel")
+
+[node name="OfficerButton4" parent="DeviceFrame/TabContainer/Officers/OfficerListMC/ScrollContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("portrait_texturerect", "desc_label") instance=ExtResource("7_rk483")]
+layout_mode = 2
+text = "Sam Carter 
+(Scientist)"
+portrait_sprite = ExtResource("10_t33dg")
+officer = 4
+description = "Skilled in material science. Improved your metal output by 50%."
+portrait_texturerect = NodePath("../../../../../OfficerPortrait")
+desc_label = NodePath("../../../../../OfficerDescMC/MarginContainer/OfficerDescLabel")
+
+[node name="OfficerButton5" parent="DeviceFrame/TabContainer/Officers/OfficerListMC/ScrollContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("portrait_texturerect", "desc_label") instance=ExtResource("7_rk483")]
+layout_mode = 2
+text = "Governor Jerrerod 
+(Governor)"
+portrait_sprite = ExtResource("10_0xedy")
+officer = 5
+description = "Very good at house stuff. Boost your housing capacity by 100%."
+portrait_texturerect = NodePath("../../../../../OfficerPortrait")
+desc_label = NodePath("../../../../../OfficerDescMC/MarginContainer/OfficerDescLabel")
+
+[node name="OfficerButton6" parent="DeviceFrame/TabContainer/Officers/OfficerListMC/ScrollContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("portrait_texturerect", "desc_label") instance=ExtResource("7_rk483")]
+layout_mode = 2
+text = "Mary Watney 
+(Engineer)"
+portrait_sprite = ExtResource("12_cymej")
+officer = 6
+description = "A fast and capable engineer.  Helping you with your quest.
+ 
+[color=green]- Reduced construction time by 50%.[/color]
+[color=darkgray]- Refund 50% of metal cost when deconstruct buildings.[/color]
+[color=darkgray]- Reduce ship hull upgrade by 25%.[/color]"
+portrait_texturerect = NodePath("../../../../../OfficerPortrait")
+desc_label = NodePath("../../../../../OfficerDescMC/MarginContainer/OfficerDescLabel")
+
+[node name="OfficerButton7" parent="DeviceFrame/TabContainer/Officers/OfficerListMC/ScrollContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("portrait_texturerect", "desc_label") instance=ExtResource("7_rk483")]
+layout_mode = 2
+text = "Dr Dorian 
+(Doctor)"
+portrait_sprite = ExtResource("13_xdugs")
+officer = 7
+description = "Scary yet talented doctor. Prevents sickness-related events from happening."
+portrait_texturerect = NodePath("../../../../../OfficerPortrait")
+desc_label = NodePath("../../../../../OfficerDescMC/MarginContainer/OfficerDescLabel")
+
+[node name="OfficerDescMC" type="MarginContainer" parent="DeviceFrame/TabContainer/Officers"]
+layout_mode = 0
+offset_left = 226.0
+offset_top = 87.0
+offset_right = 441.0
+offset_bottom = 232.0
+
+[node name="Background" type="TextureRect" parent="DeviceFrame/TabContainer/Officers/OfficerDescMC"]
+self_modulate = Color(0.2, 0.2, 0.192157, 0.537255)
+layout_mode = 2
+texture = ExtResource("4_hkjqs")
+
+[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Officers/OfficerDescMC"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="OfficerDescLabel" type="RichTextLabel" parent="DeviceFrame/TabContainer/Officers/OfficerDescMC/MarginContainer"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "A fast and capable engineer.  Helping you with your quest.
+ 
+[color=green]- Reduced construction time by 50%.[/color]
+[color=darkgray]- Refund 50% of metal cost when deconstruct buildings.[/color]
+[color=darkgray]- Reduce ship hull upgrade by 25%.[/color]"
+autowrap_mode = 2
+
+[node name="Status" type="TabBar" parent="DeviceFrame/TabContainer"]
+layout_mode = 2
+script = ExtResource("24_fwbaf")
+
+[node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Status"]
+self_modulate = Color(0.0352941, 0.0156863, 0.0823529, 1)
+layout_mode = 0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 451.0
+offset_bottom = 242.0
+texture = ExtResource("4_hkjqs")
+
+[node name="Title" type="Label" parent="DeviceFrame/TabContainer/Status"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 16.0
+offset_right = 169.0
+offset_bottom = 53.0
+theme_override_font_sizes/font_size = 24
+text = "Ship status"
+horizontal_alignment = 1
+
+[node name="ShipStatusLabel" type="Label" parent="DeviceFrame/TabContainer/Status"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 59.0
+offset_right = 212.0
+offset_bottom = 163.0
+text = "Ship hull Lv. 1
+Speed: ~1 LY / day"
+
+[node name="WarningLabel" type="Label" parent="DeviceFrame/TabContainer/Status"]
 visible = false
 self_modulate = Color(1, 0.0392157, 0.054902, 1)
 layout_mode = 0
-offset_left = 109.0
-offset_top = 161.0
-offset_right = 337.0
-offset_bottom = 187.0
-text = "Warning: not enough housing"
+offset_left = 116.0
+offset_top = 213.0
+offset_right = 344.0
+offset_bottom = 239.0
+text = "Warning: not enough resource"
+
+[node name="UpgradeHullButton" type="Button" parent="DeviceFrame/TabContainer/Status"]
+visible = false
+layout_mode = 2
+offset_left = 154.0
+offset_top = 169.0
+offset_right = 298.0
+offset_bottom = 209.0
+text = "Improve ship hull
+(15 Metal)"
 
 [node name="ShowHideCommandScreen" type="Button" parent="DeviceFrame"]
 layout_mode = 0
@@ -306,10 +740,15 @@ libraries = {
 [connection signal="tab_changed" from="DeviceFrame/TabContainer" to="." method="_on_tab_container_tab_changed"]
 [connection signal="mouse_entered" from="DeviceFrame/TabContainer/Travel/StarmapInputArea/Area2D" to="." method="_on_starmap_area_mouse_entered"]
 [connection signal="mouse_exited" from="DeviceFrame/TabContainer/Travel/StarmapInputArea/Area2D" to="." method="_on_starmap_area_mouse_exited"]
+[connection signal="pressed" from="DeviceFrame/TabContainer/Research/ResearchGraphView/UpgradeButton" to="DeviceFrame/TabContainer/Research" method="_on_upgrade_button_pressed"]
+[connection signal="pressed" from="DeviceFrame/TabContainer/Research/ResearchGraphView/BackButton" to="DeviceFrame/TabContainer/Research" method="_on_back_button_pressed"]
+[connection signal="timeout" from="DeviceFrame/TabContainer/Research/NotEnoughResourceTimer" to="DeviceFrame/TabContainer/Research" method="_on_not_enough_resource_timer_timeout"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button" to="." method="_on_default_path_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button2" to="." method="_on_intergalatic_route_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button3" to="." method="_on_asteroid_field_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button4" to="." method="_on_void_field_pressed"]
 [connection signal="toggled" from="DeviceFrame/TabContainer/Travel/ChangePathButton" to="." method="_on_change_path_button_toggled"]
-[connection signal="pressed" from="DeviceFrame/TabContainer/Cryostasis Citizen/Button" to="." method="_on_wake_up_citizen"]
-[connection signal="toggled" from="DeviceFrame/ShowHideCommandScreen" to="." method="_on_show_hide_travel_screen_toggled"]
+[connection signal="pressed" from="DeviceFrame/TabContainer/Crewmates/YeetButton" to="DeviceFrame/TabContainer/Crewmates" method="_on_yeet_button_pressed"]
+[connection signal="pressed" from="DeviceFrame/TabContainer/Crewmates/ConfirmYeetButton" to="DeviceFrame/TabContainer/Crewmates" method="_on_confirm_yeet_button_pressed"]
+[connection signal="pressed" from="DeviceFrame/TabContainer/Status/UpgradeHullButton" to="DeviceFrame/TabContainer/Status" method="_on_upgrade_hull_button_pressed"]
+[connection signal="toggled" from="DeviceFrame/ShowHideCommandScreen" to="." method="_on_show_hide_command_screen_toggled"]

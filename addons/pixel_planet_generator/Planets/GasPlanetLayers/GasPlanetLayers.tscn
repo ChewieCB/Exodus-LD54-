@@ -1,0 +1,86 @@
+[gd_scene load_steps=15 format=3 uid="uid://dcai4etsxl4rb"]
+
+[ext_resource type="Script" path="res://addons/pixel_planet_generator/Planets/GasPlanetLayers/GasPlanetLayers.gd" id="2"]
+[ext_resource type="Shader" path="res://addons/pixel_planet_generator/Planets/GasPlanetLayers/Ring.gdshader" id="3"]
+[ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="3_p7x1b"]
+[ext_resource type="Shader" path="res://addons/pixel_planet_generator/Planets/GasPlanetLayers/GasLayers.gdshader" id="4"]
+
+[sub_resource type="Gradient" id="1"]
+offsets = PackedFloat32Array(0, 0.498182, 1)
+colors = PackedColorArray(0.933333, 0.764706, 0.603922, 1, 0.85098, 0.627451, 0.4, 1, 0.560784, 0.337255, 0.231373, 1)
+
+[sub_resource type="GradientTexture1D" id="2"]
+gradient = SubResource("1")
+
+[sub_resource type="Gradient" id="3"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.4, 0.223529, 0.192157, 1, 0.270588, 0.156863, 0.235294, 1, 0.133333, 0.12549, 0.203922, 1)
+
+[sub_resource type="GradientTexture1D" id="4"]
+gradient = SubResource("3")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_01bh8"]
+shader = ExtResource("4")
+shader_parameter/pixels = 100.0
+shader_parameter/rotation = 0.0
+shader_parameter/cloud_cover = 0.61
+shader_parameter/light_origin = Vector2(-0.1, 0.3)
+shader_parameter/time_speed = 0.05
+shader_parameter/stretch = 2.204
+shader_parameter/cloud_curve = 1.376
+shader_parameter/light_border_1 = 0.52
+shader_parameter/light_border_2 = 0.62
+shader_parameter/bands = 0.892
+shader_parameter/should_dither = true
+shader_parameter/size = 10.107
+shader_parameter/OCTAVES = 3
+shader_parameter/seed = 6.314
+shader_parameter/time = 0.0
+shader_parameter/colorscheme = SubResource("2")
+shader_parameter/dark_colorscheme = SubResource("4")
+
+[sub_resource type="Gradient" id="Gradient_fmxrv"]
+offsets = PackedFloat32Array(0, 0.498182, 1)
+colors = PackedColorArray(0.933333, 0.764706, 0.603922, 1, 0.85098, 0.627451, 0.4, 1, 0.560784, 0.337255, 0.231373, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_77gjb"]
+gradient = SubResource("Gradient_fmxrv")
+
+[sub_resource type="Gradient" id="Gradient_mmlo5"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.4, 0.223529, 0.192157, 1, 0.270588, 0.156863, 0.235294, 1, 0.133333, 0.12549, 0.203922, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_axa8r"]
+gradient = SubResource("Gradient_mmlo5")
+
+[sub_resource type="ShaderMaterial" id="6"]
+shader = ExtResource("3")
+shader_parameter/pixels = 384.0
+shader_parameter/rotation = 0.7
+shader_parameter/light_origin = Vector2(-0.1, 0.3)
+shader_parameter/time_speed = 0.2
+shader_parameter/light_border_1 = 0.52
+shader_parameter/light_border_2 = 0.62
+shader_parameter/ring_width = 0.127
+shader_parameter/ring_perspective = 6.0
+shader_parameter/scale_rel_to_planet = 6.0
+shader_parameter/size = 15.0
+shader_parameter/OCTAVES = 4
+shader_parameter/seed = 8.461
+shader_parameter/time = 0.0
+shader_parameter/colorscheme = SubResource("GradientTexture1D_77gjb")
+shader_parameter/dark_colorscheme = SubResource("GradientTexture1D_axa8r")
+
+[node name="GasPlanetLayers" type="Node2D"]
+position = Vector2(569, 281)
+scale = Vector2(4, 4)
+script = ExtResource("2")
+
+[node name="GasLayers" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_01bh8")
+texture = ExtResource("3_p7x1b")
+
+[node name="Ring" type="Sprite2D" parent="."]
+material = SubResource("6")
+scale = Vector2(3, 3)
+texture = ExtResource("3_p7x1b")

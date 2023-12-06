@@ -1,24 +1,27 @@
 [gd_resource type="Resource" script_class="BuildingResource" load_steps=3 format=3 uid="uid://c4xijw2v8bv0p"]
 
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_trl2k"]
-[ext_resource type="Texture2D" uid="uid://dg8jstnxunrvd" path="res://assets/buildings/new/water_1.png" id="2_8s7rh"]
+[ext_resource type="Texture2D" uid="uid://dg8jstnxunrvd" path="res://assets/buildings/water_1.png" id="2_beg45"]
 
 [resource]
 script = ExtResource("1_trl2k")
 name = "Vapour Cycler"
 type = 2
-sprite = ExtResource("2_8s7rh")
+sprite = ExtResource("2_beg45")
 housing_prod = 0
 food_prod = 0
-water_prod = 2
+water_prod = 3
 air_prod = 0
+metal_prod = 0
 food_cost = 0
 air_cost = 0
 water_cost = 0
+metal_cost = 9
 people_cost = 3
 refund_food = 0
 refund_air = 0
 refund_water = 0
+refund_metal = 0
 refund_population = 0
-construction_time = 0
-destruction_time = 2
+construction_time = 2
+destruction_time = 1

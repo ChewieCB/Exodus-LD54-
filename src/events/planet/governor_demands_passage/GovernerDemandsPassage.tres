@@ -1,42 +1,52 @@
-[gd_resource type="Resource" script_class="Event" load_steps=2 format=3 uid="uid://yx5xsd5mk6gm"]
+[gd_resource type="Resource" script_class="ExodusEvent" load_steps=2 format=3 uid="uid://yx5xsd5mk6gm"]
 
-[ext_resource type="Script" path="res://src/events/resource/event_resource.gd" id="1_whple"]
+[ext_resource type="Script" path="res://src/events/event_resource.gd" id="1_whple"]
 
 [resource]
 script = ExtResource("1_whple")
 name = "Governor Demands Passage"
 type = 0
+planet_type = 7
+active_screen = 2
 event_text_file = "res://src/events/planet/governor_demands_passage/governer_demands_passage.txt"
 pop_reward_1 = 4
 food_reward_1 = 30
 water_reward_1 = 0
 air_reward_1 = 0
+metal_reward_1 = 0
 pop_reward_2 = 0
 food_reward_2 = 70
 water_reward_2 = 0
 air_reward_2 = 0
+metal_reward_2 = 0
 pop_reward_3 = 0
 food_reward_3 = 0
 water_reward_3 = 0
 air_reward_3 = 0
+metal_reward_3 = 0
 pop_reward_4 = 0
 food_reward_4 = 0
 water_reward_4 = 0
 air_reward_4 = 0
+metal_reward_4 = 0
 pop_cost_1 = 0
 food_cost_1 = 0
 water_cost_1 = 0
 air_cost_1 = 0
+metal_cost_1 = 0
 pop_cost_2 = 0
 food_cost_2 = 0
 water_cost_2 = 0
 air_cost_2 = 0
+metal_cost_2 = 0
 pop_cost_3 = 0
 food_cost_3 = 0
 water_cost_3 = 0
 air_cost_3 = 0
+metal_cost_3 = 0
 pop_cost_4 = 0
 food_cost_4 = 0
 water_cost_4 = 0
 air_cost_4 = 0
+metal_cost_4 = 0
 is_chain_event = false

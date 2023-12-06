@@ -1,0 +1,339 @@
+[gd_scene load_steps=17 format=3 uid="uid://doioc1jac620x"]
+
+[ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="1_gmg1v"]
+[ext_resource type="PackedScene" uid="uid://duihto0qvkw2b" path="res://src/ui/command_screen/research_tab/TechUpgradeButton.tscn" id="2_rwbl4"]
+[ext_resource type="Texture2D" uid="uid://c8jp51mebn7q3" path="res://assets/ui/upgrades/common_upgrade.png" id="3_j8s4g"]
+[ext_resource type="Script" path="res://src/common/resource_cost.gd" id="4_cielo"]
+
+[sub_resource type="Resource" id="Resource_bba2q"]
+script = ExtResource("4_cielo")
+food = 0
+water = 0
+air = 10
+metal = 10
+
+[sub_resource type="Resource" id="Resource_6fxcb"]
+script = ExtResource("4_cielo")
+food = 0
+water = 0
+air = 30
+metal = 40
+
+[sub_resource type="Resource" id="Resource_ojv5p"]
+script = ExtResource("4_cielo")
+food = 0
+water = 0
+air = 20
+metal = 20
+
+[sub_resource type="Resource" id="Resource_4mh4f"]
+script = ExtResource("4_cielo")
+food = 0
+water = 0
+air = 50
+metal = 40
+
+[sub_resource type="Resource" id="Resource_it406"]
+script = ExtResource("4_cielo")
+food = 0
+water = 25
+air = 0
+metal = 25
+
+[sub_resource type="Resource" id="Resource_6ukt5"]
+script = ExtResource("4_cielo")
+food = 0
+water = 35
+air = 35
+metal = 40
+
+[sub_resource type="Resource" id="Resource_xm4aw"]
+script = ExtResource("4_cielo")
+food = 0
+water = 30
+air = 80
+metal = 80
+
+[sub_resource type="Resource" id="Resource_w3qdd"]
+script = ExtResource("4_cielo")
+food = 20
+water = 20
+air = 65
+metal = 65
+
+[sub_resource type="Resource" id="Resource_fh41k"]
+script = ExtResource("4_cielo")
+food = 5
+water = 5
+air = 0
+metal = 15
+
+[sub_resource type="Resource" id="Resource_87k5l"]
+script = ExtResource("4_cielo")
+food = 0
+water = 0
+air = 0
+metal = 60
+
+[sub_resource type="Resource" id="Resource_affab"]
+script = ExtResource("4_cielo")
+food = 20
+water = 20
+air = 20
+metal = 20
+
+[sub_resource type="Resource" id="Resource_4k5fw"]
+script = ExtResource("4_cielo")
+food = 0
+water = 20
+air = 20
+metal = 100
+
+[node name="HabitationMedicalResearch" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 451.0
+offset_bottom = 138.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0, 1, 0.32549, 0.0627451)
+layout_mode = 0
+offset_left = 7.0
+offset_top = 8.0
+offset_right = 446.0
+offset_bottom = 136.0
+texture = ExtResource("1_gmg1v")
+
+[node name="Line1-2" type="Line2D" parent="."]
+position = Vector2(12, 16)
+points = PackedVector2Array(40, 40, 80, 40)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line1-3" type="Line2D" parent="."]
+position = Vector2(12, 16)
+points = PackedVector2Array(40, 40, 40, 84, 80, 84)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line3-4" type="Line2D" parent="."]
+position = Vector2(12, 16)
+points = PackedVector2Array(84, 84, 128, 84)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line5-6" type="Line2D" parent="."]
+position = Vector2(21, 16)
+points = PackedVector2Array(180, 40, 220, 40)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line6-7" type="Line2D" parent="."]
+position = Vector2(21, 16)
+points = PackedVector2Array(224, 40, 268, 40)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line6-8" type="Line2D" parent="."]
+position = Vector2(21, 16)
+points = PackedVector2Array(224, 40, 224, 84, 268, 84)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line9-10" type="Line2D" parent="."]
+position = Vector2(21, 16)
+points = PackedVector2Array(331, 40, 375, 40)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line9-11" type="Line2D" parent="."]
+position = Vector2(21, 16)
+points = PackedVector2Array(331, 40, 331, 84)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line9-12" type="Line2D" parent="."]
+position = Vector2(21, 16)
+points = PackedVector2Array(331, 40, 375, 84)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Upgrade1" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_rwbl4")]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 40.0
+offset_right = 68.0
+offset_bottom = 72.0
+upgrade_name = "Tightbeam Communication"
+upgrade_description = "Allow communication outside current sector."
+upgrade_id = 35
+upgrade_sprite = ExtResource("3_j8s4g")
+cost = SubResource("Resource_bba2q")
+connection_lines = [NodePath("../Line1-2"), NodePath("../Line1-3")]
+
+[node name="Upgrade2" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_rwbl4")]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 40.0
+offset_right = 112.0
+offset_bottom = 72.0
+upgrade_name = "Quantum Entanglement Comm."
+upgrade_description = "Allow communication from multiple sectors away."
+upgrade_id = 36
+upgrade_sprite = ExtResource("3_j8s4g")
+cost = SubResource("Resource_6fxcb")
+require_one_of_these_upgrades = [NodePath("../Upgrade1")]
+disabled = true
+
+[node name="Upgrade3" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("2_rwbl4")]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 84.0
+offset_right = 112.0
+offset_bottom = 116.0
+upgrade_name = "Scanner Array"
+upgrade_description = "Allow us to inspect with more detailed information about planets, space stations and nearby ships."
+upgrade_id = 37
+upgrade_sprite = ExtResource("3_j8s4g")
+cost = SubResource("Resource_ojv5p")
+connection_lines = [NodePath("../Line3-4")]
+require_one_of_these_upgrades = [NodePath("../Upgrade1")]
+disabled = true
+
+[node name="Upgrade4" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_rwbl4")]
+layout_mode = 0
+offset_left = 124.0
+offset_top = 84.0
+offset_right = 156.0
+offset_bottom = 116.0
+upgrade_name = "Survey Drones"
+upgrade_description = "Even more information and increased range for scanning."
+upgrade_id = 38
+upgrade_sprite = ExtResource("3_j8s4g")
+cost = SubResource("Resource_4mh4f")
+require_one_of_these_upgrades = [NodePath("../Upgrade3")]
+disabled = true
+
+[node name="Upgrade5" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_rwbl4")]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 40.0
+offset_right = 216.0
+offset_bottom = 72.0
+upgrade_name = "Redundant Engine Reactor"
+upgrade_description = "Increase ship travel speed by [color=green]25%[/color]. If one engine go down, ship still can travel by the remaining."
+upgrade_id = 39
+upgrade_sprite = ExtResource("3_j8s4g")
+cost = SubResource("Resource_it406")
+connection_lines = [NodePath("../Line5-6")]
+disabled = true
+
+[node name="Upgrade6" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("2_rwbl4")]
+layout_mode = 0
+offset_left = 228.0
+offset_top = 40.0
+offset_right = 260.0
+offset_bottom = 72.0
+upgrade_name = "AI Reactor Management"
+upgrade_description = "Increases the amount of stress the engine can take in overdride."
+upgrade_id = 40
+upgrade_sprite = ExtResource("3_j8s4g")
+cost = SubResource("Resource_6ukt5")
+connection_lines = [NodePath("../Line6-7"), NodePath("../Line6-8")]
+require_one_of_these_upgrades = [NodePath("../Upgrade5")]
+disabled = true
+
+[node name="Upgrade7" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_rwbl4")]
+layout_mode = 0
+offset_left = 272.0
+offset_top = 40.0
+offset_right = 304.0
+offset_bottom = 72.0
+upgrade_name = "Precise Jump Calculation"
+upgrade_description = "Increase range we can override jump."
+upgrade_id = 41
+upgrade_sprite = ExtResource("3_j8s4g")
+cost = SubResource("Resource_xm4aw")
+require_one_of_these_upgrades = [NodePath("../Upgrade6")]
+disabled = true
+
+[node name="Upgrade8" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_rwbl4")]
+layout_mode = 0
+offset_left = 272.0
+offset_top = 84.0
+offset_right = 304.0
+offset_bottom = 116.0
+upgrade_name = "AI Astronavigation"
+upgrade_description = "Increase ship travel speed by another [color=green]25%[/color]."
+upgrade_id = 42
+upgrade_sprite = ExtResource("3_j8s4g")
+cost = SubResource("Resource_w3qdd")
+require_one_of_these_upgrades = [NodePath("../Upgrade6")]
+disabled = true
+
+[node name="Upgrade9" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_rwbl4")]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 40.0
+offset_right = 368.0
+offset_bottom = 72.0
+upgrade_name = "Hull Upgrading Expertise"
+upgrade_description = "Unlock spaceship hull integrity upgrade (can be access in Status screen)."
+upgrade_id = 43
+upgrade_sprite = ExtResource("3_j8s4g")
+cost = SubResource("Resource_fh41k")
+connection_lines = [NodePath("../Line9-10"), NodePath("../Line9-11"), NodePath("../Line9-12")]
+
+[node name="Upgrade10" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_rwbl4")]
+layout_mode = 0
+offset_left = 380.0
+offset_top = 40.0
+offset_right = 412.0
+offset_bottom = 72.0
+upgrade_name = "Titanium Hull"
+upgrade_description = "Reduce damage caused by space debris impacts."
+upgrade_id = 44
+upgrade_sprite = ExtResource("3_j8s4g")
+cost = SubResource("Resource_87k5l")
+require_one_of_these_upgrades = [NodePath("../Upgrade9")]
+disabled = true
+
+[node name="Upgrade11" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_rwbl4")]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 84.0
+offset_right = 368.0
+offset_bottom = 116.0
+upgrade_name = "Emergency Compartment"
+upgrade_description = "Reduce time needed for crew to get to safety during a hull breach. Reduce chance for crew injured when ship damaged."
+upgrade_id = 45
+upgrade_sprite = ExtResource("3_j8s4g")
+cost = SubResource("Resource_affab")
+require_one_of_these_upgrades = [NodePath("../Upgrade9")]
+disabled = true
+
+[node name="Upgrade12" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_rwbl4")]
+layout_mode = 0
+offset_left = 380.0
+offset_top = 84.0
+offset_right = 412.0
+offset_bottom = 116.0
+upgrade_name = "Modular Hull Plates"
+upgrade_description = "Reduce cost for repairing and upgrading ship hull by [color=green]50%[/color]."
+upgrade_id = 46
+upgrade_sprite = ExtResource("3_j8s4g")
+cost = SubResource("Resource_4k5fw")
+require_one_of_these_upgrades = [NodePath("../Upgrade9")]
+
+[node name="TreeLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -88.0
+offset_top = 10.0
+offset_right = 88.0
+offset_bottom = 29.0
+grow_horizontal = 2
+text = "Ship Infrastructure"
+horizontal_alignment = 1
