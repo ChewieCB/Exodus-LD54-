@@ -1,11 +1,10 @@
-[gd_scene load_steps=29 format=3 uid="uid://b1xmgw2jwmunk"]
+[gd_scene load_steps=30 format=3 uid="uid://b1xmgw2jwmunk"]
 
 [ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="1_4qidw"]
 [ext_resource type="Script" path="res://src/ui/command_screen/command_screen.gd" id="1_rladp"]
 [ext_resource type="Texture2D" uid="uid://8m1r17nptfyg" path="res://assets/sprite/space_map.png" id="2_tgm10"]
-[ext_resource type="PackedScene" uid="uid://1dd0jvugd41x" path="res://src/ui/command_screen/star_map/StarMap.tscn" id="3_jn7gj"]
-[ext_resource type="Texture2D" uid="uid://d3pj8wans2lr4" path="res://assets/sprite/circle.png" id="3_4kwp3"]
 [ext_resource type="Script" path="res://src/ui/command_screen/crewmate_tab/crewmate_tab.gd" id="3_ffkt0"]
+[ext_resource type="PackedScene" uid="uid://1dd0jvugd41x" path="res://src/ui/command_screen/star_map/StarMap.tscn" id="3_jn7gj"]
 [ext_resource type="Script" path="res://src/ui/command_screen/research_tab/research_tab.gd" id="3_v75ll"]
 [ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="4_hkjqs"]
 [ext_resource type="PackedScene" uid="uid://b7bouq455qx0b" path="res://src/ui/command_screen/crewmate_tab/CrewmateButton.tscn" id="4_vsvdc"]
@@ -43,9 +42,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(1119, 0)]
-[sub_resource type="Curve2D" id="Curve2D_ncuok"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 105, -62, 0, 0, 0, 0, 88, -77, 0, 0, 0, 0, 35, -58, 0, 0, 0, 0, -1, -11, 0, 0, 0, 0, -5, 0, 0, 0, 0, 0, 8, 44)
 }
 
 [sub_resource type="Animation" id="Animation_0rfvp"]
@@ -110,7 +106,6 @@ offset_bottom = 460.0
 mouse_filter = 2
 
 [node name="Research" type="TabBar" parent="DeviceFrame/TabContainer"]
-visible = false
 layout_mode = 2
 script = ExtResource("3_v75ll")
 
@@ -270,6 +265,7 @@ text = "[center]Cost: 30 food, 5 water, 5 metal, 5 air, 5 prefabs, 100 dark matt
 one_shot = true
 
 [node name="Travel" type="TabBar" parent="DeviceFrame/TabContainer"]
+visible = false
 layout_mode = 2
 mouse_filter = 2
 
@@ -303,7 +299,7 @@ stretch = true
 handle_input_locally = false
 physics_object_picking = true
 size = Vector2i(450, 235)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="StarMap" parent="DeviceFrame/TabContainer/Travel/MarginContainer/SubViewport" instance=ExtResource("3_jn7gj")]
 position = Vector2(1167.5, 224)
@@ -669,6 +665,7 @@ text = "A fast and capable engineer.  Helping you with your quest.
 autowrap_mode = 2
 
 [node name="Status" type="TabBar" parent="DeviceFrame/TabContainer"]
+visible = false
 layout_mode = 2
 script = ExtResource("24_fwbaf")
 
@@ -738,11 +735,11 @@ libraries = {
 }
 
 [connection signal="tab_changed" from="DeviceFrame/TabContainer" to="." method="_on_tab_container_tab_changed"]
-[connection signal="mouse_entered" from="DeviceFrame/TabContainer/Travel/StarmapInputArea/Area2D" to="." method="_on_starmap_area_mouse_entered"]
-[connection signal="mouse_exited" from="DeviceFrame/TabContainer/Travel/StarmapInputArea/Area2D" to="." method="_on_starmap_area_mouse_exited"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Research/ResearchGraphView/UpgradeButton" to="DeviceFrame/TabContainer/Research" method="_on_upgrade_button_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Research/ResearchGraphView/BackButton" to="DeviceFrame/TabContainer/Research" method="_on_back_button_pressed"]
 [connection signal="timeout" from="DeviceFrame/TabContainer/Research/NotEnoughResourceTimer" to="DeviceFrame/TabContainer/Research" method="_on_not_enough_resource_timer_timeout"]
+[connection signal="mouse_entered" from="DeviceFrame/TabContainer/Travel/StarmapInputArea/Area2D" to="." method="_on_starmap_area_mouse_entered"]
+[connection signal="mouse_exited" from="DeviceFrame/TabContainer/Travel/StarmapInputArea/Area2D" to="." method="_on_starmap_area_mouse_exited"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button" to="." method="_on_default_path_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button2" to="." method="_on_intergalatic_route_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button3" to="." method="_on_asteroid_field_pressed"]

@@ -40,7 +40,6 @@ func _ready() -> void:
 	EventManager.chosen_path = EventManager.TRAVEL_PATH_TYPE.DEFAULT_PATH
 	desc_label.text = "Default path\nYou have equal chance to meet all type of events."
 
-	TickManager.tick.connect(_update_path_follow)
 	update_officer_list()
 
 
@@ -147,11 +146,6 @@ func hide_screen():
 func show_screen():
 	if not trave_screen_open:
 		_on_show_hide_command_screen_toggled(true)
-
-
-func _on_tab_container_tab_changed(tab:int) -> void:
-	SoundManager.play_button_click_sfx()
-	wakeup_warning_label.visible = false
 
 
 func _on_starmap_area_mouse_entered():
