@@ -6,23 +6,11 @@
 [resource]
 script = ExtResource("1_lvmyu")
 name = "Cryostasis Pod Array"
-type = 4
+type = 2
 sprite = ExtResource("2_wu5o6")
 housing_prod = 0
-food_prod = 0
-water_prod = 0
-air_prod = 0
-metal_prod = 0
 storage_prod = 0
-food_cost = 0
-air_cost = 0
-water_cost = 0
-metal_cost = 0
 people_cost = 3
-refund_food = 0
-refund_air = 0
-refund_water = 0
-refund_metal = 0
 refund_population = 5
 construction_time = 0
 destruction_time = 8

@@ -1,28 +1,34 @@
-[gd_resource type="Resource" script_class="BuildingResource" load_steps=3 format=3 uid="uid://bpglmgphuppq0"]
+[gd_resource type="Resource" script_class="BuildingResource" load_steps=6 format=3 uid="uid://bpglmgphuppq0"]
 
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_hysrt"]
+[ext_resource type="Script" path="res://src/common/resource_data.gd" id="1_lowq7"]
 [ext_resource type="Texture2D" uid="uid://cd5fu0tqd45wm" path="res://assets/buildings/air_3.png" id="2_8hiy4"]
+
+[sub_resource type="Resource" id="Resource_jq1vw"]
+script = ExtResource("1_lowq7")
+food = 0
+water = 0
+air = 0
+metal = 120
+
+[sub_resource type="Resource" id="Resource_6uvvy"]
+script = ExtResource("1_lowq7")
+food = 0
+water = 0
+air = 15
+metal = 0
 
 [resource]
 script = ExtResource("1_hysrt")
 name = "Oxygen Synthesiser"
-type = 3
+type = 0
 sprite = ExtResource("2_8hiy4")
+resource_prod = SubResource("Resource_6uvvy")
 housing_prod = 0
-food_prod = 0
-water_prod = 0
-air_prod = 15
-metal_prod = 0
 storage_prod = 0
-food_cost = 0
-air_cost = 0
-water_cost = 0
-metal_cost = 120
+resource_cost = SubResource("Resource_jq1vw")
 people_cost = 8
-refund_food = 0
-refund_air = 0
-refund_water = 0
-refund_metal = 0
+resource_refund = 0
 refund_population = 0
 construction_time = 9
 destruction_time = 6

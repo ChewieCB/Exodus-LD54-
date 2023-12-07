@@ -1,33 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://h0sodhkfhoxg"]
+[gd_scene load_steps=6 format=3 uid="uid://h0sodhkfhoxg"]
 
 [ext_resource type="Script" path="res://src/buildings/building.gd" id="1_1mv8l"]
-[ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="2_mio6y"]
+[ext_resource type="Resource" uid="uid://b567oop6a126s" path="res://src/buildings/warehouse/warehouse.tres" id="2_refjn"]
 [ext_resource type="Texture2D" uid="uid://nlcv4ra06eam" path="res://assets/buildings/warehouse.png" id="3_cleof"]
 [ext_resource type="PackedScene" uid="uid://bp6x36xyoxhh2" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="4_e7egk"]
-
-[sub_resource type="Resource" id="Resource_2srxs"]
-script = ExtResource("2_mio6y")
-name = "Warehouse"
-type = 6
-sprite = ExtResource("3_cleof")
-housing_prod = 0
-food_prod = 0
-water_prod = 0
-air_prod = 0
-metal_prod = 0
-storage_prod = 500
-food_cost = 0
-air_cost = 0
-water_cost = 0
-metal_cost = 25
-people_cost = 3
-refund_food = 0
-refund_air = 0
-refund_water = 0
-refund_metal = 0
-refund_population = 0
-construction_time = 5
-destruction_time = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wsjqj"]
 size = Vector2(122, 122)
@@ -35,7 +11,7 @@ size = Vector2(122, 122)
 [node name="Warehouse" type="Node2D"]
 scale = Vector2(0.5, 0.5)
 script = ExtResource("1_1mv8l")
-data = SubResource("Resource_2srxs")
+data = ExtResource("2_refjn")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(96, 64)
