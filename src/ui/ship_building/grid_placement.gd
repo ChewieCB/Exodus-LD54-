@@ -60,11 +60,11 @@ func _physics_process(_delta):
 	placement_coord = tilemap.local_to_map(mouse_pos)
 	original_placement_coord = placement_coord
 	if abs(rotate_counter) % 4 == 1:
-		placement_coord.x -= 1
+		placement_coord.x = original_placement_coord.x - 1
 	elif abs(rotate_counter) % 4 == 2:
-		placement_coord -= Vector2(1, 1)
+		placement_coord = original_placement_coord - Vector2(1, 1)
 	elif abs(rotate_counter) % 4 == 3:
-		placement_coord.y -= 1
+		placement_coord.y = original_placement_coord.y - 1
 	preview_pos = tilemap.map_to_local(placement_coord) + GRID_OFFSET
 	preview_pos = tilemap.to_global(preview_pos)
 
@@ -88,9 +88,7 @@ func _physics_process(_delta):
 		if Input.is_action_just_pressed("rotate_cw"):
 			current_building.rotation += PI/2
 			rotate_counter += 1
-		elif Input.is_action_just_pressed("rotate_ccw"):
-			current_building.rotation -= PI/2
-			rotate_counter -= 1
+			print(rotate_counter, " ", abs(rotate_counter) % 4)
 
 
 func is_outside_gridmap(coord: Vector2) -> bool:

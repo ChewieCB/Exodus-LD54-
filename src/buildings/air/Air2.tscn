@@ -12,12 +12,12 @@ size = Vector2(60, 56)
 size = Vector2(56, 184)
 
 [node name="Air2" type="Node2D"]
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_av3lv")
 data = ExtResource("2_g3mg0")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, 64)
-scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_46jds")
 offset = Vector2(-32, -32)
 
