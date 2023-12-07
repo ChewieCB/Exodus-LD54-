@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://34k64jmhv1se"]
+[gd_scene load_steps=3 format=3 uid="uid://34k64jmhv1se"]
 
 [ext_resource type="Script" path="res://src/buildings/building.gd" id="1_6ukbn"]
-[ext_resource type="Resource" uid="uid://cgd0yn1rt47y2" path="res://src/buildings/resource/test_building.tres" id="2_50h3s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ig8i2"]
 size = Vector2(64, 64)
@@ -9,7 +8,6 @@ size = Vector2(64, 64)
 [node name="Building" type="Node2D"]
 scale = Vector2(0.5, 0.5)
 script = ExtResource("1_6ukbn")
-data = ExtResource("2_50h3s")
 
 [node name="Area2D" type="Area2D" parent="."]
 

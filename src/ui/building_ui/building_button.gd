@@ -42,6 +42,8 @@ func _ready():
 
 
 func get_resource_string_with_icon(resource_data: ResourceData, multiplier: int = 1) -> String:
+	if resource_data == null:
+		return "Error"
 	var tmp = ""
 	if resource_data.metal > 0:
 		tmp += "{0} [img]{1}[/img] ".format([resource_data.metal * multiplier, METAL_ICON])

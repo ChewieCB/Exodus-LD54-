@@ -189,6 +189,16 @@ func cancel_building_remove(no_refund=false):
 	sprite.material.set_shader_parameter("mode", 0)
 
 
+func get_produced_resource() -> ResourceData:
+	var prod_res = ResourceData.new()
+	prod_res.food = data.resource_prod.food
+	prod_res.water = data.resource_prod.water
+	prod_res.air = data.resource_prod.air
+	prod_res.metal = data.resource_prod.metal
+
+	# Apply adjacency bonus here
+	return prod_res
+
 func set_original_color():
 	if sprite is Sprite2D:
 		original_color = sprite.modulate
@@ -242,4 +252,5 @@ func rotate_cw():
 
 func rotate_ccw():
 	rotation -= PI/2
+
 

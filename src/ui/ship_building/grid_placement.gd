@@ -88,7 +88,6 @@ func _physics_process(_delta):
 		if Input.is_action_just_pressed("rotate_cw"):
 			current_building.rotation += PI/2
 			rotate_counter += 1
-			print(rotate_counter, " ", abs(rotate_counter) % 4)
 
 
 func is_outside_gridmap(coord: Vector2) -> bool:
