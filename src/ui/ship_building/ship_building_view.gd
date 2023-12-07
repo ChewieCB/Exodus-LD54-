@@ -32,7 +32,7 @@ func tutorial_tracker(type: EnumAutoload.BuildingType):
 		return
 
 	match type:
-		EnumAutoload.BuildingType.HAB:
+		EnumAutoload.BuildingType.HABITATION:
 			n_hab_built += 1
 		EnumAutoload.BuildingType.FOOD:
 			n_food_built += 1

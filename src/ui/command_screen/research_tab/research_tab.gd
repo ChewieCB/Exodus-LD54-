@@ -92,7 +92,7 @@ func _on_upgrade_button_pressed() -> void:
 		if Utils.check_if_enough_resource(selected_upgrade_data.cost):
 			SoundManager.play_sound(proceed_click_sfx, "UI")
 			ResourceManager.add_upgrade(selected_upgrade_data.upgrade_id)
-			Utils.apply_resource_cost(selected_upgrade_data.cost)
+			Utils.change_resource(selected_upgrade_data.cost, false)
 			# Refresh UI
 			for upgr in selected_upgrade_data.conflict_one_of_these_upgrades:
 				upgr.disabled = true

@@ -56,7 +56,7 @@ var event_dict = {} # Dictionary, format int : ExodusEvent (example: {0: tutoria
 
 @onready var planets = {
 	ExodusEvent.PlanetType.WET_TERRAIN: preload("res://addons/pixel_planet_generator/Planets/Rivers/Rivers.tscn"),
-	ExodusEvent.PlanetType.DRY_TERRAIN: preload("res://addons/pixel_planet_generator/Planets/DryTerran/DryTerrain.tscn"),	
+	ExodusEvent.PlanetType.DRY_TERRAIN: preload("res://addons/pixel_planet_generator/Planets/DryTerran/DryTerrain.tscn"),
 	ExodusEvent.PlanetType.ISLAND: preload("res://addons/pixel_planet_generator/Planets/LandMasses/LandMasses.tscn"),
 	ExodusEvent.PlanetType.NO_ATMOSPHERE: preload("res://addons/pixel_planet_generator/Planets/NoAtmosphere/NoAtmosphere.tscn"),
 	ExodusEvent.PlanetType.GAS_PLANET: preload("res://addons/pixel_planet_generator/Planets/GasPlanet/GasPlanet.tscn"),
@@ -80,7 +80,7 @@ func _ready() -> void:
 
 	# Remove the debug event from the available array
 	available_events.pop_front()
-	
+
 	if tutorial_progress == 0:
 		tick_to_event += 5
 
@@ -88,13 +88,15 @@ func _ready() -> void:
 func finished_building(type: EnumAutoload.BuildingType):
 	emit_signal("building_finished", type)
 	match type:
-		EnumAutoload.BuildingType.HAB:
+		EnumAutoload.BuildingType.HABITATION:
 			n_hab_building += 1
 		EnumAutoload.BuildingType.FOOD:
 			n_food_building += 1
 		EnumAutoload.BuildingType.WATER:
 			n_water_building += 1
 		EnumAutoload.BuildingType.AIR:
+			n_air_building += 1
+		EnumAutoload.BuildingType.METAL:
 			n_air_building += 1
 
 
@@ -108,7 +110,7 @@ func get_random_event():
 	if available_events:
 		var event: ExodusEvent = available_events.pop_at(rand_index)
 		completed_events.push_back(event)
-		
+
 		return event
 	else:
 		return null
@@ -191,7 +193,7 @@ func reset_state():
 	n_food_building = 0
 	n_water_building = 0
 	n_air_building = 0
-	
+
 	tutorial_progress = -1
 	tick_since_last_event = 0
 	tick_passed_total = 0

@@ -143,7 +143,7 @@ func start_constructing():
 	placed = true
 	preview = false
 	ResourceManager.assign_workers(self)
-	ResourceManager.metal_amount -= Utils.calculate_build_cost_with_upgrade(data.metal_cost)
+	Utils.change_resource(data.resource_cost, false, Utils.get_build_cost_with_upgrade_multiplier())
 	# Restore the building's true colour outside of preview UI
 	color_sprite(original_color.r, original_color.g, original_color.b, original_color.a)
 	# Update build timer/construction effects
@@ -174,7 +174,7 @@ func cancel_building(no_refund=false):
 	build_timer_ui.visible = false
 	if not no_refund:
 		ResourceManager.retrieve_workers(self)
-		ResourceManager.metal_amount += Utils.calculate_build_cost_with_upgrade(data.metal_cost)
+		Utils.change_resource(data.resource_cost, true, Utils.get_build_cost_with_upgrade_multiplier())
 	BuildingManager.construction_queue.erase(self)
 	SoundManager.play_sound(build_finish_sfx, "SFX")
 	self.queue_free()

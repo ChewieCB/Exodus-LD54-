@@ -1,15 +1,32 @@
-[gd_resource type="Resource" script_class="BuildingResource" load_steps=3 format=3 uid="uid://b8fbf5vwmkcvf"]
+[gd_resource type="Resource" script_class="BuildingResource" load_steps=6 format=3 uid="uid://b8fbf5vwmkcvf"]
 
+[ext_resource type="Script" path="res://src/common/resource_data.gd" id="1_6q8eq"]
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_lvmyu"]
 [ext_resource type="Texture2D" uid="uid://cyjvcd4ur3y2w" path="res://assets/buildings/cryo_pod_2.png" id="2_wu5o6"]
+
+[sub_resource type="Resource" id="Resource_k0gdl"]
+script = ExtResource("1_6q8eq")
+food = 0
+water = 0
+air = 0
+metal = 0
+
+[sub_resource type="Resource" id="Resource_8j3dq"]
+script = ExtResource("1_6q8eq")
+food = 0
+water = 0
+air = 0
+metal = 0
 
 [resource]
 script = ExtResource("1_lvmyu")
 name = "Cryostasis Pod Array"
-type = 2
+type = 5
 sprite = ExtResource("2_wu5o6")
+resource_prod = SubResource("Resource_8j3dq")
 housing_prod = 0
 storage_prod = 0
+resource_cost = SubResource("Resource_k0gdl")
 people_cost = 3
 refund_population = 5
 construction_time = 0

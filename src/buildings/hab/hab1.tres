@@ -21,7 +21,7 @@ metal = 0
 [resource]
 script = ExtResource("1_7240g")
 name = "Hab Block"
-type = 1
+type = 4
 sprite = ExtResource("2_dpf2o")
 resource_prod = SubResource("Resource_ay3qp")
 housing_prod = 1

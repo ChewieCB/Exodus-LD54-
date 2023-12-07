@@ -224,24 +224,24 @@ func calculate_resource_modifier(resource_type, population) -> void:
 				storage_amount = BASE_STORAGE + production
 		EnumAutoload.ResourceType.FOOD:
 			for building in BuildingManager.buildings:
-				production += building.data.food_prod
+				production += building.data.resource_prod.food
 			# if EnumAutoload.Officer.FAROQ_KHAN in current_officers and production > 0:
 			# 	production = (int)(FAROQ_KHAN_BONUS * production)
 			consumption = population * pop_food_cost
 			current_food_modifier = production - consumption
 		EnumAutoload.ResourceType.WATER:
 			for building in BuildingManager.buildings:
-				production += building.data.water_prod
+				production += building.data.resource_prod.water
 			consumption = population * pop_water_cost
 			current_water_modifier = production - consumption
 		EnumAutoload.ResourceType.AIR:
 			for building in BuildingManager.buildings:
-				production += building.data.air_prod
+				production += building.data.resource_prod.air
 			consumption = population * pop_air_cost
 			current_air_modifier = production - consumption
 		EnumAutoload.ResourceType.METAL:
 			for building in BuildingManager.buildings:
-				production += building.data.metal_prod
+				production += building.data.resource_prod.metal
 			current_metal_modifier = production
 
 

@@ -2,7 +2,7 @@ extends Node
 
 signal building_selected(building: PackedScene)
 signal not_enough_workers
-signal not_enough_metal
+signal not_enough_resource
 signal show_info_panel(pos: Vector2, data: BuildingResource)
 signal hide_info_panel
 

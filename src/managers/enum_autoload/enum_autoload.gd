@@ -19,7 +19,10 @@ enum CrewmateStatus {
 }
 
 enum BuildingType {
-	PRODUCTION,
+	FOOD,
+	WATER,
+	AIR,
+	METAL,
 	HABITATION,
 	CRYO_POD,
 	STORAGE

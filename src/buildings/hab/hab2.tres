@@ -21,7 +21,7 @@ metal = 0
 [resource]
 script = ExtResource("1_d1pcb")
 name = "Dormitory"
-type = 1
+type = 4
 sprite = ExtResource("2_utet1")
 resource_prod = SubResource("Resource_weiod")
 housing_prod = 3

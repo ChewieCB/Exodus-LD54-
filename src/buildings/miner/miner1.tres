@@ -21,7 +21,7 @@ metal = 1
 [resource]
 script = ExtResource("1_t7dhw")
 name = "Dust Compressor"
-type = 5
+type = 3
 sprite = ExtResource("2_y2hc2")
 resource_prod = SubResource("Resource_mgmyg")
 housing_prod = 0

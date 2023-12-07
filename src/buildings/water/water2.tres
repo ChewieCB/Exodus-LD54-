@@ -21,7 +21,7 @@ metal = 0
 [resource]
 script = ExtResource("1_rd10i")
 name = "Refiltration Center"
-type = 0
+type = 1
 sprite = ExtResource("2_bg57v")
 resource_prod = SubResource("Resource_l4wkd")
 housing_prod = 0

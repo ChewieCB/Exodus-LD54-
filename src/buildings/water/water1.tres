@@ -21,7 +21,7 @@ metal = 0
 [resource]
 script = ExtResource("1_trl2k")
 name = "Vapour Cycler"
-type = 0
+type = 1
 sprite = ExtResource("2_beg45")
 resource_prod = SubResource("Resource_nxpr8")
 housing_prod = 0

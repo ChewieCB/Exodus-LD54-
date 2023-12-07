@@ -21,14 +21,13 @@ metal = 0
 [resource]
 script = ExtResource("1_hysrt")
 name = "Oxygen Synthesiser"
-type = 0
+type = 2
 sprite = ExtResource("2_8hiy4")
 resource_prod = SubResource("Resource_6uvvy")
 housing_prod = 0
 storage_prod = 0
 resource_cost = SubResource("Resource_jq1vw")
 people_cost = 8
-resource_refund = 0
 refund_population = 0
 construction_time = 9
 destruction_time = 6
