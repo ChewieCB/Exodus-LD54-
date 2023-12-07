@@ -33,7 +33,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
           PRERELEASE: true
-          PRERELEASE_SUFFIX: testing
+          PRERELEASE_SUFFIX: alpha
           DEFAULT_BRANCH: release
           RELEASE_BRANCHES: testing, release
       - name: create release
