@@ -13,6 +13,7 @@ food_prod = 0
 water_prod = 18
 air_prod = 0
 metal_prod = 0
+storage_prod = 0
 food_cost = 0
 air_cost = 0
 water_cost = 0
