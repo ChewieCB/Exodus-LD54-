@@ -32,8 +32,8 @@ static func get_build_time_with_upgrade_multiplier() -> float:
 	return clampf(1 - reduction_perc, 0, 1)
 	
 static func calculate_build_time_with_upgrade(base_time: int) -> int:
-	var reduction_perc = get_build_time_with_upgrade_multiplier()
-	return ceil(base_time * (1 - reduction_perc))
+	var multiplier = get_build_time_with_upgrade_multiplier()
+	return ceil(base_time * multiplier)
 
 
 static func get_build_cost_with_upgrade_multiplier() -> float:
@@ -47,8 +47,8 @@ static func get_build_cost_with_upgrade_multiplier() -> float:
 	return clampf(1 - reduction_perc, 0, 1)
 
 static func calculate_build_cost_with_upgrade(base_cost: int) -> int:
-	var reduction_perc = get_build_cost_with_upgrade_multiplier()
-	return ceil(base_cost * (1 - reduction_perc))
+	var multiplier = get_build_cost_with_upgrade_multiplier()
+	return ceil(base_cost * multiplier)
 
 
 static func get_storage_with_upgrade_multiplier() -> float:
@@ -60,5 +60,5 @@ static func get_storage_with_upgrade_multiplier() -> float:
 	return (1 + bonus_perc)
 
 static func calculate_storage_with_upgrade(base_storage: int) -> int:
-	var bonus_perc = get_storage_with_upgrade_multiplier()
-	return ceil(base_storage * (1 + bonus_perc))
+	var multiplier = get_storage_with_upgrade_multiplier()
+	return ceil(base_storage * multiplier)

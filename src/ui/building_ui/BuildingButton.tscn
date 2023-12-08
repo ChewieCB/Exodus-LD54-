@@ -116,7 +116,7 @@ text = "[center]+1 [img]res://assets/ui/icons/16/Home.png[/img] [/center]"
 fit_content = true
 
 [node name="Tooltip" type="TextureRect" parent="CenterContainer/HBoxContainer/VBoxContainer"]
-modulate = Color(0.721569, 0.721569, 0.721569, 1)
+modulate = Color(0.933333, 0.933333, 0.933333, 1)
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 size_flags_horizontal = 4

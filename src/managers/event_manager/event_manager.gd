@@ -34,7 +34,8 @@ var primary_story_id = 0:
 		primary_story_id = value
 		emit_signal("primary_story_id_changed")
 
-signal building_finished
+signal building_finished_signal
+signal building_deconstructed_signal
 signal start_event
 signal finish_event
 signal request_change_event_image
@@ -86,7 +87,7 @@ func _ready() -> void:
 
 
 func finished_building(type: EnumAutoload.BuildingType):
-	emit_signal("building_finished", type)
+	emit_signal("building_finished_signal", type)
 	match type:
 		EnumAutoload.BuildingType.HABITATION:
 			n_hab_building += 1
@@ -98,6 +99,9 @@ func finished_building(type: EnumAutoload.BuildingType):
 			n_air_building += 1
 		EnumAutoload.BuildingType.METAL:
 			n_air_building += 1
+
+func finished_deconstruct_building(type: EnumAutoload.BuildingType):
+	emit_signal("building_deconstructed_signal", type)
 
 
 func _on_dialogic_signal(arg: String):

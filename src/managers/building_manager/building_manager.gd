@@ -3,7 +3,7 @@ extends Node
 signal building_selected(building: PackedScene)
 signal not_enough_workers
 signal not_enough_resource
-signal show_info_panel(pos: Vector2, data: BuildingResource)
+signal show_info_panel(pos: Vector2, building: Building)
 signal hide_info_panel
 
 # Array to store each building under construction in order from most recent
@@ -15,8 +15,8 @@ var buildings: Array[Building] = []
 func start_building(building_scene):
 	emit_signal("building_selected", building_scene)
 
-func show_building_info_panel(pos: Vector2, building_data: BuildingResource):
-	emit_signal("show_info_panel", pos, building_data)
+func show_building_info_panel(pos: Vector2, building: Building):
+	emit_signal("show_info_panel", pos, building)
 
 func hide_building_info_panel():
 	emit_signal("hide_info_panel")

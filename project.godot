@@ -178,6 +178,7 @@ drag_camera={
 [layer_names]
 
 2d_physics/layer_1="Building"
+2d_physics/layer_2="NearbyRange"
 
 [rendering]
 

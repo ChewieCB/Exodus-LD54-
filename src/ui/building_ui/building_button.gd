@@ -108,7 +108,7 @@ func _update_info_after_upgrade():
 
 
 func _on_tooltip_mouse_entered() -> void:
-	BuildingManager.show_building_info_panel(global_position, building.data)
+	BuildingManager.show_building_info_panel(global_position, building)
 
 func _on_tooltip_mouse_exited() -> void:
 	BuildingManager.hide_building_info_panel()

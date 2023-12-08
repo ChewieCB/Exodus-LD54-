@@ -34,12 +34,24 @@ var is_deconstructing: bool = false
 var ticks_left_to_delete: int
 
 var is_displaying_info_panel = false
+var bonus_multiplier: float = 1
 
 
 func _ready():
 	set_original_color()
 	build_timer_ui.visible = false
 	TickManager.tick.connect(_on_tick)
+	if placed and building_complete:
+		_setup_scan_for_nearby_bonus()
+
+
+func check_for_adjacency_multiplier(building_type_just_changed):
+	bonus_multiplier = 1
+	for area in collider.get_overlapping_areas():
+		if area.get_parent() is Building:
+			var nearby_building = area.get_parent() as Building
+			if nearby_building.type == EnumAutoload.BuildingType.STORAGE:
+				bonus_multiplier += 0.2
 
 
 func build_in_progress():
@@ -68,8 +80,15 @@ func deconstruct_in_progress():
 	#
 	BuildingManager.construction_queue.push_front(self)
 
+func _input(event):
+	if event.is_action_pressed("left_click") and not preview:
+		if is_selected:
+			BuildingManager.show_building_info_panel(global_position, self)
+			is_displaying_info_panel = true
 
-func _physics_process(delta):
+
+func _process(delta):
+	# TODO: Optimize this
 	if Input.is_action_just_pressed("cancel_place_building"):
 		if is_selected and can_delete and not preview:
 			if is_constructing and not is_deconstructing:
@@ -78,17 +97,6 @@ func _physics_process(delta):
 				cancel_building_remove()
 			else:
 				set_building_remove()
-
-
-func _input(event):
-	if event.is_action_pressed("left_click") and not preview:
-		if is_selected:
-			BuildingManager.show_building_info_panel(global_position, data)
-			is_displaying_info_panel = true
-
-
-func _process(delta):
-	# TODO: Optimize this
 	if not placed and preview:
 		if collider.has_overlapping_areas() or collider.has_overlapping_bodies() or outside_gridmap:
 			color_sprite(1, 0, 0, 0.5)
@@ -97,6 +105,14 @@ func _process(delta):
 			color_sprite(0, 1, 0, 0.5)
 			placeable = true
 
+
+func _setup_scan_for_nearby_bonus():
+	if type in [EnumAutoload.BuildingType.CRYO_POD, EnumAutoload.BuildingType.STORAGE]:
+		return
+
+	collider.set_collision_mask_value (2, true)
+	EventManager.building_finished_signal.connect(check_for_adjacency_multiplier)
+	EventManager.building_deconstructed_signal.connect(check_for_adjacency_multiplier)
 
 func _on_tick():
 	if not placed:
@@ -152,6 +168,7 @@ func start_constructing():
 	build_timer_ui.visible = true
 	build_in_progress()
 	SoundManager.play_sound(build_start_sfx, "SFX")
+	_setup_scan_for_nearby_bonus()
 
 func set_building_remove():
 	if ResourceManager.worker_amount >= data.people_cost:
@@ -191,10 +208,10 @@ func cancel_building_remove(no_refund=false):
 
 func get_produced_resource() -> ResourceData:
 	var prod_res = ResourceData.new()
-	prod_res.food = data.resource_prod.food
-	prod_res.water = data.resource_prod.water
-	prod_res.air = data.resource_prod.air
-	prod_res.metal = data.resource_prod.metal
+	prod_res.food = ceil(data.resource_prod.food * bonus_multiplier)
+	prod_res.water = ceil(data.resource_prod.water * bonus_multiplier)
+	prod_res.air = ceil(data.resource_prod.air * bonus_multiplier)
+	prod_res.metal = ceil(data.resource_prod.metal * bonus_multiplier)
 
 	# Apply adjacency bonus here
 	return prod_res
