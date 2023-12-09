@@ -14,7 +14,7 @@ jobs:
       tag: ${{ steps.bump_tag.outputs.tag }}
     name: Export game to Github
     steps:
-      - name: Initial checkout
+      - name: Checkout repo
         uses: actions/checkout@v3.3.0
         with:
           fetch-depth: 0
@@ -37,11 +37,7 @@ jobs:
       - name: Overwrite version in 'build_tag.cfg' and push changes
         run: |
           echo "${{ steps.new_tag.outputs.tag }}" > 'build_tag.cfg'
-      
-      - name: Checkout with updated build tag
-        uses: actions/checkout@v3.3.0
-        with:
-          fetch-depth: 0
+          cat build_tag.cfg
 
       - name: Export game
         id: export
