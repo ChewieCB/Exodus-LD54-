@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://b85p5j1o1rsav"]
+
+[ext_resource type="Shader" path="res://src/ui/star_map/starlane/starlane_chevrons.gdshader" id="1_fqnr8"]
+[ext_resource type="Texture2D" uid="uid://b6k7thdu2t5su" path="res://assets/sprite/chevron_small.png" id="2_u227g"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3dbbe"]
+shader = ExtResource("1_fqnr8")
+shader_parameter/color = Color(1, 0.909804, 0.470588, 0.254902)
+shader_parameter/speed = 2.0
+
+[node name="StarlaneChevrons" type="Line2D"]
+texture_filter = 1
+texture_repeat = 2
+material = SubResource("ShaderMaterial_3dbbe")
+points = PackedVector2Array(0, 0, 200, 40)
+width = 5.0
+texture = ExtResource("2_u227g")
+texture_mode = 1

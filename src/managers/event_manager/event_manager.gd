@@ -40,6 +40,8 @@ signal start_event
 signal finish_event
 signal request_change_event_image
 signal request_change_objective_label
+signal negation_zone
+signal proximity_alert(ticks_left)
 signal victory
 signal primary_story_id_changed
 

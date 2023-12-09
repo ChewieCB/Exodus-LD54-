@@ -6,7 +6,9 @@ extends Control
 
 func _ready():
 	ResourceManager.connect("game_over", _game_over)
+	EventManager.connect("negation_zone", _negation_zone)
 	EventManager.connect("victory", _victory)
+
 
 func _game_over(resource):
 	print("GameOver")
@@ -26,6 +28,15 @@ func _game_over(resource):
 
 	if resource == EnumAutoload.ResourceType.POPULATION:
 		flavour_text.text = "All of your crew died."
+
+
+func _negation_zone():
+	print("Game Over - Entered Negation Zone")
+	get_tree().paused = true
+	TickManager.stop_ticks()
+	get_parent().anim_player.play("hide_build_menu")
+	anim_player.play("game_over")
+	flavour_text.text = "You failed to escape the negation zone."
 
 
 func _victory():

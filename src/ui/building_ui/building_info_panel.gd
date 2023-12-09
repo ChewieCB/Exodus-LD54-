@@ -30,9 +30,8 @@ func show_info_panel(pos: Vector2, building: Building):
 			desc_label.text = "Can be deconstructed to wake up {n_pop} crew member(s).".format({"n_pop": building_data.refund_population})
 		EnumAutoload.BuildingType.STORAGE:
 			desc_label.text = "Increased max storage capacity by {n_storage} units.".format({"n_storage": Utils.calculate_storage_with_upgrade(building_data.storage_prod)})
-	stat_label.text = "Construct time: {n_build_day} day(s)".format({"n_build_day": Utils.calculate_build_time_with_upgrade(building_data.construction_time)})
-	stat_label.text += "\nDeconstruct time: {n_des_day} day(s)".format({"n_des_day": Utils.calculate_build_time_with_upgrade(building_data.destruction_time)})
-	stat_label.text += "\nWorkers required: {n_des_pop} crewmate(s)".format({"n_des_pop": building_data.people_cost})
+	stat_label.text = "Construct time: {0} day(s) | Need {1} crewmate(s)".format([Utils.calculate_build_time_with_upgrade(building_data.construction_time), building_data.people_cost])
+	stat_label.text += "\nDeconstruct time: {0} day(s) | Need {1} crewmate(s)".format([Utils.calculate_build_time_with_upgrade(building_data.destruction_time), building_data.people_cost])
 	if building.bonus_multiplier > 1:
 		stat_label.text += "\nCurrent bonus multiplier: {mul}".format({"mul": building.bonus_multiplier})
 	visible = true
