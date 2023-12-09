@@ -74,3 +74,11 @@ enum UpgradeId {
 	AGRI_ACCEL_GROWTH,
 	AGRI_OPTIMIZED_DESIGN
 }
+
+# FIXME - find a better place to store this
+var BUILD_VERSION: String
+
+func _ready():
+	var file = FileAccess.open("res://build_tag.cfg", FileAccess.READ)
+	BUILD_VERSION = file.get_as_text()
+	file.close()

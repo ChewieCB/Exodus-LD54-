@@ -38,9 +38,7 @@ func _ready() -> void:
 		event_planet_holder = event_image_holder.get_node("EventPlanetHolder")
 	
 	# Read in the build version tag from the config and update the label
-	var file = FileAccess.open("res://build_tag.cfg", FileAccess.READ)
-	DEBUG_build_tag.text = file.get_as_text()
-	file.close()
+	DEBUG_build_tag.text = EnumAutoload.BUILD_VERSION
 
 func _unhandled_input(event: InputEvent) -> void:
 	if build_menu_open:
