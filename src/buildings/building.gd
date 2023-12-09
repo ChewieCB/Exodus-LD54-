@@ -41,20 +41,37 @@ func _ready():
 	set_original_color()
 	build_timer_ui.visible = false
 	TickManager.tick.connect(_on_tick)
+	# TickManager.tick.connect(func(): check_for_adjacency_multiplier(type))
+	ResourceManager.upgrade_acquired.connect(apply_upgrades)
+	apply_upgrades()
+
 	if placed and building_complete:
 		_setup_scan_for_nearby_bonus()
 
 
-func check_for_adjacency_multiplier(building_type_just_changed):
+func check_for_adjacency_multiplier(_unused_var):
 	bonus_multiplier = 1
 	for area in collider.get_overlapping_areas():
 		if area.get_parent() is Building:
 			var nearby_building = area.get_parent() as Building
-			if nearby_building.type == EnumAutoload.BuildingType.STORAGE:
+			if nearby_building.type == EnumAutoload.BuildingType.STORAGE and \
+				EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_STOCK_ANALYSIS in ResourceManager.current_upgrades:
 				bonus_multiplier += 0.2
 
 
-func build_in_progress():
+func apply_upgrades():
+	if type == EnumAutoload.BuildingType.STORAGE and \
+		EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_ADV_LOGISTIC in ResourceManager.current_upgrades:
+			get_node("Range").scale = Vector2(1.5, 1.5)
+
+	# Wait 2 frame to make sure all Area2D changes are setup correctly
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+
+	check_for_adjacency_multiplier(type)
+
+
+func construct_in_progress():
 	# Update the building to show it's under construction
 	var pulse_colour = Color("#ffd4a3")
 	pulse_colour.a = 0.5
@@ -92,9 +109,9 @@ func _process(delta):
 	if Input.is_action_just_pressed("cancel_place_building"):
 		if is_selected and can_delete and not preview:
 			if is_constructing and not is_deconstructing:
-				cancel_building()
+				cancel_construction()
 			elif building_complete and is_deconstructing:
-				cancel_building_remove()
+				cancel_deconstruction()
 			else:
 				set_building_remove()
 	if not placed and preview:
@@ -155,6 +172,7 @@ func deconstructed_refund_resource():
 		ResourceManager.population_amount += data.refund_population
 
 func start_constructing():
+	remove_improved_preview()
 	is_constructing = true
 	placed = true
 	preview = false
@@ -166,7 +184,7 @@ func start_constructing():
 	ticks_left_to_build = Utils.calculate_build_time_with_upgrade(data.construction_time)
 	build_timer_ui.label.text = str(ticks_left_to_build)
 	build_timer_ui.visible = true
-	build_in_progress()
+	construct_in_progress()
 	SoundManager.play_sound(build_start_sfx, "SFX")
 	_setup_scan_for_nearby_bonus()
 
@@ -186,7 +204,7 @@ func set_building_remove():
 		SoundManager.play_sound(cant_place_sfx, "SFX")
 
 # Cancel a building that is constructing
-func cancel_building(no_refund=false):
+func cancel_construction(no_refund=false):
 	is_constructing = false
 	build_timer_ui.visible = false
 	if not no_refund:
@@ -197,7 +215,7 @@ func cancel_building(no_refund=false):
 	self.queue_free()
 
 # Cancel a building that is de-constructing
-func cancel_building_remove(no_refund=false):
+func cancel_deconstruction(no_refund=false):
 	is_deconstructing = false
 	build_timer_ui.visible = false
 	if not no_refund:
@@ -213,8 +231,17 @@ func get_produced_resource() -> ResourceData:
 	prod_res.air = ceil(data.resource_prod.air * bonus_multiplier)
 	prod_res.metal = ceil(data.resource_prod.metal * bonus_multiplier)
 
-	# Apply adjacency bonus here
 	return prod_res
+
+func enable_improved_preview():
+	if type == EnumAutoload.BuildingType.STORAGE:
+		if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_STOCK_ANALYSIS in ResourceManager.current_upgrades:
+			get_node("Range/RangeSprite").visible = true
+
+func remove_improved_preview():
+	if type == EnumAutoload.BuildingType.STORAGE:
+		get_node("Range/RangeSprite").visible = false
+
 
 func set_original_color():
 	if sprite is Sprite2D:
@@ -256,6 +283,7 @@ func _on_area_2d_mouse_entered():
 	sprite.material.set_shader_parameter("shine_color", pulse_colour)
 	sprite.material.set_shader_parameter("full_pulse_cycle", true)
 	sprite.material.set_shader_parameter("mode", 1)
+	enable_improved_preview()
 
 
 func _on_area_2d_mouse_exited():
@@ -263,11 +291,8 @@ func _on_area_2d_mouse_exited():
 	sprite.material.set_shader_parameter("mode", 0)
 	BuildingManager.hide_building_info_panel()
 	is_displaying_info_panel = false
+	remove_improved_preview()
+
 
 func rotate_cw():
 	rotation += PI/2
-
-func rotate_ccw():
-	rotation -= PI/2
-
-

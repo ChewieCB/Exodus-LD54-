@@ -49,6 +49,7 @@ func get_new_building():
 	new_building.global_position = mouse_pos
 	add_child(new_building)
 	current_building = new_building
+	current_building.enable_improved_preview()
 
 
 func _physics_process(_delta):
@@ -109,6 +110,7 @@ func place_building():
 		BuildingManager.emit_signal("not_enough_workers")
 		SoundManager.play_sound(cant_place_sfx, "SFX")
 		return
+
 	if not Utils.check_if_enough_resource(current_building.data.resource_cost):
 		BuildingManager.emit_signal("not_enough_resource")
 		SoundManager.play_sound(cant_place_sfx, "SFX")
@@ -119,6 +121,7 @@ func place_building():
 	previous_rotation = current_building.rotation
 	current_building.build_timer_ui.update_rotation()
 	current_building = null
+
 
 func stop_building_preview():
 	if current_building != null:

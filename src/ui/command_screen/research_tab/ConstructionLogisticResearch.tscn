@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://ce5dg57vaxm3d"]
+[gd_scene load_steps=17 format=3 uid="uid://ce5dg57vaxm3d"]
 
 [ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="1_rnfvl"]
 [ext_resource type="PackedScene" uid="uid://duihto0qvkw2b" path="res://src/ui/command_screen/research_tab/TechUpgradeButton.tscn" id="2_3jq7e"]
+[ext_resource type="Texture2D" uid="uid://nlcv4ra06eam" path="res://assets/buildings/warehouse.png" id="3_2j2jf"]
 [ext_resource type="Texture2D" uid="uid://c8jp51mebn7q3" path="res://assets/ui/upgrades/common_upgrade.png" id="3_04mtn"]
 [ext_resource type="Script" path="res://src/common/resource_data.gd" id="4_ibyel"]
 
@@ -28,17 +29,17 @@ metal = 200
 
 [sub_resource type="Resource" id="Resource_hh64u"]
 script = ExtResource("4_ibyel")
-food = 20
-water = 20
-air = 20
+food = 30
+water = 30
+air = 30
 metal = 20
 
 [sub_resource type="Resource" id="Resource_a8sva"]
 script = ExtResource("4_ibyel")
-food = 40
-water = 40
-air = 40
-metal = 25
+food = 60
+water = 60
+air = 60
+metal = 35
 
 [sub_resource type="Resource" id="Resource_710nv"]
 script = ExtResource("4_ibyel")
@@ -154,7 +155,7 @@ offset_bottom = 72.0
 upgrade_name = "Warehouse"
 upgrade_description = "Unlock Warehouse building. The blueprint is located in Misc tab in Building Menu."
 upgrade_id = 24
-upgrade_sprite = ExtResource("3_04mtn")
+upgrade_sprite = ExtResource("3_2j2jf")
 cost = SubResource("Resource_rwmse")
 connection_lines = [NodePath("../Line1-2")]
 
@@ -167,7 +168,7 @@ offset_bottom = 72.0
 upgrade_name = "Advanced Sorter"
 upgrade_description = "Increase storage capacity of Warehouses by [color=green]25%[/color]."
 upgrade_id = 27
-upgrade_sprite = ExtResource("3_04mtn")
+upgrade_sprite = ExtResource("3_2j2jf")
 cost = SubResource("Resource_pppth")
 connection_lines = [NodePath("../Line2-3"), NodePath("../Line2-4")]
 require_one_of_these_upgrades = [NodePath("../Upgrade1")]
@@ -181,7 +182,7 @@ offset_bottom = 73.0
 upgrade_name = "Automated Warehouse"
 upgrade_description = "Increase storage capacity of Warehouses by another [color=green]50%[/color]."
 upgrade_id = 28
-upgrade_sprite = ExtResource("3_04mtn")
+upgrade_sprite = ExtResource("3_2j2jf")
 cost = SubResource("Resource_ha0or")
 require_one_of_these_upgrades = [NodePath("../Upgrade2")]
 
@@ -192,13 +193,12 @@ offset_top = 88.0
 offset_right = 136.0
 offset_bottom = 120.0
 upgrade_name = "Advanced Logistics"
-upgrade_description = "Increase range of Warehouses by [color=green]25%[/color]."
+upgrade_description = "Buildings adjacent (within 1 tiles) to Warehouse get a [color=green]20%[/color] bonus to their resource production."
 upgrade_id = 25
-upgrade_sprite = ExtResource("3_04mtn")
+upgrade_sprite = ExtResource("3_2j2jf")
 cost = SubResource("Resource_hh64u")
 connection_lines = [NodePath("../Line4-5")]
 require_one_of_these_upgrades = [NodePath("../Upgrade2")]
-disabled = true
 
 [node name="Upgrade5" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_3jq7e")]
 layout_mode = 0
@@ -207,12 +207,11 @@ offset_top = 88.0
 offset_right = 184.0
 offset_bottom = 120.0
 upgrade_name = "Stock Analysis Protocol"
-upgrade_description = "Increase range of Warehouses by another [color=green]50%[/color]."
+upgrade_description = "Increase range of Warehouses to [color=green]2[/color] tiles."
 upgrade_id = 26
-upgrade_sprite = ExtResource("3_04mtn")
+upgrade_sprite = ExtResource("3_2j2jf")
 cost = SubResource("Resource_a8sva")
 require_one_of_these_upgrades = [NodePath("../Upgrade4")]
-disabled = true
 
 [node name="Upgrade6" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_3jq7e")]
 layout_mode = 0

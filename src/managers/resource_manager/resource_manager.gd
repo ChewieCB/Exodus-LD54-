@@ -122,10 +122,10 @@ var worker_amount: int:
 				#
 				if most_recent_building.is_constructing:
 					emit_signal("construction_cancelled_lack_of_workers", most_recent_building.data.name)
-					most_recent_building.cancel_building(true)
+					most_recent_building.cancel_construction(true)
 				elif most_recent_building.is_deconstructing:
 					emit_signal("construction_cancelled_lack_of_workers", most_recent_building.data.name)
-					most_recent_building.cancel_building_remove(true)
+					most_recent_building.cancel_deconstruction(true)
 			# Assign the new value
 			value += worker_refund
 
