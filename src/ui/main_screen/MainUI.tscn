@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cu7ivg1u3vbhl"]
+[gd_scene load_steps=17 format=3 uid="uid://cu7ivg1u3vbhl"]
 
 [ext_resource type="PackedScene" uid="uid://bdbib8np6c616" path="res://src/ui/main_screen/resources/ResourceUI.tscn" id="1_4u51x"]
 [ext_resource type="PackedScene" uid="uid://sjhl1wud5upl" path="res://src/ui/building_ui/BuildUI.tscn" id="1_hyvdy"]
@@ -11,7 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://b2rwhkbjj7e4n" path="res://src/ui/main_screen/ResourceAlertsUI.tscn" id="7_njybl"]
 [ext_resource type="PackedScene" uid="uid://dv3uxnkp8ekhg" path="res://src/ui/building_ui/BuildingInfoPanel.tscn" id="7_povcy"]
 [ext_resource type="PackedScene" uid="uid://d2r3r36bru83h" path="res://src/ui/main_screen/BuildingAlert.tscn" id="7_r6nxt"]
-[ext_resource type="Script" path="res://src/ui/main_screen/events_debug/events_debug_menu.gd" id="9_e81ol"]
 
 [sub_resource type="Animation" id="Animation_3toh5"]
 resource_name = "RESET"
@@ -245,43 +244,39 @@ Left-click to Build.
 Right-click to Destroy"
 autowrap_mode = 2
 
-[node name="DEBUGEventsTrigger" type="PanelContainer" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -436.0
-offset_top = 15.0
-offset_right = -277.0
-offset_bottom = 55.0
-grow_horizontal = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="DEBUGEventsTrigger"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="DEBUGEventsTrigger/VBoxContainer"]
-layout_mode = 2
-text = "Trigger Event"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="EventsOption" type="OptionButton" parent="DEBUGEventsTrigger/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-alignment = 1
-item_count = 1
-popup/item_0/text = "Mr Khan"
-popup/item_0/id = 0
-script = ExtResource("9_e81ol")
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "RESET"
 libraries = {
 "": SubResource("AnimationLibrary_pifv8")
 }
 
+[node name="DEBUG_BuildVersionTag" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 428.0
+offset_top = -139.0
+offset_right = 468.0
+offset_bottom = -99.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="DEBUG_BuildVersionTag"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="DEBUG_BuildVersionTag/MarginContainer"]
+modulate = Color(1, 1, 1, 0.207843)
+layout_mode = 2
+text = "v1.0.5.alpha.5"
+
 [connection signal="pressed" from="BuildShowToggle/Button" to="." method="_on_build_button_pressed"]
 [connection signal="item_selected" from="DebugEventsMenu/MarginContainer/PanelContainer/VBoxContainer/OptionButton" to="." method="_on_debug_event_menu_button_item_selected"]
 [connection signal="pressed" from="ChatCrewButton" to="." method="_on_chat_crew_pressed"]
-[connection signal="item_selected" from="DEBUGEventsTrigger/VBoxContainer/EventsOption" to="DEBUGEventsTrigger/VBoxContainer/EventsOption" method="_on_item_selected"]

@@ -18,6 +18,8 @@ extends Control
 @onready var debug_event_dropdown = $DebugEventsMenu/MarginContainer/PanelContainer/VBoxContainer/OptionButton
 @onready var chat_crew_button: Button = $ChatCrewButton
 
+@onready var DEBUG_build_tag: Label = $DEBUG_BuildVersionTag/MarginContainer/Label
+
 var build_menu_open = false
 var event_image: Sprite2D
 var event_planet_holder: Node2D
@@ -34,6 +36,11 @@ func _ready() -> void:
 	if event_image_holder:
 		event_image = event_image_holder.get_node("EventImage")
 		event_planet_holder = event_image_holder.get_node("EventPlanetHolder")
+	
+	# Read in the build version tag from the config and update the label
+	var file = FileAccess.open("res://build_tag.cfg", FileAccess.READ)
+	DEBUG_build_tag.text = file.get_as_text()
+	file.close()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if build_menu_open:
