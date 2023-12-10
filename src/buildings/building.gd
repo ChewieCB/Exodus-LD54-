@@ -13,8 +13,6 @@ class_name Building
 @onready var build_finish_sfx = preload("res://assets/audio/sfx/Building_Finish.mp3")
 @onready var cant_place_sfx = preload("res://assets/audio/sfx/Cant_Place_Building_There.mp3")
 
-const Utils = preload("res://src/common/exodus_utils.gd")
-
 # Build menu vars
 var preview = false
 var outside_gridmap = false
@@ -34,25 +32,43 @@ var is_deconstructing: bool = false
 var ticks_left_to_delete: int
 
 var is_displaying_info_panel = false
-
-
-enum TYPES {
-	HabBuilding,
-	FoodBuilding,
-	WaterBuilding,
-	AirBuilding,
-	CryoPod,
-	MiningBuilding,
-}
+var bonus_multiplier: float = 1
 
 
 func _ready():
 	set_original_color()
 	build_timer_ui.visible = false
 	TickManager.tick.connect(_on_tick)
+	ResourceManager.upgrade_acquired.connect(apply_upgrades)
+	apply_upgrades()
+
+	if placed and building_complete:
+		_setup_scan_for_nearby_bonus()
 
 
-func build_in_progress():
+func check_for_adjacency_multiplier(_unused_var):
+	bonus_multiplier = 1
+	for area in collider.get_overlapping_areas():
+		if area.get_parent() is Building:
+			var nearby_building = area.get_parent() as Building
+			if nearby_building.type == EnumAutoload.BuildingType.STORAGE and \
+				EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_STOCK_ANALYSIS in ResourceManager.current_upgrades:
+				bonus_multiplier += 0.2
+
+
+func apply_upgrades():
+	if type == EnumAutoload.BuildingType.STORAGE and \
+		EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_ADV_LOGISTIC in ResourceManager.current_upgrades:
+			get_node("Range").scale = Vector2(1.5, 1.5)
+
+	# Wait 2 frame to make sure all Area2D changes are setup correctly
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+
+	check_for_adjacency_multiplier(type)
+
+
+func construct_in_progress():
 	# Update the building to show it's under construction
 	var pulse_colour = Color("#ffd4a3")
 	pulse_colour.a = 0.5
@@ -78,27 +94,23 @@ func deconstruct_in_progress():
 	#
 	BuildingManager.construction_queue.push_front(self)
 
-
-func _physics_process(delta):
-	if Input.is_action_just_pressed("cancel_place_building"):
-		if is_selected and can_delete and not preview:
-			if is_constructing and not is_deconstructing:
-				cancel_building()
-			elif building_complete and is_deconstructing:
-				cancel_building_remove()
-			else:
-				set_building_remove()
-
-
 func _input(event):
 	if event.is_action_pressed("left_click") and not preview:
 		if is_selected:
-			BuildingManager.show_building_info_panel(global_position, data)
+			BuildingManager.show_building_info_panel(global_position, self)
 			is_displaying_info_panel = true
 
 
 func _process(delta):
 	# TODO: Optimize this
+	if Input.is_action_just_pressed("cancel_place_building"):
+		if is_selected and can_delete and not preview:
+			if is_constructing and not is_deconstructing:
+				cancel_construction()
+			elif building_complete and is_deconstructing:
+				cancel_deconstruction()
+			else:
+				set_building_remove()
 	if not placed and preview:
 		if collider.has_overlapping_areas() or collider.has_overlapping_bodies() or outside_gridmap:
 			color_sprite(1, 0, 0, 0.5)
@@ -107,6 +119,14 @@ func _process(delta):
 			color_sprite(0, 1, 0, 0.5)
 			placeable = true
 
+
+func _setup_scan_for_nearby_bonus():
+	if type in [EnumAutoload.BuildingType.CRYO_POD, EnumAutoload.BuildingType.STORAGE]:
+		return
+
+	collider.set_collision_mask_value (2, true)
+	EventManager.building_finished.connect(check_for_adjacency_multiplier)
+	EventManager.building_deconstructed.connect(check_for_adjacency_multiplier)
 
 func _on_tick():
 	if not placed:
@@ -145,23 +165,25 @@ func remove_building():
 	self.queue_free()
 
 func deconstructed_refund_resource():
-	if type == Building.TYPES.CryoPod:
+	if type == EnumAutoload.BuildingType.CRYO_POD:
 		ResourceManager.population_amount += data.refund_population
 
 func start_constructing():
+	remove_improved_preview()
 	is_constructing = true
 	placed = true
 	preview = false
 	ResourceManager.assign_workers(self)
-	ResourceManager.metal_amount -= Utils.calculate_build_cost_with_upgrade(data.metal_cost)
+	ResourceManager.change_resource(data.resource_cost, false, ResourceManager.get_build_cost_with_upgrade_multiplier())
 	# Restore the building's true colour outside of preview UI
 	color_sprite(original_color.r, original_color.g, original_color.b, original_color.a)
 	# Update build timer/construction effects
-	ticks_left_to_build = Utils.calculate_build_time_with_upgrade(data.construction_time)
+	ticks_left_to_build = ResourceManager.calculate_build_time_with_upgrade(data.construction_time)
 	build_timer_ui.label.text = str(ticks_left_to_build)
 	build_timer_ui.visible = true
-	build_in_progress()
+	construct_in_progress()
 	SoundManager.play_sound(build_start_sfx, "SFX")
+	_setup_scan_for_nearby_bonus()
 
 func set_building_remove():
 	if ResourceManager.worker_amount >= data.people_cost:
@@ -169,7 +191,7 @@ func set_building_remove():
 		# Costs workers to deconstruct
 		ResourceManager.assign_workers(self)
 		# Update build timer/construction effects
-		ticks_left_to_delete = Utils.calculate_build_time_with_upgrade(data.destruction_time)
+		ticks_left_to_delete = ResourceManager.calculate_build_time_with_upgrade(data.destruction_time)
 		build_timer_ui.label.text = str(ticks_left_to_delete)
 		build_timer_ui.visible = true
 		deconstruct_in_progress()
@@ -179,24 +201,43 @@ func set_building_remove():
 		SoundManager.play_sound(cant_place_sfx, "SFX")
 
 # Cancel a building that is constructing
-func cancel_building(no_refund=false):
+func cancel_construction(no_refund=false):
 	is_constructing = false
 	build_timer_ui.visible = false
 	if not no_refund:
 		ResourceManager.retrieve_workers(self)
-		ResourceManager.metal_amount += Utils.calculate_build_cost_with_upgrade(data.metal_cost)
+		ResourceManager.change_resource(data.resource_cost, true, ResourceManager.get_build_cost_with_upgrade_multiplier())
 	BuildingManager.construction_queue.erase(self)
 	SoundManager.play_sound(build_finish_sfx, "SFX")
 	self.queue_free()
 
 # Cancel a building that is de-constructing
-func cancel_building_remove(no_refund=false):
+func cancel_deconstruction(no_refund=false):
 	is_deconstructing = false
 	build_timer_ui.visible = false
 	if not no_refund:
 		ResourceManager.retrieve_workers(self)
 	SoundManager.play_sound(build_finish_sfx, "SFX")
 	sprite.material.set_shader_parameter("mode", 0)
+
+
+func get_produced_resource() -> ResourceData:
+	var prod_res = ResourceData.new()
+	prod_res.food = ceil(data.resource_prod.food * bonus_multiplier)
+	prod_res.water = ceil(data.resource_prod.water * bonus_multiplier)
+	prod_res.air = ceil(data.resource_prod.air * bonus_multiplier)
+	prod_res.metal = ceil(data.resource_prod.metal * bonus_multiplier)
+
+	return prod_res
+
+func enable_improved_preview():
+	if type == EnumAutoload.BuildingType.STORAGE:
+		if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_STOCK_ANALYSIS in ResourceManager.current_upgrades:
+			get_node("Range/RangeSprite").visible = true
+
+func remove_improved_preview():
+	if type == EnumAutoload.BuildingType.STORAGE:
+		get_node("Range/RangeSprite").visible = false
 
 
 func set_original_color():
@@ -239,6 +280,7 @@ func _on_area_2d_mouse_entered():
 	sprite.material.set_shader_parameter("shine_color", pulse_colour)
 	sprite.material.set_shader_parameter("full_pulse_cycle", true)
 	sprite.material.set_shader_parameter("mode", 1)
+	enable_improved_preview()
 
 
 func _on_area_2d_mouse_exited():
@@ -246,10 +288,8 @@ func _on_area_2d_mouse_exited():
 	sprite.material.set_shader_parameter("mode", 0)
 	BuildingManager.hide_building_info_panel()
 	is_displaying_info_panel = false
+	remove_improved_preview()
+
 
 func rotate_cw():
 	rotation += PI/2
-
-func rotate_ccw():
-	rotation -= PI/2
-

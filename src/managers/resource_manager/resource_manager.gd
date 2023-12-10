@@ -7,6 +7,7 @@ signal food_changed(value)
 signal water_changed(value)
 signal air_changed(value)
 signal metal_changed(value)
+signal storage_changed(value)
 #
 signal food_modifier_changed(total, modifier)
 signal water_modifier_changed(total, modifier)
@@ -36,6 +37,7 @@ var air_alert_shown = false
 
 const FAROQ_KHAN_BONUS = 1.5
 const GOVERNOR_BONUS = 2
+const BASE_STORAGE = 500
 
 # How many ticks/days/turns each endgame flag can go on for before you lose
 var starving_time: int = 9
@@ -45,7 +47,7 @@ var starving_time_left = starving_time:
 		if is_starving:
 			emit_signal("starving", starving_time_left)
 			if starving_time_left == 0:
-				emit_signal("game_over", RESOURCE_TYPE.FOOD)
+				emit_signal("game_over", EnumAutoload.ResourceType.FOOD)
 var thirsty_time: int = 6
 var thirsty_time_left = thirsty_time:
 	set(value):
@@ -53,7 +55,7 @@ var thirsty_time_left = thirsty_time:
 		if is_thirsty:
 			emit_signal("dehydrated", thirsty_time_left)
 			if thirsty_time_left == 0:
-				emit_signal("game_over", RESOURCE_TYPE.WATER)
+				emit_signal("game_over", EnumAutoload.ResourceType.WATER)
 var suffocating_time: int = 3
 var suffocating_time_left = suffocating_time:
 	set(value):
@@ -61,7 +63,7 @@ var suffocating_time_left = suffocating_time:
 		if is_suffocating:
 			emit_signal("suffocating", suffocating_time_left)
 			if suffocating_time_left == 0:
-				emit_signal("game_over", RESOURCE_TYPE.AIR)
+				emit_signal("game_over", EnumAutoload.ResourceType.AIR)
 
 # Endgame flags, if any of these last too long its game over
 var is_starving = false:
@@ -84,14 +86,7 @@ var is_suffocating = false:
 		emit_signal("suffocating", suffocating_time)
 
 
-enum RESOURCE_TYPE {
-	POPULATION,
-	HOUSING,
-	FOOD,
-	WATER,
-	AIR,
-	METAL
-}
+
 
 var current_officers = [EnumAutoload.Officer.PRESSLEY, EnumAutoload.Officer.TORGON]
 var current_upgrades = []
@@ -125,10 +120,10 @@ var worker_amount: int:
 				#
 				if most_recent_building.is_constructing:
 					emit_signal("construction_cancelled_lack_of_workers", most_recent_building.data.name)
-					most_recent_building.cancel_building(true)
+					most_recent_building.cancel_construction(true)
 				elif most_recent_building.is_deconstructing:
 					emit_signal("construction_cancelled_lack_of_workers", most_recent_building.data.name)
-					most_recent_building.cancel_building_remove(true)
+					most_recent_building.cancel_deconstruction(true)
 			# Assign the new value
 			value += worker_refund
 
@@ -143,6 +138,11 @@ var housing_amount: int:
 		housing_amount = value
 		emit_signal("housing_changed", housing_amount, available_housing)
 var available_housing: int = housing_amount - population_amount
+
+var storage_amount: int:
+	set(value):
+		storage_amount = value
+		emit_signal("storage_changed", storage_amount)
 #
 #
 #
@@ -187,20 +187,16 @@ func _ready() -> void:
 
 # TODO: Can be optimized, only run on build/tick event, not every frame
 func _physics_process(delta):
-	for idx in range(0, 6):
+	for idx in range(0, 7):
 		calculate_resource_modifier(idx, population_amount)
 		match idx:
-			RESOURCE_TYPE.POPULATION:
-				pass
-			RESOURCE_TYPE.HOUSING:
-				pass
-			RESOURCE_TYPE.FOOD:
+			EnumAutoload.ResourceType.FOOD:
 				emit_signal("food_modifier_changed", food_amount, current_food_modifier)
-			RESOURCE_TYPE.WATER:
+			EnumAutoload.ResourceType.WATER:
 				emit_signal("water_modifier_changed", water_amount, current_water_modifier)
-			RESOURCE_TYPE.AIR:
+			EnumAutoload.ResourceType.AIR:
 				emit_signal("air_modifier_changed", air_amount, current_air_modifier)
-			RESOURCE_TYPE.METAL:
+			EnumAutoload.ResourceType.METAL:
 				emit_signal("metal_modifier_changed", metal_amount, current_metal_modifier)
 
 func calculate_resource_modifier(resource_type, population) -> void:
@@ -208,47 +204,52 @@ func calculate_resource_modifier(resource_type, population) -> void:
 	var consumption = 0
 	var modifier = 0
 	match resource_type:
-		RESOURCE_TYPE.HOUSING:
+		EnumAutoload.ResourceType.HOUSING:
 			# Housing is an outlier, we don't update per turn we just keep track
 			# of used and avaialble housing
 			for building in BuildingManager.buildings:
 				production += building.data.housing_prod
-			if EnumAutoload.Officer.GOVERNOR_JERREROD in current_officers and production > 0:
-				production = (int)(GOVERNOR_BONUS * production)
+			# if EnumAutoload.Officer.GOVERNOR_JERREROD in current_officers and production > 0:
+			# 	production = (int)(GOVERNOR_BONUS * production)
 			consumption = population_amount
 			#
 			housing_amount = production
 			available_housing = production - consumption
-		RESOURCE_TYPE.FOOD:
+		EnumAutoload.ResourceType.STORAGE:
 			for building in BuildingManager.buildings:
-				production += building.data.food_prod
-			if EnumAutoload.Officer.FAROQ_KHAN in current_officers and production > 0:
-				production = (int)(FAROQ_KHAN_BONUS * production)
+				production += building.data.storage_prod
+				production = ResourceManager.calculate_storage_with_upgrade(production)
+				storage_amount = BASE_STORAGE + production
+		EnumAutoload.ResourceType.FOOD:
+			for building in BuildingManager.buildings:
+				production += building.get_produced_resource().food
+			# if EnumAutoload.Officer.FAROQ_KHAN in current_officers and production > 0:
+			# 	production = (int)(FAROQ_KHAN_BONUS * production)
 			consumption = population * pop_food_cost
 			current_food_modifier = production - consumption
-		RESOURCE_TYPE.WATER:
+		EnumAutoload.ResourceType.WATER:
 			for building in BuildingManager.buildings:
-				production += building.data.water_prod
+				production += building.get_produced_resource().water
 			consumption = population * pop_water_cost
 			current_water_modifier = production - consumption
-		RESOURCE_TYPE.AIR:
+		EnumAutoload.ResourceType.AIR:
 			for building in BuildingManager.buildings:
-				production += building.data.air_prod
+				production += building.get_produced_resource().air
 			consumption = population * pop_air_cost
 			current_air_modifier = production - consumption
-		RESOURCE_TYPE.METAL:
+		EnumAutoload.ResourceType.METAL:
 			for building in BuildingManager.buildings:
-				production += building.data.metal_prod
+				production += building.get_produced_resource().metal
 			current_metal_modifier = production
 
 
 func update_resource_tick() -> void:
 	# When we receive a tick signal from the GameTickManager
 	# we update our resource levels.
-	food_amount = clamp(food_amount + current_food_modifier, 0, 999)
-	water_amount = clamp(water_amount + current_water_modifier, 0, 999)
-	air_amount = clamp(air_amount + current_air_modifier, 0, 999)
-	metal_amount = clamp(metal_amount + current_metal_modifier, 0, 999)
+	food_amount = clamp(food_amount + current_food_modifier, 0, storage_amount)
+	water_amount = clamp(water_amount + current_water_modifier, 0, storage_amount)
+	air_amount = clamp(air_amount + current_air_modifier, 0, storage_amount)
+	metal_amount = clamp(metal_amount + current_metal_modifier, 0, storage_amount)
 
 	# TODO - change resource UI colours over low threshold
 
@@ -303,20 +304,20 @@ func _on_tick():
 func check_if_all_crew_died():
 	if population_amount <= 0:
 		population_amount = 0
-		emit_signal("game_over", RESOURCE_TYPE.POPULATION)
+		emit_signal("game_over", EnumAutoload.ResourceType.POPULATION)
 
 
 func change_resource_from_event(resource: String, amount_str: String):
 	var amount = int(amount_str)
 	match resource:
 		"food":
-			food_amount += amount
+			food_amount = clamp(food_amount + amount, 0, storage_amount)
 		"water":
-			water_amount += amount
+			water_amount = clamp(water_amount + amount, 0, storage_amount)
 		"air":
-			air_amount += amount
+			air_amount = clamp(air_amount + amount, 0, storage_amount)
 		"metal":
-			metal_amount += amount
+			metal_amount = clamp(metal_amount + amount, 0, storage_amount)
 		"population":
 			if amount > 0:
 				var empty_spot = housing_amount - population_amount
@@ -365,6 +366,72 @@ func add_upgrade(upgrade_id: EnumAutoload.UpgradeId):
 	current_upgrades.append(upgrade_id)
 	emit_signal("upgrade_acquired")
 
+
+func check_if_enough_resource(cost: ResourceData) -> bool:
+	# return true
+	if food_amount < cost.food:
+		return false
+	if water_amount < cost.water:
+		return false
+	if air_amount < cost.air:
+		return false
+	if metal_amount < cost.metal:
+		return false
+	return true
+
+
+func change_resource(resource_data: ResourceData, add: bool = true, multiplier: float = 1) -> void:
+	var operation_multiplier = 1
+	if not add:
+		operation_multiplier = -1
+	food_amount += ceil(resource_data.food * operation_multiplier * multiplier)
+	water_amount += ceil(resource_data.water * operation_multiplier * multiplier)
+	air_amount += ceil(resource_data.air * operation_multiplier * multiplier)
+	metal_amount += ceil(resource_data.metal * operation_multiplier * multiplier)
+
+
+func get_build_time_with_upgrade_multiplier() -> float:
+	var reduction_perc = 0
+	if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_CREW_CHIEF in current_upgrades:
+		reduction_perc += 0.1
+	if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_DEEP_SPACE in current_upgrades:
+		reduction_perc += 0.15
+	if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_DRONE in current_upgrades:
+		reduction_perc += 0.25
+	return clampf(1 - reduction_perc, 0, 1)
+	
+func calculate_build_time_with_upgrade(base_time: int) -> int:
+	var multiplier = get_build_time_with_upgrade_multiplier()
+	return ceil(base_time * multiplier)
+
+
+func get_build_cost_with_upgrade_multiplier() -> float:
+	var reduction_perc = 0
+	if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_IMPROVE_SCHEMATICS in current_upgrades:
+		reduction_perc += 0.1
+	if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_AI_ENHANCED_SCHEMATICS in current_upgrades:
+		reduction_perc += 0.15
+	if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_AI_GENERATED_SCHEMATICS in current_upgrades:
+		reduction_perc += 0.25
+	return clampf(1 - reduction_perc, 0, 1)
+
+func calculate_build_cost_with_upgrade(base_cost: int) -> int:
+	var multiplier = get_build_cost_with_upgrade_multiplier()
+	return ceil(base_cost * multiplier)
+
+
+func get_storage_with_upgrade_multiplier() -> float:
+	var bonus_perc = 0
+	if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_ADV_SORTERS in current_upgrades:
+		bonus_perc += 0.25
+	if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_AUTOMATED_WAREHOUSES in current_upgrades:
+		bonus_perc += 0.50
+	return (1 + bonus_perc)
+
+func calculate_storage_with_upgrade(base_storage: int) -> int:
+	var multiplier = get_storage_with_upgrade_multiplier()
+	return ceil(base_storage * multiplier)
+
 func reset_state():
 	# TODO - load initial values from file for difficulty settings
 	population_amount = 3
@@ -373,6 +440,7 @@ func reset_state():
 	water_amount = 250
 	air_amount = 200
 	metal_amount = 10
+	storage_amount = BASE_STORAGE
 
 	food_alert_shown = false
 	water_alert_shown = false

@@ -122,12 +122,6 @@ layout_mode = 2
 toggle_mode = true
 text = "Build Menu"
 
-[node name="ResourceUI" parent="." instance=ExtResource("1_4u51x")]
-layout_mode = 1
-offset_left = -346.5
-offset_top = -72.0
-offset_right = 346.5
-
 [node name="BuildingAlerts" parent="." instance=ExtResource("7_r6nxt")]
 layout_mode = 1
 mouse_filter = 1
@@ -159,6 +153,12 @@ mouse_force_pass_scroll_events = false
 visible = false
 
 [node name="CommandScreen" parent="." instance=ExtResource("6_hbhke")]
+
+[node name="ResourceUI" parent="." instance=ExtResource("1_4u51x")]
+layout_mode = 1
+offset_left = -346.5
+offset_top = -72.0
+offset_right = 346.5
 
 [node name="TimeControlUI" type="Control" parent="."]
 layout_mode = 1
@@ -239,7 +239,7 @@ offset_left = 229.0
 offset_top = -107.0
 offset_right = 472.0
 offset_bottom = -29.0
-text = "Q, E to rotate building.
+text = "E to rotate building.
 Left-click to Build.
 Right-click to Destroy"
 autowrap_mode = 2

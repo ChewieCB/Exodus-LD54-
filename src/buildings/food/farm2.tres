@@ -1,27 +1,33 @@
-[gd_resource type="Resource" script_class="BuildingResource" load_steps=3 format=3 uid="uid://bfedsax4b6dse"]
+[gd_resource type="Resource" script_class="BuildingResource" load_steps=6 format=3 uid="uid://bfedsax4b6dse"]
 
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_ndhch"]
+[ext_resource type="Script" path="res://src/common/resource_data.gd" id="1_px0dy"]
 [ext_resource type="Texture2D" uid="uid://bmrisjkpambuj" path="res://assets/buildings/food_2.png" id="2_jt25t"]
+
+[sub_resource type="Resource" id="Resource_rbkej"]
+script = ExtResource("1_px0dy")
+food = 0
+water = 0
+air = 0
+metal = 44
+
+[sub_resource type="Resource" id="Resource_ba3c0"]
+script = ExtResource("1_px0dy")
+food = 12
+water = 0
+air = 0
+metal = 0
 
 [resource]
 script = ExtResource("1_ndhch")
 name = "Hydroponics Bay"
-type = 1
+type = 0
 sprite = ExtResource("2_jt25t")
+resource_prod = SubResource("Resource_ba3c0")
 housing_prod = 0
-food_prod = 12
-water_prod = 0
-air_prod = 0
-metal_prod = 0
-food_cost = 0
-air_cost = 0
-water_cost = 0
-metal_cost = 44
+storage_prod = 0
+resource_cost = SubResource("Resource_rbkej")
 people_cost = 4
-refund_food = 0
-refund_air = 0
-refund_water = 0
-refund_metal = 0
 refund_population = 0
 construction_time = 4
 destruction_time = 2

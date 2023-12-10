@@ -17,13 +17,13 @@ func _resource_low_alert(resource):
 	var val_1
 	var val_2
 	match resource:
-		ResourceManager.RESOURCE_TYPE.FOOD:
+		EnumAutoload.ResourceType.FOOD:
 			val_1 = "is starving!"
 			val_2 = "farms"
-		ResourceManager.RESOURCE_TYPE.WATER:
+		EnumAutoload.ResourceType.WATER:
 			val_1 = "is dying of thirst!"
 			val_2 = "water processing"
-		ResourceManager.RESOURCE_TYPE.AIR:
+		EnumAutoload.ResourceType.AIR:
 			val_1 = "is suffocating!"
 			val_2 = "air cyclers"
 	

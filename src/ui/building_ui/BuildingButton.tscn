@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://5ce2cbb55dyv"]
+[gd_scene load_steps=7 format=3 uid="uid://5ce2cbb55dyv"]
 
 [ext_resource type="Texture2D" uid="uid://dw4vv6brsf8a1" path="res://assets/buildings/hab_1.png" id="1_5jg35"]
 [ext_resource type="Script" path="res://src/ui/building_ui/building_button.gd" id="1_jspa8"]
+[ext_resource type="PackedScene" uid="uid://3slp8ujgyckn" path="res://src/buildings/hab/Hab1.tscn" id="2_60u1r"]
 [ext_resource type="Texture2D" uid="uid://bj4y01dn0igj5" path="res://assets/ui/icons/16/People.png" id="2_ol8gj"]
-[ext_resource type="Texture2D" uid="uid://dawueysu2x7ts" path="res://assets/ui/icons/food_icon.png" id="3_cldon"]
 [ext_resource type="Texture2D" uid="uid://2p4jagl32fr1" path="res://assets/ui/icons/16/Clock.png" id="3_g56x5"]
-[ext_resource type="Texture2D" uid="uid://vr3s3nju34ut" path="res://assets/ui/icons/metal_icon.png" id="4_6adgf"]
 [ext_resource type="Texture2D" uid="uid://cr1bdj2mbacx3" path="res://assets/ui/icons/help_icon.png" id="6_2a8kd"]
 
 [node name="BuildingButton" type="MarginContainer"]
@@ -20,25 +19,21 @@ offset_right = 157.0
 offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 script = ExtResource("1_jspa8")
+building_object = ExtResource("2_60u1r")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 2
-mouse_filter = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-mouse_filter = 2
+alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -53,7 +48,7 @@ layout_mode = 2
 
 [node name="BuildingName" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/NameContainer"]
 layout_mode = 2
-text = "Building Name"
+text = "Hab Block"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
@@ -75,7 +70,7 @@ theme_override_constants/separation = 2
 
 [node name="WorkerCost" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer/WorkersContainer/HBoxContainer"]
 layout_mode = 2
-text = "10"
+text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -95,7 +90,7 @@ theme_override_constants/separation = 2
 
 [node name="BuildingTime" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer/TimeContainer/HBoxContainer"]
 layout_mode = 2
-text = "10"
+text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -104,59 +99,29 @@ layout_mode = 2
 texture = ExtResource("3_g56x5")
 stretch_mode = 5
 
-[node name="MetalContainer" type="MarginContainer" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer"]
+[node name="CostRTL" type="RichTextLabel" parent="CenterContainer/HBoxContainer/VBoxContainer"]
+self_modulate = Color(1, 0.560784, 0.529412, 1)
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_left = 4
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "[center]Cost 6 [img]res://assets/ui/icons/metal_icon.png[/img] [/center]"
+fit_content = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer/MetalContainer"]
+[node name="ProdRTL" type="RichTextLabel" parent="CenterContainer/HBoxContainer/VBoxContainer"]
+self_modulate = Color(0.552941, 1, 0.537255, 1)
 layout_mode = 2
-theme_override_constants/separation = 2
-
-[node name="MetalCost" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer/MetalContainer/HBoxContainer"]
-layout_mode = 2
-text = "10"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="MetalIcon" type="TextureRect" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer/NameCostContainer/RequirementsContainer/MetalContainer/HBoxContainer"]
-layout_mode = 2
-texture = ExtResource("4_6adgf")
-stretch_mode = 5
-
-[node name="MarginContainer3" type="MarginContainer" parent="CenterContainer/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(20, 0)
-layout_mode = 2
-size_flags_stretch_ratio = 0.0
-mouse_filter = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer3"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/separation = 8
-
-[node name="BuildingProd" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer3/HBoxContainer"]
-layout_mode = 2
-text = "+0"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer3/HBoxContainer"]
-layout_mode = 2
-texture = ExtResource("3_cldon")
-stretch_mode = 5
-
-[node name="BuildingProd2" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer/MarginContainer3/HBoxContainer"]
-layout_mode = 2
-text = "per day"
-vertical_alignment = 1
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "[center]+1 [img]res://assets/ui/icons/16/Home.png[/img] [/center]"
+fit_content = true
 
 [node name="Tooltip" type="TextureRect" parent="CenterContainer/HBoxContainer/VBoxContainer"]
-modulate = Color(0.721569, 0.721569, 0.721569, 1)
+modulate = Color(0.933333, 0.933333, 0.933333, 1)
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_default_cursor_shape = 16
 texture = ExtResource("6_2a8kd")
 expand_mode = 1
 
@@ -178,4 +143,6 @@ custom_minimum_size = Vector2(160, 160)
 layout_mode = 2
 size_flags_horizontal = 3
 
+[connection signal="mouse_entered" from="CenterContainer/HBoxContainer/VBoxContainer/Tooltip" to="." method="_on_tooltip_mouse_entered"]
+[connection signal="mouse_exited" from="CenterContainer/HBoxContainer/VBoxContainer/Tooltip" to="." method="_on_tooltip_mouse_exited"]
 [connection signal="pressed" from="CenterContainer/HBoxContainer/MarginContainer2/Button" to="." method="_on_button_pressed"]

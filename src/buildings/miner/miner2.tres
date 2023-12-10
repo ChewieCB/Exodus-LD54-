@@ -1,27 +1,33 @@
-[gd_resource type="Resource" script_class="BuildingResource" load_steps=3 format=3 uid="uid://c0rbi85ffjr8v"]
+[gd_resource type="Resource" script_class="BuildingResource" load_steps=6 format=3 uid="uid://c0rbi85ffjr8v"]
 
+[ext_resource type="Script" path="res://src/common/resource_data.gd" id="1_csts3"]
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_wbrhj"]
 [ext_resource type="Texture2D" uid="uid://cuaukf2rs1rq1" path="res://assets/buildings/miner_2.png" id="2_42u3y"]
+
+[sub_resource type="Resource" id="Resource_vuuax"]
+script = ExtResource("1_csts3")
+food = 0
+water = 0
+air = 0
+metal = 40
+
+[sub_resource type="Resource" id="Resource_qe2je"]
+script = ExtResource("1_csts3")
+food = 0
+water = 0
+air = 0
+metal = 6
 
 [resource]
 script = ExtResource("1_wbrhj")
 name = "Nebula Collector"
-type = 5
+type = 3
 sprite = ExtResource("2_42u3y")
+resource_prod = SubResource("Resource_qe2je")
 housing_prod = 0
-food_prod = 0
-water_prod = 0
-air_prod = 0
-metal_prod = 6
-food_cost = 0
-air_cost = 0
-water_cost = 0
-metal_cost = 40
+storage_prod = 0
+resource_cost = SubResource("Resource_vuuax")
 people_cost = 3
-refund_food = 0
-refund_air = 0
-refund_water = 0
-refund_metal = 0
 refund_population = 0
 construction_time = 4
 destruction_time = 2
