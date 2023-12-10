@@ -9,7 +9,6 @@ class_name ResearchTab
 @onready var research_graph_holder = $ResearchGraphView/ResearchGraphHolder
 @onready var not_enough_resource_timer: Timer = $NotEnoughResourceTimer
 
-const Utils = preload("res://src/common/exodus_utils.gd")
 var warning_click_sfx = preload("res://assets/audio/sfx/Cant_Place_Building_There.mp3")
 var proceed_click_sfx = preload("res://assets/audio/sfx/Building_Start.mp3")
 
@@ -89,10 +88,10 @@ func update_status_all_upgrade_buttons():
 
 func _on_upgrade_button_pressed() -> void:
 	if selected_upgrade_data != null:
-		if Utils.check_if_enough_resource(selected_upgrade_data.cost):
+		if ResourceManager.check_if_enough_resource(selected_upgrade_data.cost):
 			SoundManager.play_sound(proceed_click_sfx, "UI")
 			ResourceManager.add_upgrade(selected_upgrade_data.upgrade_id)
-			Utils.change_resource(selected_upgrade_data.cost, false)
+			ResourceManager.change_resource(selected_upgrade_data.cost, false)
 			# Refresh UI
 			for upgr in selected_upgrade_data.conflict_one_of_these_upgrades:
 				upgr.disabled = true

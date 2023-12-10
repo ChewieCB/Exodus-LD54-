@@ -39,8 +39,6 @@ const FAROQ_KHAN_BONUS = 1.5
 const GOVERNOR_BONUS = 2
 const BASE_STORAGE = 500
 
-const Utils = preload("res://src/common/exodus_utils.gd")
-
 # How many ticks/days/turns each endgame flag can go on for before you lose
 var starving_time: int = 9
 var starving_time_left = starving_time:
@@ -220,7 +218,7 @@ func calculate_resource_modifier(resource_type, population) -> void:
 		EnumAutoload.ResourceType.STORAGE:
 			for building in BuildingManager.buildings:
 				production += building.data.storage_prod
-				production = Utils.calculate_storage_with_upgrade(production)
+				production = ResourceManager.calculate_storage_with_upgrade(production)
 				storage_amount = BASE_STORAGE + production
 		EnumAutoload.ResourceType.FOOD:
 			for building in BuildingManager.buildings:
@@ -367,6 +365,72 @@ func update_specialist_bonus():
 func add_upgrade(upgrade_id: EnumAutoload.UpgradeId):
 	current_upgrades.append(upgrade_id)
 	emit_signal("upgrade_acquired")
+
+
+func check_if_enough_resource(cost: ResourceData) -> bool:
+	# return true
+	if food_amount < cost.food:
+		return false
+	if water_amount < cost.water:
+		return false
+	if air_amount < cost.air:
+		return false
+	if metal_amount < cost.metal:
+		return false
+	return true
+
+
+func change_resource(resource_data: ResourceData, add: bool = true, multiplier: float = 1) -> void:
+	var operation_multiplier = 1
+	if not add:
+		operation_multiplier = -1
+	food_amount += ceil(resource_data.food * operation_multiplier * multiplier)
+	water_amount += ceil(resource_data.water * operation_multiplier * multiplier)
+	air_amount += ceil(resource_data.air * operation_multiplier * multiplier)
+	metal_amount += ceil(resource_data.metal * operation_multiplier * multiplier)
+
+
+func get_build_time_with_upgrade_multiplier() -> float:
+	var reduction_perc = 0
+	if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_CREW_CHIEF in current_upgrades:
+		reduction_perc += 0.1
+	if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_DEEP_SPACE in current_upgrades:
+		reduction_perc += 0.15
+	if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_DRONE in current_upgrades:
+		reduction_perc += 0.25
+	return clampf(1 - reduction_perc, 0, 1)
+	
+func calculate_build_time_with_upgrade(base_time: int) -> int:
+	var multiplier = get_build_time_with_upgrade_multiplier()
+	return ceil(base_time * multiplier)
+
+
+func get_build_cost_with_upgrade_multiplier() -> float:
+	var reduction_perc = 0
+	if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_IMPROVE_SCHEMATICS in current_upgrades:
+		reduction_perc += 0.1
+	if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_AI_ENHANCED_SCHEMATICS in current_upgrades:
+		reduction_perc += 0.15
+	if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_AI_GENERATED_SCHEMATICS in current_upgrades:
+		reduction_perc += 0.25
+	return clampf(1 - reduction_perc, 0, 1)
+
+func calculate_build_cost_with_upgrade(base_cost: int) -> int:
+	var multiplier = get_build_cost_with_upgrade_multiplier()
+	return ceil(base_cost * multiplier)
+
+
+func get_storage_with_upgrade_multiplier() -> float:
+	var bonus_perc = 0
+	if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_ADV_SORTERS in current_upgrades:
+		bonus_perc += 0.25
+	if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_AUTOMATED_WAREHOUSES in current_upgrades:
+		bonus_perc += 0.50
+	return (1 + bonus_perc)
+
+func calculate_storage_with_upgrade(base_storage: int) -> int:
+	var multiplier = get_storage_with_upgrade_multiplier()
+	return ceil(base_storage * multiplier)
 
 func reset_state():
 	# TODO - load initial values from file for difficulty settings

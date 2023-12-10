@@ -19,8 +19,6 @@ const OUTSIDE_SHIP_TILE_ID = Vector2i(-2, 0)
 const INSIDE_SHIP_TILE_ID = Vector2i(3, 1)
 const NO_TILE_ID = Vector2i(-1, -1)
 
-const Utils = preload("res://src/common/exodus_utils.gd")
-
 
 func _ready():
 	BuildingManager.building_selected.connect(_building_button_pressed)
@@ -111,7 +109,7 @@ func place_building():
 		SoundManager.play_sound(cant_place_sfx, "SFX")
 		return
 
-	if not Utils.check_if_enough_resource(current_building.data.resource_cost):
+	if not ResourceManager.check_if_enough_resource(current_building.data.resource_cost):
 		BuildingManager.emit_signal("not_enough_resource")
 		SoundManager.play_sound(cant_place_sfx, "SFX")
 		return

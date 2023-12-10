@@ -292,6 +292,7 @@ offset_right = 225.0
 offset_bottom = 117.5
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 1
 mouse_filter = 2
 stretch = true
 
@@ -397,11 +398,6 @@ grow_horizontal = 2
 grow_vertical = 0
 toggle_mode = true
 text = "Change path"
-
-[node name="Cryostasis Citizen" type="TabBar" parent="DeviceFrame/TabContainer"]
-visible = false
-layout_mode = 2
-mouse_filter = 2
 
 [node name="Crewmates" type="TabBar" parent="DeviceFrame/TabContainer"]
 visible = false

@@ -22,8 +22,6 @@ const STORAGE_ICON = "res://assets/ui/icons/storage_icon.png"
 
 var building: Building
 
-const Utils = preload("res://src/common/exodus_utils.gd")
-
 func _ready():
 	if building_object == null:
 		return
@@ -79,8 +77,8 @@ func _update_info_after_upgrade():
 	# it when it come to that
 
 	if not Engine.is_editor_hint():
-		cost_multiplier = Utils.get_build_cost_with_upgrade_multiplier()
-		warehouse_multiplier = Utils.get_storage_with_upgrade_multiplier()
+		cost_multiplier = ResourceManager.get_build_cost_with_upgrade_multiplier()
+		warehouse_multiplier = ResourceManager.get_storage_with_upgrade_multiplier()
 
 	cost_string = get_resource_string_with_icon(building.data.resource_cost, cost_multiplier)
 	if cost_string != "":

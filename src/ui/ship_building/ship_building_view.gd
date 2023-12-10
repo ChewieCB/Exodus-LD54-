@@ -12,7 +12,7 @@ var bgm_music
 
 func _ready():
 	TickManager.tick_changed.connect(_update_star_particles)
-	EventManager.building_finished_signal.connect(tutorial_tracker)
+	EventManager.building_finished.connect(tutorial_tracker)
 	if tutorial_disabled:
 		EventManager.tutorial_progress = -1
 
