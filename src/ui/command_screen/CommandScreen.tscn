@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://1dd0jvugd41x" path="res://src/ui/command_screen/star_map/StarMap.tscn" id="3_jn7gj"]
 [ext_resource type="Script" path="res://src/ui/command_screen/research_tab/research_tab.gd" id="3_v75ll"]
 [ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="4_hkjqs"]
+[ext_resource type="PackedScene" uid="uid://veb72nmjfegq" path="res://src/ui/command_screen/missions_tab/MissionEntry.tscn" id="4_u7ron"]
 [ext_resource type="PackedScene" uid="uid://b7bouq455qx0b" path="res://src/ui/command_screen/crewmate_tab/CrewmateButton.tscn" id="4_vsvdc"]
 [ext_resource type="Script" path="res://assets/planets/Star/Star.gd" id="5_c2tjh"]
 [ext_resource type="PackedScene" uid="uid://c6fnnntkibdna" path="res://src/ui/command_screen/research_tab/SelectResearchGraphButton.tscn" id="5_fynyk"]
@@ -18,7 +19,6 @@
 [ext_resource type="Shader" path="res://assets/planets/Star/Star.gdshader" id="7_hulyr"]
 [ext_resource type="PackedScene" uid="uid://btjkgkmeros7p" path="res://src/ui/command_screen/research_tab/CrewSuppliesResearch.tscn" id="7_qusv6"]
 [ext_resource type="PackedScene" uid="uid://lwk7nc56s8g8" path="res://src/ui/command_screen/OfficerLabel.tscn" id="7_rk483"]
-[ext_resource type="Texture2D" uid="uid://dv6va8esoriwu" path="res://assets/ui/icons/16/Icon_Close1.png" id="8_2xto3"]
 [ext_resource type="Texture2D" uid="uid://df0siiqlu7ln3" path="res://assets/character/torgon.png" id="8_jre42"]
 [ext_resource type="Texture2D" uid="uid://xor5ih5p1g3d" path="res://assets/character/faroq_khan.png" id="9_47m3x"]
 [ext_resource type="PackedScene" uid="uid://ce5dg57vaxm3d" path="res://src/ui/command_screen/research_tab/ConstructionLogisticResearch.tscn" id="9_iekhi"]
@@ -174,208 +174,8 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MissionItem1" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer"]
+[node name="MissionItem1" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer" instance=ExtResource("4_u7ron")]
 layout_mode = 2
-size_flags_vertical = 6
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 4
-
-[node name="PanelContainer" type="PanelContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1"]
-custom_minimum_size = Vector2(0, 64)
-layout_mode = 2
-
-[node name="LowerPanelContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer"]
-layout_mode = 2
-size_flags_vertical = 8
-
-[node name="LowerPanel" type="Panel" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/LowerPanelContainer"]
-custom_minimum_size = Vector2(0, 4)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ukjso")
-
-[node name="MissionPanelElements" type="HBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer"]
-layout_mode = 2
-
-[node name="MissionSelectContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements"]
-layout_mode = 2
-
-[node name="Details" type="HBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer"]
-layout_mode = 2
-
-[node name="PortraitContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 0
-
-[node name="Panel" type="Panel" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/PortraitContainer"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ukjso")
-
-[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/PortraitContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-
-[node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/PortraitContainer/MarginContainer"]
-layout_mode = 2
-texture = ExtResource("10_0xedy")
-expand_mode = 3
-stretch_mode = 5
-
-[node name="MissionDetailsContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details"]
-layout_mode = 2
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 4
-
-[node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer"]
-layout_mode = 2
-text = "NPC Name"
-vertical_alignment = 2
-
-[node name="MarginContainer2" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer2"]
-layout_mode = 2
-text = "Quest Title Description"
-
-[node name="MarginContainer3" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 2
-size_flags_vertical = 8
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 0
-
-[node name="Panel" type="Panel" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer3"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ukjso")
-
-[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer3"]
-layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = -2
-
-[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer3/MarginContainer"]
-layout_mode = 2
-text = "Available"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer"]
-visible = false
-layout_mode = 2
-icon_alignment = 1
-
-[node name="SeparatorContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements"]
-layout_mode = 2
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_bottom = 8
-
-[node name="VSeparator" type="VSeparator" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/SeparatorContainer"]
-modulate = Color(1, 1, 1, 0.2)
-layout_mode = 2
-
-[node name="StarContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements"]
-layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-
-[node name="CenterContainer" type="CenterContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/StarContainer"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/StarContainer/CenterContainer"]
-layout_mode = 2
-theme_override_constants/separation = -16
-
-[node name="StarOrange" type="Control" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 8
-mouse_filter = 2
-script = ExtResource("5_c2tjh")
-relative_scale = 8.0
-gui_zoom = 2.0
-
-[node name="Glow" type="ColorRect" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer/StarOrange"]
-material = SubResource("ShaderMaterial_0cir6")
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -8.0
-offset_right = 8.0
-offset_bottom = 16.0
-grow_horizontal = 2
-mouse_filter = 2
-
-[node name="Star" type="ColorRect" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer/StarOrange"]
-material = SubResource("ShaderMaterial_kmv4c")
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -8.0
-offset_right = 8.0
-offset_bottom = 16.0
-grow_horizontal = 2
-mouse_filter = 2
-
-[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer"]
-layout_mode = 2
-text = "Ursa
-Majoris"
-horizontal_alignment = 1
-vertical_alignment = 2
-
-[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/StarContainer"]
-visible = false
-layout_mode = 2
-
-[node name="SeparatorContainer2" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements"]
-layout_mode = 2
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_bottom = 8
-
-[node name="VSeparator" type="VSeparator" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/SeparatorContainer2"]
-modulate = Color(1, 1, 1, 0.2)
-layout_mode = 2
-
-[node name="CancelContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_right = 8
-
-[node name="CenterContainer" type="CenterContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/CancelContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="TextureButton" type="TextureButton" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/CancelContainer/CenterContainer"]
-layout_mode = 2
-texture_normal = ExtResource("8_2xto3")
 
 [node name="MissionItem2" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer"]
 layout_mode = 2

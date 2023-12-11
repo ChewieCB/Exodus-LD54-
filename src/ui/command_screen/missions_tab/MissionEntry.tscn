@@ -1,0 +1,459 @@
+[gd_scene load_steps=24 format=3 uid="uid://veb72nmjfegq"]
+
+[ext_resource type="Script" path="res://src/ui/command_screen/missions_tab/mission_entry.gd" id="1_1h6qo"]
+[ext_resource type="Texture2D" uid="uid://cox4fi3kfgyyo" path="res://assets/character/governor_jerrerod.png" id="1_21r3i"]
+[ext_resource type="Script" path="res://assets/planets/Star/Star.gd" id="2_74ytu"]
+[ext_resource type="Texture2D" uid="uid://d2f8n2wysokcw" path="res://assets/ui/menus/hover_texture.png" id="3_cv8uh"]
+[ext_resource type="Shader" path="res://assets/planets/Star/Glow.gdshader" id="3_kjbao"]
+[ext_resource type="Texture2D" uid="uid://lqu4dabib8pv" path="res://assets/ui/menus/pressed_texture.png" id="3_r8h41"]
+[ext_resource type="Shader" path="res://assets/planets/Star/Star.gdshader" id="4_mre4b"]
+[ext_resource type="Texture2D" uid="uid://dx3knmkbvqthr" path="res://assets/ui/menus/disabled_texture.png" id="5_woh32"]
+[ext_resource type="Texture2D" uid="uid://cfkjug4hptvun" path="res://assets/ui/icons/16/Icon_Help.png" id="6_pxuq1"]
+[ext_resource type="Shader" path="res://assets/planets/Star/star_signal.gdshader" id="7_ciilw"]
+[ext_resource type="Shader" path="res://assets/planets/Star/StarBlobs.gdshader" id="9_ntgi5"]
+[ext_resource type="Shader" path="res://assets/planets/Star/StarFlares.gdshader" id="11_mn724"]
+[ext_resource type="Shader" path="res://assets/planets/Star/star_selected.gdshader" id="12_2iskr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ukjso"]
+bg_color = Color(0.937469, 0.6038, 0.286259, 1)
+corner_radius_top_right = 6
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_03cad"]
+shader = ExtResource("7_ciilw")
+shader_parameter/color_signal = Color(0.321569, 1, 0.909804, 1)
+shader_parameter/size = 0.35
+shader_parameter/zoom = 16.0
+shader_parameter/speed = 2.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0cir6"]
+shader = ExtResource("3_kjbao")
+shader_parameter/radius = 0.6
+shader_parameter/thickness = 0.39
+shader_parameter/color = Color(0.870588, 0.552941, 0.0784314, 1)
+shader_parameter/brightness = 1.84
+shader_parameter/angular_speed = 1.27
+shader_parameter/radial_speed = 1.56
+shader_parameter/alpha = 0.23
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h6nx0"]
+resource_local_to_scene = true
+shader = ExtResource("9_ntgi5")
+shader_parameter/pixels = 300.0
+shader_parameter/color = Color(0.929641, 0.588174, 0.082063, 1)
+shader_parameter/time_speed = 0.05
+shader_parameter/time = 2676.54
+shader_parameter/rotation = 0.0
+shader_parameter/seed = null
+shader_parameter/circle_amount = 2.0
+shader_parameter/circle_size = 1.0
+shader_parameter/size = 5.055
+shader_parameter/OCTAVES = 4
+
+[sub_resource type="Gradient" id="Gradient_fo81h"]
+offsets = PackedFloat32Array(0.0193237, 0.657005)
+colors = PackedColorArray(0.94, 0.38399, 0.0846, 1, 0.94, 0.611, 0.282, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_utib5"]
+gradient = SubResource("Gradient_fo81h")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_riy0l"]
+resource_local_to_scene = true
+shader = ExtResource("4_mre4b")
+shader_parameter/pixels = 100.0
+shader_parameter/time_speed = 1.0
+shader_parameter/time = 401.48
+shader_parameter/rotation = 1.255
+shader_parameter/should_dither = true
+shader_parameter/seed = 6.427
+shader_parameter/size = 30.0
+shader_parameter/OCTAVES = 8
+shader_parameter/TILES = 9.0
+shader_parameter/colorramp = SubResource("GradientTexture2D_utib5")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sqpw4"]
+resource_local_to_scene = true
+shader = ExtResource("11_mn724")
+shader_parameter/pixels = 200.0
+shader_parameter/time_speed = 0.05
+shader_parameter/time = 40148.0
+shader_parameter/rotation = 0.0
+shader_parameter/should_dither = true
+shader_parameter/storm_width = 0.3
+shader_parameter/storm_dither_width = 0.07
+shader_parameter/scale = 1.0
+shader_parameter/seed = null
+shader_parameter/circle_amount = 5.0
+shader_parameter/circle_scale = 1.0
+shader_parameter/size = 50.0
+shader_parameter/OCTAVES = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x2wvv"]
+shader = ExtResource("12_2iskr")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/size = 2.0
+shader_parameter/squishness = Vector2(1, 1)
+shader_parameter/color1 = Color(0.784314, 0.784314, 0.784314, 0.0941176)
+shader_parameter/color2 = Color(0.466667, 0.345098, 0.65098, 0.192157)
+shader_parameter/color3 = null
+shader_parameter/color4 = null
+shader_parameter/color5 = null
+shader_parameter/color6 = Color(0, 0, 0, 1)
+shader_parameter/step1 = 0.159
+shader_parameter/step2 = 0.182
+shader_parameter/step3 = 0.233
+shader_parameter/step4 = 0.264
+shader_parameter/step5 = 0.265
+shader_parameter/step6 = 0.266
+
+[sub_resource type="Environment" id="Environment_rbybe"]
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 2.35
+glow_strength = 1.08
+glow_blend_mode = 0
+glow_hdr_threshold = 0.63
+
+[node name="MissionItem" type="MarginContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -204.5
+offset_top = -42.5
+offset_right = 204.5
+offset_bottom = 42.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 6
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+script = ExtResource("1_1h6qo")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="LowerPanelContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="LowerPanel" type="Panel" parent="PanelContainer/LowerPanelContainer"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ukjso")
+
+[node name="MissionPanelElements" type="HBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MissionSelectContainer" type="MarginContainer" parent="PanelContainer/MissionPanelElements"]
+layout_mode = 2
+
+[node name="Details" type="HBoxContainer" parent="PanelContainer/MissionPanelElements/MissionSelectContainer"]
+layout_mode = 2
+
+[node name="PortraitContainer" type="MarginContainer" parent="PanelContainer/MissionPanelElements/MissionSelectContainer/Details"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 0
+
+[node name="Panel" type="Panel" parent="PanelContainer/MissionPanelElements/MissionSelectContainer/Details/PortraitContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ukjso")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MissionPanelElements/MissionSelectContainer/Details/PortraitContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MissionPanelElements/MissionSelectContainer/Details/PortraitContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("1_21r3i")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="MissionDetailsContainer" type="MarginContainer" parent="PanelContainer/MissionPanelElements/MissionSelectContainer/Details"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+text = "NPC Name"
+vertical_alignment = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+text = "Quest Title Description"
+
+[node name="MarginContainer3" type="MarginContainer" parent="PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="Panel" type="Panel" parent="PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ukjso")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="Label" type="Label" parent="PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer3/MarginContainer"]
+layout_mode = 2
+text = "Available"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Button" type="TextureButton" parent="PanelContainer/MissionPanelElements/MissionSelectContainer"]
+layout_mode = 2
+texture_pressed = ExtResource("3_r8h41")
+texture_hover = ExtResource("3_cv8uh")
+texture_disabled = ExtResource("5_woh32")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="SeparatorContainer" type="MarginContainer" parent="PanelContainer/MissionPanelElements"]
+layout_mode = 2
+theme_override_constants/margin_left = -4
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = -4
+theme_override_constants/margin_bottom = 8
+
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/MissionPanelElements/SeparatorContainer"]
+modulate = Color(1, 1, 1, 0.2)
+layout_mode = 2
+
+[node name="StarContainer" type="MarginContainer" parent="PanelContainer/MissionPanelElements"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MissionPanelElements/StarContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_right = 4
+
+[node name="CenterContainer" type="CenterContainer" parent="PanelContainer/MissionPanelElements/StarContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MissionPanelElements/StarContainer/MarginContainer/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = -16
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MissionPanelElements/StarContainer/MarginContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_bottom = 12
+
+[node name="StarOrange" type="Control" parent="PanelContainer/MissionPanelElements/StarContainer/MarginContainer/CenterContainer/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+script = ExtResource("2_74ytu")
+relative_scale = 4.0
+gui_zoom = 2.0
+
+[node name="Signal" type="ColorRect" parent="PanelContainer/MissionPanelElements/StarContainer/MarginContainer/CenterContainer/VBoxContainer/MarginContainer/StarOrange"]
+visible = false
+material = SubResource("ShaderMaterial_03cad")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = -16.0
+offset_right = 4.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Glow" type="ColorRect" parent="PanelContainer/MissionPanelElements/StarContainer/MarginContainer/CenterContainer/VBoxContainer/MarginContainer/StarOrange"]
+material = SubResource("ShaderMaterial_0cir6")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Blobs" type="ColorRect" parent="PanelContainer/MissionPanelElements/StarContainer/MarginContainer/CenterContainer/VBoxContainer/MarginContainer/StarOrange"]
+visible = false
+material = SubResource("ShaderMaterial_h6nx0")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Star" type="ColorRect" parent="PanelContainer/MissionPanelElements/StarContainer/MarginContainer/CenterContainer/VBoxContainer/MarginContainer/StarOrange"]
+material = SubResource("ShaderMaterial_riy0l")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="StarFlares" type="ColorRect" parent="PanelContainer/MissionPanelElements/StarContainer/MarginContainer/CenterContainer/VBoxContainer/MarginContainer/StarOrange"]
+visible = false
+material = SubResource("ShaderMaterial_sqpw4")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Highlight" type="ColorRect" parent="PanelContainer/MissionPanelElements/StarContainer/MarginContainer/CenterContainer/VBoxContainer/MarginContainer/StarOrange"]
+visible = false
+material = SubResource("ShaderMaterial_x2wvv")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="PanelContainer/MissionPanelElements/StarContainer/MarginContainer/CenterContainer/VBoxContainer/MarginContainer/StarOrange"]
+environment = SubResource("Environment_rbybe")
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/MissionPanelElements/StarContainer/MarginContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MissionPanelElements/StarContainer/MarginContainer/CenterContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+text = "Ursa
+Majoris"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="TextureButton" parent="PanelContainer/MissionPanelElements/StarContainer"]
+layout_mode = 2
+texture_pressed = ExtResource("3_r8h41")
+texture_hover = ExtResource("3_cv8uh")
+texture_disabled = ExtResource("5_woh32")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="SeparatorContainer2" type="MarginContainer" parent="PanelContainer/MissionPanelElements"]
+layout_mode = 2
+theme_override_constants/margin_left = -4
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = -4
+theme_override_constants/margin_bottom = 8
+
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/MissionPanelElements/SeparatorContainer2"]
+modulate = Color(1, 1, 1, 0.2)
+layout_mode = 2
+
+[node name="CancelContainer" type="MarginContainer" parent="PanelContainer/MissionPanelElements"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_right = 16
+
+[node name="CenterContainer" type="CenterContainer" parent="PanelContainer/MissionPanelElements/CancelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MissionPanelElements/CancelContainer/CenterContainer"]
+layout_mode = 2
+texture = ExtResource("6_pxuq1")
+
+[node name="TextureButton" type="TextureButton" parent="PanelContainer/MissionPanelElements/CancelContainer/CenterContainer/TextureRect"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_pressed = ExtResource("3_r8h41")
+texture_hover = ExtResource("3_cv8uh")
+ignore_texture_size = true
+stretch_mode = 0
+
+[connection signal="pressed" from="PanelContainer/MissionPanelElements/MissionSelectContainer/Button" to="." method="_on_mission_button_pressed"]
+[connection signal="pressed" from="PanelContainer/MissionPanelElements/CancelContainer/CenterContainer/TextureRect/TextureButton" to="." method="_on_context_button_pressed"]

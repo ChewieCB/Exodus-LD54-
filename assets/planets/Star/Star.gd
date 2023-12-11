@@ -46,6 +46,8 @@ func _ready():
 	
 	starflarecolor1.colors = [Color("ffd832"), Color("f5ffe8")]
 	starflarecolor2.colors = [Color("77d6c1"), Color("f5ffe8")]
+	
+	size *= relative_scale
 
 
 func _set_colors(sd): # this is just a little extra function to show some different possible stars
