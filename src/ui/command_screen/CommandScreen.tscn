@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://b1xmgw2jwmunk"]
+[gd_scene load_steps=40 format=3 uid="uid://b1xmgw2jwmunk"]
 
 [ext_resource type="Texture2D" uid="uid://c2gvwiki601v3" path="res://assets/sprite/display screen.png" id="1_4qidw"]
 [ext_resource type="Script" path="res://src/ui/command_screen/command_screen.gd" id="1_rladp"]
@@ -8,22 +8,62 @@
 [ext_resource type="Script" path="res://src/ui/command_screen/research_tab/research_tab.gd" id="3_v75ll"]
 [ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="4_hkjqs"]
 [ext_resource type="PackedScene" uid="uid://b7bouq455qx0b" path="res://src/ui/command_screen/crewmate_tab/CrewmateButton.tscn" id="4_vsvdc"]
+[ext_resource type="Script" path="res://assets/planets/Star/Star.gd" id="5_c2tjh"]
 [ext_resource type="PackedScene" uid="uid://c6fnnntkibdna" path="res://src/ui/command_screen/research_tab/SelectResearchGraphButton.tscn" id="5_fynyk"]
+[ext_resource type="Shader" path="res://assets/planets/Star/Glow.gdshader" id="6_ij1cx"]
 [ext_resource type="Texture2D" uid="uid://crwutx701neym" path="res://assets/character/crewmates/image1x1.png" id="6_uofd5"]
 [ext_resource type="Texture2D" uid="uid://cegl6af3k4xpo" path="res://assets/character/pressley.png" id="6_wk0bw"]
 [ext_resource type="PackedScene" uid="uid://diawc60skh6ii" path="res://src/ui/command_screen/research_tab/HabitationMedicalResearch.tscn" id="7_cq70m"]
 [ext_resource type="PackedScene" uid="uid://b0j5locyowwo2" path="res://src/ui/command_screen/research_tab/ManufacturingResearch.tscn" id="7_da66k"]
+[ext_resource type="Shader" path="res://assets/planets/Star/Star.gdshader" id="7_hulyr"]
 [ext_resource type="PackedScene" uid="uid://btjkgkmeros7p" path="res://src/ui/command_screen/research_tab/CrewSuppliesResearch.tscn" id="7_qusv6"]
 [ext_resource type="PackedScene" uid="uid://lwk7nc56s8g8" path="res://src/ui/command_screen/OfficerLabel.tscn" id="7_rk483"]
+[ext_resource type="Texture2D" uid="uid://dv6va8esoriwu" path="res://assets/ui/icons/16/Icon_Close1.png" id="8_2xto3"]
 [ext_resource type="Texture2D" uid="uid://df0siiqlu7ln3" path="res://assets/character/torgon.png" id="8_jre42"]
 [ext_resource type="Texture2D" uid="uid://xor5ih5p1g3d" path="res://assets/character/faroq_khan.png" id="9_47m3x"]
 [ext_resource type="PackedScene" uid="uid://ce5dg57vaxm3d" path="res://src/ui/command_screen/research_tab/ConstructionLogisticResearch.tscn" id="9_iekhi"]
 [ext_resource type="Texture2D" uid="uid://cox4fi3kfgyyo" path="res://assets/character/governor_jerrerod.png" id="10_0xedy"]
+[ext_resource type="Texture2D" uid="uid://b5n41jawss5y7" path="res://assets/ui/icons/16/Confirm.png" id="10_miix4"]
 [ext_resource type="PackedScene" uid="uid://doioc1jac620x" path="res://src/ui/command_screen/research_tab/ShipInfrastructureResearch.tscn" id="10_nmkce"]
 [ext_resource type="Texture2D" uid="uid://dqwcek01e0v4k" path="res://assets/character/sam_carter.png" id="10_t33dg"]
 [ext_resource type="Texture2D" uid="uid://dxsiqg3h4gm0" path="res://assets/character/mary_watney.png" id="12_cymej"]
 [ext_resource type="Texture2D" uid="uid://bfqerbgujnq0s" path="res://assets/character/dr_dorian.png" id="13_xdugs"]
 [ext_resource type="Script" path="res://src/ui/command_screen/status_tab/status_tab.gd" id="24_fwbaf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ukjso"]
+bg_color = Color(0.937469, 0.6038, 0.286259, 1)
+corner_radius_top_right = 6
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0cir6"]
+shader = ExtResource("6_ij1cx")
+shader_parameter/radius = 0.6
+shader_parameter/thickness = 0.39
+shader_parameter/color = Color(0.870588, 0.552941, 0.0784314, 1)
+shader_parameter/brightness = 1.84
+shader_parameter/angular_speed = 1.27
+shader_parameter/radial_speed = 1.56
+shader_parameter/alpha = 0.23
+
+[sub_resource type="Gradient" id="Gradient_fo81h"]
+offsets = PackedFloat32Array(0.0193237, 0.657005)
+colors = PackedColorArray(0.94, 0.38399, 0.0846, 1, 0.94, 0.611, 0.282, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_utib5"]
+gradient = SubResource("Gradient_fo81h")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kmv4c"]
+resource_local_to_scene = true
+shader = ExtResource("7_hulyr")
+shader_parameter/pixels = 100.0
+shader_parameter/time_speed = 1.0
+shader_parameter/time = 315.549
+shader_parameter/rotation = 1.255
+shader_parameter/should_dither = true
+shader_parameter/seed = 6.427
+shader_parameter/size = 30.0
+shader_parameter/OCTAVES = 8
+shader_parameter/TILES = 9.0
+shader_parameter/colorramp = SubResource("GradientTexture2D_utib5")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v161y"]
 size = Vector2(450, 235)
@@ -105,7 +145,1052 @@ offset_right = 500.0
 offset_bottom = 460.0
 mouse_filter = 2
 
+[node name="Missions" type="TabBar" parent="DeviceFrame/TabContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Missions"]
+self_modulate = Color(0.0352941, 0.0745098, 0.0823529, 1)
+layout_mode = 0
+offset_left = 2.0
+offset_top = 26.0
+offset_right = 451.0
+offset_bottom = 266.0
+texture = ExtResource("4_hkjqs")
+
+[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions"]
+layout_mode = 0
+offset_top = 26.0
+offset_right = 453.0
+offset_bottom = 267.0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="ScrollContainer" type="ScrollContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer"]
+layout_mode = 2
+
+[node name="MissionItemsContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MissionItem1" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="LowerPanelContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="LowerPanel" type="Panel" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/LowerPanelContainer"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ukjso")
+
+[node name="MissionPanelElements" type="HBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer"]
+layout_mode = 2
+
+[node name="MissionSelectContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+
+[node name="Details" type="HBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer"]
+layout_mode = 2
+
+[node name="PortraitContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 0
+
+[node name="Panel" type="Panel" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/PortraitContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ukjso")
+
+[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/PortraitContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/PortraitContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("10_0xedy")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="MissionDetailsContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+text = "NPC Name"
+vertical_alignment = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+text = "Quest Title Description"
+
+[node name="MarginContainer3" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="Panel" type="Panel" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ukjso")
+
+[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = -2
+
+[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer3/MarginContainer"]
+layout_mode = 2
+text = "Available"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/MissionSelectContainer"]
+visible = false
+layout_mode = 2
+icon_alignment = 1
+
+[node name="SeparatorContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VSeparator" type="VSeparator" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/SeparatorContainer"]
+modulate = Color(1, 1, 1, 0.2)
+layout_mode = 2
+
+[node name="StarContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="CenterContainer" type="CenterContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/StarContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/StarContainer/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = -16
+
+[node name="StarOrange" type="Control" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+mouse_filter = 2
+script = ExtResource("5_c2tjh")
+relative_scale = 8.0
+gui_zoom = 2.0
+
+[node name="Glow" type="ColorRect" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer/StarOrange"]
+material = SubResource("ShaderMaterial_0cir6")
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -8.0
+offset_right = 8.0
+offset_bottom = 16.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Star" type="ColorRect" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer/StarOrange"]
+material = SubResource("ShaderMaterial_kmv4c")
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -8.0
+offset_right = 8.0
+offset_bottom = 16.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Ursa
+Majoris"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/StarContainer"]
+visible = false
+layout_mode = 2
+
+[node name="SeparatorContainer2" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VSeparator" type="VSeparator" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/SeparatorContainer2"]
+modulate = Color(1, 1, 1, 0.2)
+layout_mode = 2
+
+[node name="CancelContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 8
+
+[node name="CenterContainer" type="CenterContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/CancelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TextureButton" type="TextureButton" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem1/PanelContainer/MissionPanelElements/CancelContainer/CenterContainer"]
+layout_mode = 2
+texture_normal = ExtResource("8_2xto3")
+
+[node name="MissionItem2" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="LowerPanelContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="LowerPanel" type="Panel" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/LowerPanelContainer"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ukjso")
+
+[node name="MissionPanelElements" type="HBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer"]
+layout_mode = 2
+
+[node name="MissionSelectContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+
+[node name="Details" type="HBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/MissionSelectContainer"]
+layout_mode = 2
+
+[node name="PortraitContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/MissionSelectContainer/Details"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 0
+
+[node name="Panel" type="Panel" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/PortraitContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ukjso")
+
+[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/PortraitContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/PortraitContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("12_cymej")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="MissionDetailsContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/MissionSelectContainer/Details"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+text = "NPC Name"
+vertical_alignment = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+text = "Quest Title Description"
+
+[node name="MarginContainer3" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="Panel" type="Panel" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ukjso")
+
+[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = -2
+
+[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer3/MarginContainer"]
+layout_mode = 2
+text = "Completed"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/MissionSelectContainer"]
+visible = false
+layout_mode = 2
+icon_alignment = 1
+
+[node name="SeparatorContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VSeparator" type="VSeparator" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/SeparatorContainer"]
+modulate = Color(1, 1, 1, 0.2)
+layout_mode = 2
+
+[node name="StarContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="CenterContainer" type="CenterContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/StarContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/StarContainer/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = -16
+
+[node name="StarOrange" type="Control" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+mouse_filter = 2
+script = ExtResource("5_c2tjh")
+relative_scale = 8.0
+gui_zoom = 2.0
+
+[node name="Glow" type="ColorRect" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer/StarOrange"]
+material = SubResource("ShaderMaterial_0cir6")
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -8.0
+offset_right = 8.0
+offset_bottom = 16.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Star" type="ColorRect" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer/StarOrange"]
+material = SubResource("ShaderMaterial_kmv4c")
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -8.0
+offset_right = 8.0
+offset_bottom = 16.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Ursa
+Majoris"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/StarContainer"]
+visible = false
+layout_mode = 2
+
+[node name="SeparatorContainer2" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VSeparator" type="VSeparator" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/SeparatorContainer2"]
+modulate = Color(1, 1, 1, 0.2)
+layout_mode = 2
+
+[node name="CancelContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 8
+
+[node name="CenterContainer" type="CenterContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/CancelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TextureButton" type="TextureButton" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem2/PanelContainer/MissionPanelElements/CancelContainer/CenterContainer"]
+layout_mode = 2
+texture_normal = ExtResource("10_miix4")
+
+[node name="MissionItem3" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="LowerPanelContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="LowerPanel" type="Panel" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/LowerPanelContainer"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ukjso")
+
+[node name="MissionPanelElements" type="HBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer"]
+layout_mode = 2
+
+[node name="MissionSelectContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+
+[node name="Details" type="HBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/MissionSelectContainer"]
+layout_mode = 2
+
+[node name="PortraitContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/MissionSelectContainer/Details"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 0
+
+[node name="Panel" type="Panel" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/PortraitContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ukjso")
+
+[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/PortraitContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/PortraitContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("12_cymej")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="MissionDetailsContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/MissionSelectContainer/Details"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+text = "NPC Name"
+vertical_alignment = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+text = "Quest Title Description"
+
+[node name="MarginContainer3" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="Panel" type="Panel" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ukjso")
+
+[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = -2
+
+[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer3/MarginContainer"]
+layout_mode = 2
+text = "Completed"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/MissionSelectContainer"]
+visible = false
+layout_mode = 2
+icon_alignment = 1
+
+[node name="SeparatorContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VSeparator" type="VSeparator" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/SeparatorContainer"]
+modulate = Color(1, 1, 1, 0.2)
+layout_mode = 2
+
+[node name="StarContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="CenterContainer" type="CenterContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/StarContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/StarContainer/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = -16
+
+[node name="StarOrange" type="Control" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+mouse_filter = 2
+script = ExtResource("5_c2tjh")
+relative_scale = 8.0
+gui_zoom = 2.0
+
+[node name="Glow" type="ColorRect" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer/StarOrange"]
+material = SubResource("ShaderMaterial_0cir6")
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -8.0
+offset_right = 8.0
+offset_bottom = 16.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Star" type="ColorRect" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer/StarOrange"]
+material = SubResource("ShaderMaterial_kmv4c")
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -8.0
+offset_right = 8.0
+offset_bottom = 16.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Ursa
+Majoris"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/StarContainer"]
+visible = false
+layout_mode = 2
+
+[node name="SeparatorContainer2" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VSeparator" type="VSeparator" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/SeparatorContainer2"]
+modulate = Color(1, 1, 1, 0.2)
+layout_mode = 2
+
+[node name="CancelContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 8
+
+[node name="CenterContainer" type="CenterContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/CancelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TextureButton" type="TextureButton" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem3/PanelContainer/MissionPanelElements/CancelContainer/CenterContainer"]
+layout_mode = 2
+texture_normal = ExtResource("10_miix4")
+
+[node name="MissionItem4" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="LowerPanelContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="LowerPanel" type="Panel" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/LowerPanelContainer"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ukjso")
+
+[node name="MissionPanelElements" type="HBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer"]
+layout_mode = 2
+
+[node name="MissionSelectContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+
+[node name="Details" type="HBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/MissionSelectContainer"]
+layout_mode = 2
+
+[node name="PortraitContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/MissionSelectContainer/Details"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 0
+
+[node name="Panel" type="Panel" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/PortraitContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ukjso")
+
+[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/PortraitContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/PortraitContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("12_cymej")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="MissionDetailsContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/MissionSelectContainer/Details"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+text = "NPC Name"
+vertical_alignment = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+text = "Quest Title Description"
+
+[node name="MarginContainer3" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="Panel" type="Panel" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ukjso")
+
+[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = -2
+
+[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer3/MarginContainer"]
+layout_mode = 2
+text = "Completed"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/MissionSelectContainer"]
+visible = false
+layout_mode = 2
+icon_alignment = 1
+
+[node name="SeparatorContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VSeparator" type="VSeparator" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/SeparatorContainer"]
+modulate = Color(1, 1, 1, 0.2)
+layout_mode = 2
+
+[node name="StarContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="CenterContainer" type="CenterContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/StarContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/StarContainer/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = -16
+
+[node name="StarOrange" type="Control" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+mouse_filter = 2
+script = ExtResource("5_c2tjh")
+relative_scale = 8.0
+gui_zoom = 2.0
+
+[node name="Glow" type="ColorRect" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer/StarOrange"]
+material = SubResource("ShaderMaterial_0cir6")
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -8.0
+offset_right = 8.0
+offset_bottom = 16.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Star" type="ColorRect" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer/StarOrange"]
+material = SubResource("ShaderMaterial_kmv4c")
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -8.0
+offset_right = 8.0
+offset_bottom = 16.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Ursa
+Majoris"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/StarContainer"]
+visible = false
+layout_mode = 2
+
+[node name="SeparatorContainer2" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VSeparator" type="VSeparator" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/SeparatorContainer2"]
+modulate = Color(1, 1, 1, 0.2)
+layout_mode = 2
+
+[node name="CancelContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 8
+
+[node name="CenterContainer" type="CenterContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/CancelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TextureButton" type="TextureButton" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem4/PanelContainer/MissionPanelElements/CancelContainer/CenterContainer"]
+layout_mode = 2
+texture_normal = ExtResource("10_miix4")
+
+[node name="MissionItem5" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="LowerPanelContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="LowerPanel" type="Panel" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/LowerPanelContainer"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ukjso")
+
+[node name="MissionPanelElements" type="HBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer"]
+layout_mode = 2
+
+[node name="MissionSelectContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+
+[node name="Details" type="HBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/MissionSelectContainer"]
+layout_mode = 2
+
+[node name="PortraitContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/MissionSelectContainer/Details"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 0
+
+[node name="Panel" type="Panel" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/PortraitContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ukjso")
+
+[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/PortraitContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="TextureRect" type="TextureRect" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/PortraitContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("12_cymej")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="MissionDetailsContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/MissionSelectContainer/Details"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+text = "NPC Name"
+vertical_alignment = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+text = "Quest Title Description"
+
+[node name="MarginContainer3" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="Panel" type="Panel" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ukjso")
+
+[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = -2
+
+[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/MissionSelectContainer/Details/MissionDetailsContainer/VBoxContainer/MarginContainer3/MarginContainer"]
+layout_mode = 2
+text = "Completed"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/MissionSelectContainer"]
+visible = false
+layout_mode = 2
+icon_alignment = 1
+
+[node name="SeparatorContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VSeparator" type="VSeparator" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/SeparatorContainer"]
+modulate = Color(1, 1, 1, 0.2)
+layout_mode = 2
+
+[node name="StarContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="CenterContainer" type="CenterContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/StarContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/StarContainer/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = -16
+
+[node name="StarOrange" type="Control" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+mouse_filter = 2
+script = ExtResource("5_c2tjh")
+relative_scale = 8.0
+gui_zoom = 2.0
+
+[node name="Glow" type="ColorRect" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer/StarOrange"]
+material = SubResource("ShaderMaterial_0cir6")
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -8.0
+offset_right = 8.0
+offset_bottom = 16.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Star" type="ColorRect" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer/StarOrange"]
+material = SubResource("ShaderMaterial_kmv4c")
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -8.0
+offset_right = 8.0
+offset_bottom = 16.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/StarContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Ursa
+Majoris"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Button" type="Button" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/StarContainer"]
+visible = false
+layout_mode = 2
+
+[node name="SeparatorContainer2" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VSeparator" type="VSeparator" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/SeparatorContainer2"]
+modulate = Color(1, 1, 1, 0.2)
+layout_mode = 2
+
+[node name="CancelContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 8
+
+[node name="CenterContainer" type="CenterContainer" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/CancelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TextureButton" type="TextureButton" parent="DeviceFrame/TabContainer/Missions/MarginContainer/ScrollContainer/MissionItemsContainer/MissionItem5/PanelContainer/MissionPanelElements/CancelContainer/CenterContainer"]
+layout_mode = 2
+texture_normal = ExtResource("10_miix4")
+
 [node name="Research" type="TabBar" parent="DeviceFrame/TabContainer"]
+visible = false
 layout_mode = 2
 script = ExtResource("3_v75ll")
 
