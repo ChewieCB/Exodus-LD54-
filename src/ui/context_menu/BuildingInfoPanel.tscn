@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dv3uxnkp8ekhg"]
 
-[ext_resource type="Script" path="res://src/ui/building_ui/building_info_panel.gd" id="1_tj680"]
+[ext_resource type="Script" path="res://src/ui/context_menu/building_info_panel.gd" id="1_h35vj"]
 
 [sub_resource type="Theme" id="Theme_mxffo"]
 default_font_size = 12
@@ -9,8 +9,7 @@ default_font_size = 12
 default_font_size = 12
 
 [node name="BuildingInfoPanel" type="Node2D"]
-position = Vector2(572, 317)
-script = ExtResource("1_tj680")
+script = ExtResource("1_h35vj")
 
 [node name="Margin" type="MarginContainer" parent="."]
 anchors_preset = 8
@@ -58,3 +57,12 @@ theme = SubResource("Theme_16jmh")
 text = "Deconstruct time: 5 days
 Workers required: 5 crewmates"
 autowrap_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="Margin/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+columns = 2
+
+[node name="WarehouseSpecializeButton" type="Button" parent="Margin/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Specialize"

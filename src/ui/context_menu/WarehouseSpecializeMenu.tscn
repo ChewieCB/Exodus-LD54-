@@ -1,0 +1,50 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8ffntl2ehamj"]
+
+[ext_resource type="Script" path="res://src/ui/context_menu/warehouse_spec_menu.gd" id="1_knluc"]
+
+[node name="WarehouseSpecializeMenu" type="Node2D"]
+script = ExtResource("1_knluc")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_right = 224.0
+offset_bottom = 66.0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Choose the resource type
+ you want to specialize"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+columns = 4
+
+[node name="WaterButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Water"
+
+[node name="FoodButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Food"
+
+[node name="OxygenButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Oxygen"
+
+[node name="MetalButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Metal"
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/GridContainer/WaterButton" to="." method="_on_water_button_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/GridContainer/FoodButton" to="." method="_on_food_button_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/GridContainer/OxygenButton" to="." method="_on_oxygen_button_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/GridContainer/MetalButton" to="." method="_on_metal_button_pressed"]

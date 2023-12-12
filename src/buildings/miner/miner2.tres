@@ -21,7 +21,7 @@ metal = 6
 [resource]
 script = ExtResource("1_wbrhj")
 name = "Nebula Collector"
-type = 3
+type = 4
 sprite = ExtResource("2_42u3y")
 resource_prod = SubResource("Resource_qe2je")
 housing_prod = 0

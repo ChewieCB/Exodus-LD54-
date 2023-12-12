@@ -49,22 +49,26 @@ func _ready():
 func check_for_adjacency_multiplier(_unused_var):
 	bonus_multiplier = 1
 	for area in collider.get_overlapping_areas():
-		if area.get_parent() is Building:
-			var nearby_building = area.get_parent() as Building
-			if nearby_building.type == EnumAutoload.BuildingType.STORAGE and \
-				EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_STOCK_ANALYSIS in ResourceManager.current_upgrades:
-				bonus_multiplier += 0.2
+		# Warehouse bonus
+		if area.get_parent() is WarehouseBuilding:
+			var nearby_warehouse = area.get_parent() as WarehouseBuilding
+			if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_STOCK_ANALYSIS in ResourceManager.current_upgrades:
+				var warehouse_resource_bonus = nearby_warehouse.get_resource_bonus_prod()
+				match(type):
+					EnumAutoload.BuildingType.WATER:
+						bonus_multiplier += warehouse_resource_bonus.water
+					EnumAutoload.BuildingType.AIR:
+						bonus_multiplier += warehouse_resource_bonus.air
+					EnumAutoload.BuildingType.FOOD:
+						bonus_multiplier += warehouse_resource_bonus.food
+					EnumAutoload.BuildingType.METAL:
+						bonus_multiplier += warehouse_resource_bonus.metal
 
 
 func apply_upgrades():
-	if type == EnumAutoload.BuildingType.STORAGE and \
-		EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_ADV_LOGISTIC in ResourceManager.current_upgrades:
-			get_node("Range").scale = Vector2(1.5, 1.5)
-
 	# Wait 2 frame to make sure all Area2D changes are setup correctly
 	await get_tree().physics_frame
 	await get_tree().physics_frame
-
 	check_for_adjacency_multiplier(type)
 
 
@@ -125,8 +129,8 @@ func _setup_scan_for_nearby_bonus():
 		return
 
 	collider.set_collision_mask_value (2, true)
-	EventManager.building_finished.connect(check_for_adjacency_multiplier)
-	EventManager.building_deconstructed.connect(check_for_adjacency_multiplier)
+	BuildingManager.building_finished.connect(check_for_adjacency_multiplier)
+	BuildingManager.building_deconstructed.connect(check_for_adjacency_multiplier)
 
 func _on_tick():
 	if not placed:
@@ -141,7 +145,7 @@ func _on_tick():
 			ResourceManager.add_building(self)
 			ResourceManager.retrieve_workers(self)
 			BuildingManager.construction_queue.erase(self)
-			EventManager.finished_building(type)
+			BuildingManager.finished_building(type)
 			SoundManager.play_sound(build_finish_sfx, "SFX")
 			sprite.material.set_shader_parameter("mode", 0)
 		else:
@@ -231,13 +235,12 @@ func get_produced_resource() -> ResourceData:
 	return prod_res
 
 func enable_improved_preview():
-	if type == EnumAutoload.BuildingType.STORAGE:
-		if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_STOCK_ANALYSIS in ResourceManager.current_upgrades:
-			get_node("Range/RangeSprite").visible = true
+	# For override
+	return
 
 func remove_improved_preview():
-	if type == EnumAutoload.BuildingType.STORAGE:
-		get_node("Range/RangeSprite").visible = false
+	# For override
+	return
 
 
 func set_original_color():

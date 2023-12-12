@@ -237,7 +237,7 @@ upgrade_description = "Allow you to choose and specialize a warehouse to a resou
 upgrade_id = 54
 upgrade_sprite = ExtResource("3_2j2jf")
 cost = SubResource("Resource_uh1s6")
-require_one_of_these_upgrades = [NodePath("../Upgrade10")]
+require_one_of_these_upgrades = [NodePath("../Upgrade4")]
 
 [node name="Upgrade6" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_3jq7e")]
 layout_mode = 0

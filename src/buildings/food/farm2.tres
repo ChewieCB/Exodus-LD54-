@@ -21,7 +21,7 @@ metal = 0
 [resource]
 script = ExtResource("1_ndhch")
 name = "Hydroponics Bay"
-type = 0
+type = 1
 sprite = ExtResource("2_jt25t")
 resource_prod = SubResource("Resource_ba3c0")
 housing_prod = 0

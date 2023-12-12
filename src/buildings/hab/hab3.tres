@@ -21,7 +21,7 @@ metal = 0
 [resource]
 script = ExtResource("1_erjft")
 name = "Megablock"
-type = 4
+type = 5
 sprite = ExtResource("2_kfkc4")
 resource_prod = SubResource("Resource_qkvfc")
 housing_prod = 10

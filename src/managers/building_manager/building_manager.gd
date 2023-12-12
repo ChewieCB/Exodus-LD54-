@@ -5,12 +5,18 @@ signal not_enough_workers
 signal not_enough_resource
 signal show_info_panel(pos: Vector2, building: Building)
 signal hide_info_panel
+signal building_finished
+signal building_deconstructed
 
 # Array to store each building under construction in order from most recent
 # to least recent, used so we can cancel construction and refund remaining workers
 # when pop goes down.
 var construction_queue = []
 var buildings: Array[Building] = []
+var n_hab_building = 0
+var n_food_building = 0
+var n_water_building = 0
+var n_air_building = 0
 
 func start_building(building_scene):
 	emit_signal("building_selected", building_scene)
@@ -36,6 +42,20 @@ func delete_building_with_name(building_name: String) -> bool:
 			return true
 	return false
 
+func finished_building(type: EnumAutoload.BuildingType):
+	emit_signal("building_finished", type)
+	match type:
+		EnumAutoload.BuildingType.HABITATION:
+			n_hab_building += 1
+		EnumAutoload.BuildingType.FOOD:
+			n_food_building += 1
+		EnumAutoload.BuildingType.WATER:
+			n_water_building += 1
+		EnumAutoload.BuildingType.AIR:
+			n_air_building += 1
+		EnumAutoload.BuildingType.METAL:
+			n_air_building += 1
+
 
 func expand_building_area(blockoff_name: String):
 	var ship_building_view = get_tree().get_root().get_node("ShipBuildingView")
@@ -46,5 +66,9 @@ func expand_building_area(blockoff_name: String):
 
 
 func reset_state():
+	n_hab_building = 0
+	n_food_building = 0
+	n_water_building = 0
+	n_air_building = 0
 	buildings = []
 	construction_queue = []

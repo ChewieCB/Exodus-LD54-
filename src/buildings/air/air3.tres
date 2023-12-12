@@ -21,7 +21,7 @@ metal = 0
 [resource]
 script = ExtResource("1_hysrt")
 name = "Oxygen Synthesiser"
-type = 2
+type = 3
 sprite = ExtResource("2_8hiy4")
 resource_prod = SubResource("Resource_6uvvy")
 housing_prod = 0

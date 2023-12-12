@@ -123,16 +123,16 @@ func _on_hab_ui_mouse_entered():
 	ResourceManager.emit_signal("ui_hover_show", "Housing (Available Housing)\nNegative available housing will cause unrest and unfortunate events more likely to happen")
 
 func _on_food_ui_mouse_entered():
-	ResourceManager.emit_signal("ui_hover_show", "Food (Food per Day)\n{current} / {max}".format({"current": ResourceManager.food_amount, "max": ResourceManager.storage_amount}))
+	ResourceManager.emit_signal("ui_hover_show", "Food (Food per Day)\n{current} / {max}".format({"current": ResourceManager.food_amount, "max": ResourceManager.storage_resource_amount.food}))
 
 func _on_water_ui_mouse_entered():
-	ResourceManager.emit_signal("ui_hover_show", "Water (Water per Day)\n{current} / {max}".format({"current": ResourceManager.water_amount, "max": ResourceManager.storage_amount}))
+	ResourceManager.emit_signal("ui_hover_show", "Water (Water per Day)\n{current} / {max}".format({"current": ResourceManager.water_amount, "max": ResourceManager.storage_resource_amount.water}))
 
 func _on_air_ui_mouse_entered():
-	ResourceManager.emit_signal("ui_hover_show", "Oxygen (Oxygen per Day)\n{current} / {max}".format({"current": ResourceManager.air_amount, "max": ResourceManager.storage_amount}))
+	ResourceManager.emit_signal("ui_hover_show", "Oxygen (Oxygen per Day)\n{current} / {max}".format({"current": ResourceManager.air_amount, "max": ResourceManager.storage_resource_amount.air}))
 
 func _on_metal_ui_mouse_entered():
-	ResourceManager.emit_signal("ui_hover_show", "Metal (Metal per Day)\n{current} / {max}".format({"current": ResourceManager.metal_amount, "max": ResourceManager.storage_amount}))
+	ResourceManager.emit_signal("ui_hover_show", "Metal (Metal per Day)\n{current} / {max}".format({"current": ResourceManager.metal_amount, "max": ResourceManager.storage_resource_amount.metal}))
 
 
-	
+

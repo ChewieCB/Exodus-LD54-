@@ -139,10 +139,11 @@ var housing_amount: int:
 		emit_signal("housing_changed", housing_amount, available_housing)
 var available_housing: int = housing_amount - population_amount
 
-var storage_amount: int:
+var storage_resource_amount: ResourceData:
 	set(value):
-		storage_amount = value
-		emit_signal("storage_changed", storage_amount)
+		storage_resource_amount = value
+		print("Storage changed")
+		emit_signal("storage_changed", storage_resource_amount)
 #
 #
 #
@@ -187,7 +188,7 @@ func _ready() -> void:
 
 # TODO: Can be optimized, only run on build/tick event, not every frame
 func _physics_process(delta):
-	for idx in range(0, 7):
+	for idx in range(EnumAutoload.ResourceType.size()):
 		calculate_resource_modifier(idx, population_amount)
 		match idx:
 			EnumAutoload.ResourceType.FOOD:
@@ -217,9 +218,14 @@ func calculate_resource_modifier(resource_type, population) -> void:
 			available_housing = production - consumption
 		EnumAutoload.ResourceType.STORAGE:
 			for building in BuildingManager.buildings:
-				production += building.data.storage_prod
-				production = ResourceManager.calculate_storage_with_upgrade(production)
-				storage_amount = BASE_STORAGE + production
+				if building is WarehouseBuilding:
+					var warehouse = building as WarehouseBuilding
+					var resource_capacity = warehouse.get_resource_storage_capacity()
+					var mul = ResourceManager.get_storage_with_upgrade_multiplier()
+					storage_resource_amount.food = BASE_STORAGE + resource_capacity.food * mul
+					storage_resource_amount.air = BASE_STORAGE + resource_capacity.air * mul
+					storage_resource_amount.water = BASE_STORAGE + resource_capacity.water * mul
+					storage_resource_amount.metal = BASE_STORAGE + resource_capacity.metal * mul
 		EnumAutoload.ResourceType.FOOD:
 			for building in BuildingManager.buildings:
 				production += building.get_produced_resource().food
@@ -246,10 +252,10 @@ func calculate_resource_modifier(resource_type, population) -> void:
 func update_resource_tick() -> void:
 	# When we receive a tick signal from the GameTickManager
 	# we update our resource levels.
-	food_amount = clamp(food_amount + current_food_modifier, 0, storage_amount)
-	water_amount = clamp(water_amount + current_water_modifier, 0, storage_amount)
-	air_amount = clamp(air_amount + current_air_modifier, 0, storage_amount)
-	metal_amount = clamp(metal_amount + current_metal_modifier, 0, storage_amount)
+	food_amount = clamp(food_amount + current_food_modifier, 0, storage_resource_amount.food)
+	water_amount = clamp(water_amount + current_water_modifier, 0, storage_resource_amount.water)
+	air_amount = clamp(air_amount + current_air_modifier, 0, storage_resource_amount.air)
+	metal_amount = clamp(metal_amount + current_metal_modifier, 0, storage_resource_amount.metal)
 
 	# TODO - change resource UI colours over low threshold
 
@@ -311,13 +317,13 @@ func change_resource_from_event(resource: String, amount_str: String):
 	var amount = int(amount_str)
 	match resource:
 		"food":
-			food_amount = clamp(food_amount + amount, 0, storage_amount)
+			food_amount = clamp(food_amount + amount, 0, storage_resource_amount.food)
 		"water":
-			water_amount = clamp(water_amount + amount, 0, storage_amount)
+			water_amount = clamp(water_amount + amount, 0, storage_resource_amount.water)
 		"air":
-			air_amount = clamp(air_amount + amount, 0, storage_amount)
+			air_amount = clamp(air_amount + amount, 0, storage_resource_amount.air)
 		"metal":
-			metal_amount = clamp(metal_amount + amount, 0, storage_amount)
+			metal_amount = clamp(metal_amount + amount, 0, storage_resource_amount.metal)
 		"population":
 			if amount > 0:
 				var empty_spot = housing_amount - population_amount
@@ -399,7 +405,7 @@ func get_build_time_with_upgrade_multiplier() -> float:
 	if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_DRONE in current_upgrades:
 		reduction_perc += 0.25
 	return clampf(1 - reduction_perc, 0, 1)
-	
+
 func calculate_build_time_with_upgrade(base_time: int) -> int:
 	var multiplier = get_build_time_with_upgrade_multiplier()
 	return ceil(base_time * multiplier)
@@ -440,8 +446,7 @@ func reset_state():
 	water_amount = 250
 	air_amount = 200
 	metal_amount = 10
-	storage_amount = BASE_STORAGE
-
+	storage_resource_amount = ResourceData.new(BASE_STORAGE, BASE_STORAGE, BASE_STORAGE, BASE_STORAGE)
 	food_alert_shown = false
 	water_alert_shown = false
 	air_alert_shown = false

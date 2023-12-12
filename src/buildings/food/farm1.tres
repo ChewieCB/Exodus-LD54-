@@ -21,7 +21,7 @@ metal = 0
 [resource]
 script = ExtResource("1_i83ox")
 name = "Vertical Farm"
-type = 0
+type = 1
 sprite = ExtResource("2_bea60")
 resource_prod = SubResource("Resource_7mj85")
 housing_prod = 0

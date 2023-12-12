@@ -21,7 +21,7 @@ metal = 0
 [resource]
 script = ExtResource("1_lvmyu")
 name = "Cryostasis Pod Array"
-type = 5
+type = 6
 sprite = ExtResource("2_wu5o6")
 resource_prod = SubResource("Resource_8j3dq")
 housing_prod = 0

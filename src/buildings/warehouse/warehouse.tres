@@ -21,7 +21,7 @@ metal = 0
 [resource]
 script = ExtResource("1_cseok")
 name = "Warehouse"
-type = 6
+type = 7
 sprite = ExtResource("2_s1flm")
 resource_prod = SubResource("Resource_omf1k")
 housing_prod = 0
