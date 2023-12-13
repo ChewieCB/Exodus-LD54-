@@ -217,15 +217,19 @@ func calculate_resource_modifier(resource_type, population) -> void:
 			housing_amount = production
 			available_housing = production - consumption
 		EnumAutoload.ResourceType.STORAGE:
+			storage_resource_amount.food = BASE_STORAGE 
+			storage_resource_amount.air = BASE_STORAGE 
+			storage_resource_amount.water = BASE_STORAGE
+			storage_resource_amount.metal = BASE_STORAGE 
 			for building in BuildingManager.buildings:
 				if building is WarehouseBuilding:
 					var warehouse = building as WarehouseBuilding
 					var resource_capacity = warehouse.get_resource_storage_capacity()
 					var mul = ResourceManager.get_storage_with_upgrade_multiplier()
-					storage_resource_amount.food = BASE_STORAGE + resource_capacity.food * mul
-					storage_resource_amount.air = BASE_STORAGE + resource_capacity.air * mul
-					storage_resource_amount.water = BASE_STORAGE + resource_capacity.water * mul
-					storage_resource_amount.metal = BASE_STORAGE + resource_capacity.metal * mul
+					storage_resource_amount.food += resource_capacity.food * mul
+					storage_resource_amount.air += resource_capacity.air * mul
+					storage_resource_amount.water += resource_capacity.water * mul
+					storage_resource_amount.metal += resource_capacity.metal * mul
 		EnumAutoload.ResourceType.FOOD:
 			for building in BuildingManager.buildings:
 				production += building.get_produced_resource().food

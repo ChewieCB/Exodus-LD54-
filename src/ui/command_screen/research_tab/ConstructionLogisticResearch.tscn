@@ -206,7 +206,7 @@ offset_top = 88.0
 offset_right = 136.0
 offset_bottom = 120.0
 upgrade_name = "Advanced Logistics"
-upgrade_description = "Buildings adjacent (within 1 tiles) to Warehouse get a [color=green]20%[/color] bonus to their resource production."
+upgrade_description = "Buildings adjacent (within 1 tiles) to Warehouses get a [color=green]20%[/color] bonus to their resource production."
 upgrade_id = 25
 upgrade_sprite = ExtResource("3_2j2jf")
 cost = SubResource("Resource_hh64u")

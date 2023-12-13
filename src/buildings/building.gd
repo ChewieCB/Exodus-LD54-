@@ -2,7 +2,6 @@ extends Node2D
 class_name Building
 
 @export var data: BuildingResource
-@onready var type = data.type
 
 @onready var sprite = $Sprite2D
 @onready var collider = $Area2D
@@ -26,12 +25,11 @@ var ticks_left_to_build: int
 @export var building_complete: bool = false
 
 # Deletion
-var is_selected: bool = false
 var can_delete: bool = true
 var is_deconstructing: bool = false
 var ticks_left_to_delete: int
+var is_hover = false
 
-var is_displaying_info_panel = false
 var bonus_multiplier: float = 1
 
 
@@ -54,7 +52,7 @@ func check_for_adjacency_multiplier(_unused_var):
 			var nearby_warehouse = area.get_parent() as WarehouseBuilding
 			if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_STOCK_ANALYSIS in ResourceManager.current_upgrades:
 				var warehouse_resource_bonus = nearby_warehouse.get_resource_bonus_prod()
-				match(type):
+				match(data.type):
 					EnumAutoload.BuildingType.WATER:
 						bonus_multiplier += warehouse_resource_bonus.water
 					EnumAutoload.BuildingType.AIR:
@@ -69,7 +67,7 @@ func apply_upgrades():
 	# Wait 2 frame to make sure all Area2D changes are setup correctly
 	await get_tree().physics_frame
 	await get_tree().physics_frame
-	check_for_adjacency_multiplier(type)
+	check_for_adjacency_multiplier(data.type)
 
 
 func construct_in_progress():
@@ -98,17 +96,11 @@ func deconstruct_in_progress():
 	#
 	BuildingManager.construction_queue.push_front(self)
 
-func _input(event):
-	if event.is_action_pressed("left_click") and not preview:
-		if is_selected:
-			BuildingManager.show_building_info_panel(global_position, self)
-			is_displaying_info_panel = true
-
 
 func _process(delta):
 	# TODO: Optimize this
 	if Input.is_action_just_pressed("cancel_place_building"):
-		if is_selected and can_delete and not preview:
+		if is_hover and can_delete and not preview:
 			if is_constructing and not is_deconstructing:
 				cancel_construction()
 			elif building_complete and is_deconstructing:
@@ -125,7 +117,7 @@ func _process(delta):
 
 
 func _setup_scan_for_nearby_bonus():
-	if type in [EnumAutoload.BuildingType.CRYO_POD, EnumAutoload.BuildingType.STORAGE]:
+	if data.type in [EnumAutoload.BuildingType.CRYO_POD, EnumAutoload.BuildingType.STORAGE]:
 		return
 
 	collider.set_collision_mask_value (2, true)
@@ -145,7 +137,7 @@ func _on_tick():
 			ResourceManager.add_building(self)
 			ResourceManager.retrieve_workers(self)
 			BuildingManager.construction_queue.erase(self)
-			BuildingManager.finished_building(type)
+			BuildingManager.finished_building(data.type)
 			SoundManager.play_sound(build_finish_sfx, "SFX")
 			sprite.material.set_shader_parameter("mode", 0)
 		else:
@@ -169,7 +161,7 @@ func remove_building():
 	self.queue_free()
 
 func deconstructed_refund_resource():
-	if type == EnumAutoload.BuildingType.CRYO_POD:
+	if data.type == EnumAutoload.BuildingType.CRYO_POD:
 		ResourceManager.population_amount += data.refund_population
 
 func start_constructing():
@@ -267,13 +259,12 @@ func _notification(what: int) -> void:
 
 func on_predelete() -> void:
 	ResourceManager.remove_building(self)
-	if is_displaying_info_panel:
+	if BuildingManager.selected_building == self:
 		BuildingManager.hide_building_info_panel()
 
 
 func _on_area_2d_mouse_entered():
-	# TODO add popup or highlight
-	is_selected = true
+	BuildingManager.selected_building = self
 	# print(self.data.name + " selected")
 	var pulse_colour = Color("#ffffff")
 	pulse_colour.a = 0.5
@@ -284,15 +275,42 @@ func _on_area_2d_mouse_entered():
 	sprite.material.set_shader_parameter("full_pulse_cycle", true)
 	sprite.material.set_shader_parameter("mode", 1)
 	enable_improved_preview()
+	is_hover = true
 
 
 func _on_area_2d_mouse_exited():
-	is_selected = false
+	BuildingManager.selected_building = null
 	sprite.material.set_shader_parameter("mode", 0)
-	BuildingManager.hide_building_info_panel()
-	is_displaying_info_panel = false
 	remove_improved_preview()
-
+	is_hover = false
 
 func rotate_cw():
 	rotation += PI/2
+
+func get_context_menu_name() -> String:
+	return data.name
+
+func get_context_menu_description() -> String:
+	var tmp = ""
+	match data.type:
+		EnumAutoload.BuildingType.HABITATION:
+			tmp = "Can house {n_house} crew members.".format({"n_house": data.housing_prod})
+		EnumAutoload.BuildingType.FOOD:
+			tmp = "Can produce {n_food} units of Food per day.".format({"n_food": get_produced_resource().food})
+		EnumAutoload.BuildingType.WATER:
+			tmp = "Can produce {n_water} units of Water per day.".format({"n_water": get_produced_resource().water})
+		EnumAutoload.BuildingType.AIR:
+			tmp = "Can produce {n_air} units of Oxygen per day.".format({"n_air": get_produced_resource().air})
+		EnumAutoload.BuildingType.METAL:
+			tmp = "Can produce {n_metal} units of Metal per day.".format({"n_metal": get_produced_resource().metal})
+		EnumAutoload.BuildingType.CRYO_POD:
+			tmp = "Can be deconstructed to wake up {n_pop} crew member(s).".format({"n_pop": data.refund_population})
+	return tmp
+
+func get_context_menu_stat() -> String:
+	var tmp = ""
+	tmp = "Construct time: {0} day(s), {1} crewmate(s)".format([ResourceManager.calculate_build_time_with_upgrade(data.construction_time), data.people_cost])
+	tmp += "\nDeconstruct time: {0} day(s), {1} crewmate(s)".format([ResourceManager.calculate_build_time_with_upgrade(data.destruction_time), data.people_cost])
+	if bonus_multiplier > 1:
+		tmp += "\nCurrent multiplier: {mul}%".format({"mul": bonus_multiplier * 100})
+	return tmp

@@ -18,6 +18,15 @@ var n_food_building = 0
 var n_water_building = 0
 var n_air_building = 0
 
+var selected_building: Building = null
+
+func _input(event):
+	if event.is_action_pressed("left_click"):
+		if selected_building != null and not selected_building.preview:
+			show_building_info_panel(selected_building.global_position, selected_building)
+		selected_building = null
+
+
 func start_building(building_scene):
 	emit_signal("building_selected", building_scene)
 

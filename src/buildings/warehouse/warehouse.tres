@@ -19,6 +19,7 @@ air = 0
 metal = 0
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_cseok")
 name = "Warehouse"
 type = 7
