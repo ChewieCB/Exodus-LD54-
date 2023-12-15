@@ -24,6 +24,8 @@ func _game_over(resource):
 			resource_str = "water"
 		ResourceManager.RESOURCE_TYPE.AIR:
 			resource_str = "air"
+		ResourceManager.RESOURCE_TYPE.MORALE:
+			resource_str = "morale.\nCrew riots have exploded into a mutiny and you have been forced out the airlock."
 	flavour_text.text = "You ran out of {0}.".format([resource_str])
 
 	if resource == ResourceManager.RESOURCE_TYPE.POPULATION:
@@ -37,6 +39,7 @@ func _negation_zone():
 	get_parent().anim_player.play("hide_build_menu")
 	anim_player.play("game_over")
 	flavour_text.text = "You failed to escape the negation zone."
+
 
 
 func _victory():

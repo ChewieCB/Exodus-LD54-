@@ -16,6 +16,7 @@ enum TYPE {
 	FOOD,
 	WATER,
 	AIR,
+	MORALE,
 	PROXIMITY
 }
 
@@ -33,6 +34,8 @@ enum TYPE {
 				icon.texture = load("res://assets/ui/icons/final_icons/water_icon.png")
 			TYPE.AIR:
 				icon.texture = load("res://assets/ui/icons/final_icons/air_icon.png")
+			TYPE.MORALE:
+				icon.texture = load("res://assets/ui/icons/final_icons/pop_icon.png")
 #			TYPE.PROXIMITY:
 #				icon.texture = null
 		
@@ -67,6 +70,8 @@ func _ready():
 			icon.texture = load("res://assets/ui/icons/final_icons/water_icon.png")
 		TYPE.AIR:
 			icon.texture = load("res://assets/ui/icons/final_icons/air_icon.png")
+		TYPE.MORALE:
+			icon.texture = load("res://assets/ui/icons/final_icons/pop_icon.png")
 		TYPE.PROXIMITY:
 			icon.texture = null
 			# FIXME - Make the proximity alert red

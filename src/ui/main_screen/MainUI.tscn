@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cu7ivg1u3vbhl"]
+[gd_scene load_steps=20 format=3 uid="uid://cu7ivg1u3vbhl"]
 
 [ext_resource type="PackedScene" uid="uid://bdbib8np6c616" path="res://src/ui/main_screen/resources/ResourceUI.tscn" id="1_4u51x"]
 [ext_resource type="PackedScene" uid="uid://sjhl1wud5upl" path="res://src/ui/building_ui/BuildUI.tscn" id="1_hyvdy"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dcuhjw7qe51sg" path="res://src/ui/main_screen/resources/ResourceChangePopup.tscn" id="3_nq3mf"]
 [ext_resource type="PackedScene" uid="uid://bsqw1bcfuxbvr" path="res://src/ui/building_ui/TimeControlUI.tscn" id="4_2kxyh"]
 [ext_resource type="PackedScene" uid="uid://cnjv60xkxx8oq" path="res://src/ui/building_ui/NotEnoughWorkersPopup.tscn" id="4_eo2jl"]
+[ext_resource type="Script" path="res://src/ui/main_screen/resources/morale_ui.gd" id="5_1rahp"]
 [ext_resource type="PackedScene" uid="uid://be20dl26vkt1d" path="res://src/ui/main_screen/resources/HorizontalBarUI.tscn" id="5_whypt"]
 [ext_resource type="PackedScene" uid="uid://b1xmgw2jwmunk" path="res://src/ui/command_screen/CommandScreen.tscn" id="6_hbhke"]
 [ext_resource type="Script" path="res://src/ui/main_screen/debug_event_dropdown.gd" id="7_my6e0"]
@@ -171,6 +172,7 @@ theme_override_constants/separation = 32
 
 [node name="MoraleUI" parent="LowerBar/MarginContainer/HBoxContainer/VBoxContainer/ProgressBarUI/MarginContainer/VBoxContainer" instance=ExtResource("5_whypt")]
 layout_mode = 2
+script = ExtResource("5_1rahp")
 label_text = "Morale"
 bar_min = -100
 

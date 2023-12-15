@@ -1,7 +1,9 @@
 @tool
 extends Control
+class_name HBarUI
 
-@onready var label = $VBoxContainer/MarginContainer/Label
+@onready var label = $VBoxContainer/MarginContainer/HBoxContainer/Label
+@onready var percent_label = $VBoxContainer/MarginContainer/HBoxContainer/Label2
 @onready var progress_bar = $VBoxContainer/MarginContainer2/ProgressBar
 
 @export var label_text: String = ""
@@ -18,12 +20,10 @@ func _ready():
 	progress_bar.min_value = bar_min
 	progress_bar.max_value = bar_max
 	
-	style_box = StyleBoxFlat.new()
-	progress_bar.add_theme_stylebox_override("fill", style_box)
+	progress_bar.material = progress_bar.material.duplicate()
 	
 	# DEBUG - random start value
-	progress_bar.value = randi_range(bar_min, bar_max)
-	progress_bar.max_value = bar_max
+	progress_bar.value = bar_max
 
 
 func _process(delta):
@@ -40,7 +40,12 @@ func _process(delta):
 	var current_color = colors[0]
 	var next_color = colors[1]
 	cached_color = current_color.lerp(next_color, delta)
-	style_box.bg_color = cached_color
+	if not Engine.is_editor_hint():
+		progress_bar.material.set_shader_parameter("color_stripe", cached_color)
+	
+		# Update the percent text
+		var progress_percent = remap(progress_bar.value, bar_min, bar_max, 0.0, 1.0)
+		percent_label.text = str(floor(progress_percent * 100)) + "%"
 
 
 func _map_value_to_colour(value: float) -> Array[Color]:

@@ -8,6 +8,8 @@ signal water_changed(value)
 signal air_changed(value)
 signal metal_changed(value)
 #
+signal morale_changed(value)
+#
 signal food_modifier_changed(total, modifier)
 signal water_modifier_changed(total, modifier)
 signal air_modifier_changed(total, modifier)
@@ -16,9 +18,11 @@ signal metal_modifier_changed(total, modifier)
 signal starving(ticks_left)
 signal dehydrated(ticks_left)
 signal suffocating(ticks_left)
+signal mutiny(ticks_left)
 signal stopped_starving
 signal stopped_thirsty
 signal stopped_suffocating
+signal stopped_mutiny
 #
 signal resource_low(resource)
 signal game_over(resource)
@@ -62,6 +66,14 @@ var suffocating_time_left = suffocating_time:
 			emit_signal("suffocating", suffocating_time_left)
 			if suffocating_time_left == 0:
 				emit_signal("game_over", RESOURCE_TYPE.AIR)
+var mutiny_time: int = 3
+var mutiny_time_left = mutiny_time:
+	set(value):
+		mutiny_time_left = value
+		if morale_amount == -100:
+			emit_signal("mutiny", mutiny_time_left)
+			if mutiny_time_left == 0:
+				emit_signal("game_over", RESOURCE_TYPE.MORALE)
 
 # Endgame flags, if any of these last too long its game over
 var is_starving = false:
@@ -82,6 +94,12 @@ var is_suffocating = false:
 			return
 		is_suffocating = value
 		emit_signal("suffocating", suffocating_time)
+var is_mutiny = false:
+	set(value):
+		if value == is_mutiny:
+			return
+		is_mutiny = value
+		emit_signal("mutiny", mutiny_time)
 
 
 enum RESOURCE_TYPE {
@@ -90,7 +108,8 @@ enum RESOURCE_TYPE {
 	FOOD,
 	WATER,
 	AIR,
-	METAL
+	METAL,
+	MORALE
 }
 
 var current_officers = [EnumAutoload.Officer.PRESSLEY, EnumAutoload.Officer.TORGON]
@@ -142,7 +161,10 @@ var housing_amount: int:
 	set(value):
 		housing_amount = value
 		emit_signal("housing_changed", housing_amount, available_housing)
-var available_housing: int = housing_amount - population_amount
+var available_housing: int = housing_amount - population_amount:
+	set(value):
+		available_housing = value
+		habitability = calculate_habitability_score()
 #
 #
 #
@@ -162,6 +184,10 @@ var metal_amount: int:
 	set(value):
 		metal_amount = value
 		emit_signal("metal_changed", metal_amount)
+var morale_amount: int:
+	set(value):
+		morale_amount = value
+		emit_signal("morale_changed", morale_amount)
 
 var current_food_modifier: int = 0
 var current_air_modifier: int = 0
@@ -174,6 +200,23 @@ var pop_food_cost: int = 2
 var pop_water_cost: int = 3
 var pop_air_cost: int = 1
 
+var habitability: int = 0:
+	set(value):
+		habitability = clamp(value, -100, 100)
+		morale_amount = habitability + current_morale_modifier
+# This modifier is accumulated from per-event morale changes
+var current_morale_modifier: int = 0:
+	set(value):
+		current_morale_modifier = value
+		morale_amount = habitability + current_morale_modifier
+# How much does each resource affect habitability?
+var housing_habitability_impact: int = 8
+@export var housing_impact_curve: Curve
+# Weights for one-off events impacting morale
+var crew_loss_morale_impact: int = 10
+var crew_gain_morale_impact: int = 15
+
+
 func _ready() -> void:
 	TickManager.tick.connect(_on_tick)
 
@@ -183,6 +226,8 @@ func _ready() -> void:
 	pop_food_cost = 2
 	pop_water_cost = 2
 	pop_air_cost = 1
+	
+	current_morale_modifier = 0
 
 
 # TODO: Can be optimized, only run on build/tick event, not every frame
@@ -202,6 +247,7 @@ func _physics_process(delta):
 				emit_signal("air_modifier_changed", air_amount, current_air_modifier)
 			RESOURCE_TYPE.METAL:
 				emit_signal("metal_modifier_changed", metal_amount, current_metal_modifier)
+
 
 func calculate_resource_modifier(resource_type, population) -> void:
 	var production = 0
@@ -242,6 +288,25 @@ func calculate_resource_modifier(resource_type, population) -> void:
 			current_metal_modifier = production
 
 
+func calculate_habitability_score() -> int:
+	var new_habitability: int = 0
+	var housing_mod = available_housing * housing_habitability_impact
+	var housed_ratio: float = clamp(
+		float(available_housing) / float(population_amount),
+		0, 3
+	)
+	var lower_map = remap(housed_ratio, 0.0, 1.0, 0.0, 0.5)
+	var higher_map = remap(housed_ratio, 1.0, 10.0, 0.5, 1)
+	var sample_map
+	if housed_ratio <= 1.0:
+		sample_map = lower_map
+	else:
+		sample_map = higher_map
+	new_habitability = housing_mod * housing_impact_curve.sample(sample_map)
+	
+	return new_habitability
+
+
 func update_resource_tick() -> void:
 	# When we receive a tick signal from the GameTickManager
 	# we update our resource levels.
@@ -262,11 +327,15 @@ func update_resource_tick() -> void:
 	if is_suffocating and current_air_modifier < 0:
 		suffocating_time_left -= 1
 		print("Suffocating: " + str(suffocating_time_left) + " ticks left")
+	if is_mutiny:
+		mutiny_time_left -= 1
+		print("Mutiny: " + str(mutiny_time_left) + " ticks left")
 
 	# Reset loss counters if they've changed
 	is_starving = food_amount == 0 and current_food_modifier < 0
 	is_thirsty = water_amount == 0 and current_water_modifier < 0
 	is_suffocating = air_amount == 0 and current_air_modifier < 0
+	is_mutiny = morale_amount == -100
 
 
 func can_add_population(value) -> bool:
@@ -275,6 +344,7 @@ func can_add_population(value) -> bool:
 		return true
 	else:
 		return false
+
 
 func add_building(building: Building):
 	if building not in BuildingManager.buildings:
@@ -327,6 +397,7 @@ func change_resource_from_event(resource: String, amount_str: String):
 		"population_forced":
 			population_amount += amount
 
+
 func change_specialist_from_event(operation: String, specialist_name: String):
 	var specialist = null
 	match specialist_name:
@@ -346,11 +417,13 @@ func change_specialist_from_event(operation: String, specialist_name: String):
 		else:
 			remove_specialist(specialist)
 
+
 func add_specialist(specialist: EnumAutoload.Officer):
 	if specialist not in current_officers:
 		current_officers.append(specialist)
 	print("Add specialist")
 	update_specialist_bonus()
+
 
 func remove_specialist(specialist: EnumAutoload.Officer):
 	if specialist in current_officers:
@@ -358,12 +431,15 @@ func remove_specialist(specialist: EnumAutoload.Officer):
 	update_specialist_bonus()
 	print("Remove specialist")
 
+
 func update_specialist_bonus():
 	return
+
 
 func add_upgrade(upgrade_id: EnumAutoload.UpgradeId):
 	current_upgrades.append(upgrade_id)
 	emit_signal("upgrade_acquired")
+
 
 func reset_state():
 	# TODO - load initial values from file for difficulty settings
@@ -373,6 +449,7 @@ func reset_state():
 	water_amount = 250
 	air_amount = 200
 	metal_amount = 10
+	morale_amount = 0
 
 	food_alert_shown = false
 	water_alert_shown = false
