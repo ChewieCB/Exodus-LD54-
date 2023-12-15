@@ -149,7 +149,7 @@ size_flags_horizontal = 4
 theme_override_constants/margin_top = 40
 resource_change_popup = ExtResource("3_nq3mf")
 
-[node name="MoraleUI2" type="MarginContainer" parent="LowerBar/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="ProgressBarUI" type="MarginContainer" parent="LowerBar/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/margin_left = 64
@@ -157,24 +157,24 @@ theme_override_constants/margin_top = -16
 theme_override_constants/margin_right = 64
 theme_override_constants/margin_bottom = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="LowerBar/MarginContainer/HBoxContainer/VBoxContainer/MoraleUI2"]
+[node name="MarginContainer" type="MarginContainer" parent="LowerBar/MarginContainer/HBoxContainer/VBoxContainer/ProgressBarUI"]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="VBoxContainer" type="HBoxContainer" parent="LowerBar/MarginContainer/HBoxContainer/VBoxContainer/MoraleUI2/MarginContainer"]
+[node name="VBoxContainer" type="HBoxContainer" parent="LowerBar/MarginContainer/HBoxContainer/VBoxContainer/ProgressBarUI/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 32
 
-[node name="HorizontalBarUI" parent="LowerBar/MarginContainer/HBoxContainer/VBoxContainer/MoraleUI2/MarginContainer/VBoxContainer" instance=ExtResource("5_whypt")]
+[node name="MoraleUI" parent="LowerBar/MarginContainer/HBoxContainer/VBoxContainer/ProgressBarUI/MarginContainer/VBoxContainer" instance=ExtResource("5_whypt")]
 layout_mode = 2
 label_text = "Morale"
 bar_min = -100
 
-[node name="HorizontalBarUI2" parent="LowerBar/MarginContainer/HBoxContainer/VBoxContainer/MoraleUI2/MarginContainer/VBoxContainer" instance=ExtResource("5_whypt")]
+[node name="HullUI" parent="LowerBar/MarginContainer/HBoxContainer/VBoxContainer/ProgressBarUI/MarginContainer/VBoxContainer" instance=ExtResource("5_whypt")]
 layout_mode = 2
 label_text = "Hull"
 bar_max = 300
