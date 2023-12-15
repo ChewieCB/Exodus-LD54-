@@ -259,12 +259,13 @@ func _notification(what: int) -> void:
 
 func on_predelete() -> void:
 	ResourceManager.remove_building(self)
-	if BuildingManager.selected_building == self:
+	if len(BuildingManager.selected_building_queue) > 0 and \
+		BuildingManager.selected_building_queue[0] == self:
 		BuildingManager.hide_building_info_panel()
 
 
 func _on_area_2d_mouse_entered():
-	BuildingManager.selected_building = self
+	BuildingManager.selected_building_queue.append(self)
 	# print(self.data.name + " selected")
 	var pulse_colour = Color("#ffffff")
 	pulse_colour.a = 0.5
@@ -279,7 +280,7 @@ func _on_area_2d_mouse_entered():
 
 
 func _on_area_2d_mouse_exited():
-	BuildingManager.selected_building = null
+	BuildingManager.selected_building_queue.erase(self)
 	sprite.material.set_shader_parameter("mode", 0)
 	remove_improved_preview()
 	is_hover = false

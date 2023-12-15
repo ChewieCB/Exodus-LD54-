@@ -6,6 +6,7 @@ class_name BuildingInfoPanel
 @onready var stat_label: Label = $PanelContainer/MarginContainer/Info/VBoxContainer/StatLabel
 @onready var grid_container = $PanelContainer/MarginContainer/Info/VBoxContainer/GridContainer
 @onready var main_panel = $PanelContainer/MarginContainer/Info
+@onready var panel_container = $PanelContainer
 
 @onready var warehouse_spec_button: Button = $PanelContainer/MarginContainer/Info/VBoxContainer/GridContainer/WarehouseSpecializeButton
 @onready var warehouse_spec_menu = $PanelContainer/MarginContainer/WarehouseSpec
@@ -19,8 +20,8 @@ func _ready() -> void:
 func _input(event):
 	if event.is_action_pressed("left_click"):
 		# Check if the mouse click is outside the GUI
-		if is_showing:
-			if not Rect2(main_panel.position, main_panel.get_size()).has_point(get_local_mouse_position()):
+		if not Rect2(panel_container.position, panel_container.get_size()).has_point(get_local_mouse_position()):
+			if is_showing:
 				hide_info_panel()
 
 func show_info_panel(pos: Vector2, building: Building):

@@ -1,11 +1,17 @@
 extends Building
 class_name WarehouseBuilding
 
+@onready var adjacent_range: Area2D = $Range
+@onready var adjacent_range_sprite: Sprite2D = $Range/RangeSprite
+
+
 var specialized_type: EnumAutoload.ResourceType = EnumAutoload.ResourceType.NONE
 
 const SPEC_STORAGE_MULTIPLIER = 4
 const SPEC_PROD_BONUS = 1
 const BASE_PROD_BONUS = 0.2
+
+const SPEC_COLOR = [Color(1, 1, 1), null, null, Color(0.4, 1, 0.4), Color(0.4, 0.8, 1), Color(1, 0.4, 0.4), Color(0.7, 0.9, 0.7)]
 
 func _ready():
 	super()
@@ -14,7 +20,7 @@ func _ready():
 
 func apply_upgrades():
 	if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_ADV_LOGISTIC in ResourceManager.current_upgrades:
-			get_node("Range").scale = Vector2(1.5, 1.5)
+		adjacent_range.scale = Vector2(1.5, 1.5)
 	# Wait 2 frame to make sure all Area2D changes are setup correctly
 	await get_tree().physics_frame
 	await get_tree().physics_frame
@@ -22,19 +28,8 @@ func apply_upgrades():
 
 func set_specialisation(_type: EnumAutoload.ResourceType):
 	specialized_type = _type
-	print("Changed")
-	match specialized_type:
-		EnumAutoload.ResourceType.AIR:
-			sprite.self_modulate = Color(1, 0.8, 0.8)
-		EnumAutoload.ResourceType.WATER:
-			sprite.self_modulate = Color(0.8, 0.8, 1)
-		EnumAutoload.ResourceType.FOOD:
-			sprite.self_modulate = Color(0.8, 1, 0.8)
-		EnumAutoload.ResourceType.METAL:
-			sprite.self_modulate = Color(0.7, 0.9, 0.7)
-		EnumAutoload.ResourceType.NONE:
-			sprite.self_modulate = Color(1, 1, 1)
-	# FOrce emit signal so we can update other buildings bonus multiplier
+	sprite.self_modulate = SPEC_COLOR[specialized_type]
+	# Force emit signal so we can update other buildings bonus multiplier
 	BuildingManager.finished_building(EnumAutoload.BuildingType.NONE)
 
 func get_resource_bonus_prod():
@@ -78,10 +73,10 @@ func get_resource_storage_capacity():
 
 func enable_improved_preview():
 	if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_STOCK_ANALYSIS in ResourceManager.current_upgrades:
-		get_node("Range/RangeSprite").visible = true
+		adjacent_range_sprite.visible = true
 
 func remove_improved_preview():
-	get_node("Range/RangeSprite").visible = false
+	adjacent_range_sprite.visible = false
 
 func get_context_menu_name() -> String:
 	var tmp = ""
