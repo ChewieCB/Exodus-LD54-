@@ -127,6 +127,12 @@ var population_amount: int:
 		worker_amount += diff
 		available_housing += diff
 		CrewmateManager.update_current_crewmates(value)
+		#
+		if diff < 0:
+			current_morale_modifier -= crew_loss_morale_impact * abs(diff)
+		elif diff > 0:
+			current_morale_modifier += crew_gain_morale_impact * abs(diff)
+		
 
 var worker_amount: int:
 	set(value):
@@ -138,7 +144,6 @@ var worker_amount: int:
 			while value + worker_refund < 0:
 				var current_refund = 0
 				var most_recent_building = BuildingManager.construction_queue.pop_front()
-				print(most_recent_building)
 				current_refund = most_recent_building.data.people_cost
 				worker_refund += current_refund
 				#
@@ -213,8 +218,8 @@ var current_morale_modifier: int = 0:
 var housing_habitability_impact: int = 8
 @export var housing_impact_curve: Curve
 # Weights for one-off events impacting morale
-var crew_loss_morale_impact: int = 10
-var crew_gain_morale_impact: int = 15
+var crew_loss_morale_impact: int = 20
+var crew_gain_morale_impact: int = 10
 
 
 func _ready() -> void:

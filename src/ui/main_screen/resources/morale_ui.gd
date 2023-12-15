@@ -7,5 +7,6 @@ func _ready():
 
 
 func _update_progress(value):
+	print(value)
 	progress_bar.value = value
 

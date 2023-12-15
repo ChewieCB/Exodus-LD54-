@@ -30,6 +30,7 @@ const BUILD_MENU_CAMERA_ZOOM = Vector2(0.6, 0.6)
 const SHIP_CAMERA_ZOOM = Vector2(0.4, 0.4)
 const EVENT_CAMERA_ZOOM = Vector2(0.15, 0.15)
 
+
 func _ready() -> void:
 	EventManager.start_event.connect(_on_start_event)
 	EventManager.finish_event.connect(_on_finish_event)
@@ -109,7 +110,6 @@ func _on_play_dialog_pressed():
 #	build_show_toggle.visible = false
 	build_menu.visible = false
 	EventManager.get_next_event()
-#	EventManager.play_random_event()
 
 
 func _on_chat_crew_pressed():
