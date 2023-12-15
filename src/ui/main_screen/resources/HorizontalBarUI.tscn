@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/ui/main_screen/morale_mockup.gd" id="1_bcaag"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vkju5"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ivjk"]
 
 [node name="HorizontalBarUI" type="PanelContainer"]
 anchors_preset = 8
@@ -44,9 +44,8 @@ theme_override_constants/margin_bottom = 2
 [node name="ProgressBar" type="ProgressBar" parent="VBoxContainer/MarginContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/fill = SubResource("StyleBoxFlat_vkju5")
-min_value = -100.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_8ivjk")
 step = 1.0
-value = -1.0
+value = 13.0
 rounded = true
 show_percentage = false

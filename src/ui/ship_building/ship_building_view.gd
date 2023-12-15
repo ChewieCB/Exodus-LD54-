@@ -34,9 +34,15 @@ func _ready():
 	get_node("UI").visible = true
 
 
-func _physics_process(delta):
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
-		# We can only call this safely in the physics frame
+func _physics_process(_delta):
+	# We can only call get_world_2d().direct_space_state safely 
+	# in the physics frame, hence why this logic is here 
+	# instead of _input.
+	if Input.is_action_just_pressed("cancel_place_building"):
+		# Don't exit build view if we have a building preview active
+		if $ShipSprite/ShipGrid.current_building:
+			return
+		# Check if the mouse is over a building collider
 		var space = get_world_2d().direct_space_state
 		var params = PhysicsPointQueryParameters2D.new()
 		params.position = get_global_mouse_position()
@@ -46,6 +52,7 @@ func _physics_process(delta):
 		# Check if there is a collision at the mouse position
 		if space.intersect_point(params, 1):
 			return
+		
 		emit_signal("ship_deselected")
 
 
