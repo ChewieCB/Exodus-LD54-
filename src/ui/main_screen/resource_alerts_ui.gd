@@ -7,6 +7,7 @@ var food_alert: Alert
 var water_alert: Alert
 var air_alert: Alert
 var morale_alert: Alert
+var proximity_alert: Alert
 #@onready var food_alert = $VBoxContainer/FoodAlertContainer
 #@onready var food_alert_counter = $VBoxContainer/FoodAlertContainer/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/CountdownContainer/Countdown
 #@onready var water_alert = $VBoxContainer/WaterAlertContainer
@@ -21,8 +22,39 @@ func _ready():
 	ResourceManager.dehydrated.connect(_dehydrated)
 	ResourceManager.suffocating.connect(_suffocating)
 	ResourceManager.mutiny.connect(_mutiny)
+	EventManager.proximity_alert.connect(_proximity)
 	#
 	ResourceManager.game_over.connect(_hide_all)
+
+
+func _proximity(ticks_left):
+	if not proximity_alert:
+		if ticks_left < 6:
+			var new_alert = alert_scene.instantiate()
+			var text = "Proximity Warning"
+			
+			# Add it to the container
+			alert_container.add_child(new_alert)
+			new_alert.visible = false
+			new_alert.alert_text = text
+			new_alert.type = Alert.TYPE.PROXIMITY
+			new_alert.has_countdown = false
+			
+			# Move it to the top so more recent events show at the top
+			alert_container.move_child(new_alert, 0)
+			new_alert.visible = true
+			new_alert.anim_player.play("alert_in")
+			await new_alert.anim_player.animation_finished
+			#
+			proximity_alert = new_alert
+			SoundManager.play_sound(resource_low_1_sfx, "SFX")
+	else:
+		if ticks_left > 6:
+			if is_instance_valid(proximity_alert):
+				# Delete it after a time period
+				proximity_alert.anim_player.play("alert_out")
+				await proximity_alert.anim_player.animation_finished
+				proximity_alert.queue_free()
 
 
 func _starving(ticks_left):
