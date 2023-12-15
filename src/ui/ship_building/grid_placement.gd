@@ -122,6 +122,7 @@ func place_building():
 	current_building.build_timer_ui.update_rotation()
 	current_building = null
 
+
 func stop_building_preview():
 	if current_building != null:
 		previous_rotation = current_building.rotation

@@ -1,12 +1,12 @@
 extends Control
 
-@onready var population_counter = $MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer/HBoxContainer/PopLabel
-@onready var worker_counter = $MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer/HBoxContainer/WorkerLabel
-@onready var hab_label: Label = $MarginContainer/HBoxContainer/MarginContainer5/HBoxContainer/HabDebug
-@onready var food_label: Label = $MarginContainer/HBoxContainer/MarginContainer2/HBoxContainer/FoodDebug
-@onready var water_label: Label = $MarginContainer/HBoxContainer/MarginContainer3/HBoxContainer/WaterDebug
-@onready var air_label: Label = $MarginContainer/HBoxContainer/MarginContainer4/HBoxContainer/AirDebug
-@onready var metal_label: Label = $MarginContainer/HBoxContainer/MarginContainer6/HBoxContainer/MetalLabel
+@onready var population_counter = $HBoxContainer/MarginContainer/HBoxContainer/PopContainer/HBoxContainer/PopLabel
+@onready var worker_counter = $HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer/HBoxContainer/WorkerLabel
+@onready var hab_label: Label = $HBoxContainer/MarginContainer5/HBoxContainer/HabDebug
+@onready var food_label: Label = $HBoxContainer/MarginContainer2/HBoxContainer/FoodDebug
+@onready var water_label: Label = $HBoxContainer/MarginContainer3/HBoxContainer/WaterDebug
+@onready var air_label: Label = $HBoxContainer/MarginContainer4/HBoxContainer/AirDebug
+@onready var metal_label: Label = $HBoxContainer/MarginContainer6/HBoxContainer/MetalLabel
 
 
 @export var resource_change_popup: PackedScene
