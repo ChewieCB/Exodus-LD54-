@@ -21,7 +21,7 @@ metal = 0
 [resource]
 script = ExtResource("1_s1q55")
 name = "Nutrition Reclamation Plant"
-type = 0
+type = 1
 sprite = ExtResource("2_myw13")
 resource_prod = SubResource("Resource_40lqr")
 housing_prod = 0

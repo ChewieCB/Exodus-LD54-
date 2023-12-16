@@ -12,6 +12,7 @@ enum Officer {
 }
 
 enum CrewmateStatus {
+	NONE,
 	HEALTHY,
 	INFECTED,
 	INJURED,
@@ -19,6 +20,7 @@ enum CrewmateStatus {
 }
 
 enum BuildingType {
+	NONE,
 	FOOD,
 	WATER,
 	AIR,
@@ -29,6 +31,7 @@ enum BuildingType {
 }
 
 enum ResourceType {
+	NONE,
 	POPULATION,
 	HOUSING,
 	FOOD,
@@ -96,7 +99,9 @@ enum UpgradeId {
 	AGRI_SPACEDUST_ENHANCED,
 	AGRI_HARMONIC_CYCLE,
 	AGRI_ACCEL_GROWTH,
-	AGRI_OPTIMIZED_DESIGN
+	AGRI_OPTIMIZED_DESIGN,
+	CONSTRUCTION_LOGIC_SPECIALIZED_WAREHOUSE,
+
 }
 
 # FIXME - find a better place to store this

@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://b1xmgw2jwmunk" path="res://src/ui/command_screen/CommandScreen.tscn" id="6_hbhke"]
 [ext_resource type="Script" path="res://src/ui/main_screen/debug_event_dropdown.gd" id="7_my6e0"]
 [ext_resource type="PackedScene" uid="uid://b2rwhkbjj7e4n" path="res://src/ui/main_screen/ResourceAlertsUI.tscn" id="7_njybl"]
-[ext_resource type="PackedScene" uid="uid://dv3uxnkp8ekhg" path="res://src/ui/building_ui/BuildingInfoPanel.tscn" id="7_povcy"]
+[ext_resource type="PackedScene" uid="uid://dv3uxnkp8ekhg" path="res://src/ui/context_menu/BuildingInfoPanel.tscn" id="7_povcy"]
 [ext_resource type="PackedScene" uid="uid://d2r3r36bru83h" path="res://src/ui/main_screen/BuildingAlert.tscn" id="7_r6nxt"]
 
 [sub_resource type="Animation" id="Animation_3toh5"]

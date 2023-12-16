@@ -21,7 +21,7 @@ metal = 0
 [resource]
 script = ExtResource("1_e8w12")
 name = "Co2 Scrubber"
-type = 2
+type = 3
 sprite = ExtResource("2_lliic")
 resource_prod = SubResource("Resource_qoonj")
 housing_prod = 0

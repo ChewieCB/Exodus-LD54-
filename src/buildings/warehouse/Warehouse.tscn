@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://h0sodhkfhoxg"]
 
-[ext_resource type="Script" path="res://src/buildings/building.gd" id="1_1mv8l"]
+[ext_resource type="Script" path="res://src/buildings/warehouse/warehouse_building.gd" id="1_wy8si"]
 [ext_resource type="Resource" uid="uid://b567oop6a126s" path="res://src/buildings/warehouse/warehouse.tres" id="2_refjn"]
 [ext_resource type="Texture2D" uid="uid://nlcv4ra06eam" path="res://assets/buildings/warehouse.png" id="3_cleof"]
 [ext_resource type="PackedScene" uid="uid://bp6x36xyoxhh2" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="4_e7egk"]
@@ -14,7 +14,7 @@ size = Vector2(122, 122)
 
 [node name="Warehouse" type="Node2D"]
 scale = Vector2(0.5, 0.5)
-script = ExtResource("1_1mv8l")
+script = ExtResource("1_wy8si")
 data = ExtResource("2_refjn")
 
 [node name="Range" type="Area2D" parent="."]
