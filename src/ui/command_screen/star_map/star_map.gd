@@ -128,7 +128,7 @@ func _ready():
 	# Add star shaders
 	var star_positions = generate_stars(stars)
 	# Pick an outer star and place the ship tracker there
-	var outer_stars = get_outer_stars(star_positions, 32, 64)
+	var outer_stars = get_outer_stars(star_positions, 64, 128)
 	var start_point = outer_stars[randi_range(0, outer_stars.size() - 1)]
 	previous_star = stars.filter(
 		func(star): return star.global_position == start_point
@@ -670,7 +670,7 @@ func generate_stars(stars) -> Array:
 	return star_positions
 
 
-func get_outer_stars(stars, min_distance=64, max_distance=128) -> Array:
+func get_outer_stars(stars, min_distance=128, max_distance=256) -> Array:
 	# We need to offset the center point here based on the origin of this scene
 	# for when we run it as a SubViewport within the UI
 	var outer_stars = Array(stars).filter(

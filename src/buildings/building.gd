@@ -1,6 +1,8 @@
 extends Node2D
 class_name Building
 
+signal building_finished_operation
+
 @export var data: BuildingResource
 @onready var type = data.type
 
@@ -124,6 +126,7 @@ func _on_tick():
 			EventManager.finished_building(type)
 			SoundManager.play_sound(build_finish_sfx, "SFX")
 			sprite.material.set_shader_parameter("mode", 0)
+			emit_signal("building_finished_operation")
 		else:
 			ticks_left_to_build -= 1
 			build_timer_ui.label.text = str(ticks_left_to_build)
@@ -142,6 +145,7 @@ func remove_building():
 	BuildingManager.construction_queue.erase(self)
 	SoundManager.play_sound(build_finish_sfx, "SFX")
 	deconstructed_refund_resource()
+	emit_signal("building_finished_operation")
 	self.queue_free()
 
 func deconstructed_refund_resource():

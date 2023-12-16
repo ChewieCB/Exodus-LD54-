@@ -74,5 +74,3 @@ value = 100.0
 rounded = true
 nine_patch_stretch = true
 texture_progress = SubResource("CanvasTexture_ml1kt")
-
-[connection signal="value_changed" from="VBoxContainer/MarginContainer2/ProgressBar" to="." method="_on_progress_bar_value_changed"]
