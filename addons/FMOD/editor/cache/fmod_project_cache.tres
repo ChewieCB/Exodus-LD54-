@@ -1,0 +1,125 @@
+[gd_resource type="ProjectCache" load_steps=12 format=3 uid="uid://dj2iqa7ppirts"]
+
+[sub_resource type="BankAsset" id="BankAsset_287sb"]
+file_path = "res://fmod/banks/Desktop/Master.bank"
+modified_time = 1702717124
+path = "bank:/Master"
+guid = "{8df31713-1723-46dc-9637-80e74eddba53}"
+name = "Master"
+
+[sub_resource type="BankAsset" id="BankAsset_x50pm"]
+file_path = "res://fmod/banks/Desktop/Master.strings.bank"
+modified_time = 1702717124
+path = "bank:/Master.strings"
+guid = "{15ee37c7-6658-0a9e-107e-0a19bf2ebccb}"
+name = "Master.strings"
+
+[sub_resource type="BusAsset" id="BusAsset_2jvlg"]
+path = "bus:/Reverb"
+guid = "{7483b94c-bdd8-4d3d-a7ee-d6499c0e4a40}"
+name = "Reverb"
+
+[sub_resource type="BusAsset" id="BusAsset_lg4mp"]
+path = "bus:/"
+guid = "{d74a53d3-d8d4-4df8-aa0e-ba6f429c42f7}"
+name = "Master"
+
+[sub_resource type="FMOD_STUDIO_PARAMETER_ID" id="FMOD_STUDIO_PARAMETER_ID_vgyac"]
+data1 = 3913031957
+data2 = 1883467705
+
+[sub_resource type="FMOD_STUDIO_PARAMETER_DESCRIPTION" id="FMOD_STUDIO_PARAMETER_DESCRIPTION_ikp6t"]
+name = "Food-Water-Air"
+id = SubResource("FMOD_STUDIO_PARAMETER_ID_vgyac")
+maximum = 1.0
+guid = "{35240a11-fc6b-45fb-af73-c26daef6fb8d}"
+
+[sub_resource type="ParameterAsset" id="ParameterAsset_3p23w"]
+parameter_description = SubResource("FMOD_STUDIO_PARAMETER_DESCRIPTION_ikp6t")
+path = "parameter:/Food-Water-Air"
+guid = "{35240a11-fc6b-45fb-af73-c26daef6fb8d}"
+name = "Food-Water-Air"
+
+[sub_resource type="EventAsset" id="EventAsset_elmbi"]
+min_distance = 1.0
+max_distance = 20.0
+parameters = {
+"{35240a11-fc6b-45fb-af73-c26daef6fb8d}": SubResource("ParameterAsset_3p23w")
+}
+path = "event:/Dynamic Music - Track A-B"
+guid = "{d6f42473-17d4-45ad-b194-ce0cd31bfbb3}"
+name = "Dynamic Music - Track A-B"
+
+[sub_resource type="FMOD_STUDIO_PARAMETER_ID" id="FMOD_STUDIO_PARAMETER_ID_fmcaw"]
+data1 = 3874550041
+data2 = 4225426445
+
+[sub_resource type="FMOD_STUDIO_PARAMETER_DESCRIPTION" id="FMOD_STUDIO_PARAMETER_DESCRIPTION_cmssq"]
+name = "Morale"
+id = SubResource("FMOD_STUDIO_PARAMETER_ID_fmcaw")
+minimum = -100.0
+maximum = 100.0
+flags = 4
+guid = "{e2668176-0739-4670-b255-12cb6a96011e}"
+
+[sub_resource type="ParameterAsset" id="ParameterAsset_xwh0t"]
+parameter_description = SubResource("FMOD_STUDIO_PARAMETER_DESCRIPTION_cmssq")
+path = "parameter:/Morale"
+guid = "{e2668176-0739-4670-b255-12cb6a96011e}"
+name = "Morale"
+
+[resource]
+banks = {
+"{15ee37c7-6658-0a9e-107e-0a19bf2ebccb}": SubResource("BankAsset_x50pm"),
+"{8df31713-1723-46dc-9637-80e74eddba53}": SubResource("BankAsset_287sb")
+}
+events = {
+"{d6f42473-17d4-45ad-b194-ce0cd31bfbb3}": SubResource("EventAsset_elmbi")
+}
+busses = {
+"{7483b94c-bdd8-4d3d-a7ee-d6499c0e4a40}": SubResource("BusAsset_2jvlg"),
+"{d74a53d3-d8d4-4df8-aa0e-ba6f429c42f7}": SubResource("BusAsset_lg4mp")
+}
+parameters = {
+"{e2668176-0739-4670-b255-12cb6a96011e}": SubResource("ParameterAsset_xwh0t")
+}
+bank_tree = [{
+"children": [],
+"item_type": 3,
+"node_name": "Master",
+"path": "bank:/Master",
+"resource": SubResource("BankAsset_287sb")
+}, {
+"children": [],
+"item_type": 3,
+"node_name": "Master.strings",
+"path": "bank:/Master.strings",
+"resource": SubResource("BankAsset_x50pm")
+}]
+event_tree = [{
+"children": [],
+"item_type": 1,
+"node_name": "Dynamic Music - Track A-B",
+"path": "event:/Dynamic Music - Track A-B",
+"resource": SubResource("EventAsset_elmbi")
+}]
+bus_tree = [{
+"children": [{
+"children": [],
+"item_type": 4,
+"node_name": "Reverb",
+"path": "bus:/Reverb",
+"resource": SubResource("BusAsset_2jvlg")
+}],
+"item_type": 4,
+"node_name": "bus:",
+"path": "bus:/",
+"resource": SubResource("BusAsset_lg4mp")
+}]
+parameter_tree = [{
+"children": [],
+"item_type": 6,
+"node_name": "Morale",
+"path": "parameter:/Morale",
+"resource": SubResource("ParameterAsset_xwh0t")
+}]
