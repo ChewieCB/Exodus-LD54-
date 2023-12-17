@@ -134,5 +134,3 @@ func _on_air_ui_mouse_entered():
 func _on_metal_ui_mouse_entered():
 	ResourceManager.emit_signal("ui_hover_show", "Metal (Metal per Day)")
 
-
-	

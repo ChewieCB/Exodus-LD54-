@@ -57,6 +57,14 @@ extends Node2D
 @export_range(0, 5, 0.1) var NEGATION_ZONE_RATE: float = 2.5
 @onready var initial_negation_zone_radius: float = negation_zone_radius
 var previous_negation_zone_radius: float
+# If we're within the debuff distance to the negation zone, 
+# we lose morale scaled by how close we are.
+@export_range(32, 256, 1) var negation_zone_morale_debuff_range: int = 32
+# If we're at least the buff distance away from the negation zone, 
+# we gain morale scaled by how far we are.
+@export_range(256, 512, 1) var negation_zone_morale_buff_range: int = 256
+@export_range(-0.1, -2.0, -0.1) var morale_debuff: float = -0.5
+@export_range(0.1, 2.0, 0.1) var morale_buff: float = 0.25
 
 
 var points_to_draw: PackedVector2Array
@@ -893,8 +901,15 @@ func _on_tick():
 	var ship_distance = $ShipTracker.global_position.distance_to(adjusted_center)
 	# TODO - parameterize the negation_zone reduction
 	var ticks_until_negation = floor((negation_zone_radius + 1 - ship_distance) / NEGATION_ZONE_RATE)
-	print(ticks_until_negation)
 	EventManager.emit_signal("proximity_alert", ticks_until_negation)
+	# Decrease morale when we're near the negation zone, 
+	# and slightly increase morale when we're far away.
+	var morale_buff: int = 0
+	if ship_distance <= negation_zone_morale_debuff_range:
+		morale_buff = ship_distance * morale_debuff
+	elif ship_distance >= negation_zone_morale_buff_range:
+		morale_buff = ship_distance * morale_buff
+	ResourceManager.current_morale_modifier += morale_buff
 	# TODO - make negation zone shader draw OVER ship sprite
 	# Check if player is fully in negation zone, game over if they are
 	if $ShipTracker.global_position.distance_to(adjusted_center) >= negation_zone_radius + 1:
