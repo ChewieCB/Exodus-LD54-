@@ -36,5 +36,6 @@ func end_environmental_effect():
 
 
 func _on_tick():
-	ticks_left -= 1
+	if type == TYPES.TemporaryMoraleEffect:
+		ticks_left -= 1
 

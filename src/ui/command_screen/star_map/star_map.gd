@@ -909,7 +909,14 @@ func _on_tick():
 	EventManager.emit_signal("proximity_alert", ticks_until_negation)
 	# Decrease morale when we're near the negation zone, 
 	# and slightly increase morale when we're far away.
-	var current_morale_buff: int = 0
+	#
+	# Check if negation_zone envioronmental MoraleEffect already exists in queue
+	var _negation_zone_effect = ResourceManager.morale_effect_queue.filter(
+		func(effect):
+			return effect.type == MoraleEffect.TYPES.EnvironmentalMoraleEffect \
+			and effect._name.begins_with("Negation zone proximity")
+	).pop_front()
+	var current_morale_buff: int
 	if distance_to_negation_zone <= morale_debuff_max_distance:
 		current_morale_buff = remap(
 			distance_to_negation_zone, 
@@ -926,9 +933,23 @@ func _on_tick():
 			morale_buff_min, 
 			morale_buff_max
 		)
-	ResourceManager.current_morale_modifier += (current_morale_buff)
+	if _negation_zone_effect:
+		if current_morale_buff != 0:
+			_negation_zone_effect._name = "Negation zone proximity [%su]" % [round(distance_to_negation_zone)]
+			_negation_zone_effect.morale_modifier_value = current_morale_buff
+		else:
+			ResourceManager.remove_morale_effect(_negation_zone_effect)
+	else:
+		if current_morale_buff != 0:
+			ResourceManager.add_morale_effect(
+				"Negation zone proximity [%s]u" % [round(distance_to_negation_zone)],
+				 current_morale_buff, 
+				-1, 
+				MoraleEffect.TYPES.EnvironmentalMoraleEffect
+			)
 	print("Negation zone is %s units away, morale changed by %s" % [round(distance_to_negation_zone), current_morale_buff])
 	# TODO - make negation zone shader draw OVER ship sprite
+	#
 	# Check if player is fully in negation zone, game over if they are
 	if $ShipTracker.global_position.distance_to(adjusted_center) >= negation_zone_radius + 1:
 		EventManager.emit_signal("negation_zone")

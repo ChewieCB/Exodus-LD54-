@@ -44,7 +44,12 @@ func _update_morale_effect_counters():
 			var _mod_str = "+" + str(modifier)
 			if modifier < 0:
 				_mod_str = _mod_str.erase(0)
-			var effect_text = "%s: %s (%s)" % [_effect._name, _mod_str, _effect.ticks_left]
+				
+			var effect_text: String
+			if _effect.type == MoraleEffect.TYPES.TemporaryMoraleEffect:
+				effect_text = "%s: %s (%s)" % [_effect._name, _mod_str, _effect.ticks_left]
+			else:
+				effect_text = "%s: %s" % [_effect._name, _mod_str]
 			details_modifiers.get_child(idx).get_child(0).text = effect_text
 
 
