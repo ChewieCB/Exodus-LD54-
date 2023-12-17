@@ -1,7 +1,7 @@
 extends Node
 # MAKE SURE THIS SCRIPT LOAD BEFORE RESOURCE_MANAGER IN PROJECT AUTOLOAD SETTINGS
 
-signal crewmate_jettisoned
+signal crewmate_jettisoned(crewmate)
 
 var first_name_list: Array[String] = []
 var last_name_list: Array[String] = []
@@ -40,11 +40,13 @@ func add_crewmates(amount: int = 1):
 		current_crewmates.append(new_crewmate)
 
 func remove_crewmates_by_name(fullname: String):
+	var chosen_crewmate: CrewmateData
 	for crewmate in current_crewmates:
 		if crewmate.crewmate_name == fullname:
+			chosen_crewmate = crewmate
 			current_crewmates.erase(crewmate)
+	emit_signal("crewmate_jettisoned", chosen_crewmate)
 	ResourceManager.population_amount -= 1
-	emit_signal("crewmate_jettisoned")
 
 func remove_random_n_crewmates(n: int = 0):
 	if n > len(current_crewmates):

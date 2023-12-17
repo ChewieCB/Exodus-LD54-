@@ -3,6 +3,8 @@ extends Node
 # Resource value signals
 signal population_changed(value)
 signal workers_changed(value)
+signal morale_effect_applied(effect: MoraleEffect)
+signal morale_effect_removed(effect: MoraleEffect)
 #
 signal housing_changed(total, available)
 signal food_changed(value)
@@ -105,6 +107,8 @@ var habitability: int = 0: set = set_habitability
 var current_morale_modifier: int = 0: set = set_current_morale_modifier # This modifier is accumulated from per-event morale changes
 @export var housing_impact_weight_curve: Curve
 var housing_habitability_impact: int = 8
+# 
+var morale_effect_queue: Array[MoraleEffect] = []
 var crew_jettison_morale_impact: int = 15 # This is compouneded with the crew_loss value
 var crew_loss_morale_impact: int = 20
 var crew_gain_morale_impact: int = 3
@@ -188,6 +192,11 @@ func calculate_resource_modifier(resource_type, population) -> void:
 			for building in BuildingManager.buildings:
 				production += building.data.metal_prod
 			current_metal_modifier = production
+		RESOURCE_TYPE.MORALE:
+			for effect in morale_effect_queue:
+				if effect != null:
+					modifier += effect.morale_modifier_value
+			current_morale_modifier = modifier
 
 
 func calculate_habitability_score() -> int:
@@ -209,6 +218,7 @@ func update_resources_with_modifier() -> void:
 	water_amount = clamp(water_amount + current_water_modifier, 0, 999)
 	air_amount = clamp(air_amount + current_air_modifier, 0, 999)
 	metal_amount = clamp(metal_amount + current_metal_modifier, 0, 999)
+	morale_amount = clamp(habitability + current_morale_modifier, -100, 100)
 
 	# TODO - change resource UI colours over low threshold
 
@@ -328,8 +338,10 @@ func update_specialist_bonus():
 	return
 
 
-func _jettison_crewmate():
-	current_morale_modifier -= crew_jettison_morale_impact
+func _jettison_crewmate(crewmate):
+	add_morale_effect(
+		"Jettisoned %s" % [crewmate.crewmate_name], -crew_jettison_morale_impact, 25
+	)
 
 
 func add_upgrade(upgrade_id: EnumAutoload.UpgradeId):
@@ -359,6 +371,7 @@ func reset_state():
 	current_food_modifier = 0
 	current_air_modifier = 0
 	current_water_modifier = 0
+	current_morale_modifier = 0
 	current_officers = [EnumAutoload.Officer.PRESSLEY, EnumAutoload.Officer.TORGON]
 	current_upgrades = []
 	update_specialist_bonus()
@@ -381,9 +394,13 @@ func set_population_amount(value: int):
 	CrewmateManager.update_current_crewmates(value)
 	# Morale impact
 	if diff < 0:
-		current_morale_modifier -= crew_loss_morale_impact * abs(diff)
+		add_morale_effect(
+			"Lost %s crew" % [diff], crew_loss_morale_impact * diff, 10
+		)
 	elif diff > 0:
-		current_morale_modifier += crew_gain_morale_impact * abs(diff)
+		add_morale_effect(
+			"Gained %s new crew" % [diff], crew_gain_morale_impact * diff, 6
+		)
 	# Update UI
 	update_resource_modifiers()
 
@@ -433,6 +450,31 @@ func set_available_housing(value: int):
 func set_habitability(value: int):
 	habitability = clamp(value, -100, 100)
 	morale_amount = habitability + current_morale_modifier
+
+func add_morale_effect(
+	name: String, value: int, length: int, 
+	type: MoraleEffect.TYPES = MoraleEffect.TYPES.TemporaryMoraleEffect
+):
+	# Don't add any effects added before the game starts
+	var effect = MoraleEffect.new()
+	effect._name = name
+	effect.type = type
+	effect.morale_modifier_value = value
+	effect.effect_length = length
+	TickManager.tick.connect(effect._on_tick)
+	
+	morale_effect_queue.append(effect)
+	emit_signal("morale_effect_applied", effect)
+	emit_signal("morale_changed", morale_amount)
+
+func remove_morale_effect(effect: MoraleEffect):
+	var idx = morale_effect_queue.find(effect)
+	if idx == -1:
+		return
+	var effect_to_remove = morale_effect_queue.pop_at(idx)
+	emit_signal("morale_effect_removed", effect_to_remove)
+	effect_to_remove.queue_free()
+	emit_signal("morale_changed", morale_amount)
 
 func set_current_morale_modifier(value: int):
 	current_morale_modifier = value

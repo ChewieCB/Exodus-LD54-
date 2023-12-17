@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://src/ui/main_screen/resources/hbar_ui.gd" id="1_a2xwx"]
 [ext_resource type="Shader" path="res://src/ui/main_screen/resources/progress_bar_stripes.gdshader" id="2_s8saq"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2mutv"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xg4ig"]
 resource_local_to_scene = true
 shader = ExtResource("2_s8saq")
 shader_parameter/color_gap = Color(0.25, 0.25, 0.25, 0.25)
@@ -72,19 +72,6 @@ theme_override_constants/margin_right = -8
 layout_mode = 2
 theme_override_constants/separation = -9
 
-[node name="MarginContainer1" type="MarginContainer" parent="VBoxContainer/DetailsContainer/VBoxContainer/ModifiersContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 8
-
-[node name="Label" type="Label" parent="VBoxContainer/DetailsContainer/VBoxContainer/ModifiersContainer/VBoxContainer/MarginContainer1"]
-layout_mode = 2
-text = "+23 for (EventID)"
-vertical_alignment = 1
-
 [node name="TotalContainer" type="MarginContainer" parent="VBoxContainer/DetailsContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
@@ -115,7 +102,6 @@ theme_override_constants/separation = 8
 
 [node name="Label" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
-text = "Morale"
 vertical_alignment = 1
 
 [node name="Label2" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer"]
@@ -134,7 +120,7 @@ theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 4
 
 [node name="ProgressBar" type="TextureProgressBar" parent="VBoxContainer/MarginContainer2"]
-material = SubResource("ShaderMaterial_2mutv")
+material = SubResource("ShaderMaterial_xg4ig")
 layout_mode = 2
 value = 100.0
 rounded = true
