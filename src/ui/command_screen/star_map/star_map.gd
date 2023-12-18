@@ -68,7 +68,7 @@ var previous_negation_zone_radius: float
 @export_range(100, 1000, 1) var morale_buff_min_distance: int = 100
 @export_range(100, 1000, 1) var morale_buff_max_distance: int = 400
 @export_range(0.1, 20.0, 0.1) var morale_buff_min: float = 0.5
-@export_range(0.1, 20.0, 0.1) var morale_buff_max: float = 2.0
+@export_range(0.1, 20.0, 0.1) var morale_buff_max: float = 4.0
 
 
 var points_to_draw: PackedVector2Array
@@ -920,8 +920,8 @@ func _on_tick():
 	if distance_to_negation_zone <= morale_debuff_max_distance:
 		current_morale_buff = remap(
 			distance_to_negation_zone, 
-			morale_debuff_min_distance, 
 			morale_debuff_max_distance, 
+			morale_debuff_min_distance, 
 			morale_debuff_min, 
 			morale_debuff_max
 		)
