@@ -200,15 +200,7 @@ func calculate_resource_modifier(resource_type, population) -> void:
 
 
 func calculate_habitability_score() -> int:
-	var new_habitability: int = 0
-	var overcrowding: int = 0
-	if available_housing < 0:
-		overcrowding = population_amount - available_housing
-		new_habitability -= overcrowding * housing_habitability_impact
-	elif available_housing > 0:
-		new_habitability += available_housing * housing_habitability_impact
-	
-	return new_habitability
+	return clamp(available_housing * housing_habitability_impact, -100, 100)
 
 
 func update_resources_with_modifier() -> void:
