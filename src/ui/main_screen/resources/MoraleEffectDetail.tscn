@@ -1,11 +1,14 @@
-[gd_scene format=3 uid="uid://yu3y7e1lqamo"]
+[gd_scene load_steps=2 format=3 uid="uid://yu3y7e1lqamo"]
 
-[node name="DetailContainer" type="MarginContainer"]
+[ext_resource type="Script" path="res://src/ui/main_screen/resources/morale_effect_detail.gd" id="1_ojgvu"]
+
+[node name="MoraleEffectDetail" type="MarginContainer"]
 size_flags_vertical = 3
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 8
+script = ExtResource("1_ojgvu")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 2

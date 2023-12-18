@@ -20,7 +20,7 @@ var style_box: StyleBoxFlat
 var direction_flip: bool = false
 var cached_color: Color
 
-var detail_container = load("res://src/ui/main_screen/resources/HBarDetail.tscn")
+var detail_container = load("res://src/ui/main_screen/resources/MoraleEffectDetail.tscn")
 
 func _ready():
 	label.text = label_text

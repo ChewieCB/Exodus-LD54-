@@ -3,8 +3,8 @@ extends Node
 # Resource value signals
 signal population_changed(value)
 signal workers_changed(value)
-signal morale_effect_applied(effect: MoraleEffect)
-signal morale_effect_removed(effect: MoraleEffect)
+signal morale_effect_applied(updated_effects: Array)
+signal morale_effect_removed(updated_effects: Array)
 #
 signal housing_changed(total, available)
 signal food_changed(value)
@@ -116,7 +116,7 @@ var crew_gain_morale_impact: int = 3
 
 func _ready() -> void:
 	TickManager.tick.connect(_on_tick)
-	CrewmateManager.crewmate_jettisoned.connect(_jettison_crewmate)
+	CrewmateManager.crewmate_jettisoned.connect(jettison_crewmate)
 	
 	reset_state()
 	
@@ -338,7 +338,7 @@ func update_specialist_bonus():
 	return
 
 
-func _jettison_crewmate(crewmate):
+func jettison_crewmate(crewmate):
 	add_morale_effect(
 		"Jettisoned %s" % [crewmate.crewmate_name], -crew_jettison_morale_impact, 25
 	)
@@ -464,7 +464,7 @@ func add_morale_effect(
 	TickManager.tick.connect(effect._on_tick)
 	
 	morale_effect_queue.append(effect)
-	emit_signal("morale_effect_applied", effect)
+	emit_signal("morale_effect_applied", [effect])
 	emit_signal("morale_changed", morale_amount)
 
 func remove_morale_effect(effect: MoraleEffect):
@@ -472,8 +472,7 @@ func remove_morale_effect(effect: MoraleEffect):
 	if idx == -1:
 		return
 	var effect_to_remove = morale_effect_queue.pop_at(idx)
-	emit_signal("morale_effect_removed", effect_to_remove)
-	effect_to_remove.queue_free()
+	emit_signal("morale_effect_removed", [effect_to_remove])
 	emit_signal("morale_changed", morale_amount)
 
 func set_current_morale_modifier(value: int):
@@ -482,7 +481,6 @@ func set_current_morale_modifier(value: int):
 
 func set_morale_amount(value: int):
 	morale_amount = clamp(value, -100, 100)
-	print("morale", morale_amount)
 	emit_signal("morale_changed", morale_amount)
 
 func set_is_mutiny(value: bool):

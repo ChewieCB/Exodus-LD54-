@@ -26,13 +26,14 @@ enum TYPES {
 var ticks_left: int = effect_length:
 	set(value):
 		ticks_left = value
-		if ticks_left == -1:
-			ResourceManager.remove_morale_effect(self)
+		if type == TYPES.TemporaryMoraleEffect:
+			if ticks_left <= 0:
+				ResourceManager.remove_morale_effect(self)
 
 
 func end_environmental_effect():
 	if type == TYPES.EnvironmentalMoraleEffect:
-		queue_free()
+		ResourceManager.remove_morale_effect(self)
 
 
 func _on_tick():
