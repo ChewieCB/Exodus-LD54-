@@ -19,6 +19,8 @@ config/icon="res://assets/sprite/game_avatar.png"
 [autoload]
 
 EnumAutoload="*res://src/managers/enum_autoload/enum_autoload.gd"
+FMODRuntime="*res://addons/FMOD/runtime/fmod_runtime_manager.gd"
+SoundManager="*res://addons/sound_manager/sound_manager.gd"
 CrewmateManager="*res://src/managers/crewmate_manager/CrewmateManager.tscn"
 ScreenTransitionManager="*res://src/ui/ScreenTransitionManager.tscn"
 Dialogic="*res://addons/dialogic/Other/DialogicGameHandler.gd"
@@ -26,8 +28,7 @@ ResourceManager="*res://src/managers/resource_manager/ResourceManager.tscn"
 BuildingManager="*res://src/managers/building_manager/BuildingManger.tscn"
 EventManager="*res://src/managers/event_manager/EventManager.tscn"
 TickManager="*res://src/managers/tick_manager/TickManager.tscn"
-SoundManager="*res://addons/sound_manager/sound_manager.gd"
-FMODRuntime="*res://addons/FMOD/runtime/fmod_runtime_manager.gd"
+FmodManager="*res://src/managers/fmod_manager/FmodManager.tscn"
 
 [debug]
 
@@ -109,7 +110,7 @@ settings/banks_path="res://fmod/banks/Desktop"
 settings/fmod_output_type=0
 settings/fmod_debug_flags=0
 settings/fmod_debug_mode=1
-settings/banks_to_load_at_startup=Array[String]([])
+settings/banks_to_load_at_startup=Array[String](["res://fmod/banks/Desktop/Master.bank"])
 settings/banks_preload_samples=false
 settings/banks_flags=0
 settings/sample_rate=48000

@@ -186,6 +186,22 @@ func _ready() -> void:
 	pop_air_cost = 1
 
 
+func _process(delta: float) -> void:
+	var food_ratio_left = 1000
+	var water_ratio_left = 1000
+	var air_ratio_left = 1000
+
+	if current_food_modifier < 0:
+		food_ratio_left = float(food_amount) / abs(current_food_modifier)
+	if current_water_modifier < 0:
+		water_ratio_left = float(water_amount) / abs(current_water_modifier)
+	if current_air_modifier < 0:
+		air_ratio_left = float(air_amount) / abs(current_air_modifier)
+
+	var lowest_ratio = min(food_ratio_left, water_ratio_left, air_ratio_left)
+	lowest_ratio = clampf(lowest_ratio / 10.0, 0, 1)
+	FmodManager.update_dynamic_music(lowest_ratio)
+
 # TODO: Can be optimized, only run on build/tick event, not every frame
 func _physics_process(delta):
 	for idx in range(EnumAutoload.ResourceType.size()):

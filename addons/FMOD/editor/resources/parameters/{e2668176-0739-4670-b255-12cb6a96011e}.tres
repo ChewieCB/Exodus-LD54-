@@ -1,19 +1,19 @@
 [gd_resource type="ParameterAsset" load_steps=3 format=3 uid="uid://dwg70kpgwe5qf"]
 
-[sub_resource type="FMOD_STUDIO_PARAMETER_ID" id="FMOD_STUDIO_PARAMETER_ID_i6t31"]
+[sub_resource type="FMOD_STUDIO_PARAMETER_ID" id="FMOD_STUDIO_PARAMETER_ID_s7xs8"]
 data1 = 3874550041
 data2 = 4225426445
 
-[sub_resource type="FMOD_STUDIO_PARAMETER_DESCRIPTION" id="FMOD_STUDIO_PARAMETER_DESCRIPTION_ndlld"]
+[sub_resource type="FMOD_STUDIO_PARAMETER_DESCRIPTION" id="FMOD_STUDIO_PARAMETER_DESCRIPTION_r8obo"]
 name = "Morale"
-id = SubResource("FMOD_STUDIO_PARAMETER_ID_i6t31")
+id = SubResource("FMOD_STUDIO_PARAMETER_ID_s7xs8")
 minimum = -100.0
 maximum = 100.0
 flags = 4
 guid = "{e2668176-0739-4670-b255-12cb6a96011e}"
 
 [resource]
-parameter_description = SubResource("FMOD_STUDIO_PARAMETER_DESCRIPTION_ndlld")
+parameter_description = SubResource("FMOD_STUDIO_PARAMETER_DESCRIPTION_r8obo")
 path = "parameter:/Morale"
 guid = "{e2668176-0739-4670-b255-12cb6a96011e}"
 name = "Morale"

@@ -1,6 +1,5 @@
 extends Node
 
-
 const SoundEffectsPlayer = preload("res://addons/sound_manager/sound_effects.gd")
 const MusicPlayer = preload("res://addons/sound_manager/music.gd")
 

@@ -13,8 +13,8 @@ func _ready():
 	var i = randi_range(0, len(planet_images) - 1)
 	planet_logo.texture = planet_images[i]
 	build_tag.text = EnumAutoload.BUILD_VERSION
-	var music = load("res://assets/audio/music/ld54-bgm-medley-no-alarms-1.1.mp3")
-	SoundManager.play_music(music, 0.2, "Music")
+	# var music = load("res://assets/audio/music/ld54-bgm-medley-no-alarms-1.1.mp3")
+	# SoundManager.play_music(music, 0.2, "Music")
 	ScreenTransitionManager.fade_in(0.8)
 	await ScreenTransitionManager.transitioned
 
