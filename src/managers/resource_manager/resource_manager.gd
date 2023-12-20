@@ -489,8 +489,8 @@ func add_morale_effect(
 	TickManager.tick.connect(effect._on_tick)
 	
 	morale_effect_queue.append(effect)
+	update_resource_modifiers()
 	emit_signal("morale_effect_applied", [effect])
-	emit_signal("morale_changed", morale_amount)
 
 func remove_morale_effect(effect: MoraleEffect):
 	var idx = morale_effect_queue.find(effect)
