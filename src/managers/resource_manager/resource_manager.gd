@@ -274,7 +274,7 @@ func check_if_all_crew_died():
 		emit_signal("game_over", RESOURCE_TYPE.POPULATION)
 
 
-func change_resource_from_event(resource: String, amount_str: String):
+func change_resource_from_event(resource: String, amount_str: String, custom_effect_msg: String):
 	var amount = int(amount_str)
 	match resource:
 		"food":
@@ -286,14 +286,10 @@ func change_resource_from_event(resource: String, amount_str: String):
 		"metal":
 			metal_amount += amount
 		"population":
-			if amount > 0:
-				var empty_spot = housing_amount - population_amount
-				if amount <= empty_spot:
-					population_amount += amount
+			if custom_effect_msg:
+				set_population_amount(population_amount + amount, false, custom_effect_msg)
 			else:
 				population_amount += amount
-		"population_forced":
-			population_amount += amount
 
 
 func add_morale_effect_from_event(
@@ -367,8 +363,8 @@ func reset_state():
 	food_amount = 150
 	water_amount = 250
 	air_amount = 200
-	metal_amount = 10
-	morale_amount = 0
+	metal_amount = 100
+	morale_amount = 50
 	
 	# Remove any morale effects
 	for _effect in morale_effect_queue:
@@ -400,7 +396,7 @@ func reset_state():
 func get_population_amount():
 	return _population_amount
 
-func set_population_amount(value: int, ignore_morale: bool = false):
+func set_population_amount(value: int, ignore_morale: bool = false, custom_effect_msg: String = ""):
 	var diff = value - _population_amount
 	_population_amount = value
 	# Signal for UI updates
@@ -413,13 +409,22 @@ func set_population_amount(value: int, ignore_morale: bool = false):
 	CrewmateManager.update_current_crewmates(value)
 	# Morale impact
 	if not ignore_morale:
+		var effect_message: String
 		if diff < 0:
+			if custom_effect_msg:
+				effect_message = custom_effect_msg
+			else:
+				effect_message = "Lost %s crew" % [diff]
 			add_morale_effect(
-				"Lost %s crew" % [diff], crew_loss_morale_impact * diff, 10
+				effect_message, crew_loss_morale_impact * diff, 10
 			)
 		elif diff > 0:
+			if custom_effect_msg:
+				effect_message = custom_effect_msg
+			else:
+				effect_message = "Gained %s crew" % [diff]
 			add_morale_effect(
-				"Gained %s new crew" % [diff], crew_gain_morale_impact * diff, 6
+				effect_message, crew_gain_morale_impact * diff, 6
 			)
 	# Update UI
 	update_resource_modifiers()

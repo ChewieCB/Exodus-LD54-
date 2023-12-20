@@ -104,7 +104,6 @@ func _on_mouse_entered():
 		housing_mod = " +%s from housing" % [housing_score]
 			
 	details_base.text = "Base: %s (50%s)" % [ResourceManager.habitability, housing_mod]
-	details_total.text = "Total: %s%" % [ResourceManager.morale_amount]
 	show_details()
 
 

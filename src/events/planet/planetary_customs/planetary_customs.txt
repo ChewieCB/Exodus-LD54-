@@ -8,18 +8,22 @@ ExecutiveOfficer (Normal): What are your orders?
 	# 50% chance success
 	if {chance} >= 50:
 		ExecutiveOfficer (Normal): Captain, we've escaped successfully without anyone being the wiser.
-		ExecutiveOfficer (Normal):No doubt that pesky customs official will be surprised when he finds our empty berth.
+		ExecutiveOfficer (Normal): No doubt that pesky customs official will be surprised when he finds our empty berth.
+		[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["{morale_reward_1}", "Made a daring escape", "8", "true"]" single_use="true"]
+		Morale up {morale_reward_1}%.
 		Leave ExecutiveOfficer
 	else:
 		ExecutiveOfficer (Normal): Captain, we escaped successfully, but I regret not all of the crew managed to get on board in time and were detained by port security.
 		ExecutiveOfficer (Normal): We had to leave them behind.
-		[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "-{pop_cost_1}"]" single_use="true"]
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "-{pop_cost_1}", "Left {pop_cost_1} crew behind"]" single_use="true"]
 		Leave ExecutiveOfficer
-		You lost {pop_cost_1} Crew.
+		You lost {pop_cost_1} Crew. Morale down {morale_cost_2}%.
 
 - It's not worth the risk. We'll wait until port control gets our documents in order and we will leave as soon as we are able.
 	ExecutiveOfficer (Normal): Captain, after a prolonged stay, port control finally have our permit documentation in order.
 	ExecutiveOfficer (Normal): We have been granted permission to board ship and depart.
 	ExecutiveOfficer (Normal): Let's leave this wretched planet behind.
+	[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["-{morale_cost_1}", "Delayed by bureaucracy", "5", "true"]" single_use="true"]
+	Morale down {morale_cost_1}%.
 
 [signal arg="end_event"]

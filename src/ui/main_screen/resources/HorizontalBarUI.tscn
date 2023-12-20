@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://src/ui/main_screen/resources/hbar_ui.gd" id="1_a2xwx"]
 [ext_resource type="Shader" path="res://src/ui/main_screen/resources/progress_bar_stripes.gdshader" id="2_s8saq"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_anwto"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gd6sh"]
 resource_local_to_scene = true
 shader = ExtResource("2_s8saq")
 shader_parameter/color_gap = Color(0.25, 0.25, 0.25, 0.25)
@@ -37,7 +37,6 @@ size_flags_vertical = 8
 alignment = 2
 
 [node name="DetailsContainer" type="MarginContainer" parent="VBoxContainer"]
-visible = false
 modulate = Color(1, 1, 1, 0.898039)
 layout_mode = 2
 size_flags_vertical = 0
@@ -72,20 +71,7 @@ theme_override_constants/margin_right = -8
 layout_mode = 2
 theme_override_constants/separation = -9
 
-[node name="TotalContainer" type="MarginContainer" parent="VBoxContainer/DetailsContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 4
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 8
-
-[node name="Label" type="Label" parent="VBoxContainer/DetailsContainer/VBoxContainer/TotalContainer"]
-layout_mode = 2
-text = "Total: +25"
-vertical_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer/DetailsContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
@@ -120,7 +106,7 @@ theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 4
 
 [node name="ProgressBar" type="TextureProgressBar" parent="VBoxContainer/MarginContainer2"]
-material = SubResource("ShaderMaterial_anwto")
+material = SubResource("ShaderMaterial_gd6sh")
 layout_mode = 2
 value = 100.0
 rounded = true

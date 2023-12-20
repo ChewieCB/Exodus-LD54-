@@ -9,20 +9,27 @@ ExecutiveOfficer (Normal): Should we help?
 	# 75% chance success
 	if {chance} >= 25:
 		The crew of the Menelaus are grateful for aid, but the ship is beyond repair.
-		if {available_housing} >= {pop_reward_1}:
+		- Invite the crew to join your ship. (Gain {pop_reward_1} crew)
 			They strip the Menelaus for any useful parts and join your crew.
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "{pop_reward_1}"]" single_use="true"]
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{water_reward_1}"]" single_use="true"]
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "{food_reward_1}"]" single_use="true"]
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "{air_reward_1}"]" single_use="true"]
+			[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["{morale_reward_1}", "Saved the crew of the Menelaus", "24", "true"]" single_use="true"]
 			Gained {pop_reward_1} Crew, {food_reward_1} Food, {water_reward_1} Water, {air_reward_1} Oxygen.
+		- Leave the crew to await the next passing ship.
+			We can't spare the resources to support the Menelaus' crew. 
+			Pressley, rebroadcast the distress signal - another ship will pass by eventually.
+			[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["-{morale_cost_1}", "Left the Menelaus stranded", "18", "true"]" single_use="true"]
 	else:
 		It was a trap! On docking with the Menelaus, pirates opened fire and tried to storm our ship! Our security team held them off before they crossed the docking tube and we are away.
 		ExecutiveOfficer (Normal): We are sending transmissions to every ship in the system to warn them about the Menelaus.
 		[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "-{pop_cost_1}"]" single_use="true"]
+		[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["-{morale_cost_2}", "Ambushed by pirates", "23", "true"]" single_use="true"]
 		You lost {pop_cost_1} Crew.
 - Leave the Menelaus to her fate.
 	Someone else wil come along, Mr Pressley. We'll rebroadcast the message in the hope that others will hear it.
 	ExecutiveOfficer (Normal): I understand, Captain. I've ordered communications to retransmit the distress signal and send it in every direction. Hopefully someone will hear it.
+	[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["-{morale_cost_1}", "Left the Menelaus stranded", "18", "true"]" single_use="true"]
 Leave ExecutiveOfficer
 [signal arg="end_event"]

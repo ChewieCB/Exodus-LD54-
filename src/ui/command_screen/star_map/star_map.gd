@@ -947,7 +947,6 @@ func _on_tick():
 				-1, 
 				MoraleEffect.TYPES.EnvironmentalMoraleEffect
 			)
-	print("Negation zone is %s units away, morale changed by %s" % [round(distance_to_negation_zone), current_morale_buff])
 	# TODO - make negation zone shader draw OVER ship sprite
 	#
 	# Check if player is fully in negation zone, game over if they are
