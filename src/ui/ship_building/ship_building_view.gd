@@ -63,7 +63,7 @@ func _input(event):
 		event.pressed:
 			if is_ship_hover:
 				emit_signal("ship_selected")
-				$ShipSprite/CanvasModulate.color = ship_no_highlight
+				$ShipSprite.modulate = ship_no_highlight
 
 
 func tutorial_tracker(type: Building.TYPES):
@@ -118,10 +118,10 @@ func play_bgm_again():
 func _on_ship_select_area_mouse_entered():
 	is_ship_hover = true
 	if not $UI/MainUI.build_menu_open:
-		$ShipSprite/CanvasModulate.color = ship_highlight
+		$ShipSprite.modulate = ship_highlight
 
 
 func _on_ship_select_area_mouse_exited():
 	is_ship_hover = false
 	if not $UI/MainUI.build_menu_open:
-		$ShipSprite/CanvasModulate.color = ship_no_highlight
+		$ShipSprite.modulate = ship_no_highlight
