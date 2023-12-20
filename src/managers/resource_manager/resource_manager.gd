@@ -78,7 +78,11 @@ var current_upgrades = []
 
 # Resources to be managed
 # Pop/Worker
-var population_amount: int: set = set_population_amount
+var population_amount: int: 
+	get: return get_population_amount()
+	set(value): set_population_amount(value)
+# Use a private var here to allow for optional args in setter
+var _population_amount: int
 var worker_amount: int: set = set_worker_amount
 # How many resources-per-tick does one person cost?
 var pop_housing_cost: int = 1
@@ -200,7 +204,7 @@ func calculate_resource_modifier(resource_type, population) -> void:
 
 
 func calculate_habitability_score() -> int:
-	return clamp(available_housing * housing_habitability_impact, -100, 100)
+	return clamp(50 + available_housing * housing_habitability_impact, 0, 100)
 
 
 func update_resources_with_modifier() -> void:
@@ -356,13 +360,20 @@ func add_upgrade(upgrade_id: EnumAutoload.UpgradeId):
 
 func reset_state():
 	# TODO - load initial values from file for difficulty settings
-	population_amount = 3
+	# Update the pop without changing morale
+	set_population_amount(3, true)
+#	population_amount = 3
 	housing_amount = 0
 	food_amount = 150
 	water_amount = 250
 	air_amount = 200
 	metal_amount = 10
 	morale_amount = 0
+	
+	# Remove any morale effects
+	for _effect in morale_effect_queue:
+		var morale_effect = morale_effect_queue.pop_front()
+		emit_signal("morale_effect_removed", [morale_effect])
 
 	food_alert_shown = false
 	water_alert_shown = false
@@ -386,11 +397,14 @@ func reset_state():
 
 # POPULATION/CREW-RELATED RESOURCES
 
-func set_population_amount(value: int):
-	var diff = value - population_amount
-	population_amount = value
+func get_population_amount():
+	return _population_amount
+
+func set_population_amount(value: int, ignore_morale: bool = false):
+	var diff = value - _population_amount
+	_population_amount = value
 	# Signal for UI updates
-	emit_signal("population_changed", population_amount)
+	emit_signal("population_changed", _population_amount)
 	# FIXME - This is probably gonna cause a negative worker number if
 	# we lose pop mid-construction
 	worker_amount += diff
@@ -398,14 +412,15 @@ func set_population_amount(value: int):
 	# Crew systems
 	CrewmateManager.update_current_crewmates(value)
 	# Morale impact
-	if diff < 0:
-		add_morale_effect(
-			"Lost %s crew" % [diff], crew_loss_morale_impact * diff, 10
-		)
-	elif diff > 0:
-		add_morale_effect(
-			"Gained %s new crew" % [diff], crew_gain_morale_impact * diff, 6
-		)
+	if not ignore_morale:
+		if diff < 0:
+			add_morale_effect(
+				"Lost %s crew" % [diff], crew_loss_morale_impact * diff, 10
+			)
+		elif diff > 0:
+			add_morale_effect(
+				"Gained %s new crew" % [diff], crew_gain_morale_impact * diff, 6
+			)
 	# Update UI
 	update_resource_modifiers()
 
@@ -453,7 +468,7 @@ func set_available_housing(value: int):
 # MORALE
 
 func set_habitability(value: int):
-	habitability = clamp(value, -100, 100)
+	habitability = clamp(value, 0, 100)
 	morale_amount = habitability + current_morale_modifier
 
 func add_morale_effect(
@@ -485,7 +500,7 @@ func set_current_morale_modifier(value: int):
 	morale_amount = habitability + current_morale_modifier
 
 func set_morale_amount(value: int):
-	morale_amount = clamp(value, -100, 100)
+	morale_amount = clamp(value, 0, 100)
 	emit_signal("morale_changed", morale_amount)
 
 func set_is_mutiny(value: bool):
@@ -496,7 +511,7 @@ func set_is_mutiny(value: bool):
 
 func set_mutiny_time_left(value: int):
 	mutiny_time_left = value
-	if morale_amount == -100:
+	if morale_amount == 0:
 		emit_signal("mutiny", mutiny_time_left)
 		if mutiny_time_left == 0:
 			emit_signal("game_over", RESOURCE_TYPE.MORALE)

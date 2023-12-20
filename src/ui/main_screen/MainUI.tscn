@@ -308,7 +308,6 @@ size_flags_vertical = 8
 mouse_filter = 1
 script = ExtResource("5_1rahp")
 label_text = "Morale"
-bar_min = -100
 
 [node name="HullUI" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/VBoxContainer" instance=ExtResource("5_whypt")]
 layout_mode = 2

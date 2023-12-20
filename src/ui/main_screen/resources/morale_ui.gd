@@ -21,7 +21,7 @@ func remove_morale_details(details_to_remove: Array):
 		details_modifiers.remove_child(_detail)
 		_detail.queue_free()
 		await _detail.tree_exited
-	update_morale_details
+	update_morale_details(ResourceManager.morale_effect_queue)
 
 
 func update_morale_details(updated_effects: Array):
@@ -96,8 +96,15 @@ func _on_mouse_entered():
 	var morale_mod = "+" + str(morale_mod_value)
 	if morale_mod_value <= 0:
 		morale_mod = morale_mod.erase(0)
-	details_base.text = "Base: %s" % [ResourceManager.habitability]
-	details_total.text = "Total: %s" % [ResourceManager.morale_amount]
+	var housing_mod = ""
+	var housing_score = ResourceManager.available_housing * ResourceManager.housing_habitability_impact
+	if ResourceManager.available_housing < 0:
+		housing_mod = " %s from housing" % [housing_score]
+	elif ResourceManager.available_housing > 0:
+		housing_mod = " +%s from housing" % [housing_score]
+			
+	details_base.text = "Base: %s (50%s)" % [ResourceManager.habitability, housing_mod]
+	details_total.text = "Total: %s%" % [ResourceManager.morale_amount]
 	show_details()
 
 
