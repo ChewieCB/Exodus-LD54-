@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cu7ivg1u3vbhl"]
+[gd_scene load_steps=24 format=3 uid="uid://cu7ivg1u3vbhl"]
 
 [ext_resource type="PackedScene" uid="uid://bdbib8np6c616" path="res://src/ui/main_screen/resources/ResourceUI.tscn" id="1_4u51x"]
 [ext_resource type="PackedScene" uid="uid://sjhl1wud5upl" path="res://src/ui/building_ui/BuildUI.tscn" id="1_hyvdy"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://b2rwhkbjj7e4n" path="res://src/ui/main_screen/ResourceAlertsUI.tscn" id="7_njybl"]
 [ext_resource type="PackedScene" uid="uid://dv3uxnkp8ekhg" path="res://src/ui/building_ui/BuildingInfoPanel.tscn" id="7_povcy"]
 [ext_resource type="PackedScene" uid="uid://d2r3r36bru83h" path="res://src/ui/main_screen/BuildingAlert.tscn" id="7_r6nxt"]
+[ext_resource type="PackedScene" uid="uid://cualluj64eim3" path="res://src/ui/main_screen/resources/MoraleDetailPopup.tscn" id="12_302xp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_juris"]
 resource_local_to_scene = true
@@ -371,6 +372,8 @@ layout_mode = 2
 mouse_force_pass_scroll_events = false
 
 [node name="MousePopup" parent="." instance=ExtResource("4_eo2jl")]
+
+[node name="MoraleDetailPopup" parent="." instance=ExtResource("12_302xp")]
 
 [node name="BuildingInfoPanel" parent="." instance=ExtResource("7_povcy")]
 visible = false

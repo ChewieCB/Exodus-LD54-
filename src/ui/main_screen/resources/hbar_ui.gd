@@ -5,11 +5,6 @@ class_name HBarUI
 @onready var label = $VBoxContainer/MarginContainer/HBoxContainer/Label
 @onready var percent_label = $VBoxContainer/MarginContainer/HBoxContainer/Label2
 @onready var progress_bar = $VBoxContainer/MarginContainer2/ProgressBar
-#
-@onready var details_panel = $VBoxContainer/DetailsContainer
-@onready var details_base = $VBoxContainer/DetailsContainer/VBoxContainer/BaseContainer/Label
-@onready var details_modifiers = $VBoxContainer/DetailsContainer/VBoxContainer/ModifiersContainer/VBoxContainer
-@onready var details_total = $VBoxContainer/DetailsContainer/VBoxContainer/TotalContainer/Label
 
 @export var label_text: String = ""
 @export var bar_min: int = 0
@@ -20,7 +15,6 @@ var style_box: StyleBoxFlat
 var direction_flip: bool = false
 var cached_color: Color
 
-var detail_container = load("res://src/ui/main_screen/resources/MoraleEffectDetail.tscn")
 
 func _ready():
 	label.text = label_text
@@ -81,12 +75,4 @@ func _map_value_to_colour(value: float) -> Array[Color]:
 		_next_color = Color.GREEN
 	
 	return [_current_color, _next_color]
-
-
-func show_details():
-	details_panel.visible = true
-
-
-func hide_details():
-	details_panel.visible = false
 

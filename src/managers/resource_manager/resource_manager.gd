@@ -33,6 +33,8 @@ signal game_over(resource)
 #
 signal ui_hover_show(text)
 signal ui_hover_hide
+signal morale_detail_show
+signal morale_detail_hide
 
 signal construction_cancelled_lack_of_workers(building_name)
 

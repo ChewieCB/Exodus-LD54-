@@ -4,6 +4,7 @@
 
 [node name="MoraleEffectDetail" type="MarginContainer"]
 size_flags_vertical = 3
+mouse_filter = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 16
@@ -11,6 +12,7 @@ theme_override_constants/margin_bottom = 8
 script = ExtResource("1_ojgvu")
 
 [node name="Label" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0.419608)
 layout_mode = 2
 text = "+23 for (EventID)"
 vertical_alignment = 1
