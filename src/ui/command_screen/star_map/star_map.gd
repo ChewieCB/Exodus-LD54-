@@ -893,7 +893,7 @@ func _on_tick():
 	var ship_distance = $ShipTracker.global_position.distance_to(adjusted_center)
 	# TODO - parameterize the negation_zone reduction
 	var ticks_until_negation = floor((negation_zone_radius + 1 - ship_distance) / NEGATION_ZONE_RATE)
-	print(ticks_until_negation)
+	print("Tick until negation ", ticks_until_negation)
 	EventManager.emit_signal("proximity_alert", ticks_until_negation)
 	# TODO - make negation zone shader draw OVER ship sprite
 	# Check if player is fully in negation zone, game over if they are
