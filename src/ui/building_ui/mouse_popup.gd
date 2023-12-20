@@ -6,7 +6,7 @@ extends Node2D
 
 func _ready():
 	BuildingManager.not_enough_workers.connect(not_enough_workers_popup)
-	BuildingManager.not_enough_metal.connect(not_enough_metal_popup)
+	BuildingManager.not_enough_resource.connect(not_enough_resource_popup)
 	ResourceManager.ui_hover_show.connect(resource_ui_popup_show)
 	ResourceManager.ui_hover_hide.connect(resource_ui_popup_hide)
 
@@ -21,8 +21,8 @@ func not_enough_workers_popup():
 		anim_player.stop()
 	anim_player.play("show_popup")
 
-func not_enough_metal_popup():
-	label.text = "Not enough metal!"
+func not_enough_resource_popup():
+	label.text = "Not enough resource!"
 	if anim_player.is_playing() and anim_player.current_animation != "show_popup":
 		anim_player.stop()
 	anim_player.play("show_popup")

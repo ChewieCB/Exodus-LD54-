@@ -1,27 +1,33 @@
-[gd_resource type="Resource" script_class="BuildingResource" load_steps=3 format=3 uid="uid://banpkrk7n5jfa"]
+[gd_resource type="Resource" script_class="BuildingResource" load_steps=6 format=3 uid="uid://banpkrk7n5jfa"]
 
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_i83ox"]
+[ext_resource type="Script" path="res://src/common/resource_data.gd" id="1_ph7hq"]
 [ext_resource type="Texture2D" uid="uid://d4fb71dqiy4nn" path="res://assets/buildings/food_1.png" id="2_bea60"]
+
+[sub_resource type="Resource" id="Resource_pan7g"]
+script = ExtResource("1_ph7hq")
+food = 0
+water = 0
+air = 0
+metal = 10
+
+[sub_resource type="Resource" id="Resource_7mj85"]
+script = ExtResource("1_ph7hq")
+food = 4
+water = 0
+air = 0
+metal = 0
 
 [resource]
 script = ExtResource("1_i83ox")
 name = "Vertical Farm"
 type = 1
 sprite = ExtResource("2_bea60")
+resource_prod = SubResource("Resource_7mj85")
 housing_prod = 0
-food_prod = 4
-water_prod = 0
-air_prod = 0
-metal_prod = 0
-food_cost = 0
-air_cost = 0
-water_cost = 0
-metal_cost = 10
+storage_prod = 0
+resource_cost = SubResource("Resource_pan7g")
 people_cost = 2
-refund_food = 0
-refund_air = 0
-refund_water = 0
-refund_metal = 0
 refund_population = 0
 construction_time = 2
 destruction_time = 1

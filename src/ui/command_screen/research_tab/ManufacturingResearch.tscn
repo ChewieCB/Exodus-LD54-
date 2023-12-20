@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="1_1wfk3"]
 [ext_resource type="PackedScene" uid="uid://duihto0qvkw2b" path="res://src/ui/command_screen/research_tab/TechUpgradeButton.tscn" id="2_biil3"]
-[ext_resource type="Script" path="res://src/common/resource_cost.gd" id="4_lvvo4"]
+[ext_resource type="Script" path="res://src/common/resource_data.gd" id="4_lvvo4"]
 [ext_resource type="Texture2D" uid="uid://c8jp51mebn7q3" path="res://assets/ui/upgrades/common_upgrade.png" id="6_2q1wm"]
 
 [sub_resource type="Resource" id="Resource_kxi2x"]

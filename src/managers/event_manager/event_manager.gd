@@ -1,10 +1,5 @@
 extends Node
 
-var n_hab_building = 0
-var n_food_building = 0
-var n_water_building = 0
-var n_air_building = 0
-
 var tutorial_progress = 0 # -1 = disable tutorial, 0 = enable tutorial
 var tick_since_last_event = 0
 var tick_to_event = 20
@@ -34,7 +29,6 @@ var primary_story_id = 0:
 		primary_story_id = value
 		emit_signal("primary_story_id_changed")
 
-signal building_finished
 signal start_event
 signal finish_event
 signal request_change_event_image
@@ -58,7 +52,7 @@ var event_dict = {} # Dictionary, format int : ExodusEvent (example: {0: tutoria
 
 @onready var planets = {
 	ExodusEvent.PlanetType.WET_TERRAIN: preload("res://addons/pixel_planet_generator/Planets/Rivers/Rivers.tscn"),
-	ExodusEvent.PlanetType.DRY_TERRAIN: preload("res://addons/pixel_planet_generator/Planets/DryTerran/DryTerrain.tscn"),	
+	ExodusEvent.PlanetType.DRY_TERRAIN: preload("res://addons/pixel_planet_generator/Planets/DryTerran/DryTerrain.tscn"),
 	ExodusEvent.PlanetType.ISLAND: preload("res://addons/pixel_planet_generator/Planets/LandMasses/LandMasses.tscn"),
 	ExodusEvent.PlanetType.NO_ATMOSPHERE: preload("res://addons/pixel_planet_generator/Planets/NoAtmosphere/NoAtmosphere.tscn"),
 	ExodusEvent.PlanetType.GAS_PLANET: preload("res://addons/pixel_planet_generator/Planets/GasPlanet/GasPlanet.tscn"),
@@ -82,22 +76,12 @@ func _ready() -> void:
 
 	# Remove the debug event from the available array
 	available_events.pop_front()
-	
+
 	if tutorial_progress == 0:
 		tick_to_event += 5
 
-
-func finished_building(type: Building.TYPES):
-	emit_signal("building_finished", type)
-	match type:
-		Building.TYPES.HabBuilding:
-			n_hab_building += 1
-		Building.TYPES.FoodBuilding:
-			n_food_building += 1
-		Building.TYPES.WaterBuilding:
-			n_water_building += 1
-		Building.TYPES.AirBuilding:
-			n_air_building += 1
+func finished_deconstruct_building(type: EnumAutoload.BuildingType):
+	emit_signal("building_deconstructed", type)
 
 
 func _on_dialogic_signal(arg: String):
@@ -110,7 +94,7 @@ func get_random_event():
 	if available_events:
 		var event: ExodusEvent = available_events.pop_at(rand_index)
 		completed_events.push_back(event)
-		
+
 		return event
 	else:
 		return null
@@ -189,11 +173,6 @@ func check_if_victory():
 
 
 func reset_state():
-	n_hab_building = 0
-	n_food_building = 0
-	n_water_building = 0
-	n_air_building = 0
-	
 	tutorial_progress = -1
 	tick_since_last_event = 0
 	tick_passed_total = 0

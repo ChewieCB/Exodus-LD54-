@@ -18,17 +18,17 @@ func _game_over(resource):
 	anim_player.play("game_over")
 	var resource_str
 	match resource:
-		ResourceManager.RESOURCE_TYPE.FOOD:
+		EnumAutoload.ResourceType.FOOD:
 			resource_str = "food"
-		ResourceManager.RESOURCE_TYPE.WATER:
+		EnumAutoload.ResourceType.WATER:
 			resource_str = "water"
-		ResourceManager.RESOURCE_TYPE.AIR:
+		EnumAutoload.ResourceType.AIR:
 			resource_str = "air"
 		ResourceManager.RESOURCE_TYPE.MORALE:
 			resource_str = "morale.\nCrew riots have exploded into a mutiny and you have been forced out the airlock."
 	flavour_text.text = "You ran out of {0}.".format([resource_str])
 
-	if resource == ResourceManager.RESOURCE_TYPE.POPULATION:
+	if resource == EnumAutoload.ResourceType.POPULATION:
 		flavour_text.text = "All of your crew died."
 
 

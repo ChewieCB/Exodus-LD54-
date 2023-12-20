@@ -1,27 +1,33 @@
-[gd_resource type="Resource" script_class="BuildingResource" load_steps=3 format=3 uid="uid://cp0gqu8sl1ekk"]
+[gd_resource type="Resource" script_class="BuildingResource" load_steps=6 format=3 uid="uid://cp0gqu8sl1ekk"]
 
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_d1pcb"]
+[ext_resource type="Script" path="res://src/common/resource_data.gd" id="1_mqbog"]
 [ext_resource type="Texture2D" uid="uid://b6sj6dbisqutw" path="res://assets/buildings/hab_2.png" id="2_utet1"]
+
+[sub_resource type="Resource" id="Resource_mq855"]
+script = ExtResource("1_mqbog")
+food = 0
+water = 0
+air = 0
+metal = 18
+
+[sub_resource type="Resource" id="Resource_weiod"]
+script = ExtResource("1_mqbog")
+food = 0
+water = 0
+air = 0
+metal = 0
 
 [resource]
 script = ExtResource("1_d1pcb")
 name = "Dormitory"
-type = 0
+type = 5
 sprite = ExtResource("2_utet1")
+resource_prod = SubResource("Resource_weiod")
 housing_prod = 3
-food_prod = 0
-water_prod = 0
-air_prod = 0
-metal_prod = 0
-food_cost = 0
-air_cost = 0
-water_cost = 0
-metal_cost = 18
+storage_prod = 0
+resource_cost = SubResource("Resource_mq855")
 people_cost = 2
-refund_food = 0
-refund_air = 0
-refund_water = 0
-refund_metal = 0
 refund_population = 0
 construction_time = 4
 destruction_time = 2

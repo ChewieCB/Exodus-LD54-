@@ -19,7 +19,7 @@ signal ship_deselected
 
 func _ready():
 	TickManager.tick_changed.connect(_update_star_particles)
-	EventManager.building_finished.connect(tutorial_tracker)
+	BuildingManager.building_finished.connect(tutorial_tracker)
 	if tutorial_disabled:
 		EventManager.tutorial_progress = -1
 
@@ -71,9 +71,9 @@ func tutorial_tracker(type: Building.TYPES):
 		return
 
 	match type:
-		Building.TYPES.HabBuilding:
+		EnumAutoload.BuildingType.HABITATION:
 			n_hab_built += 1
-		Building.TYPES.FoodBuilding:
+		EnumAutoload.BuildingType.FOOD:
 			n_food_built += 1
 
 	if n_food_built >= 2 and EventManager.tutorial_progress == 0:

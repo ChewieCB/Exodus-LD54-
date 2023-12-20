@@ -12,12 +12,39 @@ enum Officer {
 }
 
 enum CrewmateStatus {
+	NONE,
 	HEALTHY,
 	INFECTED,
 	INJURED,
 	CRITICAL,
 }
 
+enum BuildingType {
+	NONE,
+	FOOD,
+	WATER,
+	AIR,
+	METAL,
+	HABITATION,
+	CRYO_POD,
+	STORAGE
+}
+
+enum ResourceType {
+	NONE,
+	POPULATION,
+	HOUSING,
+	FOOD,
+	WATER,
+	AIR,
+	METAL,
+	STORAGE
+}
+
+
+# Do not add id mid-array, always add it at the end, even if it
+# look messy. Add mid-array will break the research trees.
+# We will do a refactor when this look messy enough.
 enum UpgradeId {
 	NONE,
 	CREW_SUPPLIES_FOOD_2,
@@ -44,8 +71,8 @@ enum UpgradeId {
 	MANUFACTURE_METAMAT_2,
 	MANUFACTURE_METAMAT_3,
 	CONSTRUCTION_LOGIC_WAREHOUSE,
-	CONSTRUCTION_LOGIC_ADV_LOGISTIC,
 	CONSTRUCTION_LOGIC_STOCK_ANALYSIS,
+	CONSTRUCTION_LOGIC_ADV_LOGISTIC,
 	CONSTRUCTION_LOGIC_ADV_SORTERS,
 	CONSTRUCTION_LOGIC_AUTOMATED_WAREHOUSES,
 	CONSTRUCTION_LOGIC_CREW_CHIEF,
@@ -72,7 +99,9 @@ enum UpgradeId {
 	AGRI_SPACEDUST_ENHANCED,
 	AGRI_HARMONIC_CYCLE,
 	AGRI_ACCEL_GROWTH,
-	AGRI_OPTIMIZED_DESIGN
+	AGRI_OPTIMIZED_DESIGN,
+	CONSTRUCTION_LOGIC_SPECIALIZED_WAREHOUSE,
+
 }
 
 # FIXME - find a better place to store this

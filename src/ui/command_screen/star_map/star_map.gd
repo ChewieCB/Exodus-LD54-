@@ -383,8 +383,8 @@ class Graph:
 	var graph
 	var mst
 	
-	func _init(vertices):
-		self.vertices = vertices
+	func _init(p_vertices):
+		self.vertices = p_vertices
 		self.graph = []
 		self.mst = []
 	

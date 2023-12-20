@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="1_afl24"]
 [ext_resource type="PackedScene" uid="uid://duihto0qvkw2b" path="res://src/ui/command_screen/research_tab/TechUpgradeButton.tscn" id="2_g3kk2"]
 [ext_resource type="Texture2D" uid="uid://bmrisjkpambuj" path="res://assets/buildings/food_2.png" id="3_6w3wc"]
-[ext_resource type="Script" path="res://src/common/resource_cost.gd" id="4_1aj72"]
+[ext_resource type="Script" path="res://src/common/resource_data.gd" id="4_1aj72"]
 [ext_resource type="Texture2D" uid="uid://dvnp348xbjcyg" path="res://assets/buildings/food_3.png" id="4_a0sdx"]
 [ext_resource type="Texture2D" uid="uid://ftoh02i7rxu2" path="res://assets/buildings/water_2.png" id="5_vkkaw"]
 [ext_resource type="Texture2D" uid="uid://fpjlep711shg" path="res://assets/buildings/water_3.png" id="6_cbu72"]
