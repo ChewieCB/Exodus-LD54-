@@ -46,7 +46,8 @@ func remove_crewmates_by_name(fullname: String):
 			chosen_crewmate = crewmate
 			current_crewmates.erase(crewmate)
 	emit_signal("crewmate_jettisoned", chosen_crewmate)
-	ResourceManager.population_amount -= 1
+	# Ignore morale impact of population loss, jettison morale impact should override this
+	ResourceManager.set_population_amount(ResourceManager.population_amount - 1, true)
 
 func remove_random_n_crewmates(n: int = 0):
 	if n > len(current_crewmates):

@@ -113,7 +113,7 @@ var current_morale_modifier: int = 0: set = set_current_morale_modifier # This m
 var housing_habitability_impact: int = 8
 # 
 var morale_effect_queue: Array[MoraleEffect] = []
-var crew_jettison_morale_impact: int = 15 # This is compouneded with the crew_loss value
+var crew_jettison_morale_impact: int = 35 # This replaces the crew_loss value
 var crew_loss_morale_impact: int = 20
 var crew_gain_morale_impact: int = 3
 
