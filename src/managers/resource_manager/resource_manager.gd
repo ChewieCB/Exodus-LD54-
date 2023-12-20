@@ -292,6 +292,19 @@ func change_resource_from_event(resource: String, amount_str: String):
 			population_amount += amount
 
 
+func add_morale_effect_from_event(
+		amount_str: String, detail_text: String, 
+		effect_length_str: String = "", is_temporary: String = "true"
+	):
+	var amount = int(amount_str)
+	var _is_temporary = is_temporary == "true"
+	if _is_temporary:
+		var effect_length = int(effect_length_str)
+		add_morale_effect(detail_text, amount, effect_length)
+	else:
+		add_morale_effect(detail_text, amount, -1, MoraleEffect.TYPES.EnvironmentalMoraleEffect)
+
+
 func change_specialist_from_event(operation: String, specialist_name: String):
 	var specialist = null
 	match specialist_name:
