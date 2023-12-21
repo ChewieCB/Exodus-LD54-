@@ -57,6 +57,18 @@ extends Node2D
 @export_range(0, 5, 0.1) var NEGATION_ZONE_RATE: float = 2.5
 @onready var initial_negation_zone_radius: float = negation_zone_radius
 var previous_negation_zone_radius: float
+# If we're within the debuff distance to the negation zone, 
+# we lose morale scaled by how close we are.
+@export_range(0, 100, 1) var morale_debuff_min_distance: int = 0
+@export_range(0, 100, 1) var morale_debuff_max_distance: int = 75
+@export_range(-20.0, -0.1, 0.1) var morale_debuff_min: float = -0.5
+@export_range(-20.0, -0.1, 0.1) var morale_debuff_max: float = -10.0
+# If we're at least the buff distance away from the negation zone, 
+# we gain morale scaled by how far we are.
+@export_range(100, 1000, 1) var morale_buff_min_distance: int = 100
+@export_range(100, 1000, 1) var morale_buff_max_distance: int = 400
+@export_range(0.1, 20.0, 0.1) var morale_buff_min: float = 0.5
+@export_range(0.1, 20.0, 0.1) var morale_buff_max: float = 4.0
 
 
 var points_to_draw: PackedVector2Array
@@ -128,7 +140,7 @@ func _ready():
 	# Add star shaders
 	var star_positions = generate_stars(stars)
 	# Pick an outer star and place the ship tracker there
-	var outer_stars = get_outer_stars(star_positions, 32, 64)
+	var outer_stars = get_outer_stars(star_positions, 64, 128)
 	var start_point = outer_stars[randi_range(0, outer_stars.size() - 1)]
 	previous_star = stars.filter(
 		func(star): return star.global_position == start_point
@@ -670,7 +682,7 @@ func generate_stars(stars) -> Array:
 	return star_positions
 
 
-func get_outer_stars(stars, min_distance=64, max_distance=128) -> Array:
+func get_outer_stars(stars, min_distance=128, max_distance=256) -> Array:
 	# We need to offset the center point here based on the origin of this scene
 	# for when we run it as a SubViewport within the UI
 	var outer_stars = Array(stars).filter(
@@ -891,11 +903,52 @@ func _on_tick():
 	handle_negated_starlanes()
 	#
 	var ship_distance = $ShipTracker.global_position.distance_to(adjusted_center)
+	var distance_to_negation_zone = negation_zone_radius + 1 - ship_distance
 	# TODO - parameterize the negation_zone reduction
-	var ticks_until_negation = floor((negation_zone_radius + 1 - ship_distance) / NEGATION_ZONE_RATE)
-	print("Tick until negation ", ticks_until_negation)
+	var ticks_until_negation = floor((distance_to_negation_zone) / NEGATION_ZONE_RATE)
 	EventManager.emit_signal("proximity_alert", ticks_until_negation)
+	# Decrease morale when we're near the negation zone, 
+	# and slightly increase morale when we're far away.
+	#
+	# Check if negation_zone envioronmental MoraleEffect already exists in queue
+	var _negation_zone_effect = ResourceManager.morale_effect_queue.filter(
+		func(effect):
+			return effect.type == MoraleEffect.TYPES.EnvironmentalMoraleEffect \
+			and effect._name.begins_with("Negation zone proximity")
+	).pop_front()
+	var current_morale_buff: int
+	if distance_to_negation_zone <= morale_debuff_max_distance:
+		current_morale_buff = remap(
+			distance_to_negation_zone, 
+			morale_debuff_max_distance, 
+			morale_debuff_min_distance, 
+			morale_debuff_min, 
+			morale_debuff_max
+		)
+	elif distance_to_negation_zone >= morale_buff_min_distance:
+		current_morale_buff = remap(
+			distance_to_negation_zone, 
+			morale_buff_min_distance, 
+			morale_buff_max_distance, 
+			morale_buff_min, 
+			morale_buff_max
+		)
+	if _negation_zone_effect:
+		if current_morale_buff != 0:
+			_negation_zone_effect._name = "Negation zone proximity [%su]" % [round(distance_to_negation_zone)]
+			_negation_zone_effect.morale_modifier_value = current_morale_buff
+		else:
+			ResourceManager.remove_morale_effect(_negation_zone_effect)
+	else:
+		if current_morale_buff != 0:
+			ResourceManager.add_morale_effect(
+				"Negation zone proximity [%s]u" % [round(distance_to_negation_zone)],
+				 current_morale_buff, 
+				-1, 
+				MoraleEffect.TYPES.EnvironmentalMoraleEffect
+			)
 	# TODO - make negation zone shader draw OVER ship sprite
+	#
 	# Check if player is fully in negation zone, game over if they are
 	if $ShipTracker.global_position.distance_to(adjusted_center) >= negation_zone_radius + 1:
 		EventManager.emit_signal("negation_zone")

@@ -118,6 +118,7 @@ func place_building():
 	var tmp_building = current_building
 	previous_rotation = current_building.rotation
 	current_building.build_timer_ui.update_rotation()
+	current_building.building_finished_operation.connect(ResourceManager.update_resource_modifiers)
 	current_building = null
 
 

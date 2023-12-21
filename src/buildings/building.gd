@@ -1,6 +1,8 @@
 extends Node2D
 class_name Building
 
+signal building_finished_operation
+
 @export var data: BuildingResource
 
 @onready var sprite = $Sprite2D
@@ -120,7 +122,7 @@ func _setup_scan_for_nearby_bonus():
 	if data.type in [EnumAutoload.BuildingType.CRYO_POD, EnumAutoload.BuildingType.STORAGE]:
 		return
 
-	collider.set_collision_mask_value (2, true)
+	collider.set_collision_mask_value (3, true)
 	BuildingManager.building_finished.connect(check_for_adjacency_multiplier)
 	BuildingManager.building_deconstructed.connect(check_for_adjacency_multiplier)
 
@@ -140,6 +142,7 @@ func _on_tick():
 			BuildingManager.finished_building(data.type)
 			SoundManager.play_sound(build_finish_sfx, "SFX")
 			sprite.material.set_shader_parameter("mode", 0)
+			emit_signal("building_finished_operation")
 		else:
 			ticks_left_to_build -= 1
 			build_timer_ui.label.text = str(ticks_left_to_build)
@@ -158,6 +161,7 @@ func remove_building():
 	BuildingManager.construction_queue.erase(self)
 	SoundManager.play_sound(build_finish_sfx, "SFX")
 	deconstructed_refund_resource()
+	emit_signal("building_finished_operation")
 	self.queue_free()
 
 func deconstructed_refund_resource():
@@ -213,6 +217,7 @@ func cancel_deconstruction(no_refund=false):
 	build_timer_ui.visible = false
 	if not no_refund:
 		ResourceManager.retrieve_workers(self)
+	BuildingManager.construction_queue.erase(self)
 	SoundManager.play_sound(build_finish_sfx, "SFX")
 	sprite.material.set_shader_parameter("mode", 0)
 
@@ -262,6 +267,7 @@ func on_predelete() -> void:
 	if len(BuildingManager.selected_building_queue) > 0 and \
 		BuildingManager.selected_building_queue[0] == self:
 		BuildingManager.hide_building_info_panel()
+		BuildingManager.selected_building_queue.erase(self)
 
 
 func _on_area_2d_mouse_entered():

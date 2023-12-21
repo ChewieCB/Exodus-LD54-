@@ -1,7 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://bdbib8np6c616"]
+[gd_scene load_steps=9 format=3 uid="uid://bdbib8np6c616"]
 
 [ext_resource type="Script" path="res://src/ui/main_screen/resources/resource_ui.gd" id="1_tl7ra"]
-[ext_resource type="PackedScene" uid="uid://dcuhjw7qe51sg" path="res://src/ui/main_screen/resources/ResourceChangePopup.tscn" id="2_ffyc8"]
 [ext_resource type="Texture2D" uid="uid://8paydokn6heu" path="res://assets/ui/icons/final_icons/worker_icon.png" id="2_l7p2u"]
 [ext_resource type="Texture2D" uid="uid://phc81a0xnugk" path="res://assets/ui/icons/final_icons/pop_icon.png" id="3_i4mfg"]
 [ext_resource type="Texture2D" uid="uid://cn31v70gmweo1" path="res://assets/ui/icons/final_icons/hab_icon.png" id="4_mfwa8"]
@@ -10,205 +9,197 @@
 [ext_resource type="Texture2D" uid="uid://bhhb3iolj8d4r" path="res://assets/ui/icons/final_icons/air_icon.png" id="7_auq0d"]
 [ext_resource type="Texture2D" uid="uid://vr3s3nju34ut" path="res://assets/ui/icons/metal_icon.png" id="9_a1rp3"]
 
-[node name="ResourceUI" type="Control"]
-layout_mode = 3
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 0
-mouse_filter = 2
-script = ExtResource("1_tl7ra")
-resource_change_popup = ExtResource("2_ffyc8")
-
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="ResourceUI" type="MarginContainer"]
 custom_minimum_size = Vector2(0, 32)
-layout_mode = 1
-anchors_preset = 7
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -222.5
-offset_top = -32.0
-offset_right = 222.5
+anchor_bottom = 0.5
+offset_left = -334.0
+offset_top = -25.5
+offset_right = 334.0
+offset_bottom = 25.5
 grow_horizontal = 2
-grow_vertical = 0
-theme_override_constants/margin_bottom = 32
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+script = ExtResource("1_tl7ra")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_constants/separation = 16
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/MarginContainer"]
+[node name="Panel" type="Panel" parent="HBoxContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="PopContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+[node name="PopContainer" type="MarginContainer" parent="HBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/MarginContainer/HBoxContainer/PopContainer"]
 layout_mode = 2
 
-[node name="PopIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer/HBoxContainer"]
+[node name="PopIcon" type="TextureRect" parent="HBoxContainer/MarginContainer/HBoxContainer/PopContainer/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("3_i4mfg")
 stretch_mode = 3
 
-[node name="PopLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer/HBoxContainer"]
+[node name="PopLabel" type="Label" parent="HBoxContainer/MarginContainer/HBoxContainer/PopContainer/HBoxContainer"]
 layout_mode = 2
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VSeparator" type="VSeparator" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
+mouse_filter = 1
 
-[node name="WorkerContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+[node name="WorkerContainer" type="MarginContainer" parent="HBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer"]
 layout_mode = 2
 
-[node name="WorkerIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer/HBoxContainer"]
+[node name="WorkerIcon" type="TextureRect" parent="HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("2_l7p2u")
 stretch_mode = 3
 
-[node name="WorkerLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer/HBoxContainer"]
+[node name="WorkerLabel" type="Label" parent="HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer/HBoxContainer"]
 layout_mode = 2
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MarginContainer5" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+[node name="MarginContainer5" type="MarginContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 4
 
-[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/MarginContainer5"]
+[node name="Panel" type="Panel" parent="HBoxContainer/MarginContainer5"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer5"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/MarginContainer5"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer5/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/MarginContainer5/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("4_mfwa8")
 stretch_mode = 3
 
-[node name="HabDebug" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer5/HBoxContainer"]
+[node name="HabDebug" type="Label" parent="HBoxContainer/MarginContainer5/HBoxContainer"]
 layout_mode = 2
 text = "00 (00)"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/MarginContainer2"]
+[node name="Panel" type="Panel" parent="HBoxContainer/MarginContainer2"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/MarginContainer2"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer2/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/MarginContainer2/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("5_pvja7")
 stretch_mode = 3
 
-[node name="FoodDebug" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer2/HBoxContainer"]
+[node name="FoodDebug" type="Label" parent="HBoxContainer/MarginContainer2/HBoxContainer"]
 layout_mode = 2
 text = "000 (+10)"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+[node name="MarginContainer3" type="MarginContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/MarginContainer3"]
+[node name="Panel" type="Panel" parent="HBoxContainer/MarginContainer3"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer3"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/MarginContainer3"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer3/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/MarginContainer3/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("6_1skcb")
 stretch_mode = 3
 
-[node name="WaterDebug" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer3/HBoxContainer"]
+[node name="WaterDebug" type="Label" parent="HBoxContainer/MarginContainer3/HBoxContainer"]
 layout_mode = 2
 text = "000 (+10)"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+[node name="MarginContainer4" type="MarginContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/MarginContainer4"]
+[node name="Panel" type="Panel" parent="HBoxContainer/MarginContainer4"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer4"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/MarginContainer4"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer4/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/MarginContainer4/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("7_auq0d")
 stretch_mode = 3
 
-[node name="AirDebug" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer4/HBoxContainer"]
+[node name="AirDebug" type="Label" parent="HBoxContainer/MarginContainer4/HBoxContainer"]
 layout_mode = 2
 text = "000 (+10)"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MarginContainer6" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+[node name="MarginContainer6" type="MarginContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/MarginContainer6"]
+[node name="Panel" type="Panel" parent="HBoxContainer/MarginContainer6"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer6"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/MarginContainer6"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer6/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/MarginContainer6/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("9_a1rp3")
 stretch_mode = 3
 
-[node name="MetalLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer6/HBoxContainer"]
+[node name="MetalLabel" type="Label" parent="HBoxContainer/MarginContainer6/HBoxContainer"]
 layout_mode = 2
 text = "000 (+10)"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="mouse_entered" from="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer" to="." method="_on_pop_ui_mouse_entered"]
-[connection signal="mouse_exited" from="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer" to="." method="_on_resource_ui_mouse_exited"]
-[connection signal="mouse_entered" from="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer" to="." method="_on_worker_ui_mouse_entered"]
-[connection signal="mouse_exited" from="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer" to="." method="_on_resource_ui_mouse_exited"]
-[connection signal="mouse_entered" from="MarginContainer/HBoxContainer/MarginContainer5" to="." method="_on_hab_ui_mouse_entered"]
-[connection signal="mouse_exited" from="MarginContainer/HBoxContainer/MarginContainer5" to="." method="_on_resource_ui_mouse_exited"]
-[connection signal="mouse_entered" from="MarginContainer/HBoxContainer/MarginContainer2" to="." method="_on_food_ui_mouse_entered"]
-[connection signal="mouse_exited" from="MarginContainer/HBoxContainer/MarginContainer2" to="." method="_on_resource_ui_mouse_exited"]
-[connection signal="mouse_entered" from="MarginContainer/HBoxContainer/MarginContainer3" to="." method="_on_water_ui_mouse_entered"]
-[connection signal="mouse_exited" from="MarginContainer/HBoxContainer/MarginContainer3" to="." method="_on_resource_ui_mouse_exited"]
-[connection signal="mouse_entered" from="MarginContainer/HBoxContainer/MarginContainer4" to="." method="_on_air_ui_mouse_entered"]
-[connection signal="mouse_exited" from="MarginContainer/HBoxContainer/MarginContainer4" to="." method="_on_resource_ui_mouse_exited"]
-[connection signal="mouse_entered" from="MarginContainer/HBoxContainer/MarginContainer6" to="." method="_on_metal_ui_mouse_entered"]
-[connection signal="mouse_exited" from="MarginContainer/HBoxContainer/MarginContainer6" to="." method="_on_resource_ui_mouse_exited"]
+[connection signal="mouse_entered" from="HBoxContainer/MarginContainer" to="." method="_on_pop_ui_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/MarginContainer" to="." method="_on_resource_ui_mouse_exited"]
+[connection signal="mouse_entered" from="HBoxContainer/MarginContainer5" to="." method="_on_hab_ui_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/MarginContainer5" to="." method="_on_resource_ui_mouse_exited"]
+[connection signal="mouse_entered" from="HBoxContainer/MarginContainer2" to="." method="_on_food_ui_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/MarginContainer2" to="." method="_on_resource_ui_mouse_exited"]
+[connection signal="mouse_entered" from="HBoxContainer/MarginContainer3" to="." method="_on_water_ui_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/MarginContainer3" to="." method="_on_resource_ui_mouse_exited"]
+[connection signal="mouse_entered" from="HBoxContainer/MarginContainer4" to="." method="_on_air_ui_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/MarginContainer4" to="." method="_on_resource_ui_mouse_exited"]
+[connection signal="mouse_entered" from="HBoxContainer/MarginContainer6" to="." method="_on_metal_ui_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/MarginContainer6" to="." method="_on_resource_ui_mouse_exited"]

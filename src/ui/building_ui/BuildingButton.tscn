@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dw4vv6brsf8a1" path="res://assets/buildings/hab_1.png" id="1_5jg35"]
 [ext_resource type="Script" path="res://src/ui/building_ui/building_button.gd" id="1_jspa8"]
 [ext_resource type="PackedScene" uid="uid://3slp8ujgyckn" path="res://src/buildings/hab/Hab1.tscn" id="2_60u1r"]
-[ext_resource type="Texture2D" uid="uid://bj4y01dn0igj5" path="res://assets/ui/icons/16/People.png" id="2_ol8gj"]
+[ext_resource type="Texture2D" uid="uid://b5jpsqnt0ke86" path="res://assets/ui/icons/16/People.png" id="2_ol8gj"]
 [ext_resource type="Texture2D" uid="uid://2p4jagl32fr1" path="res://assets/ui/icons/16/Clock.png" id="3_g56x5"]
 [ext_resource type="Texture2D" uid="uid://cr1bdj2mbacx3" path="res://assets/ui/icons/help_icon.png" id="6_2a8kd"]
 

@@ -6,6 +6,8 @@ extends Control
 var food_alert: Alert
 var water_alert: Alert
 var air_alert: Alert
+var morale_alert: Alert
+var proximity_alert: Alert
 #@onready var food_alert = $VBoxContainer/FoodAlertContainer
 #@onready var food_alert_counter = $VBoxContainer/FoodAlertContainer/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/CountdownContainer/Countdown
 #@onready var water_alert = $VBoxContainer/WaterAlertContainer
@@ -19,8 +21,40 @@ func _ready():
 	ResourceManager.starving.connect(_starving)
 	ResourceManager.dehydrated.connect(_dehydrated)
 	ResourceManager.suffocating.connect(_suffocating)
+	ResourceManager.mutiny.connect(_mutiny)
+	EventManager.proximity_alert.connect(_proximity)
 	#
 	ResourceManager.game_over.connect(_hide_all)
+
+
+func _proximity(ticks_left):
+	if not proximity_alert:
+		if ticks_left < 6:
+			var new_alert = alert_scene.instantiate()
+			var text = "Proximity Warning"
+			
+			# Add it to the container
+			alert_container.add_child(new_alert)
+			new_alert.visible = false
+			new_alert.alert_text = text
+			new_alert.type = Alert.TYPE.PROXIMITY
+			new_alert.has_countdown = false
+			
+			# Move it to the top so more recent events show at the top
+			alert_container.move_child(new_alert, 0)
+			new_alert.visible = true
+			new_alert.anim_player.play("alert_in")
+			await new_alert.anim_player.animation_finished
+			#
+			proximity_alert = new_alert
+			SoundManager.play_sound(resource_low_1_sfx, "SFX")
+	else:
+		if ticks_left > 6:
+			if is_instance_valid(proximity_alert):
+				# Delete it after a time period
+				proximity_alert.anim_player.play("alert_out")
+				await proximity_alert.anim_player.animation_finished
+				proximity_alert.queue_free()
 
 
 func _starving(ticks_left):
@@ -125,8 +159,41 @@ func _suffocating(ticks_left):
 			air_alert.queue_free()
 
 
+func _mutiny(ticks_left):
+	if ResourceManager.is_mutiny:
+		if not morale_alert:
+			# Create a food alert with countdown
+			var new_alert = alert_scene.instantiate()
+			var text = "Days Until Mutiny"
+			
+			# Add it to the container
+			alert_container.add_child(new_alert)
+			new_alert.visible = false
+			new_alert.alert_text = text
+			new_alert.type = Alert.TYPE.MORALE
+			new_alert.has_countdown = true
+			new_alert.countdown_value = ticks_left
+			
+			# Move it to the top so more recent events show at the top
+			alert_container.move_child(new_alert, 0)
+			new_alert.visible = true
+			new_alert.anim_player.play("alert_in")
+			await new_alert.anim_player.animation_finished
+			#
+			morale_alert = new_alert
+			SoundManager.play_sound(resource_low_1_sfx, "SFX")
+		
+		# Update the countdown
+		morale_alert.countdown_value = ticks_left
+	else:
+		if is_instance_valid(morale_alert):
+			# Delete it after a time period
+			morale_alert.anim_player.play("alert_out")
+			await morale_alert.anim_player.animation_finished
+			morale_alert.queue_free()
+
 func _hide_all(resource):
-	for _alert in [food_alert, water_alert, air_alert]:
+	for _alert in [food_alert, water_alert, air_alert, morale_alert]:
 		if is_instance_valid(_alert):
 			_alert.anim_player.play("alert_out")
 			await _alert.anim_player.animation_finished

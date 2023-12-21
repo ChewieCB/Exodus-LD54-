@@ -1,7 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://skb2lcng7chx"]
+[gd_scene load_steps=3 format=3 uid="uid://skb2lcng7chx"]
 
 [ext_resource type="Script" path="res://src/managers/resource_manager/resource_manager.gd" id="1_ec3vh"]
+
+[sub_resource type="Curve" id="Curve_mtyde"]
+min_value = 1.0
+max_value = 2.0
+_data = [Vector2(0, 1.5), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 1.5), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [node name="ResourceManager" type="Node"]
 process_mode = 1
 script = ExtResource("1_ec3vh")
+housing_impact_weight_curve = SubResource("Curve_mtyde")

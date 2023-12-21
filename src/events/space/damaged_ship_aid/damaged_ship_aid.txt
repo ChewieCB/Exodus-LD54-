@@ -9,13 +9,16 @@ ExecutiveOfficer (Normal): What are your orders?
 	# 50% chance success
 	if {chance} >= 50:
 		ExecutiveOfficer (Normal): The technicians have reported back, they advise the Intrepid's oxygen generation is restored. They are on their way back now.
+		[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["{morale_reward_1}", "Helped the Intrepid on their way", "8", "true"]" single_use="true"]
 	else:
 		ExecutiveOfficer (Normal): The technicians have returned and advise the Intrepid is fully-functional. The Intrepid made haste to leave the system, but not before her captain gave us a parting gift of excess water they harvested on the planet.
 		Leave ExecutiveOfficer
 		[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{water_reward_1}"]" single_use="true"]
+		[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["{morale_reward_1}", "Helped the Intrepid on their way", "8", "true"]" single_use="true"]
 		Gained {water_reward_1} Water
 
 - We can't spare the time and at least they're safe on that planet. Carry on, Mr Pressley.
 	ExecutiveOfficer (Normal): Understood Captain, we're moving on.
+	[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["-{morale_cost_1}", "Left the Intrepid stranded", "18", "true"]" single_use="true"]
 
 [signal arg="end_event"]

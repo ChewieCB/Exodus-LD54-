@@ -11,7 +11,17 @@ const SPEC_STORAGE_MULTIPLIER = 4
 const SPEC_PROD_BONUS = 1
 const BASE_PROD_BONUS = 0.2
 
-const SPEC_COLOR = [Color(1, 1, 1), null, null, Color(0.4, 1, 0.4), Color(0.4, 0.8, 1), Color(1, 0.4, 0.4), Color(0.7, 0.9, 0.7)]
+const SPEC_COLOR = [
+	Color(1, 1, 1), # None
+	null, # Population
+	null, # Storage
+	null, # Housing
+	null, # Morale
+	Color(0.4, 1, 0.4), # Food
+	Color(0.4, 0.8, 1), # Water
+	Color(1, 0.4, 0.4), # Air
+	Color(0.7, 0.9, 0.7) # Metal
+]
 
 func _ready():
 	super()
