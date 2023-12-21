@@ -64,6 +64,7 @@ vertical_alignment = 1
 
 [node name="VSeparator" type="VSeparator" parent="HBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
+mouse_filter = 1
 
 [node name="WorkerContainer" type="MarginContainer" parent="HBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -189,3 +190,16 @@ layout_mode = 2
 text = "000 (+10)"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="mouse_entered" from="HBoxContainer/MarginContainer" to="." method="_on_pop_ui_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/MarginContainer" to="." method="_on_resource_ui_mouse_exited"]
+[connection signal="mouse_entered" from="HBoxContainer/MarginContainer5" to="." method="_on_hab_ui_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/MarginContainer5" to="." method="_on_resource_ui_mouse_exited"]
+[connection signal="mouse_entered" from="HBoxContainer/MarginContainer2" to="." method="_on_food_ui_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/MarginContainer2" to="." method="_on_resource_ui_mouse_exited"]
+[connection signal="mouse_entered" from="HBoxContainer/MarginContainer3" to="." method="_on_water_ui_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/MarginContainer3" to="." method="_on_resource_ui_mouse_exited"]
+[connection signal="mouse_entered" from="HBoxContainer/MarginContainer4" to="." method="_on_air_ui_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/MarginContainer4" to="." method="_on_resource_ui_mouse_exited"]
+[connection signal="mouse_entered" from="HBoxContainer/MarginContainer6" to="." method="_on_metal_ui_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/MarginContainer6" to="." method="_on_resource_ui_mouse_exited"]
