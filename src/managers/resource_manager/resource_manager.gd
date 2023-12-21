@@ -13,11 +13,8 @@ signal air_changed(value)
 signal metal_changed(value)
 signal storage_changed(value)
 signal food_modifier_changed(total, modifier)
-signal water_changed(value)
 signal water_modifier_changed(total, modifier)
-signal air_changed(value)
 signal air_modifier_changed(total, modifier)
-signal metal_changed(value)
 signal metal_modifier_changed(total, modifier)
 #
 signal morale_changed(value)
@@ -112,6 +109,11 @@ var current_air_modifier: int = 0
 # METAL
 var metal_amount: int: set = set_metal_amount
 var current_metal_modifier: int = 0
+# STORAGE
+var storage_resource_amount: ResourceData:
+	set(value):
+		storage_resource_amount = value
+		emit_signal("storage_changed", storage_resource_amount)
 # MORALE
 var morale_amount: int: set = set_morale_amount
 var habitability: int = 0: set = set_habitability
@@ -235,7 +237,7 @@ func update_resources_with_modifier() -> void:
 	water_amount = clamp(water_amount + current_water_modifier, 0, storage_resource_amount.water)
 	air_amount = clamp(air_amount + current_air_modifier, 0, storage_resource_amount.air)
 	metal_amount = clamp(metal_amount + current_metal_modifier, 0, storage_resource_amount.metal)
-  morale_amount = clamp(habitability + current_morale_modifier, -100, 100)
+	morale_amount = clamp(habitability + current_morale_modifier, -100, 100)
 
 	# TODO - change resource UI colours over low threshold
 
@@ -295,7 +297,7 @@ func check_if_all_crew_died():
 		emit_signal("game_over", EnumAutoload.ResourceType.POPULATION)
 
 
-func change_resource_from_event(resource: String, amount_str: String, custom_effect_msg: String):
+func change_resource_from_event(resource: String, amount_str: String, custom_effect_msg: String=""):
 	var amount = int(amount_str)
 	match resource:
 		"food":
@@ -311,6 +313,7 @@ func change_resource_from_event(resource: String, amount_str: String, custom_eff
 				set_population_amount(population_amount + amount, false, custom_effect_msg)
 			else:
 				population_amount += amount
+	update_resource_modifiers()
 
 
 func add_morale_effect_from_event(
@@ -453,7 +456,7 @@ func reset_state():
 	metal_amount = 100
 	morale_amount = 50
   
-  storage_resource_amount = ResourceData.new(BASE_STORAGE, BASE_STORAGE, BASE_STORAGE, BASE_STORAGE)
+	storage_resource_amount = ResourceData.new(BASE_STORAGE, BASE_STORAGE, BASE_STORAGE, BASE_STORAGE)
 	
 	# Remove any morale effects
 	for _effect in morale_effect_queue:

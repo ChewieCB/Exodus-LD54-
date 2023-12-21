@@ -14,11 +14,11 @@ extends Control
 @onready var build_menu: MarginContainer = $BuildMenu
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 @onready var objective_label: Label = $ObjectiveLabel
-@onready var time_control_ui = $LowerBar/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/TimeControlUI
+@onready var time_control_ui = $LowerBar/MarginContainer/HBoxContainer/MarginContainer3/HBoxContainer/VBoxContainer/TimeControlUI
 @onready var debug_event_dropdown = $DebugEventsMenu/MarginContainer/PanelContainer/VBoxContainer/OptionButton
 @onready var chat_crew_button: Button = $ChatCrewButton
 
-@onready var DEBUG_build_tag: Label = $LowerBar/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/DEBUG_BuildTag/Label
+@onready var DEBUG_build_tag: Label = $LowerBar/MarginContainer/HBoxContainer/MarginContainer3/HBoxContainer/VBoxContainer/DEBUG_BuildTag/Label
 
 var build_menu_open = false
 var event_image: Sprite2D

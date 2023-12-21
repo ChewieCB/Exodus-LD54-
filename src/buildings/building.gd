@@ -122,7 +122,7 @@ func _setup_scan_for_nearby_bonus():
 	if data.type in [EnumAutoload.BuildingType.CRYO_POD, EnumAutoload.BuildingType.STORAGE]:
 		return
 
-	collider.set_collision_mask_value (2, true)
+	collider.set_collision_mask_value (3, true)
 	BuildingManager.building_finished.connect(check_for_adjacency_multiplier)
 	BuildingManager.building_deconstructed.connect(check_for_adjacency_multiplier)
 

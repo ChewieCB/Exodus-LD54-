@@ -327,23 +327,28 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_top = 16
 
-[node name="HBoxContainer" type="HBoxContainer" parent="LowerBar/MarginContainer/HBoxContainer"]
+[node name="MarginContainer3" type="MarginContainer" parent="LowerBar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_bottom = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer3"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="LowerBar/MarginContainer/HBoxContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer3/HBoxContainer"]
 layout_mode = 2
 
-[node name="DEBUG_BuildTag" type="MarginContainer" parent="LowerBar/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="DEBUG_BuildTag" type="MarginContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer3/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="LowerBar/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/DEBUG_BuildTag"]
+[node name="Label" type="Label" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer3/HBoxContainer/VBoxContainer/DEBUG_BuildTag"]
 modulate = Color(1, 1, 1, 0.207843)
 layout_mode = 2
 text = "v1.0.5.alpha.5"
 
-[node name="TimeControlUI" parent="LowerBar/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource("4_2kxyh")]
+[node name="TimeControlUI" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer3/HBoxContainer/VBoxContainer" instance=ExtResource("4_2kxyh")]
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -379,28 +384,6 @@ mouse_force_pass_scroll_events = false
 visible = false
 
 [node name="CommandScreen" parent="." instance=ExtResource("6_hbhke")]
-
-[node name="ResourceUI" parent="." instance=ExtResource("1_4u51x")]
-layout_mode = 1
-offset_left = -346.5
-offset_top = -72.0
-offset_right = 346.5
-
-[node name="TimeControlUI" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -247.0
-offset_top = -128.0
-grow_horizontal = 0
-grow_vertical = 0
-mouse_filter = 1
-
-[node name="MarginContainer" parent="TimeControlUI" instance=ExtResource("4_2kxyh")]
-layout_mode = 1
 
 [node name="DebugEventsMenu" type="Control" parent="."]
 layout_mode = 1

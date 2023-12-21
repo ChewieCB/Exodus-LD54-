@@ -66,7 +66,7 @@ func _input(event):
 				$ShipSprite.modulate = ship_no_highlight
 
 
-func tutorial_tracker(type: Building.TYPES):
+func tutorial_tracker(type: EnumAutoload.BuildingType):
 	if EventManager.tutorial_progress >= 2 or EventManager.tutorial_progress <= -1 :
 		return
 
