@@ -33,12 +33,13 @@ enum BuildingType {
 enum ResourceType {
 	NONE,
 	POPULATION,
+	STORAGE,
 	HOUSING,
+	MORALE,
 	FOOD,
 	WATER,
 	AIR,
 	METAL,
-	STORAGE
 }
 
 

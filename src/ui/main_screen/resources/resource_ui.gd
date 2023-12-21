@@ -1,12 +1,12 @@
 extends Control
 
-@onready var population_counter = $MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/PopContainer/HBoxContainer/PopLabel
-@onready var worker_counter = $MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer/HBoxContainer/WorkerLabel
-@onready var hab_label: Label = $MarginContainer/HBoxContainer/MarginContainer5/HBoxContainer/HabDebug
-@onready var food_label: Label = $MarginContainer/HBoxContainer/MarginContainer2/HBoxContainer/FoodDebug
-@onready var water_label: Label = $MarginContainer/HBoxContainer/MarginContainer3/HBoxContainer/WaterDebug
-@onready var air_label: Label = $MarginContainer/HBoxContainer/MarginContainer4/HBoxContainer/AirDebug
-@onready var metal_label: Label = $MarginContainer/HBoxContainer/MarginContainer6/HBoxContainer/MetalLabel
+@onready var population_counter = $HBoxContainer/MarginContainer/HBoxContainer/PopContainer/HBoxContainer/PopLabel
+@onready var worker_counter = $HBoxContainer/MarginContainer/HBoxContainer/WorkerContainer/HBoxContainer/WorkerLabel
+@onready var hab_label: Label = $HBoxContainer/MarginContainer5/HBoxContainer/HabDebug
+@onready var food_label: Label = $HBoxContainer/MarginContainer2/HBoxContainer/FoodDebug
+@onready var water_label: Label = $HBoxContainer/MarginContainer3/HBoxContainer/WaterDebug
+@onready var air_label: Label = $HBoxContainer/MarginContainer4/HBoxContainer/AirDebug
+@onready var metal_label: Label = $HBoxContainer/MarginContainer6/HBoxContainer/MetalLabel
 
 
 @export var resource_change_popup: PackedScene
@@ -110,17 +110,14 @@ func spawn_resource_change_popup(change_amount: int, parent_node: Node):
 	parent_node.add_child(new_popup)
 
 
-func _on_worker_ui_mouse_entered():
-	ResourceManager.emit_signal("ui_hover_show", "Available Crew members")
+func _on_pop_ui_mouse_entered():
+	ResourceManager.emit_signal("ui_hover_show", "Available Crew members - Total Crew memebers")
 
 func _on_resource_ui_mouse_exited():
 	ResourceManager.emit_signal("ui_hover_hide")
 
-func _on_pop_ui_mouse_entered():
-	ResourceManager.emit_signal("ui_hover_show", "Total Crew memebers")
-
 func _on_hab_ui_mouse_entered():
-	ResourceManager.emit_signal("ui_hover_show", "Housing (Available Housing)\nNegative available housing will cause unrest and unfortunate events more likely to happen")
+	ResourceManager.emit_signal("ui_hover_show", "Housing (Available Housing)")
 
 func _on_food_ui_mouse_entered():
 	ResourceManager.emit_signal("ui_hover_show", "Food (Food per Day)\n{current} / {max}".format({"current": ResourceManager.food_amount, "max": ResourceManager.storage_resource_amount.food}))
@@ -133,6 +130,4 @@ func _on_air_ui_mouse_entered():
 
 func _on_metal_ui_mouse_entered():
 	ResourceManager.emit_signal("ui_hover_show", "Metal (Metal per Day)\n{current} / {max}".format({"current": ResourceManager.metal_amount, "max": ResourceManager.storage_resource_amount.metal}))
-
-
 

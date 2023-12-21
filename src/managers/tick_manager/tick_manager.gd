@@ -9,6 +9,7 @@ const PAUSED_TICK_SPEED = 10.0
 const SLOW_TICK_SPEED = 5.0
 const FAST_TICK_SPEED = 1.25
 var current_tick_rate = SLOW_TICK_SPEED
+var current_tick: int = 0
 var time_control_ui = null
 
 func _ready():
@@ -70,7 +71,7 @@ func _set_tick_rate(new_tick_rate: float):
 
 
 func _on_timer_timeout():
-	print("tick")
+	current_tick += 1
 	emit_signal("tick")
 	if time_control_ui != null:
 		time_control_ui.saved_progress = 0

@@ -132,7 +132,7 @@ func check_tick_for_random_event():
 	# Tick equal days passed
 	tick_since_last_event += 1
 	tick_passed_total += 1
-	print("Tick left for event ", tick_to_event - tick_since_last_event)
+#	print("Tick left for event ", tick_to_event - tick_since_last_event)
 
 
 	if primary_story_id <= len(primary_story_date) - 1 and tick_passed_total >= primary_story_date[primary_story_id] - 1:

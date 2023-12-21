@@ -33,7 +33,6 @@ func resource_ui_popup_show(text: String):
 		anim_player.stop()
 	anim_player.play("show_popup_hold")
 
-
 func resource_ui_popup_hide():
 	if anim_player.is_playing() and anim_player.current_animation != "popup_hide":
 		anim_player.stop()

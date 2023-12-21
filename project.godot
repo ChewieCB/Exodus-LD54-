@@ -46,6 +46,7 @@ variables={
 "finished_select_crewmate": "false",
 "food": "0",
 "metal": "0",
+"morale": "0",
 "population": "0",
 "water": "0"
 }
@@ -186,8 +187,9 @@ drag_camera={
 
 [layer_names]
 
-2d_physics/layer_1="Building"
-2d_physics/layer_2="NearbyRange"
+2d_physics/layer_1="BuildGrid"
+2d_physics/layer_2="Building"
+2d_physics/layer_3="NearbyRange"
 
 [rendering]
 

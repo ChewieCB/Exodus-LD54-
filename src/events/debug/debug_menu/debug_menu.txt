@@ -18,15 +18,35 @@ Debug menu, choose an action to perform:
 		- +{pop_reward_3} Population
 			You get {pop_reward_3} population
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["population_forced", "{pop_reward_3}"]" single_use="true"]
-		- -{pop_cost_1} Population
-			You lose {pop_cost_1} population [if {population} - {pop_cost_1} >= 0]
+		- -{morale_cost_1} Population
+			You lose {morale_cost_1} population [if {population} - {morale_cost_1} >= 0]
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "-{pop_cost_1}"]" single_use="true"]
-		- -{pop_cost_2} Population [if {population} - {pop_cost_2} >= 0]
-			You lose {pop_cost_2} population
+		- -{morale_cost_2} Population [if {population} - {morale_cost_2} >= 0]
+			You lose {morale_cost_2} population
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "-{pop_cost_2}"]" single_use="true"]
-		- -{pop_cost_3} Population [if {population} - {pop_cost_3} >= 0]
-			You lose {pop_cost_3} population
+		- -{morale_cost_3} Population [if {population} - {morale_cost_3} >= 0]
+			You lose {morale_cost_3} population
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "-{pop_cost_3}"]" single_use="true"]
+	- Morale
+		Choose an amount.
+		- +{morale_reward_1} Morale
+			You get {pop_reward_1} morale
+			[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["{morale_reward_1}", "From debug event", "10", "true"]" single_use="true"]
+		- +{morale_reward_2} Morale
+			You get {morale_reward_2} morale
+			[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["{morale_reward_2}", "From debug event", "10", "true"]" single_use="true"]
+		- +{morale_reward_3} Morale
+			You get {morale_reward_3} morale
+			[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["{morale_reward_3}", "From debug event", "10", "true"]" single_use="true"]
+		- -{morale_cost_1} Morale
+			You lose {morale_cost_1} morale [if {morale} - {morale_cost_1} >= -100]
+			[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["-{morale_cost_1}", "From debug event", "10", "true"]" single_use="true"]
+		- -{morale_cost_2} Morale [if {morale} - {morale_cost_2} >= -100]
+			You lose {morale_cost_2} morale
+			[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["-{morale_cost_2}", "From debug event", "10", "true"]" single_use="true"]
+		- -{morale_cost_3} morale [if {morale} - {morale_cost_3} >= -100]
+			You lose {morale_cost_3} morale
+			[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["-{morale_cost_3}", "From debug event", "10", "true"]" single_use="true"]
 	- Food
 		Choose an amount.
 		- +{food_reward_1} Food

@@ -3,11 +3,18 @@ extends Node2D
 @onready var star_particles = $Space/StarCPUParticles2D
 @export var tutorial_disabled: bool = false
 
+var is_ship_hover: bool = false
+@onready var ship_no_highlight: Color = Color(1.0, 1.0, 1.0, 1.0)
+@onready var ship_highlight: Color = Color(1.5, 1.5, 1.5, 1.0)
+
 # We don't use the same variable in EventManager to avoid race condition
 var n_hab_built = 0
 var n_food_built = 0
 var bgm_audio_player: AudioStreamPlayer
 var bgm_music
+
+signal ship_selected
+signal ship_deselected
 
 
 func _ready():
@@ -25,6 +32,38 @@ func _ready():
 
 	get_tree().paused = false
 	get_node("UI").visible = true
+
+
+func _physics_process(_delta):
+	# We can only call get_world_2d().direct_space_state safely 
+	# in the physics frame, hence why this logic is here 
+	# instead of _input.
+	if Input.is_action_just_pressed("cancel_place_building"):
+		# Don't exit build view if we have a building preview active
+		if $ShipSprite/ShipGrid.current_building:
+			return
+		# Check if the mouse is over a building collider
+		var space = get_world_2d().direct_space_state
+		var params = PhysicsPointQueryParameters2D.new()
+		params.position = get_global_mouse_position()
+		params.collide_with_areas = true
+		# Only detect physics layer 2 - buildings
+		params.collision_mask = 0b0010
+		# Check if there is a collision at the mouse position
+		if space.intersect_point(params, 1):
+			return
+		
+		emit_signal("ship_deselected")
+
+
+func _input(event):
+	if event is InputEventMouseButton:
+		# Enter build menu when we left click the ship
+		if event.button_index == MOUSE_BUTTON_LEFT and \
+		event.pressed:
+			if is_ship_hover:
+				emit_signal("ship_selected")
+				$ShipSprite.modulate = ship_no_highlight
 
 
 func tutorial_tracker(type: EnumAutoload.BuildingType):
@@ -75,3 +114,14 @@ func _on_start_tutorial_timer_timeout() -> void:
 func play_bgm_again():
 	bgm_audio_player = SoundManager.play_music(bgm_music, 0.2, "Music")
 
+
+func _on_ship_select_area_mouse_entered():
+	is_ship_hover = true
+	if not $UI/MainUI.build_menu_open:
+		$ShipSprite.modulate = ship_highlight
+
+
+func _on_ship_select_area_mouse_exited():
+	is_ship_hover = false
+	if not $UI/MainUI.build_menu_open:
+		$ShipSprite.modulate = ship_no_highlight
