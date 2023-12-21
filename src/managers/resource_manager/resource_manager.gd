@@ -69,12 +69,13 @@ var mutiny_time_left = mutiny_time: set = set_mutiny_time_left
 
 enum RESOURCE_TYPE {
 	POPULATION,
+	STORAGE,
 	HOUSING,
+	MORALE,
 	FOOD,
 	WATER,
 	AIR,
 	METAL,
-	MORALE
 }
 
 var current_officers = [EnumAutoload.Officer.PRESSLEY, EnumAutoload.Officer.TORGON]
@@ -149,7 +150,7 @@ func _on_tick():
 
 
 func update_resource_modifiers():
-	for idx in range(0, 7):
+	for idx in range(1, 9):
 		calculate_resource_modifier(idx, population_amount)
 		match idx:
 			RESOURCE_TYPE.POPULATION:
@@ -173,17 +174,6 @@ func calculate_resource_modifier(resource_type, population) -> void:
 	var consumption = 0
 	var modifier = 0
 	match resource_type:
-		EnumAutoload.ResourceType.HOUSING:
-			# Housing is an outlier, we don't update per turn we just keep track
-			# of used and avaialble housing
-			for building in BuildingManager.buildings:
-				production += building.data.housing_prod
-			# if EnumAutoload.Officer.GOVERNOR_JERREROD in current_officers and production > 0:
-			# 	production = (int)(GOVERNOR_BONUS * production)
-			consumption = population_amount
-			#
-			housing_amount = production
-			available_housing = production - consumption
 		EnumAutoload.ResourceType.STORAGE:
 			storage_resource_amount.food = BASE_STORAGE 
 			storage_resource_amount.air = BASE_STORAGE 
@@ -198,6 +188,22 @@ func calculate_resource_modifier(resource_type, population) -> void:
 					storage_resource_amount.air += resource_capacity.air * mul
 					storage_resource_amount.water += resource_capacity.water * mul
 					storage_resource_amount.metal += resource_capacity.metal * mul
+		EnumAutoload.ResourceType.HOUSING:
+			# Housing is an outlier, we don't update per turn we just keep track
+			# of used and avaialble housing
+			for building in BuildingManager.buildings:
+				production += building.data.housing_prod
+			# if EnumAutoload.Officer.GOVERNOR_JERREROD in current_officers and production > 0:
+			# 	production = (int)(GOVERNOR_BONUS * production)
+			consumption = population_amount
+			#
+			housing_amount = production
+			available_housing = production - consumption
+		EnumAutoload.ResourceType.MORALE:
+			for effect in morale_effect_queue:
+				if effect != null:
+					modifier += effect.morale_modifier_value
+			current_morale_modifier = modifier
 		EnumAutoload.ResourceType.FOOD:
 			for building in BuildingManager.buildings:
 				production += building.get_produced_resource().food
@@ -219,11 +225,6 @@ func calculate_resource_modifier(resource_type, population) -> void:
 			for building in BuildingManager.buildings:
 				production += building.get_produced_resource().metal
 			current_metal_modifier = production
-		RESOURCE_TYPE.MORALE:
-			for effect in morale_effect_queue:
-				if effect != null:
-					modifier += effect.morale_modifier_value
-			current_morale_modifier = modifier
 
 
 func calculate_habitability_score() -> int:
@@ -448,6 +449,8 @@ func calculate_storage_with_upgrade(base_storage: int) -> int:
 func reset_state():
 	# TODO - load initial values from file for difficulty settings
 	# Update the pop without changing morale
+	storage_resource_amount = ResourceData.new(BASE_STORAGE, BASE_STORAGE, BASE_STORAGE, BASE_STORAGE)
+	
 	set_population_amount(3, true)
 	housing_amount = 0
 	food_amount = 150
@@ -455,8 +458,6 @@ func reset_state():
 	air_amount = 200
 	metal_amount = 100
 	morale_amount = 50
-  
-	storage_resource_amount = ResourceData.new(BASE_STORAGE, BASE_STORAGE, BASE_STORAGE, BASE_STORAGE)
 	
 	# Remove any morale effects
 	for _effect in morale_effect_queue:
