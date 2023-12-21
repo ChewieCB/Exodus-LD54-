@@ -217,6 +217,7 @@ func cancel_deconstruction(no_refund=false):
 	build_timer_ui.visible = false
 	if not no_refund:
 		ResourceManager.retrieve_workers(self)
+	BuildingManager.construction_queue.erase(self)
 	SoundManager.play_sound(build_finish_sfx, "SFX")
 	sprite.material.set_shader_parameter("mode", 0)
 
@@ -266,6 +267,7 @@ func on_predelete() -> void:
 	if len(BuildingManager.selected_building_queue) > 0 and \
 		BuildingManager.selected_building_queue[0] == self:
 		BuildingManager.hide_building_info_panel()
+		BuildingManager.selected_building_queue.erase(self)
 
 
 func _on_area_2d_mouse_entered():
