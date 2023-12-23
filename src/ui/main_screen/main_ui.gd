@@ -180,64 +180,47 @@ func _on_start_event(event: ExodusEvent):
 func _on_finish_event(arg: String):
 	match arg:
 		"change_to_build_screen":
-			var tween = get_tree().create_tween()
 			if event_image_holder:
 				tween.tween_property(event_image_holder, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
 			ship_grid.visible = true
 			ship_build_frame.visible = true
-#			build_show_toggle.visible = true
 			build_menu.visible = true
 		"change_to_nav_screen":
-			var tween = get_tree().create_tween()
 			if event_image_holder:
 				tween.tween_property(event_image_holder, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "zoom", SHIP_CAMERA_ZOOM, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 			ship_grid.visible = false
 			ship_build_frame.visible = false
-#			build_show_toggle.visible = true
 			build_menu.visible = false
 		"change_to_event_screen":
-			var tween = get_tree().create_tween()
 			tween.parallel().tween_property(camera, "zoom", EVENT_CAMERA_ZOOM, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", far_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(event_image_holder, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 			ship_grid.visible = false
 			ship_build_frame.visible = false
-#			build_show_toggle.visible = false
 			build_menu.visible = false
 		"end_event":
-			var tween = get_tree().create_tween()
 			if event_image_holder:
 				tween.tween_property(event_image_holder, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "zoom", SHIP_CAMERA_ZOOM, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(command_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
-
-#			build_show_toggle.visible = true
 			build_menu.visible = true
-
 			time_control_ui._on_speed_1_button_pressed()
 			chat_crew_button.disabled = false
-
 			ResourceManager.check_if_all_crew_died()
 			EventManager.check_if_victory()
 			TickManager.start_ticks()
 
-
 		# Hack to end an event with the build menu open for tutorials and such
 		"end_event_build":
-			var tween = get_tree().create_tween()
 			tween.tween_property(command_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 			if event_image_holder:
 				tween.tween_property(event_image_holder, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
-
-#			build_show_toggle.visible = true
 			build_menu.visible = true
-
 			time_control_ui._on_speed_1_button_pressed()
 			chat_crew_button.disabled = false
-
 			ResourceManager.check_if_all_crew_died()
 			EventManager.check_if_victory()
 			TickManager.start_ticks()
