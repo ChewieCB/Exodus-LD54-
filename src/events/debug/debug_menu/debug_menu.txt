@@ -84,7 +84,7 @@ Debug menu, choose an action to perform:
 		- -{water_cost_2} Water
 			You lose {water_cost_2} Water
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "-{water_cost_2}"]" single_use="true"]
-		- -{water_cost_3} Population
+		- -{water_cost_3} Water
 			You lose {water_cost_3} Water
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "-{water_cost_3}"]" single_use="true"]
 	- Air

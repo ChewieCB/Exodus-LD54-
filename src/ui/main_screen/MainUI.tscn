@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cu7ivg1u3vbhl"]
+[gd_scene load_steps=23 format=3 uid="uid://cu7ivg1u3vbhl"]
 
 [ext_resource type="PackedScene" uid="uid://bdbib8np6c616" path="res://src/ui/main_screen/resources/ResourceUI.tscn" id="1_4u51x"]
 [ext_resource type="PackedScene" uid="uid://sjhl1wud5upl" path="res://src/ui/building_ui/BuildUI.tscn" id="1_hyvdy"]
@@ -12,9 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://be20dl26vkt1d" path="res://src/ui/main_screen/resources/HorizontalBarUI.tscn" id="5_whypt"]
 [ext_resource type="PackedScene" uid="uid://b1xmgw2jwmunk" path="res://src/ui/command_screen/CommandScreen.tscn" id="6_hbhke"]
 [ext_resource type="Script" path="res://src/ui/main_screen/debug_event_dropdown.gd" id="7_my6e0"]
-[ext_resource type="PackedScene" uid="uid://b2rwhkbjj7e4n" path="res://src/ui/main_screen/ResourceAlertsUI.tscn" id="7_njybl"]
 [ext_resource type="PackedScene" uid="uid://dv3uxnkp8ekhg" path="res://src/ui/context_menu/BuildingInfoPanel.tscn" id="7_povcy"]
-[ext_resource type="PackedScene" uid="uid://d2r3r36bru83h" path="res://src/ui/main_screen/BuildingAlert.tscn" id="7_r6nxt"]
+[ext_resource type="PackedScene" uid="uid://y51y7b00sxwj" path="res://src/ui/main_screen/alerts/AlertBox.tscn" id="9_6d1xx"]
 [ext_resource type="PackedScene" uid="uid://cualluj64eim3" path="res://src/ui/main_screen/resources/MoraleDetailPopup.tscn" id="12_302xp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_juris"]
@@ -352,14 +351,10 @@ text = "v1.0.5.alpha.5"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BuildingAlerts" parent="." instance=ExtResource("7_r6nxt")]
+[node name="AlertBox" parent="." instance=ExtResource("9_6d1xx")]
 layout_mode = 1
-mouse_filter = 1
-
-[node name="ResourceAlerts" parent="." instance=ExtResource("7_njybl")]
-layout_mode = 1
-offset_left = -54.0
-offset_right = -14.0
+offset_top = 125.0
+offset_bottom = -445.0
 
 [node name="BuildMenu" type="MarginContainer" parent="."]
 layout_mode = 1

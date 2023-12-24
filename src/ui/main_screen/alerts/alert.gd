@@ -17,7 +17,8 @@ enum TYPE {
 	WATER,
 	AIR,
 	MORALE,
-	PROXIMITY
+	PROXIMITY,
+	RESEARCH
 }
 
 @export var type: TYPE:

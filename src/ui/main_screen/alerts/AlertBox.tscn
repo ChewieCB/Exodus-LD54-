@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://y51y7b00sxwj"]
+
+[ext_resource type="Script" path="res://src/ui/main_screen/alerts/alert_box.gd" id="1_4c77a"]
+[ext_resource type="PackedScene" uid="uid://cybouprxmhsri" path="res://src/ui/main_screen/alerts/Alert.tscn" id="2_udjhy"]
+
+[node name="AlertBox" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 269.0
+offset_right = -1065.0
+offset_bottom = -301.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4c77a")
+alert_scene = ExtResource("2_udjhy")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -78.0
+offset_right = 312.0
+offset_bottom = 98.0
+grow_vertical = 2
+
+[node name="Alert" parent="VBoxContainer" instance=ExtResource("2_udjhy")]
+layout_mode = 2
