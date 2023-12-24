@@ -5,7 +5,6 @@ extends Control
 @onready var resource_low_2_sfx = preload("res://assets/audio/sfx/Resource_Low_2.mp3")
 
 @export var alert_scene: PackedScene
-@export var lifetime: float = 1.6
 
 var food_alert: Alert
 var water_alert: Alert
@@ -14,40 +13,47 @@ var morale_alert: Alert
 var proximity_alert: Alert
 
 func _ready():
-    ResourceManager.construction_cancelled_lack_of_workers.connect(add_building_alert)
+    ResourceManager.construction_cancelled_lack_of_workers.connect(_add_building_alert)
     ResourceManager.starving.connect(_starving)
     ResourceManager.dehydrated.connect(_dehydrated)
     ResourceManager.suffocating.connect(_suffocating)
     ResourceManager.mutiny.connect(_mutiny)
+    ResourceManager.research_completed.connect(_research_complete)
     EventManager.proximity_alert.connect(_proximity)
 
     ResourceManager.game_over.connect(_hide_all)
 
-func notify_research_complete(research_name: String):
-    return
-
-func add_building_alert(building_name: String) -> void:
+func _research_complete(research_name: String):
     # Create an alert
-    var new_alert = alert_scene.instantiate()
-    var text = "{0} failed\ndue to lack of workers.".format([building_name])
-    
-    # Add it to the container
+    var new_alert: Alert = alert_scene.instantiate()
     container.add_child(new_alert)
+
+    var text = "Research {0} completed.".format([research_name])
     new_alert.visible = false
     new_alert.alert_text = text
-    new_alert.type = Alert.TYPE.WORKER
+    new_alert.type = Alert.TYPE.RESEARCH
+    new_alert.has_timer_destroy = true
     
     # Move it to the top so more recent events show at the top
     container.move_child(new_alert, 0)
     new_alert.visible = true
     new_alert.anim_player.play("alert_in")
-    await new_alert.anim_player.animation_finished
-    
-    # Delete it after a time period
-    await get_tree().create_timer(lifetime).timeout
-    new_alert.anim_player.play("alert_out")
-    await new_alert.anim_player.animation_finished
-    new_alert.queue_free()
+
+func _add_building_alert(building_name: String) -> void:
+    # Create an alert
+    var new_alert: Alert = alert_scene.instantiate()
+    container.add_child(new_alert)
+
+    var text = "{0} failed\ndue to lack of workers.".format([building_name])
+    new_alert.visible = false
+    new_alert.alert_text = text
+    new_alert.type = Alert.TYPE.WORKER
+    new_alert.has_timer_destroy = true
+
+    # Move it to the top so more recent events show at the top
+    container.move_child(new_alert, 0)
+    new_alert.visible = true
+    new_alert.anim_player.play("alert_in")
 
 func _proximity(ticks_left):
     if not proximity_alert:
@@ -106,10 +112,7 @@ func _starving(ticks_left):
         food_alert.countdown_value = ticks_left
     else:
         if is_instance_valid(food_alert):
-            # Delete it after a time period
-            food_alert.anim_player.play("alert_out")
-            await food_alert.anim_player.animation_finished
-            food_alert.queue_free()
+            food_alert.remove_alert()
 
 func _dehydrated(ticks_left):
     if ResourceManager.is_thirsty:
@@ -139,10 +142,7 @@ func _dehydrated(ticks_left):
         water_alert.countdown_value = ticks_left
     else:
         if is_instance_valid(water_alert):
-            # Delete it after a time period
-            water_alert.anim_player.play("alert_out")
-            await water_alert.anim_player.animation_finished
-            water_alert.queue_free()
+            water_alert.remove_alert()
 
 func _suffocating(ticks_left):
     if ResourceManager.is_suffocating:
@@ -172,10 +172,7 @@ func _suffocating(ticks_left):
         air_alert.countdown_value = ticks_left
     else:
         if is_instance_valid(air_alert):
-            # Delete it after a time period
-            air_alert.anim_player.play("alert_out")
-            await air_alert.anim_player.animation_finished
-            air_alert.queue_free()
+            air_alert.remove_alert()
 
 func _mutiny(ticks_left):
     if ResourceManager.is_mutiny:
@@ -205,15 +202,10 @@ func _mutiny(ticks_left):
         morale_alert.countdown_value = ticks_left
     else:
         if is_instance_valid(morale_alert):
-            # Delete it after a time period
-            morale_alert.anim_player.play("alert_out")
-            await morale_alert.anim_player.animation_finished
-            morale_alert.queue_free()
+            morale_alert.remove_alert()
 
 func _hide_all(resource):
     for _alert in [food_alert, water_alert, air_alert, morale_alert]:
         if is_instance_valid(_alert):
-            _alert.anim_player.play("alert_out")
-            await _alert.anim_player.animation_finished
-            _alert.queue_free()
+            _alert.remove_alert()
 

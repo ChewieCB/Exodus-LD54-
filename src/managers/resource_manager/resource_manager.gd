@@ -40,6 +40,7 @@ signal morale_detail_hide
 signal construction_cancelled_lack_of_workers(building_name)
 
 signal upgrade_acquired
+signal research_completed(research_name)
 
 var food_alert_shown = false
 var water_alert_shown = false
@@ -374,9 +375,10 @@ func jettison_crewmate(crewmate):
 	)
 
 
-func add_upgrade(upgrade_id: EnumAutoload.UpgradeId):
+func add_upgrade(upgrade_id: EnumAutoload.UpgradeId, upgrade_name: String):
 	current_upgrades.append(upgrade_id)
 	emit_signal("upgrade_acquired")
+	emit_signal("research_completed", upgrade_name)
 
 
 func check_if_enough_resource(cost: ResourceData) -> bool:

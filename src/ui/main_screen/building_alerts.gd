@@ -3,7 +3,7 @@ extends Control
 @onready var alert_container = $VBoxContainer
 @onready var resource_low_1_sfx = preload("res://assets/audio/sfx/Resource_Low_1.mp3")
 @onready var resource_low_2_sfx = preload("res://assets/audio/sfx/Resource_Low_2.mp3")
-@onready var alert_scene = preload("res://src/ui/main_screen/alerts/AlertContainer.tscn")
+@onready var alert_scene: PackedScene
 
 @export var lifetime: float = 1.6
 

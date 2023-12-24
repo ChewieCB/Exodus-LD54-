@@ -90,7 +90,7 @@ func _on_upgrade_button_pressed() -> void:
 	if selected_upgrade_data != null:
 		if ResourceManager.check_if_enough_resource(selected_upgrade_data.cost):
 			SoundManager.play_sound(proceed_click_sfx, "UI")
-			ResourceManager.add_upgrade(selected_upgrade_data.upgrade_id)
+			ResourceManager.add_upgrade(selected_upgrade_data.upgrade_id, selected_upgrade_data.upgrade_name)
 			ResourceManager.change_resource(selected_upgrade_data.cost, false)
 			# Refresh UI
 			for upgr in selected_upgrade_data.conflict_one_of_these_upgrades:
