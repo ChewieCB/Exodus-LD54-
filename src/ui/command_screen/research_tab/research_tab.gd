@@ -30,6 +30,7 @@ func _on_tick():
 		update_status_all_upgrade_buttons()
 	else:
 		researching_upgrade.research_time_left -= 1
+		researching_upgrade.update_status()
 
 func reset_stuff_on_tab() -> void:
 	upgrade_desc_label.text = ""
@@ -134,7 +135,6 @@ func open_research_graph(research_scene: PackedScene):
 		return
 
 	var new_research_scene = research_scene.instantiate()
-	print(new_research_scene.name)
 	for child in research_graph_holder.get_children():
 		child.visible = false
 

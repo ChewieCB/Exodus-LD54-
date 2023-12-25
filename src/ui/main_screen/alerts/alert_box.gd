@@ -26,14 +26,12 @@ func _ready():
 func _research_complete(research_name: String):
     # Create an alert
     var new_alert: Alert = alert_scene.instantiate()
-    container.add_child(new_alert)
-
-    var text = "Research {0} completed.".format([research_name])
     new_alert.visible = false
-    new_alert.alert_text = text
+    new_alert.alert_text = "Research {0} completed.".format([research_name])
     new_alert.type = EnumAutoload.AlertType.RESEARCH
     new_alert.has_timer_destroy = true
-    
+    container.add_child(new_alert)
+
     # Move it to the top so more recent events show at the top
     container.move_child(new_alert, 0)
     new_alert.visible = true
@@ -59,14 +57,11 @@ func _proximity(ticks_left):
     if not proximity_alert:
         if ticks_left < 6:
             var new_alert = alert_scene.instantiate()
-            var text = "Proximity Warning"
-            
-            # Add it to the container
-            container.add_child(new_alert)
             new_alert.visible = false
-            new_alert.alert_text = text
+            new_alert.alert_text = "Proximity Warning"
             new_alert.type = EnumAutoload.AlertType.PROXIMITY
             new_alert.has_countdown = false
+            container.add_child(new_alert)
             
             # Move it to the top so more recent events show at the top
             container.move_child(new_alert, 0)
@@ -87,18 +82,13 @@ func _proximity(ticks_left):
 func _starving(ticks_left):
     if ResourceManager.is_starving:
         if not food_alert:
-            # Create a food alert with countdown
             var new_alert = alert_scene.instantiate()
-            var text = "Days Until Starvation"
-            
-            # Add it to the container
-            container.add_child(new_alert)
             new_alert.visible = false
-            new_alert.alert_text = text
+            new_alert.alert_text = "Days Until Starvation"
             new_alert.type = EnumAutoload.AlertType.FOOD
             new_alert.has_countdown = true
             new_alert.countdown_value = ticks_left
-            new_alert.update_alert_status()
+            container.add_child(new_alert)
             
             # Move it to the top so more recent events show at the top
             container.move_child(new_alert, 0)
@@ -120,15 +110,12 @@ func _dehydrated(ticks_left):
         if not water_alert:
             # Create a food alert with countdown
             var new_alert = alert_scene.instantiate()
-            var text = "Days Until Dehydration"
-            
-            # Add it to the container
-            container.add_child(new_alert)
             new_alert.visible = false
-            new_alert.alert_text = text
+            new_alert.alert_text = "Days Until Dehydration"
             new_alert.type = EnumAutoload.AlertType.WATER
             new_alert.has_countdown = true
             new_alert.countdown_value = ticks_left
+            container.add_child(new_alert)
             
             # Move it to the top so more recent events show at the top
             container.move_child(new_alert, 0)
@@ -150,15 +137,12 @@ func _suffocating(ticks_left):
         if not air_alert:
             # Create a food alert with countdown
             var new_alert = alert_scene.instantiate()
-            var text = "Days Until Suffocation"
-            
-            # Add it to the container
-            container.add_child(new_alert)
             new_alert.visible = false
-            new_alert.alert_text = text
+            new_alert.alert_text = "Days Until Suffocation"
             new_alert.type = EnumAutoload.AlertType.AIR
             new_alert.has_countdown = true
             new_alert.countdown_value = ticks_left
+            container.add_child(new_alert)
             
             # Move it to the top so more recent events show at the top
             container.move_child(new_alert, 0)
@@ -180,15 +164,12 @@ func _mutiny(ticks_left):
         if not morale_alert:
             # Create a food alert with countdown
             var new_alert = alert_scene.instantiate()
-            var text = "Days Until Mutiny"
-            
-            # Add it to the container
-            container.add_child(new_alert)
             new_alert.visible = false
-            new_alert.alert_text = text
+            new_alert.alert_text = "Days Until Mutiny"
             new_alert.type = EnumAutoload.AlertType.MORALE
             new_alert.has_countdown = true
             new_alert.countdown_value = ticks_left
+            container.add_child(new_alert)
             
             # Move it to the top so more recent events show at the top
             container.move_child(new_alert, 0)

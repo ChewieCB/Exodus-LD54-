@@ -11,30 +11,11 @@ class_name Alert
 @onready var timer: Timer = $Timer
 
 
-@export var type: EnumAutoload.AlertType:
-	set(value):
-		type = value
-		update_alert_status()
-@export var alert_text: String = "":
-	set(value):
-		alert_text = value
-		label.text = alert_text
-@export var has_countdown: bool = false:
-	set(value):
-		has_countdown = value
-		if has_countdown:
-			countdown_sep.visible = true
-			countdown.visible = true
-		else:
-			countdown_sep.visible = false
-			countdown.visible = false
-@export var countdown_value: int = 10:
-	set(value):
-		countdown_value = value
-		countdown_text.text = str(countdown_value)
-
-@export var has_timer_destroy: bool
-
+var type: EnumAutoload.AlertType
+var alert_text: String = ""
+var has_countdown: bool = false
+var countdown_value: int = 10
+var has_timer_destroy: bool = false
 
 func _ready():
 	update_alert_status()
@@ -42,9 +23,11 @@ func _ready():
 	if has_countdown:
 		countdown_sep.visible = true
 		countdown.visible = true
+		countdown_text.text = str(countdown_value)
 	else:
 		countdown_sep.visible = false
 		countdown.visible = false
+		countdown_text.text = ""
 	if has_timer_destroy:
 		timer.start()
 
@@ -74,7 +57,12 @@ func update_alert_status():
 func remove_alert():
 	anim_player.play("alert_out")
 	await anim_player.animation_finished
+	timer.stop()
 	queue_free()
 
 func _on_timer_timeout():
+	remove_alert()
+
+
+func _on_button_pressed() -> void:
 	remove_alert()

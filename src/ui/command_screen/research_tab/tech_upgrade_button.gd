@@ -20,6 +20,7 @@ var is_researching = false
 @onready var texture_rect: TextureRect = $TextureRect
 @onready var border: TextureRect = $Border
 @onready var research_progress_bar: TextureProgressBar = $TextureRect/TextureProgressBar
+@onready var anim_player: AnimationPlayer = $AnimationPlayer
 
 var research_tab: ResearchTab = null
 var activated = false
@@ -51,6 +52,8 @@ func update_status():
 		texture_rect.self_modulate = Color(0.2, 0.2, 0.2)
 		border.visible = true
 		border.self_modulate = Color.RED
+		anim_player.stop()
+		research_progress_bar.visible = false
 		for line in connection_lines:
 			line.default_color = Color(0.2, 0.2, 0.2)
 		return
@@ -61,6 +64,8 @@ func update_status():
 		texture_rect.self_modulate = Color(1, 1, 1)
 		border.visible = true
 		border.self_modulate = Color.GREEN
+		anim_player.stop()
+		research_progress_bar.visible = false
 		for line in connection_lines:
 			line.default_color = Color(1, 1, 1)
 	else:
@@ -76,7 +81,6 @@ func update_status():
 	if is_researching:
 		research_progress_bar.value = ((research_time - research_time_left) / float(research_time)) * 100
 		research_progress_bar.visible = true
-		border.visible = true
 
 
 func check_for_previous_upgrade():
@@ -93,12 +97,10 @@ func start_research():
 	is_researching = true
 	research_progress_bar.tint_under = Color.WHITE
 	research_progress_bar.tint_progress = Color.GREEN
-	border.visible = true
-	border.self_modulate = Color.CYAN
+	anim_player.play("highlight")
 
 func pause_research():
 	# is_researching should still be true
 	research_progress_bar.tint_under = Color.DARK_GRAY
 	research_progress_bar.tint_progress = Color.YELLOW
-	border.visible = true
-	border.self_modulate = Color.YELLOW
+	anim_player.stop()
