@@ -15,6 +15,7 @@ var proceed_click_sfx = preload("res://assets/audio/sfx/Building_Start.mp3")
 var selected_upgrade_data: TechUpgradeButton
 var researching_upgrade: TechUpgradeButton
 var cost_label_prev_text = ""
+var current_research_graph = null
 
 func _ready() -> void:
 	TickManager.tick.connect(_on_tick)
@@ -89,7 +90,7 @@ func select_an_upgrade(upgrade_data: TechUpgradeButton):
 			cost_label.text = "[center]Researching... {0} days(s) left[/center]".format([researching_upgrade.research_time_left])
 			upgrade_button.visible = false
 		else:
-			cost_label.text = "[center]Research paused. {0} days(s) left[/center]".format([researching_upgrade.research_time_left])
+			cost_label.text = "[center]Research paused. {0} days(s) left[/center]".format([upgrade_data.research_time_left])
 
 
 func _cancel_select_upgrade():
@@ -98,8 +99,10 @@ func _cancel_select_upgrade():
 	cost_label.text = ""
 
 func update_status_all_upgrade_buttons():
-	var research_graph = get_node("ResearchGraphView/ResearchGraphHolder").get_child(0)
-	for child in research_graph.get_children():
+	if current_research_graph == null:
+		return
+
+	for child in current_research_graph.get_children():
 		if child is TechUpgradeButton:
 			child.update_status()
 
@@ -124,15 +127,31 @@ func _on_upgrade_button_pressed() -> void:
 			cost_label.text = "[center][color=red]Not enough resource[/color][/center]"
 			not_enough_resource_timer.start()
 
-func open_research_graph(reseach_scene: PackedScene):
+func open_research_graph(research_scene: PackedScene):
 	# This is for select a research category at the research tab main menu
 	SoundManager.play_button_click_sfx()
-	if reseach_scene == null:
+	if research_scene == null:
 		return
+
+	var new_research_scene = research_scene.instantiate()
+	print(new_research_scene.name)
 	for child in research_graph_holder.get_children():
-		child.queue_free()
-	var new_research_scene = reseach_scene.instantiate()
-	research_graph_holder.add_child(new_research_scene)
+		child.visible = false
+
+	# If that research scene not exist, instantiate and add them to node
+	# If exist, just toggle their visibility
+	var found = false
+	for child in research_graph_holder.get_children():
+		if child.name == new_research_scene.name:
+			child.visible = true
+			new_research_scene.queue_free()
+			current_research_graph = child
+			found = true
+			break
+	if not found:
+		research_graph_holder.add_child(new_research_scene)
+		current_research_graph = new_research_scene
+
 	choose_tech_view.visible = false
 	research_graph_view.visible = true
 
@@ -141,6 +160,7 @@ func _on_back_button_pressed() -> void:
 	SoundManager.play_button_click_sfx()
 	research_graph_view.visible = false
 	choose_tech_view.visible = true
+	current_research_graph = null
 	reset_stuff_on_tab()
 
 

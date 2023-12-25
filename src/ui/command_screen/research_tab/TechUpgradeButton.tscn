@@ -42,6 +42,25 @@ grow_vertical = 2
 texture = ExtResource("3_5laeo")
 expand_mode = 1
 
+[node name="TextureProgressBar" type="TextureProgressBar" parent="TextureRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -15.0
+offset_top = -4.0
+offset_right = 15.0
+grow_horizontal = 2
+grow_vertical = 0
+value = 25.0
+nine_patch_stretch = true
+texture_under = ExtResource("1_yd1l8")
+texture_progress = ExtResource("1_yd1l8")
+tint_progress = Color(0, 1, 0, 1)
+
 [node name="Button" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -50,18 +69,5 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_tdcdj")
-
-[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 1.0
-offset_top = 27.0
-offset_right = 31.0
-offset_bottom = 31.0
-value = 25.0
-nine_patch_stretch = true
-texture_under = ExtResource("1_yd1l8")
-texture_progress = ExtResource("1_yd1l8")
-tint_progress = Color(0, 1, 0, 1)
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

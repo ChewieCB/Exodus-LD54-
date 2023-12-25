@@ -119,7 +119,6 @@ offset_bottom = 242.0
 texture = ExtResource("4_hkjqs")
 
 [node name="ChooseTech" type="Control" parent="DeviceFrame/TabContainer/Research"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -214,6 +213,7 @@ text = "Body Augmentation"
 required_officer = 7
 
 [node name="ResearchGraphView" type="Control" parent="DeviceFrame/TabContainer/Research"]
+visible = false
 anchors_preset = 0
 
 [node name="ResearchGraphHolder" type="Control" parent="DeviceFrame/TabContainer/Research/ResearchGraphView"]
