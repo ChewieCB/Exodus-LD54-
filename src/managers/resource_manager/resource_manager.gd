@@ -68,17 +68,6 @@ var is_mutiny = false: set = set_is_mutiny
 var mutiny_time: int = 3
 var mutiny_time_left = mutiny_time: set = set_mutiny_time_left
 
-enum RESOURCE_TYPE {
-	POPULATION,
-	STORAGE,
-	HOUSING,
-	MORALE,
-	FOOD,
-	WATER,
-	AIR,
-	METAL,
-}
-
 var current_officers = [EnumAutoload.Officer.PRESSLEY, EnumAutoload.Officer.TORGON]
 var current_upgrades = []
 
@@ -154,11 +143,11 @@ func update_resource_modifiers():
 	for idx in range(1, 9):
 		calculate_resource_modifier(idx, population_amount)
 		match idx:
-			RESOURCE_TYPE.POPULATION:
+			EnumAutoload.ResourceType.POPULATION:
 				pass
-			RESOURCE_TYPE.HOUSING:
+			EnumAutoload.ResourceType.HOUSING:
 				emit_signal("housing_changed", housing_amount, available_housing)
-			RESOURCE_TYPE.FOOD:
+			EnumAutoload.ResourceType.FOOD:
 				emit_signal("food_modifier_changed", food_amount, current_food_modifier)
 			EnumAutoload.ResourceType.WATER:
 				emit_signal("water_modifier_changed", water_amount, current_water_modifier)
@@ -166,7 +155,7 @@ func update_resource_modifiers():
 				emit_signal("air_modifier_changed", air_amount, current_air_modifier)
 			EnumAutoload.ResourceType.METAL:
 				emit_signal("metal_modifier_changed", metal_amount, current_metal_modifier)
-			RESOURCE_TYPE.MORALE:
+			EnumAutoload.ResourceType.MORALE:
 				emit_signal("morale_changed", morale_amount)
 
 
@@ -402,7 +391,7 @@ func change_resource(resource_data: ResourceData, add: bool = true, multiplier: 
 	water_amount += ceil(resource_data.water * operation_multiplier * multiplier)
 	air_amount += ceil(resource_data.air * operation_multiplier * multiplier)
 	metal_amount += ceil(resource_data.metal * operation_multiplier * multiplier)
-
+	update_resource_modifiers()
 
 func get_build_time_with_upgrade_multiplier() -> float:
 	var reduction_perc = 0
@@ -572,12 +561,12 @@ func set_habitability(value: int):
 	morale_amount = habitability + current_morale_modifier
 
 func add_morale_effect(
-	name: String, value: int, length: int, 
+	_name: String, value: int, length: int, 
 	type: MoraleEffect.TYPES = MoraleEffect.TYPES.TemporaryMoraleEffect
 ):
 	# Don't add any effects added before the game starts
 	var effect = MoraleEffect.new()
-	effect._name = name
+	effect._name = _name
 	effect.type = type
 	effect.morale_modifier_value = value
 	effect.effect_length = length
@@ -614,7 +603,7 @@ func set_mutiny_time_left(value: int):
 	if morale_amount == 0:
 		emit_signal("mutiny", mutiny_time_left)
 		if mutiny_time_left == 0:
-			emit_signal("game_over", RESOURCE_TYPE.MORALE)
+			emit_signal("game_over", EnumAutoload.ResourceType.MORALE)
 
 # FOOD
 
@@ -633,7 +622,7 @@ func set_starving_time_left(value: int):
 	if is_starving:
 		emit_signal("starving", starving_time_left)
 		if starving_time_left == 0:
-			emit_signal("game_over", RESOURCE_TYPE.FOOD)
+			emit_signal("game_over", EnumAutoload.ResourceType.FOOD)
 
 # WATER
 
@@ -652,7 +641,7 @@ func set_thirsty_time_left(value: int):
 	if is_thirsty:
 		emit_signal("dehydrated", thirsty_time_left)
 		if thirsty_time_left == 0:
-			emit_signal("game_over", RESOURCE_TYPE.WATER)
+			emit_signal("game_over", EnumAutoload.ResourceType.WATER)
 
 # AIR
 
@@ -671,7 +660,7 @@ func set_suffocating_time_left(value: int):
 	if is_suffocating:
 		emit_signal("suffocating", suffocating_time_left)
 		if suffocating_time_left == 0:
-			emit_signal("game_over", RESOURCE_TYPE.AIR)
+			emit_signal("game_over", EnumAutoload.ResourceType.AIR)
 
 # METAL
 

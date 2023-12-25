@@ -119,6 +119,7 @@ offset_bottom = 242.0
 texture = ExtResource("4_hkjqs")
 
 [node name="ChooseTech" type="Control" parent="DeviceFrame/TabContainer/Research"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -213,7 +214,6 @@ text = "Body Augmentation"
 required_officer = 7
 
 [node name="ResearchGraphView" type="Control" parent="DeviceFrame/TabContainer/Research"]
-visible = false
 anchors_preset = 0
 
 [node name="ResearchGraphHolder" type="Control" parent="DeviceFrame/TabContainer/Research/ResearchGraphView"]
@@ -247,7 +247,7 @@ offset_top = 137.0
 offset_right = 446.0
 offset_bottom = 211.0
 bbcode_enabled = true
-text = "[u]Upgrade name[/u]
+text = "[u]Upgrade name[/u] (5 days)
 [font_size=12]Something something that increase building speed by [color=green]50%[/color].[/font_size]
 "
 
@@ -259,7 +259,7 @@ offset_right = 369.0
 offset_bottom = 241.0
 theme_override_font_sizes/normal_font_size = 12
 bbcode_enabled = true
-text = "[center]Cost: 30 food, 5 water, 5 metal, 5 air, 5 prefabs, 100 dark matter capsule, 7749 gold[/center]"
+text = "[center]Cost: 30 food, 5 water, 5 metal, 5 air, 5 prefabs[/center]"
 
 [node name="NotEnoughResourceTimer" type="Timer" parent="DeviceFrame/TabContainer/Research"]
 one_shot = true

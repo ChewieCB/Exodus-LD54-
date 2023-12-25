@@ -98,6 +98,7 @@ upgrade_description = "Unlock [color=green]tier III[/color] food production buil
 upgrade_id = 8
 upgrade_sprite = ExtResource("5_mscjs")
 cost = SubResource("Resource_hgv0c")
+research_time = 2
 require_one_of_these_upgrades = [NodePath("../Upgrade1")]
 
 [node name="Upgrade3" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_maogv")]
