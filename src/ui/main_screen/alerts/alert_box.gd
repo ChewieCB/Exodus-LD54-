@@ -31,7 +31,7 @@ func _research_complete(research_name: String):
     var text = "Research {0} completed.".format([research_name])
     new_alert.visible = false
     new_alert.alert_text = text
-    new_alert.type = Alert.TYPE.RESEARCH
+    new_alert.type = EnumAutoload.AlertType.RESEARCH
     new_alert.has_timer_destroy = true
     
     # Move it to the top so more recent events show at the top
@@ -47,7 +47,7 @@ func _add_building_alert(building_name: String) -> void:
     var text = "{0} failed\ndue to lack of workers.".format([building_name])
     new_alert.visible = false
     new_alert.alert_text = text
-    new_alert.type = Alert.TYPE.WORKER
+    new_alert.type = EnumAutoload.AlertType.WORKER
     new_alert.has_timer_destroy = true
 
     # Move it to the top so more recent events show at the top
@@ -65,7 +65,7 @@ func _proximity(ticks_left):
             container.add_child(new_alert)
             new_alert.visible = false
             new_alert.alert_text = text
-            new_alert.type = Alert.TYPE.PROXIMITY
+            new_alert.type = EnumAutoload.AlertType.PROXIMITY
             new_alert.has_countdown = false
             
             # Move it to the top so more recent events show at the top
@@ -95,9 +95,10 @@ func _starving(ticks_left):
             container.add_child(new_alert)
             new_alert.visible = false
             new_alert.alert_text = text
-            new_alert.type = Alert.TYPE.FOOD
+            new_alert.type = EnumAutoload.AlertType.FOOD
             new_alert.has_countdown = true
             new_alert.countdown_value = ticks_left
+            new_alert.update_alert_status()
             
             # Move it to the top so more recent events show at the top
             container.move_child(new_alert, 0)
@@ -125,7 +126,7 @@ func _dehydrated(ticks_left):
             container.add_child(new_alert)
             new_alert.visible = false
             new_alert.alert_text = text
-            new_alert.type = Alert.TYPE.WATER
+            new_alert.type = EnumAutoload.AlertType.WATER
             new_alert.has_countdown = true
             new_alert.countdown_value = ticks_left
             
@@ -155,7 +156,7 @@ func _suffocating(ticks_left):
             container.add_child(new_alert)
             new_alert.visible = false
             new_alert.alert_text = text
-            new_alert.type = Alert.TYPE.AIR
+            new_alert.type = EnumAutoload.AlertType.AIR
             new_alert.has_countdown = true
             new_alert.countdown_value = ticks_left
             
@@ -185,7 +186,7 @@ func _mutiny(ticks_left):
             container.add_child(new_alert)
             new_alert.visible = false
             new_alert.alert_text = text
-            new_alert.type = Alert.TYPE.MORALE
+            new_alert.type = EnumAutoload.AlertType.MORALE
             new_alert.has_countdown = true
             new_alert.countdown_value = ticks_left
             

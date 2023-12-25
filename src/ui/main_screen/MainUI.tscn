@@ -123,6 +123,8 @@ mouse_filter = 1
 script = ExtResource("1_xagyo")
 command_screen = NodePath("CommandScreen")
 
+[node name="CommandScreen" parent="." instance=ExtResource("6_hbhke")]
+
 [node name="LowerBar" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 12
@@ -377,8 +379,6 @@ mouse_force_pass_scroll_events = false
 
 [node name="BuildingInfoPanel" parent="." instance=ExtResource("7_povcy")]
 visible = false
-
-[node name="CommandScreen" parent="." instance=ExtResource("6_hbhke")]
 
 [node name="DebugEventsMenu" type="Control" parent="."]
 layout_mode = 1
