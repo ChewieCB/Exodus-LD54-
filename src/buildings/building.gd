@@ -45,6 +45,23 @@ func _ready():
 	if placed and building_complete:
 		_setup_scan_for_nearby_bonus()
 
+func _process(delta):
+	# TODO: Optimize this
+	if Input.is_action_just_pressed("cancel_place_building"):
+		if is_hover and can_delete and not preview:
+			if is_constructing and not is_deconstructing:
+				cancel_construction()
+			elif building_complete and is_deconstructing:
+				cancel_deconstruction()
+			else:
+				set_building_remove()
+	if not placed and preview:
+		if collider.has_overlapping_areas() or collider.has_overlapping_bodies() or outside_gridmap:
+			color_sprite(1, 0, 0, 0.5)
+			placeable = false
+		else:
+			color_sprite(0, 1, 0, 0.5)
+			placeable = true
 
 func check_for_adjacency_multiplier(_unused_var):
 	bonus_multiplier = 1
@@ -97,26 +114,6 @@ func deconstruct_in_progress():
 	sprite.material.set_shader_parameter("mode", 1)
 	#
 	BuildingManager.construction_queue.push_front(self)
-
-
-func _process(delta):
-	# TODO: Optimize this
-	if Input.is_action_just_pressed("cancel_place_building"):
-		if is_hover and can_delete and not preview:
-			if is_constructing and not is_deconstructing:
-				cancel_construction()
-			elif building_complete and is_deconstructing:
-				cancel_deconstruction()
-			else:
-				set_building_remove()
-	if not placed and preview:
-		if collider.has_overlapping_areas() or collider.has_overlapping_bodies() or outside_gridmap:
-			color_sprite(1, 0, 0, 0.5)
-			placeable = false
-		else:
-			color_sprite(0, 1, 0, 0.5)
-			placeable = true
-
 
 func _setup_scan_for_nearby_bonus():
 	if data.type in [EnumAutoload.BuildingType.CRYO_POD, EnumAutoload.BuildingType.STORAGE]:

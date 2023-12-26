@@ -316,6 +316,8 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Area2D" type="Area2D" parent="DeviceFrame/TabContainer/Travel/StarmapInputArea"]
+collision_layer = 8
+collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeviceFrame/TabContainer/Travel/StarmapInputArea/Area2D"]
 shape = SubResource("RectangleShape2D_v161y")
