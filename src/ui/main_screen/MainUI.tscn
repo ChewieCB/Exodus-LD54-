@@ -445,7 +445,7 @@ offset_right = 472.0
 offset_bottom = -29.0
 text = "E to rotate building.
 Left-click to Build.
-Right-click to Destroy"
+Right-click to Deconstruct"
 autowrap_mode = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
