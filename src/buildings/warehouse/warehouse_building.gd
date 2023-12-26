@@ -121,6 +121,7 @@ func get_context_menu_description() -> String:
 			tmp = "Increased max storage capacity for all resources by {n_storage} units.".format({"n_storage": ResourceManager.calculate_storage_with_upgrade(data.storage_prod)})
 			if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_STOCK_ANALYSIS in ResourceManager.current_upgrades:
 				tmp += "\nGive 20% bonus production to nearby resource-producing buildings."
+	tmp += '\nWarning: Desconstruct this building will cause surplus resources to be lost.'
 	return tmp
 
 func check_condition_for_specialize():
