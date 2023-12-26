@@ -94,11 +94,11 @@ func _update_star_particles(tick_speed, is_paused):
 		).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 	else:
 		match tick_speed:
-			TickManager.SLOW_TICK_SPEED:
+			TickManager.SLOW_TICK_TIME:
 				tween.tween_property(
 					star_particles, "speed_scale", 1, 0.35
 				).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-			TickManager.FAST_TICK_SPEED:
+			TickManager.FAST_TICK_TIME:
 				tween.tween_property(
 					star_particles, "speed_scale", 4, 0.2
 				).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
