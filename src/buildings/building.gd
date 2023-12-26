@@ -39,8 +39,8 @@ func _ready():
 	set_original_color()
 	build_timer_ui.visible = false
 	TickManager.tick.connect(_on_tick)
-	ResourceManager.upgrade_acquired.connect(apply_upgrades)
-	apply_upgrades()
+	ResourceManager.upgrade_acquired.connect(check_for_adjacency_multiplier)
+	check_for_adjacency_multiplier()
 
 	if placed and building_complete:
 		_setup_scan_for_nearby_bonus()
@@ -63,7 +63,11 @@ func _process(delta):
 			color_sprite(0, 1, 0, 0.5)
 			placeable = true
 
-func check_for_adjacency_multiplier(_unused_var):
+func check_for_adjacency_multiplier(_unused_var = null):
+	# Wait 2 frame to make sure all Area2D changes are setup correctly
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+
 	bonus_multiplier = 1
 	for area in collider.get_overlapping_areas():
 		# Warehouse bonus
@@ -80,14 +84,6 @@ func check_for_adjacency_multiplier(_unused_var):
 						bonus_multiplier += warehouse_resource_bonus.food
 					EnumAutoload.BuildingType.METAL:
 						bonus_multiplier += warehouse_resource_bonus.metal
-
-
-func apply_upgrades():
-	# Wait 2 frame to make sure all Area2D changes are setup correctly
-	await get_tree().physics_frame
-	await get_tree().physics_frame
-	check_for_adjacency_multiplier(data.type)
-
 
 func construct_in_progress():
 	# Update the building to show it's under construction
@@ -126,20 +122,9 @@ func _setup_scan_for_nearby_bonus():
 func _on_tick():
 	if not placed:
 		return
-
 	if not building_complete and is_constructing:
 		if ticks_left_to_build <= 1:
-			building_complete = true
-			is_constructing = false
-			is_deconstructing = false
-			build_timer_ui.visible = false
-			ResourceManager.add_building(self)
-			ResourceManager.retrieve_workers(self)
-			BuildingManager.construction_queue.erase(self)
-			BuildingManager.finished_building(data.type)
-			SoundManager.play_sound(build_finish_sfx, "SFX")
-			sprite.material.set_shader_parameter("mode", 0)
-			emit_signal("building_finished_operation")
+			add_building()
 		else:
 			ticks_left_to_build -= 1
 			build_timer_ui.label.text = str(ticks_left_to_build)
@@ -150,6 +135,18 @@ func _on_tick():
 			ticks_left_to_delete -= 1
 			build_timer_ui.label.text = str(ticks_left_to_delete)
 
+func add_building():
+	building_complete = true
+	is_constructing = false
+	is_deconstructing = false
+	build_timer_ui.visible = false
+	ResourceManager.add_building(self)
+	ResourceManager.retrieve_workers(self)
+	BuildingManager.construction_queue.erase(self)
+	BuildingManager.finished_building(data.type)
+	SoundManager.play_sound(build_finish_sfx, "SFX")
+	sprite.material.set_shader_parameter("mode", 0)
+	emit_signal("building_finished_operation")
 
 func remove_building():
 	build_timer_ui.visible = false
@@ -159,6 +156,7 @@ func remove_building():
 	SoundManager.play_sound(build_finish_sfx, "SFX")
 	deconstructed_refund_resource()
 	emit_signal("building_finished_operation")
+	BuildingManager.finished_deconstruct_building(data.type)
 	self.queue_free()
 
 func deconstructed_refund_resource():
