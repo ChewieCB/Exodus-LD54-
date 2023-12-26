@@ -26,8 +26,12 @@ func _on_tick():
 
 	if researching_upgrade.research_time_left <= 1:
 		ResourceManager.add_upgrade(researching_upgrade.upgrade_id, researching_upgrade.upgrade_name)
-		researching_upgrade = null
 		update_status_all_upgrade_buttons()
+		# Refresh the current selecting research
+		print(selected_upgrade_data)
+		if selected_upgrade_data != null:
+			select_an_upgrade(selected_upgrade_data)
+		researching_upgrade = null
 	else:
 		researching_upgrade.research_time_left -= 1
 		researching_upgrade.update_status()
@@ -45,32 +49,32 @@ func reset_stuff_on_tab() -> void:
 func select_an_upgrade(upgrade_data: TechUpgradeButton):
 	SoundManager.play_button_click_sfx()
 	not_enough_resource_timer.stop()
+	selected_upgrade_data = upgrade_data
 	upgrade_desc_label.text = "[u]{upgrade_name}[/u] - {time} day(s)\n[font_size=12]{upgrade_description}[/font_size]".format(
 		{"upgrade_name": upgrade_data.upgrade_name, "upgrade_description": upgrade_data.upgrade_description, "time": upgrade_data.research_time})
 
 	# Check if can be activated
 	if upgrade_data.upgrade_id != EnumAutoload.UpgradeId.NONE and \
 		upgrade_data.upgrade_id in ResourceManager.current_upgrades:
-		_cancel_select_upgrade()
+		_cancel_select_upgrade("[color=green]Researched[/color]")
 		return
 	if upgrade_data.disabled:
-		_cancel_select_upgrade()
+		_cancel_select_upgrade("[color=red]Unable to proceed. Research disabled[/color]")
 		return
 
 	# Check for conflicted upgrades
 	if len(upgrade_data.conflict_one_of_these_upgrades) > 0:
 		for upgr in upgrade_data.conflict_one_of_these_upgrades:
 			if upgr.activated:
-				_cancel_select_upgrade()
+				_cancel_select_upgrade("[color=red]Unable to proceed. Research conflicted[/color]")
 				return
 
 	# Check for prerequisite upgrade
 	var have_previous_upgrade = upgrade_data.check_for_previous_upgrade()
 	if not have_previous_upgrade:
-		_cancel_select_upgrade()
+		_cancel_select_upgrade("[color=yellow]Required prerequisite research[/color]")
 		return
 
-	selected_upgrade_data = upgrade_data
 	upgrade_button.visible = true
 	upgrade_button.text = "Proceed"
 	cost_label.text = "[center]Cost: "
@@ -94,10 +98,9 @@ func select_an_upgrade(upgrade_data: TechUpgradeButton):
 			cost_label.text = "[center]Research paused. {0} days(s) left[/center]".format([upgrade_data.research_time_left])
 
 
-func _cancel_select_upgrade():
-	selected_upgrade_data = null
+func _cancel_select_upgrade(explain_text: String = ""):
 	upgrade_button.visible = false
-	cost_label.text = ""
+	cost_label.text = "[center]" + explain_text + "[/center]"
 
 func update_status_all_upgrade_buttons():
 	if current_research_graph == null:
