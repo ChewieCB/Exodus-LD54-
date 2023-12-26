@@ -165,19 +165,17 @@ func calculate_resource_modifier(resource_type, population) -> void:
 	var modifier = 0
 	match resource_type:
 		EnumAutoload.ResourceType.STORAGE:
-			storage_resource_amount.food = BASE_STORAGE 
-			storage_resource_amount.air = BASE_STORAGE 
-			storage_resource_amount.water = BASE_STORAGE
-			storage_resource_amount.metal = BASE_STORAGE 
+			var new_storage = ResourceData.new(BASE_STORAGE, BASE_STORAGE, BASE_STORAGE, BASE_STORAGE)
 			for building in BuildingManager.buildings:
 				if building is WarehouseBuilding:
 					var warehouse = building as WarehouseBuilding
 					var resource_capacity = warehouse.get_resource_storage_capacity()
 					var mul = ResourceManager.get_storage_with_upgrade_multiplier()
-					storage_resource_amount.food += resource_capacity.food * mul
-					storage_resource_amount.air += resource_capacity.air * mul
-					storage_resource_amount.water += resource_capacity.water * mul
-					storage_resource_amount.metal += resource_capacity.metal * mul
+					new_storage.food += resource_capacity.food * mul
+					new_storage.air += resource_capacity.air * mul
+					new_storage.water += resource_capacity.water * mul
+					new_storage.metal += resource_capacity.metal * mul
+			storage_resource_amount = new_storage
 		EnumAutoload.ResourceType.HOUSING:
 			# Housing is an outlier, we don't update per turn we just keep track
 			# of used and avaialble housing
@@ -606,7 +604,6 @@ func set_mutiny_time_left(value: int):
 			emit_signal("game_over", EnumAutoload.ResourceType.MORALE)
 
 # FOOD
-
 func set_food_amount(value: int):
 	food_amount = value
 	emit_signal("food_changed", food_amount)

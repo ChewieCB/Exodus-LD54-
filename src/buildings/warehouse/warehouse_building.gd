@@ -27,7 +27,6 @@ func _ready():
 	super()
 	data.type = EnumAutoload.BuildingType.STORAGE
 
-
 func apply_upgrades():
 	if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_ADV_LOGISTIC in ResourceManager.current_upgrades:
 		adjacent_range.scale = Vector2(1.5, 1.5)
@@ -41,6 +40,8 @@ func set_specialisation(_type: EnumAutoload.ResourceType):
 	sprite.self_modulate = SPEC_COLOR[specialized_type]
 	# Force emit signal so we can update other buildings bonus multiplier
 	BuildingManager.finished_building(EnumAutoload.BuildingType.NONE)
+	# Force update resource UI
+	ResourceManager.update_resource_modifiers()
 
 func get_resource_bonus_prod():
 	var resource_data = {"air": 0, "water": 0, "food": 0, "metal": 0}

@@ -16,6 +16,7 @@ var old_food_value = 0
 var old_water_value = 0
 var old_air_value = 0
 var old_metal_value = 0
+var old_storage_value: ResourceData
 
 func _ready():
 	ResourceManager.population_changed.connect(_update_pop_ui)
@@ -34,6 +35,9 @@ func _ready():
 	ResourceManager.air_changed.connect(spawn_air_change_popup)
 	ResourceManager.metal_changed.connect(spawn_metal_change_popup)
 
+	var base_storage = ResourceManager.BASE_STORAGE
+	old_storage_value = ResourceData.new(base_storage, base_storage, base_storage, base_storage)
+	ResourceManager.storage_changed.connect(spawn_storage_change_popup)
 
 	# This is fucking stupid, but it's 1AM, i'm tired, and it fixes the UI update problem
 	ResourceManager.population_amount = ResourceManager.population_amount
@@ -120,16 +124,25 @@ func spawn_metal_change_popup(total):
 	spawn_resource_change_popup(total - old_metal_value, metal_label)
 	old_metal_value = total
 
-func spawn_resource_change_popup(change_amount: int, parent_node: Node):
+func spawn_storage_change_popup(total: ResourceData):
+	spawn_resource_change_popup(total.food - old_storage_value.food, food_label, "\nCapacity")
+	spawn_resource_change_popup(total.water - old_storage_value.water, water_label, "\nCapacity")
+	spawn_resource_change_popup(total.air - old_storage_value.air, air_label, "\nCapacity")
+	spawn_resource_change_popup(total.metal - old_storage_value.metal, metal_label, "\nCapacity")
+	old_storage_value = total
+
+func spawn_resource_change_popup(change_amount: int, parent_node: Node, suffix_text: String = ""):
 	if change_amount == 0:
 		return
 	var new_popup = resource_change_popup.instantiate()
 	if change_amount > 0:
 		new_popup.modulate = Color.GREEN
-		new_popup.get_node("Label").text = "+" + str(change_amount)
+		new_popup.get_node("Label").text = "+" + str(change_amount) + suffix_text
 	else:
 		new_popup.modulate = Color.RED
-		new_popup.get_node("Label").text = str(change_amount)
+		new_popup.get_node("Label").text = str(change_amount) + suffix_text
+	new_popup.position.x += randi_range(-15, 15)
+	new_popup.position.y += randi_range(-10, 10)
 	parent_node.add_child(new_popup)
 
 
