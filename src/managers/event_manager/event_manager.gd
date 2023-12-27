@@ -34,6 +34,7 @@ signal finish_event
 signal request_change_event_image
 signal request_change_objective_label
 signal negation_zone
+signal trigger_negation_zone(flag)
 signal proximity_alert(ticks_left)
 signal victory
 signal primary_story_id_changed
@@ -73,6 +74,7 @@ func _ready() -> void:
 	Dialogic.signal_event.connect(_on_dialogic_signal)
 	TickManager.tick.connect(check_tick_for_random_event)
 	tick_to_event = randi_range(MIN_TICK_FOR_EVENT, MAX_TICK_FOR_EVENT)
+	emit_signal("trigger_negation_zone", false)
 
 	# Remove the debug event from the available array
 	available_events.pop_front()
@@ -165,6 +167,7 @@ func check_tick_for_random_event():
 func disable_tutorial():
 	tutorial_progress = -1
 	change_objective_label("Survive until day 200")
+	emit_signal("trigger_negation_zone", true)
 
 
 func check_if_victory():
@@ -218,3 +221,7 @@ func space_fact_event():
 	"""
 	event_source_text = event_source_text.format({"random_fact"=random_fact})
 	return event_source_text
+
+
+func _trigger_negation_zone(value: bool):
+	emit_signal("trigger_negation_zone", value)
