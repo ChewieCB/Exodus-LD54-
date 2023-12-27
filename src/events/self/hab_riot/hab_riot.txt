@@ -13,7 +13,7 @@ ExecutiveOfficer (Normal): The ringleaders have been identified and await senten
 	ExecutiveOfficer (Normal): Captain, the ringleaders have been thrown in the ship's brig. We can leave them on a nearby planet.
 	ExecutiveOfficer (Normal): They rest of the crew are grumbling but the message is clear - your command is not to be questioned.
 	[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "-{pop_cost_1}"]" single_use="true"]
-	[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["{morale_cost_1}", "Imprisoned agitators", "30", "true"]" single_use="true"]
+	[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["-{morale_cost_1}", "Imprisoned agitators", "30", "true"]" single_use="true"]
 	Leave ExecutiveOfficer
 	You lost {pop_cost_1} Crew. Morale down {morale_cost_1}%.
 [signal arg="end_event"]
