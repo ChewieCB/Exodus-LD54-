@@ -140,8 +140,10 @@ func _ready():
 	# Add star shaders
 	var star_positions = generate_stars(stars)
 	# Pick an outer star and place the ship tracker there
-	var outer_stars = get_outer_stars(star_positions, 64, 128)
+	var outer_stars = get_outer_stars(star_positions)
 	var start_point = outer_stars[randi_range(0, outer_stars.size() - 1)]
+	# DEBUG
+	print("Start point distance = ", negation_zone_radius - start_point.distance_to(adjusted_center))
 	previous_star = stars.filter(
 		func(star): return star.global_position == start_point
 	).front()
@@ -682,13 +684,15 @@ func generate_stars(stars) -> Array:
 	return star_positions
 
 
-func get_outer_stars(stars, min_distance=128, max_distance=256) -> Array:
+func get_outer_stars(stars, min_distance=64, max_distance=128) -> Array:
 	# We need to offset the center point here based on the origin of this scene
 	# for when we run it as a SubViewport within the UI
 	var outer_stars = Array(stars).filter(
 		func(star): 
-			return star.distance_to(adjusted_center) >= negation_zone_radius - max_distance \
-				and star.distance_to(adjusted_center) <= negation_zone_radius + min_distance
+			var _star_distance = star.distance_to(adjusted_center)
+			var _distance_to_negation_zone = negation_zone_radius + 1 - _star_distance
+			return _distance_to_negation_zone > min_distance and \
+			_distance_to_negation_zone < max_distance 
 	)
 	
 	return outer_stars
