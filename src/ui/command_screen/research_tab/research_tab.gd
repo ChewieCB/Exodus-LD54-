@@ -27,14 +27,12 @@ func _on_tick():
 	if researching_upgrade.research_time_left <= 1:
 		ResourceManager.add_upgrade(researching_upgrade.upgrade_id, researching_upgrade.upgrade_name)
 		update_status_all_upgrade_buttons()
-		# Refresh the current selecting research
-		print(selected_upgrade_data)
-		if selected_upgrade_data != null:
-			select_an_upgrade(selected_upgrade_data)
 		researching_upgrade = null
 	else:
 		researching_upgrade.research_time_left -= 1
 		researching_upgrade.update_status()
+	if selected_upgrade_data != null:
+		select_an_upgrade(selected_upgrade_data)
 
 func reset_stuff_on_tab() -> void:
 	upgrade_desc_label.text = ""
@@ -126,6 +124,7 @@ func _on_upgrade_button_pressed() -> void:
 			update_status_all_upgrade_buttons()
 			upgrade_button.visible = false
 			cost_label.text = ""
+			select_an_upgrade(researching_upgrade)
 		else:
 			SoundManager.play_sound(warning_click_sfx, "UI")
 			cost_label.text = "[center][color=red]Not enough resource[/color][/center]"
