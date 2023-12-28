@@ -8,15 +8,15 @@ extends Control
 @onready var air_label: Label = $HBoxContainer/MarginContainer4/HBoxContainer/AirDebug
 @onready var metal_label: Label = $HBoxContainer/MarginContainer6/HBoxContainer/MetalLabel
 
-
 @export var resource_change_popup: PackedScene
 
-var old_population_value = 0
+var old_pop_value = 0
 var old_housing_value = 0
 var old_food_value = 0
 var old_water_value = 0
 var old_air_value = 0
 var old_metal_value = 0
+var old_storage_value: ResourceData
 
 func _ready():
 	ResourceManager.population_changed.connect(_update_pop_ui)
@@ -27,12 +27,23 @@ func _ready():
 	ResourceManager.water_modifier_changed.connect(_update_debug_water)
 	ResourceManager.air_modifier_changed.connect(_update_debug_air)
 	ResourceManager.metal_modifier_changed.connect(_update_debug_metal)
+	#
+	ResourceManager.population_changed.connect(spawn_pop_change_popup)
+	ResourceManager.housing_changed.connect(spawn_housing_change_popup)
+	ResourceManager.food_changed.connect(spawn_food_change_popup)
+	ResourceManager.water_changed.connect(spawn_water_change_popup)
+	ResourceManager.air_changed.connect(spawn_air_change_popup)
+	ResourceManager.metal_changed.connect(spawn_metal_change_popup)
+
+	var base_storage = ResourceManager.BASE_STORAGE
+	old_storage_value = ResourceData.new(base_storage, base_storage, base_storage, base_storage)
+	ResourceManager.storage_changed.connect(spawn_storage_change_popup)
 
 	# This is fucking stupid, but it's 1AM, i'm tired, and it fixes the UI update problem
 	ResourceManager.population_amount = ResourceManager.population_amount
 	ResourceManager.worker_amount = ResourceManager.worker_amount
 
-	old_population_value = ResourceManager.population_amount
+	old_pop_value = ResourceManager.population_amount
 	old_housing_value = ResourceManager.housing_amount
 	old_food_value = ResourceManager.food_amount
 	old_water_value = ResourceManager.water_amount
@@ -49,16 +60,12 @@ func animate_bar(bar, value) -> void:
 
 func _update_pop_ui(value):
 	population_counter.text = str(value)
-	spawn_resource_change_popup(value - old_population_value, population_counter)
-	old_population_value = value
 
 func _update_worker_ui(value):
 	worker_counter.text = str(value)
 
-
 func _update_housing_ui(total, available):
 	hab_label.text = "{0} ({1})".format([str(total), str(available)])
-	spawn_resource_change_popup(total - old_housing_value, hab_label)
 	old_housing_value = total
 
 func _update_debug_food(total, modifier):
@@ -67,7 +74,6 @@ func _update_debug_food(total, modifier):
 	if modifier > 0:
 		modifier_prefix = "+"
 	food_label.text = "{0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
-	spawn_resource_change_popup(total - old_food_value, food_label)
 	old_food_value = total
 
 func _update_debug_water(total, modifier):
@@ -76,7 +82,6 @@ func _update_debug_water(total, modifier):
 	if modifier > 0:
 		modifier_prefix = "+"
 	water_label.text = "{0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
-	spawn_resource_change_popup(total - old_water_value, water_label)
 	old_water_value = total
 
 func _update_debug_air(total, modifier):
@@ -85,7 +90,6 @@ func _update_debug_air(total, modifier):
 	if modifier > 0:
 		modifier_prefix = "+"
 	air_label.text = "{0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
-	spawn_resource_change_popup(total - old_air_value, air_label)
 	old_air_value = total
 
 func _update_debug_metal(total, modifier):
@@ -94,19 +98,51 @@ func _update_debug_metal(total, modifier):
 	if modifier > 0:
 		modifier_prefix = "+"
 	metal_label.text = "{0} ({1}{2})".format([str(round(total)), modifier_prefix, modifier_str])
+	old_metal_value = total
+
+func spawn_pop_change_popup(total):
+	spawn_resource_change_popup(total - old_pop_value, population_counter)
+	old_pop_value = total
+
+func spawn_housing_change_popup(total, available):
+	spawn_resource_change_popup(total - old_housing_value, hab_label)
+	old_housing_value = total
+
+func spawn_food_change_popup(total):
+	spawn_resource_change_popup(total - old_food_value, food_label)
+	old_food_value = total
+
+func spawn_water_change_popup(total):
+	spawn_resource_change_popup(total - old_water_value, water_label)
+	old_water_value = total
+
+func spawn_air_change_popup(total):
+	spawn_resource_change_popup(total - old_air_value, air_label)
+	old_air_value = total
+
+func spawn_metal_change_popup(total):
 	spawn_resource_change_popup(total - old_metal_value, metal_label)
 	old_metal_value = total
 
-func spawn_resource_change_popup(change_amount: int, parent_node: Node):
+func spawn_storage_change_popup(total: ResourceData):
+	spawn_resource_change_popup(total.food - old_storage_value.food, food_label, "\nCapacity")
+	spawn_resource_change_popup(total.water - old_storage_value.water, water_label, "\nCapacity")
+	spawn_resource_change_popup(total.air - old_storage_value.air, air_label, "\nCapacity")
+	spawn_resource_change_popup(total.metal - old_storage_value.metal, metal_label, "\nCapacity")
+	old_storage_value = total
+
+func spawn_resource_change_popup(change_amount: int, parent_node: Node, suffix_text: String = ""):
 	if change_amount == 0:
 		return
 	var new_popup = resource_change_popup.instantiate()
 	if change_amount > 0:
 		new_popup.modulate = Color.GREEN
-		new_popup.get_node("Label").text = "+" + str(change_amount)
+		new_popup.get_node("Label").text = "+" + str(change_amount) + suffix_text
 	else:
 		new_popup.modulate = Color.RED
-		new_popup.get_node("Label").text = str(change_amount)
+		new_popup.get_node("Label").text = str(change_amount) + suffix_text
+	new_popup.position.x += randi_range(-15, 15)
+	new_popup.position.y += randi_range(-10, 10)
 	parent_node.add_child(new_popup)
 
 

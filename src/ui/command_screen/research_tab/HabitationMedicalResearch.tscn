@@ -78,7 +78,7 @@ default_color = Color(0.2, 0.2, 0.2, 1)
 layout_mode = 0
 offset_left = 32.0
 offset_top = 40.0
-offset_right = 64.0
+offset_right = 80.0
 offset_bottom = 72.0
 upgrade_name = "Dormitory"
 upgrade_description = "Unlock [color=green]tier II[/color] habitation production building."
@@ -89,15 +89,16 @@ connection_lines = [NodePath("../Line1-2")]
 
 [node name="Upgrade2" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_maogv")]
 layout_mode = 0
-offset_left = 120.0
-offset_top = 40.0
-offset_right = 152.0
-offset_bottom = 72.0
+offset_left = 112.0
+offset_top = 32.0
+offset_right = 160.0
+offset_bottom = 80.0
 upgrade_name = "Megablock"
 upgrade_description = "Unlock [color=green]tier III[/color] food production building."
 upgrade_id = 8
 upgrade_sprite = ExtResource("5_mscjs")
 cost = SubResource("Resource_hgv0c")
+research_time = 2
 require_one_of_these_upgrades = [NodePath("../Upgrade1")]
 
 [node name="Upgrade3" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_maogv")]

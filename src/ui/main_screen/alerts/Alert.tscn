@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cybouprxmhsri"]
+[gd_scene load_steps=9 format=3 uid="uid://cybouprxmhsri"]
 
-[ext_resource type="StyleBox" uid="uid://b7f0mxot53ter" path="res://src/ui/main_screen/resources/AlertPanelTheme.tres" id="1_h15nq"]
-[ext_resource type="Script" path="res://src/ui/main_screen/alerts/alert_container.gd" id="1_spy10"]
-[ext_resource type="Texture2D" uid="uid://8paydokn6heu" path="res://assets/ui/icons/final_icons/worker_icon.png" id="3_c8e76"]
+[ext_resource type="Script" path="res://src/ui/main_screen/alerts/alert.gd" id="1_ug3hb"]
+[ext_resource type="StyleBox" uid="uid://b7f0mxot53ter" path="res://src/ui/main_screen/resources/AlertPanelTheme.tres" id="1_vbsq5"]
+[ext_resource type="Texture2D" uid="uid://8paydokn6heu" path="res://assets/ui/icons/final_icons/worker_icon.png" id="2_y8820"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bnd03"]
 
 [sub_resource type="Animation" id="Animation_dgghc"]
 resource_name = "RESET"
@@ -119,16 +121,17 @@ _data = {
 "alert_out": SubResource("Animation_6f1df")
 }
 
-[node name="AlertContainer" type="MarginContainer"]
+[node name="Alert" type="MarginContainer"]
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(0, 16)
+offset_right = 260.0
+offset_bottom = 54.0
 theme_override_constants/margin_left = -350
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 32
-script = ExtResource("1_spy10")
+script = ExtResource("1_ug3hb")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
@@ -138,7 +141,7 @@ layout_mode = 2
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/MarginContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
-theme_override_styles/panel = ExtResource("1_h15nq")
+theme_override_styles/panel = ExtResource("1_vbsq5")
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer/PanelContainer"]
 layout_mode = 2
@@ -155,7 +158,7 @@ theme_override_constants/margin_left = 8
 
 [node name="Icon" type="TextureRect" parent="VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/IconContainer"]
 layout_mode = 2
-texture = ExtResource("3_c8e76")
+texture = ExtResource("2_y8820")
 stretch_mode = 5
 
 [node name="VSeparator" type="VSeparator" parent="VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
@@ -194,7 +197,18 @@ text = "10"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_bnd03")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_ddfn3")
 }
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

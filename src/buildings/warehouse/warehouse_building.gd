@@ -27,7 +27,6 @@ func _ready():
 	super()
 	data.type = EnumAutoload.BuildingType.STORAGE
 
-
 func apply_upgrades():
 	if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_ADV_LOGISTIC in ResourceManager.current_upgrades:
 		adjacent_range.scale = Vector2(1.5, 1.5)
@@ -41,6 +40,8 @@ func set_specialisation(_type: EnumAutoload.ResourceType):
 	sprite.self_modulate = SPEC_COLOR[specialized_type]
 	# Force emit signal so we can update other buildings bonus multiplier
 	BuildingManager.finished_building(EnumAutoload.BuildingType.NONE)
+	# Force update resource UI
+	ResourceManager.update_resource_modifiers()
 
 func get_resource_bonus_prod():
 	var resource_data = {"air": 0, "water": 0, "food": 0, "metal": 0}
@@ -121,6 +122,7 @@ func get_context_menu_description() -> String:
 			tmp = "Increased max storage capacity for all resources by {n_storage} units.".format({"n_storage": ResourceManager.calculate_storage_with_upgrade(data.storage_prod)})
 			if EnumAutoload.UpgradeId.CONSTRUCTION_LOGIC_STOCK_ANALYSIS in ResourceManager.current_upgrades:
 				tmp += "\nGive 20% bonus production to nearby resource-producing buildings."
+	tmp += '\nWarning: Desconstruct this building will cause surplus resources to be lost.'
 	return tmp
 
 func check_condition_for_specialize():

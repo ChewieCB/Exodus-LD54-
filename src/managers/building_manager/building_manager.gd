@@ -65,7 +65,9 @@ func finished_building(type: EnumAutoload.BuildingType):
 		EnumAutoload.BuildingType.METAL:
 			n_air_building += 1
 
-
+func finished_deconstruct_building(type: EnumAutoload.BuildingType):
+	emit_signal("building_deconstructed", type)
+			
 func expand_building_area(blockoff_name: String):
 	var ship_building_view = get_tree().get_root().get_node("ShipBuildingView")
 	var ship_grid = ship_building_view.get_node("ShipSprite/ShipGrid")
