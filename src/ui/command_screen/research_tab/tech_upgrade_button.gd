@@ -19,14 +19,15 @@ var is_researching = false
 
 @onready var texture_rect: TextureRect = $TextureRect
 @onready var border: TextureRect = $Border
-@onready var research_progress_bar: TextureProgressBar = $TextureRect/TextureProgressBar
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
+@onready var build_timer_ui = $BuildTimerUI
 
 var research_tab: ResearchTab = null
 var activated = false
 @export var disabled = false
 
 func _ready() -> void:
+	build_timer_ui.visible = false
 	research_time_left = research_time
 	if upgrade_sprite:
 		texture_rect.texture = upgrade_sprite
@@ -53,7 +54,7 @@ func update_status():
 		border.visible = true
 		border.self_modulate = Color.RED
 		anim_player.stop()
-		research_progress_bar.visible = false
+		build_timer_ui.visible = false
 		for line in connection_lines:
 			line.default_color = Color(0.2, 0.2, 0.2)
 		return
@@ -65,7 +66,7 @@ func update_status():
 		border.visible = true
 		border.self_modulate = Color.GREEN
 		anim_player.stop()
-		research_progress_bar.visible = false
+		build_timer_ui.visible = false
 		for line in connection_lines:
 			line.default_color = Color(1, 1, 1)
 	else:
@@ -79,8 +80,8 @@ func update_status():
 		texture_rect.self_modulate = Color(1, 1, 1)
 
 	if is_researching:
-		research_progress_bar.value = ((research_time - research_time_left) / float(research_time)) * 100
-		research_progress_bar.visible = true
+		build_timer_ui.set_text(str(research_time_left))
+		build_timer_ui.visible = true
 
 
 func check_for_previous_upgrade():
@@ -95,12 +96,10 @@ func check_for_previous_upgrade():
 
 func start_research():
 	is_researching = true
-	research_progress_bar.tint_under = Color.WHITE
-	research_progress_bar.tint_progress = Color.GREEN
+	build_timer_ui.set_color(Color.GREEN)
 	anim_player.play("highlight")
 
 func pause_research():
 	# is_researching should still be true
-	research_progress_bar.tint_under = Color.DARK_GRAY
-	research_progress_bar.tint_progress = Color.YELLOW
+	build_timer_ui.set_color(Color.YELLOW)
 	anim_player.stop()
