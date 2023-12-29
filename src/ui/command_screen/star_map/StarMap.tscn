@@ -110,11 +110,11 @@ shader_parameter/noise = SubResource("NoiseTexture2D_n1f61")
 script = ExtResource("1_eteq2")
 circle_radius = 400.0
 poisson_radius = 18.0
-galactic_center_radius = 95.0
+galactic_center_radius = 92.0
 galactic_center_connection_chance = 86.0
 galactic_center_connection_jitter = 0.56
-tertiary_connection_chance = 20.0
-tertiary_connection_jitter = 0.45
+tertiary_connection_chance = 56.0
+tertiary_connection_jitter = 0.72
 negation_zone_radius = 400.0
 metadata/_edit_horizontal_guides_ = [-106.0]
 
