@@ -1,0 +1,80 @@
+[gd_scene load_steps=9 format=3 uid="uid://bi8is54rrcskk"]
+
+[ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="1_4epyg"]
+[ext_resource type="Script" path="res://src/buildings/building.gd" id="1_b2wwq"]
+[ext_resource type="Script" path="res://src/common/resource_data.gd" id="2_jlp7b"]
+[ext_resource type="PackedScene" uid="uid://bp6x36xyoxhh2" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="2_pmfom"]
+[ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="3_gw006"]
+
+[sub_resource type="Resource" id="Resource_cjvwg"]
+script = ExtResource("2_jlp7b")
+food = 0
+water = 0
+air = 0
+metal = 0
+
+[sub_resource type="Resource" id="Resource_kasdr"]
+script = ExtResource("3_gw006")
+name = "Lower Sector"
+type = 8
+resource_prod = SubResource("Resource_cjvwg")
+housing_prod = 0
+storage_prod = 0
+people_cost = 10
+refund_population = 0
+construction_time = 0
+destruction_time = 16
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vcsk8"]
+size = Vector2(93.313, 62.6939)
+
+[node name="BlockoffBot" type="Node2D"]
+position = Vector2(29.9999, 416.999)
+scale = Vector2(4.09374, 3.06249)
+script = ExtResource("1_b2wwq")
+data = SubResource("Resource_kasdr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Sprite" type="Sprite2D" parent="Sprite2D"]
+modulate = Color(0.105882, 0.105882, 0.105882, 1)
+position = Vector2(-45.8015, -19.8368)
+scale = Vector2(0.500001, 0.349491)
+texture = ExtResource("1_4epyg")
+
+[node name="Sprite2" type="Sprite2D" parent="Sprite2D"]
+modulate = Color(0.105882, 0.105882, 0.105882, 1)
+position = Vector2(-38.168, 0.28569)
+scale = Vector2(0.253817, 0.294643)
+texture = ExtResource("1_4epyg")
+
+[node name="Sprite3" type="Sprite2D" parent="Sprite2D"]
+modulate = Color(0.105882, 0.105882, 0.105882, 1)
+position = Vector2(0.244293, -0.326569)
+scale = Vector2(0.963739, 0.956841)
+texture = ExtResource("1_4epyg")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-15.1451, -8.7738e-05)
+shape = SubResource("RectangleShape2D_vcsk8")
+
+[node name="BuildTimerUI" parent="." instance=ExtResource("2_pmfom")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -38.0
+offset_top = -31.0
+offset_right = 212.0
+offset_bottom = 219.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.25, 0.25)
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

@@ -58,8 +58,14 @@ size_flags_horizontal = 4
 columns = 2
 
 [node name="WarehouseSpecializeButton" type="Button" parent="PanelContainer/MarginContainer/Info/VBoxContainer/GridContainer"]
+visible = false
 layout_mode = 2
 text = "Specialize"
+
+[node name="SectorUnlockButton" type="Button" parent="PanelContainer/MarginContainer/Info/VBoxContainer/GridContainer"]
+visible = false
+layout_mode = 2
+text = "Unlock"
 
 [node name="WarehouseSpec" parent="PanelContainer/MarginContainer" instance=ExtResource("2_3in5s")]
 visible = false
@@ -73,4 +79,5 @@ size_flags_vertical = 0
 text = "X"
 
 [connection signal="pressed" from="PanelContainer/MarginContainer/Info/VBoxContainer/GridContainer/WarehouseSpecializeButton" to="." method="_on_warehouse_specialize_button_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/Info/VBoxContainer/GridContainer/SectorUnlockButton" to="." method="_on_sector_unlock_button_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/CloseButton" to="." method="_on_close_button_pressed"]

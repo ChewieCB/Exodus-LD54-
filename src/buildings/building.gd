@@ -48,6 +48,8 @@ func _ready():
 func _process(delta):
 	# TODO: Optimize this
 	if Input.is_action_just_pressed("cancel_place_building"):
+		if data.type == EnumAutoload.BuildingType.SECTOR:
+			return
 		if is_hover and can_delete and not preview:
 			if is_constructing and not is_deconstructing:
 				cancel_construction()
@@ -307,12 +309,15 @@ func get_context_menu_description() -> String:
 			tmp = "Can produce {n_metal} units of Metal per day.".format({"n_metal": get_produced_resource().metal})
 		EnumAutoload.BuildingType.CRYO_POD:
 			tmp = "Can be deconstructed to wake up {n_pop} crew member(s).".format({"n_pop": data.refund_population})
+		EnumAutoload.BuildingType.SECTOR:
+			tmp = "Can be cleared to increase building area."
 	return tmp
 
 func get_context_menu_stat() -> String:
 	var tmp = ""
-	tmp = "Construct time: {0} day(s), {1} crewmate(s)".format([ResourceManager.calculate_build_time_with_upgrade(data.construction_time), data.people_cost])
-	tmp += "\nDeconstruct time: {0} day(s), {1} crewmate(s)".format([ResourceManager.calculate_build_time_with_upgrade(data.destruction_time), data.people_cost])
+	if not data.type == EnumAutoload.BuildingType.SECTOR:
+		tmp = "Construct time: {0} day(s), {1} crewmate(s)\n".format([ResourceManager.calculate_build_time_with_upgrade(data.construction_time), data.people_cost])
+	tmp += "Deconstruct time: {0} day(s), {1} crewmate(s)".format([ResourceManager.calculate_build_time_with_upgrade(data.destruction_time), data.people_cost])
 	if bonus_multiplier > 1:
 		tmp += "\nCurrent multiplier: {mul}%".format({"mul": bonus_multiplier * 100})
 	return tmp
