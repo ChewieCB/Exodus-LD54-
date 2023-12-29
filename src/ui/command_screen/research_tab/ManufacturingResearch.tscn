@@ -89,7 +89,7 @@ water = 200
 air = 200
 metal = 0
 
-[node name="HabitationMedicalResearch" type="Control"]
+[node name="ManufacturingResearch" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 451.0

@@ -26,10 +26,6 @@ func _ready():
 	ScreenTransitionManager.fade_in(1.5)
 	await ScreenTransitionManager.transitioned
 
-	bgm_music = load("res://assets/audio/music/ld54-bgm-medley-no-alarms-1.1.mp3")
-	bgm_audio_player = SoundManager.play_music(bgm_music, 0.2, "Music")
-	bgm_audio_player.finished.connect(play_bgm_again)
-
 	get_tree().paused = false
 	get_node("UI").visible = true
 
@@ -94,11 +90,11 @@ func _update_star_particles(tick_speed, is_paused):
 		).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 	else:
 		match tick_speed:
-			TickManager.SLOW_TICK_SPEED:
+			TickManager.SLOW_TICK_TIME:
 				tween.tween_property(
 					star_particles, "speed_scale", 1, 0.35
 				).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-			TickManager.FAST_TICK_SPEED:
+			TickManager.FAST_TICK_TIME:
 				tween.tween_property(
 					star_particles, "speed_scale", 4, 0.2
 				).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)

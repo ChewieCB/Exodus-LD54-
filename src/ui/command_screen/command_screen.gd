@@ -14,7 +14,6 @@ class_name CommandScreen
 @onready var path_choice_view = $DeviceFrame/TabContainer/Travel/PathChoiceView
 @onready var change_path_button: Button = $DeviceFrame/TabContainer/Travel/ChangePathButton
 
-
 # Officer tab
 @onready var officer_container = $DeviceFrame/TabContainer/Officers/OfficerListMC/ScrollContainer/MarginContainer/VBoxContainer
 @onready var officer_desc_label = $DeviceFrame/TabContainer/Officers/OfficerDescMC/MarginContainer/OfficerDescLabel
@@ -23,6 +22,8 @@ class_name CommandScreen
 @onready var research_tab: ResearchTab = $DeviceFrame/TabContainer/Research
 @onready var crewmate_tab: CrewmateTab = $DeviceFrame/TabContainer/Crewmates
 @onready var status_tab: StatusTab = $DeviceFrame/TabContainer/Status
+
+var main_ui: MainUI = null  # Will be set from main_ui.gd
 
 var trave_screen_open = false
 var chose_path_screen_open = false
@@ -122,7 +123,7 @@ func _on_show_hide_command_screen_toggled(button_pressed:bool) -> void:
 		trave_screen_open = true
 		show_hide_command_screen_button.button_pressed = button_pressed
 		$DeviceFrame/TabContainer/Travel/MarginContainer.grab_focus()
-
+		main_ui.hide_build_view()
 	else:
 		show_hide_command_screen_button.text = "Show command screen"
 		animation_player.play("hide")

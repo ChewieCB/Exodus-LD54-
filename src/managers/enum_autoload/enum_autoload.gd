@@ -42,6 +42,17 @@ enum ResourceType {
 	METAL,
 }
 
+enum AlertType {
+    POPULATION,
+    WORKER,
+    FOOD,
+    WATER,
+    AIR,
+    MORALE,
+    PROXIMITY,
+    RESEARCH
+}
+
 
 # Do not add id mid-array, always add it at the end, even if it
 # look messy. Add mid-array will break the research trees.

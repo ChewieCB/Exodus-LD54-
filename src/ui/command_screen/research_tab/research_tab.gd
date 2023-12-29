@@ -12,9 +12,27 @@ class_name ResearchTab
 var warning_click_sfx = preload("res://assets/audio/sfx/Cant_Place_Building_There.mp3")
 var proceed_click_sfx = preload("res://assets/audio/sfx/Building_Start.mp3")
 
-
 var selected_upgrade_data: TechUpgradeButton
+var researching_upgrade: TechUpgradeButton
 var cost_label_prev_text = ""
+var current_research_graph = null
+
+func _ready() -> void:
+	TickManager.tick.connect(_on_tick)
+
+func _on_tick():
+	if researching_upgrade == null:
+		return
+
+	if researching_upgrade.research_time_left <= 1:
+		ResourceManager.add_upgrade(researching_upgrade.upgrade_id, researching_upgrade.upgrade_name)
+		update_status_all_upgrade_buttons()
+		researching_upgrade = null
+	else:
+		researching_upgrade.research_time_left -= 1
+		researching_upgrade.update_status()
+	if selected_upgrade_data != null:
+		select_an_upgrade(selected_upgrade_data)
 
 func reset_stuff_on_tab() -> void:
 	upgrade_desc_label.text = ""
@@ -29,38 +47,34 @@ func reset_stuff_on_tab() -> void:
 func select_an_upgrade(upgrade_data: TechUpgradeButton):
 	SoundManager.play_button_click_sfx()
 	not_enough_resource_timer.stop()
-	upgrade_desc_label.text = "[u]{upgrade_name}[/u]\n[font_size=12]{upgrade_description}[/font_size]".format(
-		{"upgrade_name": upgrade_data.upgrade_name, "upgrade_description": upgrade_data.upgrade_description})
+	selected_upgrade_data = upgrade_data
+	upgrade_desc_label.text = "[u]{upgrade_name}[/u] - {time} day(s)\n[font_size=12]{upgrade_description}[/font_size]".format(
+		{"upgrade_name": upgrade_data.upgrade_name, "upgrade_description": upgrade_data.upgrade_description, "time": upgrade_data.research_time})
 
 	# Check if can be activated
 	if upgrade_data.upgrade_id != EnumAutoload.UpgradeId.NONE and \
 		upgrade_data.upgrade_id in ResourceManager.current_upgrades:
-		_cancel_select_upgrade()
+		_cancel_select_upgrade("[color=green]Researched[/color]")
 		return
 	if upgrade_data.disabled:
-		_cancel_select_upgrade()
+		_cancel_select_upgrade("[color=red]Unable to proceed. Research disabled[/color]")
 		return
 
 	# Check for conflicted upgrades
 	if len(upgrade_data.conflict_one_of_these_upgrades) > 0:
 		for upgr in upgrade_data.conflict_one_of_these_upgrades:
 			if upgr.activated:
-				_cancel_select_upgrade()
+				_cancel_select_upgrade("[color=red]Unable to proceed. Research conflicted[/color]")
 				return
 
 	# Check for prerequisite upgrade
-	var have_previous_upgrade = true
-	if len(upgrade_data.require_one_of_these_upgrades) > 0:
-		have_previous_upgrade = false
-		for upgr in upgrade_data.require_one_of_these_upgrades:
-			if upgr.activated:
-				have_previous_upgrade = true
+	var have_previous_upgrade = upgrade_data.check_for_previous_upgrade()
 	if not have_previous_upgrade:
-		_cancel_select_upgrade()
+		_cancel_select_upgrade("[color=yellow]Required prerequisite research[/color]")
 		return
 
-	selected_upgrade_data = upgrade_data
 	upgrade_button.visible = true
+	upgrade_button.text = "Proceed"
 	cost_label.text = "[center]Cost: "
 	if upgrade_data.cost.food > 0:
 		cost_label.text += str(upgrade_data.cost.food) + " Food, "
@@ -73,44 +87,73 @@ func select_an_upgrade(upgrade_data: TechUpgradeButton):
 	cost_label.text += "[/center]"
 	cost_label_prev_text = cost_label.text
 
-func _cancel_select_upgrade():
-	selected_upgrade_data = null
-	upgrade_button.visible = false
-	cost_label.text = ""
+	# If click on researching upgrade
+	if upgrade_data.is_researching:
+		if researching_upgrade == upgrade_data:
+			cost_label.text = "[center]Researching... {0} days(s) left[/center]".format([researching_upgrade.research_time_left])
+			upgrade_button.visible = false
+		else:
+			cost_label.text = "[center]Research paused. {0} days(s) left[/center]".format([upgrade_data.research_time_left])
 
+
+func _cancel_select_upgrade(explain_text: String = ""):
+	upgrade_button.visible = false
+	cost_label.text = "[center]" + explain_text + "[/center]"
 
 func update_status_all_upgrade_buttons():
-	var research_graph = get_node("ResearchGraphView/ResearchGraphHolder").get_child(0)
-	for child in research_graph.get_children():
+	if current_research_graph == null:
+		return
+
+	for child in current_research_graph.get_children():
 		if child is TechUpgradeButton:
 			child.update_status()
-
 
 func _on_upgrade_button_pressed() -> void:
 	if selected_upgrade_data != null:
 		if ResourceManager.check_if_enough_resource(selected_upgrade_data.cost):
 			SoundManager.play_sound(proceed_click_sfx, "UI")
-			ResourceManager.add_upgrade(selected_upgrade_data.upgrade_id)
-			ResourceManager.change_resource(selected_upgrade_data.cost, false)
+			if researching_upgrade != null:
+				researching_upgrade.pause_research()
+			researching_upgrade = selected_upgrade_data
+			if not researching_upgrade.is_researching:
+				ResourceManager.change_resource(selected_upgrade_data.cost, false)
+			researching_upgrade.start_research()
 			# Refresh UI
 			for upgr in selected_upgrade_data.conflict_one_of_these_upgrades:
 				upgr.disabled = true
 			update_status_all_upgrade_buttons()
 			upgrade_button.visible = false
 			cost_label.text = ""
+			select_an_upgrade(researching_upgrade)
 		else:
 			SoundManager.play_sound(warning_click_sfx, "UI")
 			cost_label.text = "[center][color=red]Not enough resource[/color][/center]"
 			not_enough_resource_timer.start()
 
-func open_research_graph(reseach_scene: PackedScene):
+func open_research_graph(research_scene: PackedScene):
+	# This is for select a research category at the research tab main menu
 	SoundManager.play_button_click_sfx()
-	if reseach_scene == null:
+	if research_scene == null:
 		return
+
+	var new_research_scene = research_scene.instantiate()
 	for child in research_graph_holder.get_children():
-		child.queue_free()
-	var new_research_scene = reseach_scene.instantiate()
-	research_graph_holder.add_child(new_research_scene)
+		child.visible = false
+
+	# If that research scene not exist, instantiate and add them to node
+	# If exist, just toggle their visibility
+	var found = false
+	for child in research_graph_holder.get_children():
+		if child.name == new_research_scene.name:
+			child.visible = true
+			new_research_scene.queue_free()
+			current_research_graph = child
+			found = true
+			break
+	if not found:
+		research_graph_holder.add_child(new_research_scene)
+		current_research_graph = new_research_scene
+
 	choose_tech_view.visible = false
 	research_graph_view.visible = true
 
@@ -119,6 +162,7 @@ func _on_back_button_pressed() -> void:
 	SoundManager.play_button_click_sfx()
 	research_graph_view.visible = false
 	choose_tech_view.visible = true
+	current_research_graph = null
 	reset_stuff_on_tab()
 
 

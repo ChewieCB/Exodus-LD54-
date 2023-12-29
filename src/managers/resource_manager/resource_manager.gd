@@ -40,6 +40,7 @@ signal morale_detail_hide
 signal construction_cancelled_lack_of_workers(building_name)
 
 signal upgrade_acquired
+signal research_completed(research_name)
 
 var food_alert_shown = false
 var water_alert_shown = false
@@ -66,17 +67,6 @@ var suffocating_time_left = suffocating_time: set = set_suffocating_time_left
 var is_mutiny = false: set = set_is_mutiny
 var mutiny_time: int = 3
 var mutiny_time_left = mutiny_time: set = set_mutiny_time_left
-
-enum RESOURCE_TYPE {
-	POPULATION,
-	STORAGE,
-	HOUSING,
-	MORALE,
-	FOOD,
-	WATER,
-	AIR,
-	METAL,
-}
 
 var current_officers = [EnumAutoload.Officer.PRESSLEY, EnumAutoload.Officer.TORGON]
 var current_upgrades = []
@@ -149,15 +139,32 @@ func _on_tick():
 	update_resources_with_modifier()
 
 
+func _process(delta: float) -> void:
+	var food_ratio_left = 1000
+	var water_ratio_left = 1000
+	var air_ratio_left = 1000
+
+	if current_food_modifier < 0:
+		food_ratio_left = float(food_amount) / abs(current_food_modifier)
+	if current_water_modifier < 0:
+		water_ratio_left = float(water_amount) / abs(current_water_modifier)
+	if current_air_modifier < 0:
+		air_ratio_left = float(air_amount) / abs(current_air_modifier)
+
+	var lowest_ratio = min(food_ratio_left, water_ratio_left, air_ratio_left)
+	lowest_ratio = clampf(lowest_ratio / 10.0, 0, 1)
+	FmodManager.update_dynamic_music(lowest_ratio)
+ 
+ 
 func update_resource_modifiers():
 	for idx in range(1, 9):
 		calculate_resource_modifier(idx, population_amount)
 		match idx:
-			RESOURCE_TYPE.POPULATION:
+			EnumAutoload.ResourceType.POPULATION:
 				pass
-			RESOURCE_TYPE.HOUSING:
+			EnumAutoload.ResourceType.HOUSING:
 				emit_signal("housing_changed", housing_amount, available_housing)
-			RESOURCE_TYPE.FOOD:
+			EnumAutoload.ResourceType.FOOD:
 				emit_signal("food_modifier_changed", food_amount, current_food_modifier)
 			EnumAutoload.ResourceType.WATER:
 				emit_signal("water_modifier_changed", water_amount, current_water_modifier)
@@ -165,7 +172,7 @@ func update_resource_modifiers():
 				emit_signal("air_modifier_changed", air_amount, current_air_modifier)
 			EnumAutoload.ResourceType.METAL:
 				emit_signal("metal_modifier_changed", metal_amount, current_metal_modifier)
-			RESOURCE_TYPE.MORALE:
+			EnumAutoload.ResourceType.MORALE:
 				emit_signal("morale_changed", morale_amount)
 
 
@@ -175,19 +182,17 @@ func calculate_resource_modifier(resource_type, population) -> void:
 	var modifier = 0
 	match resource_type:
 		EnumAutoload.ResourceType.STORAGE:
-			storage_resource_amount.food = BASE_STORAGE 
-			storage_resource_amount.air = BASE_STORAGE 
-			storage_resource_amount.water = BASE_STORAGE
-			storage_resource_amount.metal = BASE_STORAGE 
+			var new_storage = ResourceData.new(BASE_STORAGE, BASE_STORAGE, BASE_STORAGE, BASE_STORAGE)
 			for building in BuildingManager.buildings:
 				if building is WarehouseBuilding:
 					var warehouse = building as WarehouseBuilding
 					var resource_capacity = warehouse.get_resource_storage_capacity()
 					var mul = ResourceManager.get_storage_with_upgrade_multiplier()
-					storage_resource_amount.food += resource_capacity.food * mul
-					storage_resource_amount.air += resource_capacity.air * mul
-					storage_resource_amount.water += resource_capacity.water * mul
-					storage_resource_amount.metal += resource_capacity.metal * mul
+					new_storage.food += resource_capacity.food * mul
+					new_storage.air += resource_capacity.air * mul
+					new_storage.water += resource_capacity.water * mul
+					new_storage.metal += resource_capacity.metal * mul
+			storage_resource_amount = new_storage
 		EnumAutoload.ResourceType.HOUSING:
 			# Housing is an outlier, we don't update per turn we just keep track
 			# of used and avaialble housing
@@ -374,9 +379,10 @@ func jettison_crewmate(crewmate):
 	)
 
 
-func add_upgrade(upgrade_id: EnumAutoload.UpgradeId):
+func add_upgrade(upgrade_id: EnumAutoload.UpgradeId, upgrade_name: String):
 	current_upgrades.append(upgrade_id)
 	emit_signal("upgrade_acquired")
+	emit_signal("research_completed", upgrade_name)
 
 
 func check_if_enough_resource(cost: ResourceData) -> bool:
@@ -400,7 +406,7 @@ func change_resource(resource_data: ResourceData, add: bool = true, multiplier: 
 	water_amount += ceil(resource_data.water * operation_multiplier * multiplier)
 	air_amount += ceil(resource_data.air * operation_multiplier * multiplier)
 	metal_amount += ceil(resource_data.metal * operation_multiplier * multiplier)
-
+	update_resource_modifiers()
 
 func get_build_time_with_upgrade_multiplier() -> float:
 	var reduction_perc = 0
@@ -570,12 +576,12 @@ func set_habitability(value: int):
 	morale_amount = habitability + current_morale_modifier
 
 func add_morale_effect(
-	name: String, value: int, length: int, 
+	_name: String, value: int, length: int, 
 	type: MoraleEffect.TYPES = MoraleEffect.TYPES.TemporaryMoraleEffect
 ):
 	# Don't add any effects added before the game starts
 	var effect = MoraleEffect.new()
-	effect._name = name
+	effect._name = _name
 	effect.type = type
 	effect.morale_modifier_value = value
 	effect.effect_length = length
@@ -612,10 +618,9 @@ func set_mutiny_time_left(value: int):
 	if morale_amount == 0:
 		emit_signal("mutiny", mutiny_time_left)
 		if mutiny_time_left == 0:
-			emit_signal("game_over", RESOURCE_TYPE.MORALE)
+			emit_signal("game_over", EnumAutoload.ResourceType.MORALE)
 
 # FOOD
-
 func set_food_amount(value: int):
 	food_amount = value
 	emit_signal("food_changed", food_amount)
@@ -631,7 +636,7 @@ func set_starving_time_left(value: int):
 	if is_starving:
 		emit_signal("starving", starving_time_left)
 		if starving_time_left == 0:
-			emit_signal("game_over", RESOURCE_TYPE.FOOD)
+			emit_signal("game_over", EnumAutoload.ResourceType.FOOD)
 
 # WATER
 
@@ -650,7 +655,7 @@ func set_thirsty_time_left(value: int):
 	if is_thirsty:
 		emit_signal("dehydrated", thirsty_time_left)
 		if thirsty_time_left == 0:
-			emit_signal("game_over", RESOURCE_TYPE.WATER)
+			emit_signal("game_over", EnumAutoload.ResourceType.WATER)
 
 # AIR
 
@@ -669,7 +674,7 @@ func set_suffocating_time_left(value: int):
 	if is_suffocating:
 		emit_signal("suffocating", suffocating_time_left)
 		if suffocating_time_left == 0:
-			emit_signal("game_over", RESOURCE_TYPE.AIR)
+			emit_signal("game_over", EnumAutoload.ResourceType.AIR)
 
 # METAL
 

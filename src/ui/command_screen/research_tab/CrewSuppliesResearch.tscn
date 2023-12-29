@@ -97,6 +97,7 @@ Unlock [color=green]tier II[/color] food production building."
 upgrade_id = 1
 upgrade_sprite = ExtResource("3_6w3wc")
 cost = SubResource("Resource_rp7ij")
+research_time = 2
 connection_lines = [NodePath("../Line1-2")]
 
 [node name="Upgrade2" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_g3kk2")]
@@ -111,6 +112,7 @@ Unlock [color=green]tier III[/color] food production building."
 upgrade_id = 2
 upgrade_sprite = ExtResource("4_a0sdx")
 cost = SubResource("Resource_b5u8v")
+research_time = 3
 require_one_of_these_upgrades = [NodePath("../Upgrade1")]
 
 [node name="Upgrade3" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_g3kk2")]
@@ -137,6 +139,7 @@ upgrade_description = "Unlock [color=green]tier III[/color] water production bui
 upgrade_id = 4
 upgrade_sprite = ExtResource("6_cbu72")
 cost = SubResource("Resource_ruf0p")
+research_time = 3
 require_one_of_these_upgrades = [NodePath("../Upgrade3")]
 
 [node name="Upgrade5" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_g3kk2")]
@@ -163,6 +166,7 @@ upgrade_description = "Unlock [color=green]tier III[/color] air production build
 upgrade_id = 6
 upgrade_sprite = ExtResource("8_qgahd")
 cost = SubResource("Resource_dngwj")
+research_time = 4
 require_one_of_these_upgrades = [NodePath("../Upgrade5")]
 
 [node name="TreeLabel" type="Label" parent="."]

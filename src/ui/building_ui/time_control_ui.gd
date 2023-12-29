@@ -87,7 +87,7 @@ func _on_speed_1_button_pressed():
 	SoundManager.play_button_click_sfx()
 	normal_button.disabled = true
 	normal_texture.modulate = Color.GRAY
-	TickManager._set_tick_rate(TickManager.SLOW_TICK_SPEED)
+	TickManager._set_tick_rate(TickManager.SLOW_TICK_TIME)
 	
 	if pause_button.disabled:
 		pause_button.disabled = false
@@ -102,7 +102,7 @@ func _on_speed_2_button_pressed():
 	SoundManager.play_button_click_sfx()
 	fast_button.disabled = true
 	fast_texture.modulate = Color.GRAY
-	TickManager._set_tick_rate(TickManager.FAST_TICK_SPEED)
+	TickManager._set_tick_rate(TickManager.FAST_TICK_TIME)
 	
 	if pause_button.disabled:
 		pause_button.disabled = false

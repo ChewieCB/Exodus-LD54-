@@ -180,17 +180,11 @@ func _physics_process(delta):
 	# If we have a destination, move towards it
 	if is_ship_travelling:
 		if next_star:
+			var ship_speed_timescale = TickManager.get_timescale_modifier()
 			# TODO - get lerp working for this so we can ease it
 			$ShipTracker.global_position += \
 				(next_star.global_position - $ShipTracker.global_position).normalized() * \
-				SHIP_MOVE_RATE * \
-				remap(
-					TickManager.current_tick_rate,
-					TickManager.PAUSED_TICK_SPEED, 
-					TickManager.FAST_TICK_SPEED,
-					0,
-					2
-				) * delta
+				SHIP_MOVE_RATE * ship_speed_timescale * delta
 			
 			$ShipTracker.global_rotation = lerp_angle(
 				$ShipTracker.global_rotation, 

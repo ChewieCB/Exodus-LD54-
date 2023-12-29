@@ -5,15 +5,14 @@ signal tick_changed(tick_speed, is_paused)
 
 @onready var tick_timer = $Timer
 
-const PAUSED_TICK_SPEED = 10.0
-const SLOW_TICK_SPEED = 5.0
-const FAST_TICK_SPEED = 1.25
-var current_tick_rate = SLOW_TICK_SPEED
+const SLOW_TICK_TIME = 10.0
+const FAST_TICK_TIME = 2.5
+var current_tick_rate = SLOW_TICK_TIME # This is a bad name, as actually this is how long for each tick instead of how many tick per second
 var current_tick: int = 0
 var time_control_ui = null
 
 func _ready():
-	tick_timer.start(SLOW_TICK_SPEED)
+	tick_timer.start(SLOW_TICK_TIME)
 	tick_timer.set_paused(true)
 
 
@@ -24,19 +23,20 @@ func start_ticks():
 
 func stop_ticks():
 	tick_timer.set_paused(true)
-	current_tick_rate = PAUSED_TICK_SPEED
 	emit_signal("tick_changed", current_tick_rate, true)
 	
 	RenderingServer.global_shader_parameter_set(
 		"timescale", 
-		remap(
-			current_tick_rate,
-			PAUSED_TICK_SPEED,
-			FAST_TICK_SPEED,
-			0.0,
-			2.0
-		)
+		get_timescale_modifier()
 	)
+
+func get_timescale_modifier():
+	if tick_timer.paused:
+		return 0
+	if current_tick_rate == SLOW_TICK_TIME:
+		return 1
+	else:
+		return 2
 
 
 func _set_tick_rate(new_tick_rate: float):
@@ -60,13 +60,7 @@ func _set_tick_rate(new_tick_rate: float):
 	
 	RenderingServer.global_shader_parameter_set(
 		"timescale", 
-		remap(
-			current_tick_rate,
-			PAUSED_TICK_SPEED,
-			FAST_TICK_SPEED,
-			0.0,
-			2.0
-		)
+		get_timescale_modifier()
 	)
 
 
@@ -80,6 +74,6 @@ func _on_timer_timeout():
 
 
 func reset_state():
-	current_tick_rate = SLOW_TICK_SPEED
-	tick_timer.start(SLOW_TICK_SPEED)
+	current_tick_rate = SLOW_TICK_TIME
+	tick_timer.start(SLOW_TICK_TIME)
 	tick_timer.set_paused(true)

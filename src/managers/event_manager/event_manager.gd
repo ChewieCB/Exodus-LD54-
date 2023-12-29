@@ -7,7 +7,6 @@ var tick_passed_total = 0
 var tick_to_victory = 200
 var end_game = false
 
-var ship_speed_per_day = 1
 var distance_travelled = 0
 var distance_to_victory = 200
 
@@ -81,10 +80,6 @@ func _ready() -> void:
 
 	if tutorial_progress == 0:
 		tick_to_event += 5
-
-func finished_deconstruct_building(type: EnumAutoload.BuildingType):
-	emit_signal("building_deconstructed", type)
-
 
 func _on_dialogic_signal(arg: String):
 	emit_signal("finish_event", arg)
