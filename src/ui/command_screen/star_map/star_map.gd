@@ -91,7 +91,7 @@ var queued_stars: Array = []
 var chevrons_instance: Line2D
 var queued_chevrons: Array = []
 
-const SHIP_MOVE_RATE: float = 20.0 # 2.0
+const SHIP_MOVE_RATE: float = 2.0 # Default is 2.0
 var is_ship_travelling: bool = false
 
 var NEGATION_FIELD_SHRINK_RATE: float = 1.0

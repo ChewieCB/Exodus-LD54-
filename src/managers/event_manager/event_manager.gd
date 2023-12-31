@@ -155,7 +155,7 @@ func check_tick_for_random_event():
 
 func disable_tutorial():
 	tutorial_progress = -1
-	change_objective_label("Survive until day 200")
+	change_objective_label("Travel to the center of the galaxy")
 	emit_signal("trigger_negation_zone", true)
 
 
