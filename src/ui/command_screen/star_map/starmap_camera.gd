@@ -8,11 +8,18 @@ var _target_zoom: float = 8.0
 
 const PAN_RETURN_RATE: float = 2.5
 var pan_wait: float = 1.6
-var is_pan_returning: bool = true
+var is_pan_returning: bool = false
 
 var negation_zone_camera_limit_buffer: int = 32
 @onready var negation_zone_radius = get_parent().negation_zone_radius
 @onready var pan_wait_timer = $PanWaitTimer
+
+
+func _ready():
+	await get_parent().ready
+	self.global_position = get_parent().goal_point
+	await get_tree().create_timer(1.2).timeout
+	is_pan_returning = true
 
 
 func _physics_process(delta):

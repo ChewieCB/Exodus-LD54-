@@ -218,8 +218,8 @@ func _trigger_negation_zone(value: bool):
 	emit_signal("trigger_negation_zone", value)
 
 
-func reached_a_star(star: StarNode):
+func reached_a_star(star: StarNode, is_goal: bool = false):
 	emit_signal("star_arrived", star)
-	if star.is_near_galaxy_center:
+	if is_goal:
 		play_event(primary_story_events[-1])
 
