@@ -91,7 +91,7 @@ var queued_stars: Array = []
 var chevrons_instance: Line2D
 var queued_chevrons: Array = []
 
-const SHIP_MOVE_RATE: float = 2.0
+const SHIP_MOVE_RATE: float = 20.0 # 2.0
 var is_ship_travelling: bool = false
 
 var NEGATION_FIELD_SHRINK_RATE: float = 1.0
@@ -200,6 +200,8 @@ func _physics_process(delta):
 			# When the ship reaches a star
 			# Tried using is_equal_approx() for this but it needs a slightly wider margin of error
 			if $ShipTracker.global_position.distance_to(next_star.global_position) < 1:
+				EventManager.reached_a_star(next_star)
+
 				# Update relative stars
 				previous_star = next_star
 				next_star = null
@@ -697,7 +699,7 @@ func get_outer_stars(stars, min_distance=64, max_distance=128) -> Array:
 func set_inner_stars():
 	var inner_stars = Array(stars).filter(
 		func(star): 
-			return star.global_position.distance_to(adjusted_center) <= galactic_center_radius
+			return star.global_position.distance_to(adjusted_center) < galactic_center_radius
 	)
 	for star in inner_stars:
 		star.is_near_galaxy_center = true
