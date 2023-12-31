@@ -24,7 +24,7 @@ func _game_over(resource):
 			resource_str = "water"
 		EnumAutoload.ResourceType.AIR:
 			resource_str = "air"
-		ResourceManager.RESOURCE_TYPE.MORALE:
+		EnumAutoload.ResourceType.MORALE:
 			resource_str = "morale.\nCrew riots have exploded into a mutiny and you have been forced out the airlock."
 	flavour_text.text = "You ran out of {0}.".format([resource_str])
 

@@ -267,7 +267,7 @@ func update_resources_with_modifier() -> void:
 	is_starving = food_amount == 0 and current_food_modifier < 0
 	is_thirsty = water_amount == 0 and current_water_modifier < 0
 	is_suffocating = air_amount == 0 and current_air_modifier < 0
-	is_mutiny = morale_amount == -100
+	is_mutiny = morale_amount == 0
 
 
 func can_add_population(value) -> bool:
