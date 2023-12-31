@@ -61,9 +61,8 @@ func _input(event: InputEvent) -> void:
 				zoom_in()
 			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 				zoom_out()
-			if event.button_index == MOUSE_BUTTON_MIDDLE:
-				pan_wait_timer.stop()
-				is_pan_returning = false
+			pan_wait_timer.stop()
+			is_pan_returning = false
 		elif event.is_released():
 			if event.button_index == MOUSE_BUTTON_MIDDLE:
 				pan_wait_timer.start(pan_wait)
