@@ -144,6 +144,7 @@ func _ready():
 	# Pick an outer star and place the ship tracker there
 	var outer_stars = get_outer_stars(star_positions)
 	var start_point = outer_stars[randi_range(0, outer_stars.size() - 1)]
+	set_inner_stars()
 	# DEBUG
 	print("Start point distance = ", negation_zone_radius - start_point.distance_to(adjusted_center))
 	previous_star = stars.filter(
@@ -692,6 +693,15 @@ func get_outer_stars(stars, min_distance=64, max_distance=128) -> Array:
 	)
 	
 	return outer_stars
+
+func set_inner_stars():
+	var inner_stars = Array(stars).filter(
+		func(star): 
+			return star.global_position.distance_to(adjusted_center) <= galactic_center_radius
+	)
+	for star in inner_stars:
+		star.is_near_galaxy_center = true
+	
 
 # <-------- v POISSON DISTRIBUTION METHODS - MOVE OUT INTO UTILS v -------->
 
