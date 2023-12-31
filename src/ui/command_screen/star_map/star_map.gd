@@ -56,7 +56,7 @@ extends Node2D
 				0, initial_negation_zone_radius,
 				0, 0.25
 			)
-@export_range(0, 5, 0.1) var NEGATION_ZONE_RATE: float = 2.5
+@export_range(0, 5, 0.1) var NEGATION_ZONE_RATE: float = 3.5
 @onready var initial_negation_zone_radius: float = negation_zone_radius
 var previous_negation_zone_radius: float
 # If we're within the debuff distance to the negation zone, 
