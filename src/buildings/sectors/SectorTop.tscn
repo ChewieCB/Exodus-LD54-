@@ -34,7 +34,6 @@ script = ExtResource("1_xjhq6")
 data = SubResource("Resource_fn8ab")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(1, 1)
 
 [node name="Sprite" type="Sprite2D" parent="Sprite2D"]
 modulate = Color(0.105882, 0.105882, 0.105882, 1)

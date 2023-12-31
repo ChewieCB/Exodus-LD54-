@@ -274,17 +274,28 @@ func _on_area_2d_mouse_entered():
 	pulse_colour.a = 0.5
 	var pulse_mat = ShaderMaterial.new()
 	pulse_mat.shader = pulse_shader
-	sprite.material = pulse_mat
-	sprite.material.set_shader_parameter("shine_color", pulse_colour)
-	sprite.material.set_shader_parameter("full_pulse_cycle", true)
-	sprite.material.set_shader_parameter("mode", 1)
+	if sprite.get_child_count() > 0:
+		for _sprite in sprite.get_children():
+			_sprite.material = pulse_mat
+			_sprite.material.set_shader_parameter("shine_color", pulse_colour)
+			_sprite.material.set_shader_parameter("full_pulse_cycle", true)
+			_sprite.material.set_shader_parameter("mode", 1)
+	else:
+		sprite.material = pulse_mat
+		sprite.material.set_shader_parameter("shine_color", pulse_colour)
+		sprite.material.set_shader_parameter("full_pulse_cycle", true)
+		sprite.material.set_shader_parameter("mode", 1)
 	enable_improved_preview()
 	is_hover = true
 
 
 func _on_area_2d_mouse_exited():
 	BuildingManager.selected_building_queue.erase(self)
-	sprite.material.set_shader_parameter("mode", 0)
+	if sprite.get_child_count() > 0:
+		for _sprite in sprite.get_children():
+			_sprite.material.set_shader_parameter("mode", 0)
+	else:
+		sprite.material.set_shader_parameter("mode", 0)
 	remove_improved_preview()
 	is_hover = false
 
