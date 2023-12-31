@@ -56,7 +56,7 @@ extends Node2D
 				0, initial_negation_zone_radius,
 				0, 0.25
 			)
-@export_range(0, 5, 0.1) var NEGATION_ZONE_RATE: float = 2.5
+@export_range(0, 5, 0.1) var NEGATION_ZONE_RATE: float = 3.5
 @onready var initial_negation_zone_radius: float = negation_zone_radius
 var previous_negation_zone_radius: float
 # If we're within the debuff distance to the negation zone, 
@@ -91,7 +91,9 @@ var queued_stars: Array = []
 var chevrons_instance: Line2D
 var queued_chevrons: Array = []
 
-const SHIP_MOVE_RATE: float = 2.0
+var goal_point: Vector2
+
+const SHIP_MOVE_RATE: float = 1.0 # Default is 1.0
 var is_ship_travelling: bool = false
 
 var NEGATION_FIELD_SHRINK_RATE: float = 1.0
@@ -144,6 +146,17 @@ func _ready():
 	# Pick an outer star and place the ship tracker there
 	var outer_stars = get_outer_stars(star_positions)
 	var start_point = outer_stars[randi_range(0, outer_stars.size() - 1)]
+	# Pick a star near the center of the galaxy and set the goal there
+	var inner_stars: Array = get_inner_stars(star_positions)
+	inner_stars.sort_custom(
+		func(a, b):
+			return a.distance_to(start_point) > b.distance_to(start_point)
+	)
+	goal_point = inner_stars.front()
+	var goal_idx = star_positions.find(goal_point)
+	var goal_star = stars[goal_idx]
+	goal_star.is_goal = true
+	
 	# DEBUG
 	print("Start point distance = ", negation_zone_radius - start_point.distance_to(adjusted_center))
 	previous_star = stars.filter(
@@ -199,6 +212,9 @@ func _physics_process(delta):
 			# When the ship reaches a star
 			# Tried using is_equal_approx() for this but it needs a slightly wider margin of error
 			if $ShipTracker.global_position.distance_to(next_star.global_position) < 1:
+				var is_goal_star = next_star.global_position == goal_point
+				EventManager.reached_a_star(next_star, is_goal_star)
+
 				# Update relative stars
 				previous_star = next_star
 				next_star = null
@@ -692,6 +708,15 @@ func get_outer_stars(stars, min_distance=64, max_distance=128) -> Array:
 	)
 	
 	return outer_stars
+
+
+func get_inner_stars(stars):
+	var inner_stars = Array(stars).filter(
+		func(star): 
+			return star.distance_to(adjusted_center) < galactic_center_radius - 2
+	)
+	
+	return inner_stars
 
 # <-------- v POISSON DISTRIBUTION METHODS - MOVE OUT INTO UTILS v -------->
 

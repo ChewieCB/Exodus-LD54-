@@ -11,5 +11,6 @@ IntercomGuy (Normal): Though, the final decision lie on you, Captain. I trust yo
 	IntercomGuy (Normal): Great, let's go and finish the mission.
 Leave ExecutiveOfficer
 Leave IntercomGuy
+[call_node path="EventManager" method="play_victory_event" single_use="true"]
 [signal arg="end_event"]
 

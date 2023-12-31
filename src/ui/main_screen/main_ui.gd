@@ -225,7 +225,6 @@ func _on_finish_event(arg: String):
 			chat_crew_button.disabled = false
 
 			ResourceManager.check_if_all_crew_died()
-			EventManager.check_if_victory()
 			TickManager.start_ticks()
 
 
@@ -243,7 +242,6 @@ func _on_finish_event(arg: String):
 			chat_crew_button.disabled = false
 
 			ResourceManager.check_if_all_crew_died()
-			EventManager.check_if_victory()
 			TickManager.start_ticks()
 
 		"open_build_screen":

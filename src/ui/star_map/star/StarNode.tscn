@@ -1,12 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://1yjebd2j7346"]
+[gd_scene load_steps=4 format=3 uid="uid://1yjebd2j7346"]
 
 [ext_resource type="Script" path="res://src/ui/star_map/star/star_node.gd" id="1_ae73x"]
+[ext_resource type="Texture2D" uid="uid://d3pj8wans2lr4" path="res://assets/sprite/circle.png" id="2_5ek30"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_t8eav"]
 radius = 4.0
 
 [node name="StarNode" type="Node2D"]
 script = ExtResource("1_ae73x")
+
+[node name="Highlight" type="Sprite2D" parent="."]
+visible = false
+self_modulate = Color(0.160784, 1, 0.0745098, 0.741176)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_5ek30")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 rect = Rect2(-8, -8, 16, 16)

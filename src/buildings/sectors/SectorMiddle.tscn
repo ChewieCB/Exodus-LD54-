@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3 uid="uid://o50qymer48a8"]
+
+[ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="1_4t562"]
+[ext_resource type="Script" path="res://src/buildings/building.gd" id="1_c88v0"]
+[ext_resource type="Script" path="res://src/common/resource_data.gd" id="2_2yede"]
+[ext_resource type="PackedScene" uid="uid://bp6x36xyoxhh2" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="2_aid2l"]
+[ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="3_4yleg"]
+
+[sub_resource type="Resource" id="Resource_io3c3"]
+script = ExtResource("2_2yede")
+food = 0
+water = 0
+air = 0
+metal = 0
+
+[sub_resource type="Resource" id="Resource_bnn0y"]
+script = ExtResource("3_4yleg")
+name = "Mid Sector"
+type = 8
+resource_prod = SubResource("Resource_io3c3")
+housing_prod = 0
+storage_prod = 0
+people_cost = 6
+refund_population = 0
+construction_time = 0
+destruction_time = 12
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dl723"]
+size = Vector2(123, 504.999)
+
+[node name="BlockoffMiddle" type="Node2D"]
+position = Vector2(-96, 61.9998)
+script = ExtResource("1_c88v0")
+data = SubResource("Resource_bnn0y")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.105882, 0.105882, 0.105882, 1)
+position = Vector2(0.000244141, 1.99999)
+scale = Vector2(1.9375, 7.90623)
+texture = ExtResource("1_4t562")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.499756, 1.50003)
+shape = SubResource("RectangleShape2D_dl723")
+
+[node name="BuildTimerUI" parent="." instance=ExtResource("2_aid2l")]
+offset_right = 116.0
+scale = Vector2(0.7, 0.7)
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

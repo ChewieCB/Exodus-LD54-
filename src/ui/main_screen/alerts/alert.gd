@@ -14,7 +14,11 @@ class_name Alert
 var type: EnumAutoload.AlertType
 var alert_text: String = ""
 var has_countdown: bool = false
-var countdown_value: int = 10
+var countdown_value: int = 10:
+	set(value):
+		countdown_value = value
+		if countdown_text:
+			countdown_text.text = str(countdown_value)
 var has_timer_destroy: bool = false
 
 func _ready():

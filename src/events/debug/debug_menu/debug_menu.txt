@@ -11,13 +11,13 @@ Debug menu, choose an action to perform:
 		Choose an amount.
 		- +{pop_reward_1} Population
 			You get {pop_reward_1} population
-			[call_node path="ResourceManager" method="change_resource_from_event" args="["population_forced", "{pop_reward_1}"]" single_use="true"]
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "{pop_reward_1}"]" single_use="true"]
 		- +{pop_reward_2} Population
 			You get {pop_reward_2} population
-			[call_node path="ResourceManager" method="change_resource_from_event" args="["population_forced", "{pop_reward_2}"]" single_use="true"]
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "{pop_reward_2}"]" single_use="true"]
 		- +{pop_reward_3} Population
 			You get {pop_reward_3} population
-			[call_node path="ResourceManager" method="change_resource_from_event" args="["population_forced", "{pop_reward_3}"]" single_use="true"]
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "{pop_reward_3}"]" single_use="true"]
 		- -{morale_cost_1} Population
 			You lose {morale_cost_1} population [if {population} - {morale_cost_1} >= 0]
 			[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "-{pop_cost_1}"]" single_use="true"]

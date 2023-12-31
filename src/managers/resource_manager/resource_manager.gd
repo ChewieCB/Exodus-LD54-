@@ -174,6 +174,8 @@ func update_resource_modifiers():
 				emit_signal("metal_modifier_changed", metal_amount, current_metal_modifier)
 			EnumAutoload.ResourceType.MORALE:
 				emit_signal("morale_changed", morale_amount)
+			_:
+				pass
 
 
 func calculate_resource_modifier(resource_type, population) -> void:
@@ -265,7 +267,7 @@ func update_resources_with_modifier() -> void:
 	is_starving = food_amount == 0 and current_food_modifier < 0
 	is_thirsty = water_amount == 0 and current_water_modifier < 0
 	is_suffocating = air_amount == 0 and current_air_modifier < 0
-	is_mutiny = morale_amount == -100
+	is_mutiny = morale_amount == 0
 
 
 func can_add_population(value) -> bool:
@@ -279,6 +281,7 @@ func can_add_population(value) -> bool:
 func add_building(building: Building):
 	if building not in BuildingManager.buildings:
 		BuildingManager.buildings.append(building)
+		building.placed = true
 
 
 func remove_building(building: Building):

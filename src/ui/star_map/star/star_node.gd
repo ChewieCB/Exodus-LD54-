@@ -4,6 +4,8 @@ class_name StarNode
 signal star_selected(star)
 signal queue_star_selected(star)
 
+@onready var goal_highlight = $Highlight
+
 @onready var star_red_scene = load("res://assets/planets/Star/StarRed.tscn")
 @onready var star_orange_scene = load("res://assets/planets/Star/StarOrange.tscn")
 @onready var star_yellow_scene = load("res://assets/planets/Star/StarYellow.tscn")
@@ -24,6 +26,10 @@ var star_rotation: float = 1.40
 var star_tiles: int = 5
 var star_time: float = 0.0
 var star_timespeed: float = 0.3
+
+var is_goal: bool = false: # For checking game end
+	set(value):
+		is_goal = value
 
 var pickable: bool = false:
 	set(value):
@@ -46,8 +52,8 @@ func _ready():
 
 func _input(event):
 	if pickable:
-		if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
-			has_signal = !has_signal
+#		if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+#			has_signal = !has_signal
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 			if Input.is_action_pressed("shift"):
 				emit_signal("queue_star_selected", self)
@@ -95,6 +101,7 @@ func _on_visible_on_screen_notifier_2d_screen_entered():
 	
 #	get_parent().get_parent().star_shaders_visible += 1
 	add_child(star_instance)
+	has_signal = is_goal
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited():

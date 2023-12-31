@@ -27,7 +27,8 @@ enum BuildingType {
 	METAL,
 	HABITATION,
 	CRYO_POD,
-	STORAGE
+	STORAGE,
+	SECTOR
 }
 
 enum ResourceType {
@@ -43,14 +44,14 @@ enum ResourceType {
 }
 
 enum AlertType {
-    POPULATION,
-    WORKER,
-    FOOD,
-    WATER,
-    AIR,
-    MORALE,
-    PROXIMITY,
-    RESEARCH
+	POPULATION,
+	WORKER,
+	FOOD,
+	WATER,
+	AIR,
+	MORALE,
+	PROXIMITY,
+	RESEARCH
 }
 
 
