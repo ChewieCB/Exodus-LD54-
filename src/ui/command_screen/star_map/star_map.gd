@@ -41,6 +41,8 @@ extends Node2D
 		generate_starlanes()
 
 @export_group("Negation Zone")
+@export var is_negation_zone_active: bool = false:
+	set = set_is_negation_zone_active
 @export_range(0, 10000, 1) var negation_zone_radius: float = 256:
 	set(value):
 		# Cache previous value for lerping
@@ -89,10 +91,9 @@ var queued_stars: Array = []
 var chevrons_instance: Line2D
 var queued_chevrons: Array = []
 
-const SHIP_MOVE_RATE: float = 2.0
+const SHIP_MOVE_RATE: float = 2.0 # Default is 2.0
 var is_ship_travelling: bool = false
 
-var zone_shrinking: bool = false
 var NEGATION_FIELD_SHRINK_RATE: float = 1.0
 @onready var mapped_negation_radius: float = 0.25
 
@@ -136,12 +137,16 @@ func _ready():
 	negation_zone_edge_shader.size = Vector2(negation_zone_radius * 4, negation_zone_radius * 4)
 	negation_zone_edge_shader.set_anchors_and_offsets_preset(Control.PRESET_CENTER, Control.PRESET_MODE_KEEP_SIZE)
 	negation_zone_edge_shader.material.set_shader_parameter("radius", 0.5)
+	EventManager.trigger_negation_zone.connect(set_is_negation_zone_active)
 	
 	# Add star shaders
 	var star_positions = generate_stars(stars)
 	# Pick an outer star and place the ship tracker there
-	var outer_stars = get_outer_stars(star_positions, 64, 128)
+	var outer_stars = get_outer_stars(star_positions)
 	var start_point = outer_stars[randi_range(0, outer_stars.size() - 1)]
+	set_inner_stars()
+	# DEBUG
+	print("Start point distance = ", negation_zone_radius - start_point.distance_to(adjusted_center))
 	previous_star = stars.filter(
 		func(star): return star.global_position == start_point
 	).front()
@@ -195,6 +200,8 @@ func _physics_process(delta):
 			# When the ship reaches a star
 			# Tried using is_equal_approx() for this but it needs a slightly wider margin of error
 			if $ShipTracker.global_position.distance_to(next_star.global_position) < 1:
+				EventManager.reached_a_star(next_star)
+
 				# Update relative stars
 				previous_star = next_star
 				next_star = null
@@ -676,16 +683,27 @@ func generate_stars(stars) -> Array:
 	return star_positions
 
 
-func get_outer_stars(stars, min_distance=128, max_distance=256) -> Array:
+func get_outer_stars(stars, min_distance=64, max_distance=128) -> Array:
 	# We need to offset the center point here based on the origin of this scene
 	# for when we run it as a SubViewport within the UI
 	var outer_stars = Array(stars).filter(
 		func(star): 
-			return star.distance_to(adjusted_center) >= negation_zone_radius - max_distance \
-				and star.distance_to(adjusted_center) <= negation_zone_radius + min_distance
+			var _star_distance = star.distance_to(adjusted_center)
+			var _distance_to_negation_zone = negation_zone_radius + 1 - _star_distance
+			return _distance_to_negation_zone > min_distance and \
+			_distance_to_negation_zone < max_distance 
 	)
 	
 	return outer_stars
+
+func set_inner_stars():
+	var inner_stars = Array(stars).filter(
+		func(star): 
+			return star.global_position.distance_to(adjusted_center) < galactic_center_radius
+	)
+	for star in inner_stars:
+		star.is_near_galaxy_center = true
+	
 
 # <-------- v POISSON DISTRIBUTION METHODS - MOVE OUT INTO UTILS v -------->
 
@@ -888,13 +906,14 @@ func handle_negated_starlanes():
 
 
 func _on_tick():
-	negation_zone_radius -= NEGATION_ZONE_RATE
-	# Update negation radius shader
-	negation_zone_shader.material.set_shader_parameter("circle_size", mapped_negation_radius)
-	negation_zone_edge_shader.material.set_shader_parameter("radius", mapped_negation_radius * 2)
-	# Update starmap
-	clear_negated_stars()
-	handle_negated_starlanes()
+	if is_negation_zone_active:
+		negation_zone_radius -= NEGATION_ZONE_RATE
+		# Update negation radius shader
+		negation_zone_shader.material.set_shader_parameter("circle_size", mapped_negation_radius)
+		negation_zone_edge_shader.material.set_shader_parameter("radius", mapped_negation_radius * 2)
+		# Update starmap
+		clear_negated_stars()
+		handle_negated_starlanes()
 	#
 	var ship_distance = $ShipTracker.global_position.distance_to(adjusted_center)
 	var distance_to_negation_zone = negation_zone_radius + 1 - ship_distance
@@ -946,6 +965,10 @@ func _on_tick():
 	# Check if player is fully in negation zone, game over if they are
 	if $ShipTracker.global_position.distance_to(adjusted_center) >= negation_zone_radius + 1:
 		EventManager.emit_signal("negation_zone")
+
+
+func set_is_negation_zone_active(value: bool):
+	is_negation_zone_active = value
 
 
 # FIXME - I don't think the following methods are connected to anything

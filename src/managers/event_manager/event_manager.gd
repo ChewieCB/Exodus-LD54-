@@ -4,7 +4,6 @@ var tutorial_progress = 0 # -1 = disable tutorial, 0 = enable tutorial
 var tick_since_last_event = 0
 var tick_to_event = 20
 var tick_passed_total = 0
-var tick_to_victory = 200
 var end_game = false
 
 var distance_travelled = 0
@@ -22,7 +21,7 @@ enum TRAVEL_PATH_TYPE {
 var chosen_path: TRAVEL_PATH_TYPE = TRAVEL_PATH_TYPE.DEFAULT_PATH
 
 # primary storyline
-var primary_story_date = [10, 50, 100, 150, 199]
+var primary_story_date = [10, 50, 100, 150]
 var primary_story_id = 0:
 	set(value):
 		primary_story_id = value
@@ -33,9 +32,11 @@ signal finish_event
 signal request_change_event_image
 signal request_change_objective_label
 signal negation_zone
+signal trigger_negation_zone(flag)
 signal proximity_alert(ticks_left)
 signal victory
 signal primary_story_id_changed
+signal star_arrived(star)
 
 @export var encounter_events: Array[ExodusEvent]
 @export var debug_events: Array[ExodusEvent]
@@ -72,6 +73,7 @@ func _ready() -> void:
 	Dialogic.signal_event.connect(_on_dialogic_signal)
 	TickManager.tick.connect(check_tick_for_random_event)
 	tick_to_event = randi_range(MIN_TICK_FOR_EVENT, MAX_TICK_FOR_EVENT)
+	emit_signal("trigger_negation_zone", false)
 
 	# Remove the debug event from the available array
 	available_events.pop_front()
@@ -127,8 +129,7 @@ func check_tick_for_random_event():
 	# Tick equal days passed
 	tick_since_last_event += 1
 	tick_passed_total += 1
-#	print("Tick left for event ", tick_to_event - tick_since_last_event)
-
+	# print("Tick left for event ", tick_to_event - tick_since_last_event)
 
 	if primary_story_id <= len(primary_story_date) - 1 and tick_passed_total >= primary_story_date[primary_story_id] - 1:
 		tick_to_event += 1 # Delay normal event a day to prevent stuff happened same time
@@ -146,11 +147,6 @@ func check_tick_for_random_event():
 				play_event(primary_story_events[primary_story_id])
 		primary_story_id += 1
 
-	if tick_passed_total >= tick_to_victory and not end_game:
-		end_game = true
-		play_event(victory_event)
-		return
-
 	if tick_since_last_event >= tick_to_event and not end_game:
 		tick_since_last_event = 0
 		tick_to_event = randi_range(MIN_TICK_FOR_EVENT, MAX_TICK_FOR_EVENT)
@@ -159,12 +155,15 @@ func check_tick_for_random_event():
 
 func disable_tutorial():
 	tutorial_progress = -1
-	change_objective_label("Survive until day 200")
+	change_objective_label("Travel to the center of the galaxy")
+	emit_signal("trigger_negation_zone", true)
 
 
-func check_if_victory():
-	if tick_passed_total >= tick_to_victory and end_game:
+func play_victory_event():
+	if not end_game:
+		end_game = true
 		emit_signal("victory")
+		play_event(victory_event)
 
 
 func reset_state():
@@ -213,3 +212,14 @@ func space_fact_event():
 	"""
 	event_source_text = event_source_text.format({"random_fact"=random_fact})
 	return event_source_text
+
+
+func _trigger_negation_zone(value: bool):
+	emit_signal("trigger_negation_zone", value)
+
+
+func reached_a_star(star: StarNode):
+	emit_signal("star_arrived", star)
+	if star.is_near_galaxy_center:
+		play_event(primary_story_events[-1])
+

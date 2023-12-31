@@ -4,6 +4,8 @@ class_name StarNode
 signal star_selected(star)
 signal queue_star_selected(star)
 
+@onready var near_galaxy_highlight = $Highlight
+
 @onready var star_red_scene = load("res://assets/planets/Star/StarRed.tscn")
 @onready var star_orange_scene = load("res://assets/planets/Star/StarOrange.tscn")
 @onready var star_yellow_scene = load("res://assets/planets/Star/StarYellow.tscn")
@@ -24,6 +26,11 @@ var star_rotation: float = 1.40
 var star_tiles: int = 5
 var star_time: float = 0.0
 var star_timespeed: float = 0.3
+
+var is_near_galaxy_center: bool = false: # For checking game end
+	set(value):
+		is_near_galaxy_center = value
+		near_galaxy_highlight.visible = value
 
 var pickable: bool = false:
 	set(value):

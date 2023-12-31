@@ -12,7 +12,8 @@ ExecutiveOfficer (Normal): We now have the accommodation facilities to take on e
 	Join IntercomGuy 4
 	IntercomGuy (Normal): Remember, we can only take on extra crew if they are equal to or less than the ship's available housing
 	IntercomGuy (Normal): Make sure you always have some free crew habitats.
-	[call_node path="EventManager" method="change_objective_label" args="["Survive until day 200"]" single_use="true"]
+	[call_node path="EventManager" method="change_objective_label" args="["Travel to the center of the galaxy"]" single_use="true"]
+	[call_node path="EventManager" method="_trigger_negation_zone" args="[true]" single_use="true"]
 	Leave ExecutiveOfficer
 	Leave IntercomGuy
 [signal arg="end_event"]
