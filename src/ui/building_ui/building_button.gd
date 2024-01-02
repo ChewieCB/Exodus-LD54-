@@ -1,4 +1,5 @@
 @tool
+class_name BuildingButton
 extends MarginContainer
 
 @export var building_object: PackedScene
@@ -21,6 +22,15 @@ const HAB_ICON = "res://assets/ui/icons/16/Home.png"
 const STORAGE_ICON = "res://assets/ui/icons/storage_icon.png"
 
 var building: Building
+var disabled: bool = false:
+	set(value):
+		disabled = value
+		if disabled:
+			button.disabled = true
+			self.modulate = Color(1, 1, 1, 0.4)
+		else:
+			button.disabled = false
+			self.modulate = Color(1, 1, 1, 1)
 
 func _ready():
 	if building_object == null:

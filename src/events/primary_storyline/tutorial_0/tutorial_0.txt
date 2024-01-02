@@ -9,6 +9,7 @@ A Negation Field has simultaneously surrounded the galaxy. The field is creeping
 	ExecutiveOfficer (Normal): We have plenty of oxygen and water for our current crew, but our food stocks are running low. Build two vertical farms to increase our food production.
 	- Build two vertical farms
 		[call_node path="EventManager" method="change_objective_label" args="["Build 2 Food building"]" single_use="true"]
+		[call_node path="EventManager" method="_focus_build_buttons" args="["FOOD", "[0]"]" single_use="true]
 		[signal arg="open_build_screen"]
 		# TODO - add signal in tutorial to disable other build buttons
 		Click on the ship or the build button, navigate to Food tab, then choose the Vertical Farm.
