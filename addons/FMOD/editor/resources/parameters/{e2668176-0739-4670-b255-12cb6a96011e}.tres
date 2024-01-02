@@ -1,0 +1,19 @@
+[gd_resource type="ParameterAsset" load_steps=3 format=3 uid="uid://j82qkm57r2kk"]
+
+[sub_resource type="FMOD_STUDIO_PARAMETER_ID" id="FMOD_STUDIO_PARAMETER_ID_ff12i"]
+data1 = 3874550041
+data2 = 4225426445
+
+[sub_resource type="FMOD_STUDIO_PARAMETER_DESCRIPTION" id="FMOD_STUDIO_PARAMETER_DESCRIPTION_k0ird"]
+name = "Morale"
+id = SubResource("FMOD_STUDIO_PARAMETER_ID_ff12i")
+minimum = -100.0
+maximum = 100.0
+flags = 4
+guid = "{e2668176-0739-4670-b255-12cb6a96011e}"
+
+[resource]
+parameter_description = SubResource("FMOD_STUDIO_PARAMETER_DESCRIPTION_k0ird")
+path = "parameter:/Morale"
+guid = "{e2668176-0739-4670-b255-12cb6a96011e}"
+name = "Morale"
