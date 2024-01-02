@@ -155,7 +155,7 @@ func check_tick_for_random_event():
 
 func disable_tutorial():
 	tutorial_progress = -1
-	change_objective_label("Travel to the center of the galaxy")
+	change_objective_label("Travel to the target star system near the galaxy center")
 	emit_signal("trigger_negation_zone", true)
 
 
