@@ -1,0 +1,352 @@
+[gd_scene load_steps=17 format=3 uid="uid://b0j5locyowwo2"]
+
+[ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="1_1wfk3"]
+[ext_resource type="PackedScene" uid="uid://duihto0qvkw2b" path="res://src/ui/command_screen/research_tab/TechUpgradeButton.tscn" id="2_biil3"]
+[ext_resource type="Script" path="res://src/common/resource_data.gd" id="4_lvvo4"]
+[ext_resource type="Texture2D" uid="uid://c8jp51mebn7q3" path="res://assets/ui/upgrades/common_upgrade.png" id="6_2q1wm"]
+
+[sub_resource type="Resource" id="Resource_kxi2x"]
+script = ExtResource("4_lvvo4")
+food = 20
+water = 20
+air = 20
+metal = 20
+
+[sub_resource type="Resource" id="Resource_j5oe7"]
+script = ExtResource("4_lvvo4")
+food = 40
+water = 40
+air = 40
+metal = 40
+
+[sub_resource type="Resource" id="Resource_gkol3"]
+script = ExtResource("4_lvvo4")
+food = 60
+water = 60
+air = 60
+metal = 60
+
+[sub_resource type="Resource" id="Resource_bg1c6"]
+script = ExtResource("4_lvvo4")
+food = 25
+water = 25
+air = 25
+metal = 25
+
+[sub_resource type="Resource" id="Resource_qdpnc"]
+script = ExtResource("4_lvvo4")
+food = 50
+water = 50
+air = 50
+metal = 50
+
+[sub_resource type="Resource" id="Resource_wyn55"]
+script = ExtResource("4_lvvo4")
+food = 75
+water = 75
+air = 75
+metal = 75
+
+[sub_resource type="Resource" id="Resource_2rut3"]
+script = ExtResource("4_lvvo4")
+food = 0
+water = 0
+air = 0
+metal = 100
+
+[sub_resource type="Resource" id="Resource_p5jqb"]
+script = ExtResource("4_lvvo4")
+food = 0
+water = 0
+air = 0
+metal = 200
+
+[sub_resource type="Resource" id="Resource_raguh"]
+script = ExtResource("4_lvvo4")
+food = 0
+water = 0
+air = 0
+metal = 300
+
+[sub_resource type="Resource" id="Resource_mswhw"]
+script = ExtResource("4_lvvo4")
+food = 100
+water = 100
+air = 100
+metal = 0
+
+[sub_resource type="Resource" id="Resource_kuxqr"]
+script = ExtResource("4_lvvo4")
+food = 150
+water = 150
+air = 150
+metal = 0
+
+[sub_resource type="Resource" id="Resource_66v8n"]
+script = ExtResource("4_lvvo4")
+food = 200
+water = 200
+air = 200
+metal = 0
+
+[node name="ManufacturingResearch" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 451.0
+offset_bottom = 138.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0, 1, 0.32549, 0.0627451)
+layout_mode = 0
+offset_left = 7.0
+offset_top = 8.0
+offset_right = 446.0
+offset_bottom = 136.0
+texture = ExtResource("1_1wfk3")
+
+[node name="Line1-2" type="Line2D" parent="."]
+position = Vector2(29, 17)
+points = PackedVector2Array(39, 39, 79, 39)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line2-3" type="Line2D" parent="."]
+position = Vector2(85, 17)
+points = PackedVector2Array(39, 39, 79, 39)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line4-5" type="Line2D" parent="."]
+position = Vector2(29, 1)
+points = PackedVector2Array(39, 103, 79, 103)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line5-6" type="Line2D" parent="."]
+position = Vector2(77, 1)
+points = PackedVector2Array(47, 103, 87, 103)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line2-7" type="Line2D" parent="."]
+position = Vector2(76, -24)
+points = PackedVector2Array(44, 80, 44, 104, 140, 104, 140, 80, 180, 80)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line7-8" type="Line2D" parent="."]
+position = Vector2(224, -48)
+points = PackedVector2Array(48, 104, 88, 104)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line8-9" type="Line2D" parent="."]
+position = Vector2(272, -48)
+points = PackedVector2Array(48, 104, 88, 104)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line5-10" type="Line2D" parent="."]
+position = Vector2(76, 24)
+points = PackedVector2Array(44, 80, 44, 104, 140, 104, 140, 80, 180, 80)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line10-11" type="Line2D" parent="."]
+position = Vector2(224, 0)
+points = PackedVector2Array(48, 104, 88, 104)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line11-12" type="Line2D" parent="."]
+position = Vector2(268, 0)
+points = PackedVector2Array(48, 104, 88, 104)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Upgrade1" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_biil3")]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 40.0
+offset_right = 88.0
+offset_bottom = 72.0
+upgrade_name = "Prefab Factory"
+upgrade_description = "Unlock Prefab Factory building."
+upgrade_id = 12
+upgrade_sprite = ExtResource("6_2q1wm")
+cost = SubResource("Resource_kxi2x")
+connection_lines = [NodePath("../Line1-2")]
+disabled = true
+
+[node name="Upgrade2" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("2_biil3")]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 40.0
+offset_right = 136.0
+offset_bottom = 72.0
+upgrade_name = "Modular Construction"
+upgrade_description = "Increase Prefab Factories production by [color=green]25%[/color]."
+upgrade_id = 13
+upgrade_sprite = ExtResource("6_2q1wm")
+cost = SubResource("Resource_j5oe7")
+connection_lines = [NodePath("../Line2-3"), NodePath("../Line2-7")]
+require_one_of_these_upgrades = [NodePath("../Upgrade1")]
+disabled = true
+
+[node name="Upgrade3" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_biil3")]
+layout_mode = 0
+offset_left = 152.0
+offset_top = 40.0
+offset_right = 184.0
+offset_bottom = 72.0
+upgrade_name = "Efficient Designs"
+upgrade_description = "Increase Prefab Factories production by another [color=green]50%[/color]."
+upgrade_id = 14
+upgrade_sprite = ExtResource("6_2q1wm")
+cost = SubResource("Resource_gkol3")
+require_one_of_these_upgrades = [NodePath("../Upgrade2")]
+disabled = true
+
+[node name="Upgrade4" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("2_biil3")]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 88.0
+offset_right = 88.0
+offset_bottom = 120.0
+upgrade_name = "Tool Workshop"
+upgrade_description = "Unlock Tool Workshop building."
+upgrade_id = 15
+upgrade_sprite = ExtResource("6_2q1wm")
+cost = SubResource("Resource_bg1c6")
+connection_lines = [NodePath("../Line4-5")]
+disabled = true
+
+[node name="Upgrade5" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("2_biil3")]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 88.0
+offset_right = 136.0
+offset_bottom = 120.0
+upgrade_name = "Recycled Components"
+upgrade_description = "Increase Tool Workshops production by [color=green]25%[/color]."
+upgrade_id = 16
+upgrade_sprite = ExtResource("6_2q1wm")
+cost = SubResource("Resource_qdpnc")
+connection_lines = [NodePath("../Line5-6"), NodePath("../Line5-10")]
+require_one_of_these_upgrades = [NodePath("../Upgrade4")]
+disabled = true
+
+[node name="Upgrade6" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_biil3")]
+layout_mode = 0
+offset_left = 152.0
+offset_top = 88.0
+offset_right = 184.0
+offset_bottom = 120.0
+upgrade_name = "Automated Assembly"
+upgrade_description = "Increase Tool Workshops production by another [color=green]50%[/color]."
+upgrade_id = 17
+upgrade_sprite = ExtResource("6_2q1wm")
+cost = SubResource("Resource_wyn55")
+require_one_of_these_upgrades = [NodePath("../Upgrade5")]
+disabled = true
+
+[node name="Upgrade7" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("2_biil3")]
+layout_mode = 0
+offset_left = 248.0
+offset_top = 40.0
+offset_right = 280.0
+offset_bottom = 72.0
+upgrade_name = "Electronic Fab"
+upgrade_description = "Unlock Electronic Fab building."
+upgrade_id = 18
+upgrade_sprite = ExtResource("6_2q1wm")
+cost = SubResource("Resource_2rut3")
+connection_lines = [NodePath("../Line7-8")]
+require_one_of_these_upgrades = [NodePath("../Upgrade2")]
+disabled = true
+
+[node name="Upgrade8" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("2_biil3")]
+layout_mode = 0
+offset_left = 296.0
+offset_top = 40.0
+offset_right = 328.0
+offset_bottom = 72.0
+upgrade_name = "Ultrapure Semiconductors"
+upgrade_description = "Increase Electronic Fabs production by [color=green]25%[/color]."
+upgrade_id = 19
+upgrade_sprite = ExtResource("6_2q1wm")
+cost = SubResource("Resource_p5jqb")
+connection_lines = [NodePath("../Line8-9")]
+require_one_of_these_upgrades = [NodePath("../Upgrade7")]
+disabled = true
+
+[node name="Upgrade9" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_biil3")]
+layout_mode = 0
+offset_left = 344.0
+offset_top = 40.0
+offset_right = 376.0
+offset_bottom = 72.0
+upgrade_name = "Additional Lithograph"
+upgrade_description = "Increase Electronic Fabs production by another [color=green]50%[/color]."
+upgrade_id = 20
+upgrade_sprite = ExtResource("6_2q1wm")
+cost = SubResource("Resource_raguh")
+require_one_of_these_upgrades = [NodePath("../Upgrade8")]
+disabled = true
+
+[node name="Upgrade10" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("2_biil3")]
+layout_mode = 0
+offset_left = 248.0
+offset_top = 88.0
+offset_right = 280.0
+offset_bottom = 120.0
+upgrade_name = "Metamaterial Plant"
+upgrade_description = "Unlock Metamaterial Plant building."
+upgrade_id = 21
+upgrade_sprite = ExtResource("6_2q1wm")
+cost = SubResource("Resource_mswhw")
+connection_lines = [NodePath("../Line10-11")]
+require_one_of_these_upgrades = [NodePath("../Upgrade5")]
+disabled = true
+
+[node name="Upgrade11" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("2_biil3")]
+layout_mode = 0
+offset_left = 296.0
+offset_top = 88.0
+offset_right = 328.0
+offset_bottom = 120.0
+upgrade_name = "Nanofabrication"
+upgrade_description = "Increase Metamaterial Plants production by [color=green]25%[/color]."
+upgrade_id = 22
+upgrade_sprite = ExtResource("6_2q1wm")
+cost = SubResource("Resource_kuxqr")
+connection_lines = [NodePath("../Line11-12")]
+require_one_of_these_upgrades = [NodePath("../Upgrade10")]
+disabled = true
+
+[node name="Upgrade12" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("2_biil3")]
+layout_mode = 0
+offset_left = 344.0
+offset_top = 88.0
+offset_right = 376.0
+offset_bottom = 120.0
+upgrade_name = "Directed Self-Assembly"
+upgrade_description = "Increase Metamaterial Plants production by another [color=green]50%[/color]."
+upgrade_id = 23
+upgrade_sprite = ExtResource("6_2q1wm")
+cost = SubResource("Resource_66v8n")
+require_one_of_these_upgrades = [NodePath("../Upgrade11")]
+disabled = true
+
+[node name="TreeLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -88.0
+offset_top = 10.0
+offset_right = 88.0
+offset_bottom = 29.0
+grow_horizontal = 2
+text = "Manufacturing"
+horizontal_alignment = 1

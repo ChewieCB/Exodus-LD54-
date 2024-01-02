@@ -113,6 +113,7 @@ theme_override_constants/margin_right = 8
 [node name="Label" type="Label" parent="Margin/MarginContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
 text = "Not enough workers!"
+horizontal_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "RESET"

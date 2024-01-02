@@ -1,19 +1,33 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bfedsax4b6dse"]
+[gd_resource type="Resource" script_class="BuildingResource" load_steps=6 format=3 uid="uid://bfedsax4b6dse"]
 
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_ndhch"]
-[ext_resource type="Texture2D" uid="uid://cwfj12lst2m3s" path="res://assets/buildings/old/hydroponics_bay.png" id="2_jlhwk"]
+[ext_resource type="Script" path="res://src/common/resource_data.gd" id="1_px0dy"]
+[ext_resource type="Texture2D" uid="uid://bmrisjkpambuj" path="res://assets/buildings/food_2.png" id="2_jt25t"]
+
+[sub_resource type="Resource" id="Resource_rbkej"]
+script = ExtResource("1_px0dy")
+food = 0
+water = 0
+air = 0
+metal = 44
+
+[sub_resource type="Resource" id="Resource_ba3c0"]
+script = ExtResource("1_px0dy")
+food = 12
+water = 0
+air = 0
+metal = 0
 
 [resource]
 script = ExtResource("1_ndhch")
 name = "Hydroponics Bay"
 type = 1
-sprite = ExtResource("2_jlhwk")
+sprite = ExtResource("2_jt25t")
+resource_prod = SubResource("Resource_ba3c0")
 housing_prod = 0
-food_prod = 7
-water_prod = 0
-air_prod = 0
-resource_cost = 4
+storage_prod = 0
+resource_cost = SubResource("Resource_rbkej")
 people_cost = 4
-refund_value = 0
-construction_time = 5.0
-destruction_time = 0
+refund_population = 0
+construction_time = 4
+destruction_time = 2

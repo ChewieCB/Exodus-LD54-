@@ -1,9 +1,13 @@
-
 # Godot-specific ignores
 .import/
 dist/
 .godot/
 build_html/
+build_win/
+build_linux/
+
+# Fmod
+addons/FMOD/editor/cache
 
 # Mono-specific ignores
 .mono/

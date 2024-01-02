@@ -1,0 +1,81 @@
+[gd_scene load_steps=8 format=3 uid="uid://ykdtyxunj41m"]
+
+[ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="1_t2g72"]
+[ext_resource type="Script" path="res://src/buildings/building.gd" id="1_xjhq6"]
+[ext_resource type="Script" path="res://src/common/resource_data.gd" id="2_8qlun"]
+[ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="2_pk7ww"]
+
+[sub_resource type="Resource" id="Resource_xq6rm"]
+script = ExtResource("2_8qlun")
+food = 0
+water = 0
+air = 0
+metal = 0
+
+[sub_resource type="Resource" id="Resource_fn8ab"]
+script = ExtResource("2_pk7ww")
+name = "Upper Sector"
+type = 8
+resource_prod = SubResource("Resource_xq6rm")
+housing_prod = 0
+storage_prod = 0
+people_cost = 10
+refund_population = 0
+construction_time = 0
+destruction_time = 16
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sxi1p"]
+size = Vector2(93.0688, 63.0154)
+
+[node name="BlockoffTop" type="Node2D"]
+position = Vector2(29.9999, -290.499)
+scale = Vector2(4.09374, 3.01561)
+script = ExtResource("1_xjhq6")
+data = SubResource("Resource_fn8ab")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Sprite" type="Sprite2D" parent="Sprite2D"]
+modulate = Color(0.105882, 0.105882, 0.105882, 1)
+position = Vector2(-46.4122, 21.0612)
+scale = Vector2(0.503816, 0.341838)
+texture = ExtResource("1_t2g72")
+
+[node name="Sprite2" type="Sprite2D" parent="Sprite2D"]
+modulate = Color(0.105882, 0.105882, 0.105882, 1)
+position = Vector2(-38.229, 0.326447)
+scale = Vector2(0.248091, 0.306123)
+texture = ExtResource("1_t2g72")
+
+[node name="Sprite3" type="Sprite2D" parent="Sprite2D"]
+modulate = Color(0.105882, 0.105882, 0.105882, 1)
+position = Vector2(0.427496, 0.739281)
+scale = Vector2(0.963739, 0.976898)
+texture = ExtResource("1_t2g72")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-15.2672, 0.160675)
+shape = SubResource("RectangleShape2D_sxi1p")
+
+[node name="BuildTimerUI" parent="." instance_placeholder="res://src/ui/building_ui/BuildTimerUI.tscn"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.0
+offset_top = -31.0
+offset_right = 263.0
+offset_bottom = 224.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.25, 0.25)
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

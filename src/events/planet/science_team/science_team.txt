@@ -1,0 +1,16 @@
+Join ExecutiveOfficer 0
+ExecutiveOfficer (Normal): Captain, we've been approached by Dr Mona Turner. She heard of our mission and made all speed to reach us before we left the sector.
+ExecutiveOfficer (Normal): Dr Turner leads a team of scientists and engineers fleeing the Negation Field, but their ship is not suited for a long journey. They are asking to come aboard and join our crew.
+ExecutiveOfficer (Normal): What are your orders?
+
+- Extend my compliments to Dr Turner and open a docking tube. Tell them to pack light.[br](Gain {pop_reward_1} science crew)
+	ExecutiveOfficer (Normal): Dr Turner and her team have settled in well. She and her team extend their thanks.
+	[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "{pop_reward_1}"]" single_use="true"]
+	[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["{morale_reward_1}", "Science team joined crew", "8", "true"]" single_use="true"]
+	Leave ExecutiveOfficer
+	You gained {pop_reward_1} Crew. Morale up {morale_reward_1}%.
+
+- We have no room for Dr Turner or her team. Extend my apologies and prepare to leave the sector.
+	ExecutiveOfficer (Normal): Captain, I've passed your message onto Dr Turner and we're prepared to leave port. We are away.
+
+[signal arg="end_event"]

@@ -1,0 +1,45 @@
+You received an encrypted signal from a nearby planet.
+- Decrypt the signal.
+	It's a distress signal. It seems a spaceship had to make a crash landing on this planet. The survivors are asking for aid.
+	- Send a landing party with supplies to help.[br](Requires {pop_cost_1} Crew. Costs {food_cost_1} Food and {water_cost_1} Water) [if {population} >= {pop_cost_1} and {food} >= {food_cost_1} and {water} >= {water_cost_1}]
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "-{food_cost_1}"]" single_use="true"]
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "-{water_cost_1}"]" single_use="true"]
+		set {food} -= {food_cost_1}
+		set {water} -= {water_cost_1}
+		You lost {food_cost_1} Food, {water_cost_1} Water.
+		Your landing party made contact with the survivors, but report they are infected with a horrible disease! Your landing party has also been exposed.
+		- Abandon them all, we cannot risk the safety of the ship.[br](Lose {pop_cost_1} Crew)
+			You abandoned the survivors and landing party. Unfortunate, but we cannot risk the ship.
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "-{pop_cost_1}"]" single_use="true"]
+			[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["-{morale_cost_2}", "Left plague survivors to die", "14", "true"]" single_use="true"]
+			set {population} -= {pop_cost_1}
+			You lost {pop_cost_1} Crew. Morale down {morale_cost_1}%.
+		- Abandon the survivors, but recall the landing party.
+			Let's hope they are not infected yet.
+			Morale down {morale_cost_1}%.
+			[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["-{morale_cost_1}", "Left plague survivors to die", "14", "true"]" single_use="true"]
+		- Abandon the survivors, treat the landing party.[br](Cost {food_cost_2} Food, {water_cost_2} Water). [if {food} >= {food_cost_2} and {water} >= {water_cost_2}]
+			Quarantine and treat the landing party, Pressley. The other survivors will have to fend for themselves.
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "-{food_cost_2}"]" single_use="true"]
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "-{water_cost_2}"]" single_use="true"]
+			[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["-{morale_cost_1}", "Left plague survivors to die", "14", "true"]" single_use="true"]
+			[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["{morale_reward_1}", "Brought our crew back safe", "6", "true"]" single_use="true"]
+			set {food} -= {food_cost_2}
+			set {water} -= {water_cost_2}
+			You lost {food_cost_2} Food, {water_cost_2} Water.
+		- Quarantine and treat everyone.[br](Requires {pop_reward_3} Housing, Lose {food_cost_3} Food, {water_cost_3} Water, Gain {pop_reward_3} Crew)[if {food} >= {food_cost_3} and {water} >= {water_cost_3} and {available_housing} >= {pop_reward_3}]
+			Our galaxy is dying, we must help everyone we can.
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "-{food_cost_3}"]" single_use="true"]
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "-{water_cost_3}"]" single_use="true"]
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "{pop_reward_3}"]" single_use="true"]
+			[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["{morale_reward_2}", "Rescued plague survivors", "20", "true"]" single_use="true"]
+			set {food} -= {food_cost_3}
+			set {water} -= {water_cost_3}
+			set {population} += {pop_reward_3}
+			You lost {food_cost_3} Food, {water_cost_3} Water. You gained {pop_reward_3} Crew. Morale up {morale_reward_2}%.
+	- Ignore and move on
+		The ship doesn't have space or the supplies for more crew, Pressley. Let's move on.
+		[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["{morale_cost_1}", "Ignored a distress signal", "4", "true"]" single_use="true"]
+- Ignore and move on
+	You ignore the signal and maintain course.
+[signal arg="end_event"]

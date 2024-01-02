@@ -1,0 +1,256 @@
+[gd_scene load_steps=18 format=3 uid="uid://1dd0jvugd41x"]
+
+[ext_resource type="Script" path="res://src/ui/command_screen/star_map/star_map.gd" id="1_eteq2"]
+[ext_resource type="Texture2D" uid="uid://ptj0v57gt0k7" path="res://assets/backgrounds/Space Background(1).png" id="2_70tav"]
+[ext_resource type="Script" path="res://src/ui/command_screen/star_map/starmap_camera.gd" id="2_k456u"]
+[ext_resource type="Shader" path="res://src/ui/command_screen/star_map/space_bg_temp.gdshader" id="4_qryj1"]
+[ext_resource type="Shader" path="res://src/ui/command_screen/star_map/center_black_hole.gdshader" id="5_ihuh7"]
+[ext_resource type="Shader" path="res://src/ui/command_screen/star_map/crt_overlay.gdshader" id="6_n6u0w"]
+[ext_resource type="Shader" path="res://src/ui/command_screen/star_map/starnest.gdshader" id="6_unoj6"]
+[ext_resource type="Shader" path="res://src/ui/command_screen/star_map/negation_zone.gdshader" id="6_yeten"]
+[ext_resource type="Texture2D" uid="uid://ckoxrr26nrbmi" path="res://assets/sprite/ship_concept_side.png" id="7_pxyjt"]
+[ext_resource type="Shader" path="res://src/ui/command_screen/star_map/negation_zone_edge.gdshader" id="10_1swdo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ckex1"]
+shader = ExtResource("6_unoj6")
+shader_parameter/ring_radius = 0.42
+shader_parameter/thickness_scalar = 0.75
+shader_parameter/oscillation_scalar = 0.01
+shader_parameter/speed = 1.0
+shader_parameter/main_color = Color(0.690196, 1, 0.784314, 1)
+shader_parameter/lerp_color = Color(1, 1, 0.690196, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ikp86"]
+resource_local_to_scene = true
+shader = ExtResource("5_ihuh7")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/size = 1.738
+shader_parameter/squishness = Vector2(1, 1)
+shader_parameter/color1 = Color(0, 0, 0, 1)
+shader_parameter/color2 = Color(0, 0, 0, 1)
+shader_parameter/color3 = Color(0.0666667, 0.0705882, 0, 0.890196)
+shader_parameter/color4 = Color(0.309804, 0.231373, 0.109804, 1)
+shader_parameter/color5 = Color(0.239216, 0.101961, 0, 0.486275)
+shader_parameter/color6 = Color(0, 0, 0, 0)
+shader_parameter/step1 = 0.159
+shader_parameter/step2 = 0.141
+shader_parameter/step3 = 0.151
+shader_parameter/step4 = 0.174
+shader_parameter/step5 = 0.216
+shader_parameter/step6 = 0.274
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_28fq1"]
+shader = ExtResource("4_qryj1")
+shader_parameter/iterations = 17
+shader_parameter/formuparam = 0.53
+shader_parameter/volsteps = 10
+shader_parameter/stepsize = 0.1
+shader_parameter/zoom = 0.8
+shader_parameter/tile = 0.85
+shader_parameter/speed = 0.0
+shader_parameter/brightness = 0.0015
+shader_parameter/darkmatter = 0.3
+shader_parameter/distfading = 0.73
+shader_parameter/saturation = 0.85
+shader_parameter/rotation = null
+shader_parameter/colorampMix = 0.5
+shader_parameter/isColoramp = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_41bdo"]
+shader = ExtResource("6_n6u0w")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.134
+shader_parameter/scanlines_width = 0.25
+shader_parameter/grille_opacity = 0.125
+shader_parameter/resolution = Vector2(450, 235)
+shader_parameter/pixelate = true
+shader_parameter/roll = true
+shader_parameter/roll_speed = 1.14
+shader_parameter/roll_size = 25.656
+shader_parameter/roll_variation = 1.304
+shader_parameter/distort_intensity = 0.006
+shader_parameter/noise_opacity = 0.089
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.06
+shader_parameter/aberration = 0.00500005
+shader_parameter/brightness = 1.4
+shader_parameter/discolor = true
+shader_parameter/warp_amount = 0.672
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.72
+shader_parameter/vignette_opacity = 0.254
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0d3cb"]
+shader = ExtResource("6_yeten")
+shader_parameter/circle_size = 0.5
+shader_parameter/color_gap = Color(0.545098, 0.137255, 0.172549, 0.392157)
+shader_parameter/color_stripe = Color(0.254902, 0.109804, 0.176471, 0.392157)
+shader_parameter/divisions = 32.0
+shader_parameter/stripe_bias = 2.0
+shader_parameter/speed = 0.01
+shader_parameter/angle = 0.7854
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_n1f61"]
+width = 8192
+height = 8192
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7r7fl"]
+shader = ExtResource("10_1swdo")
+shader_parameter/radius = 1.0
+shader_parameter/thickness = 0.03
+shader_parameter/color = Color(0.341176, 0.145098, 0.0235294, 1)
+shader_parameter/brightness = 5.0
+shader_parameter/angular_speed = 2.5
+shader_parameter/radial_speed = 4.43
+shader_parameter/alpha = 0.63
+shader_parameter/noise = SubResource("NoiseTexture2D_n1f61")
+
+[node name="StarMap" type="Node2D"]
+script = ExtResource("1_eteq2")
+circle_radius = 400.0
+poisson_radius = 18.0
+galactic_center_radius = 92.0
+galactic_center_connection_chance = 86.0
+galactic_center_connection_jitter = 0.56
+tertiary_connection_chance = 56.0
+tertiary_connection_jitter = 0.72
+negation_zone_radius = 400.0
+metadata/_edit_horizontal_guides_ = [-106.0]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 512.0
+offset_bottom = 512.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1e-05, 1e-05)
+mouse_filter = 2
+texture = ExtResource("2_70tav")
+stretch_mode = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(8, 8)
+script = ExtResource("2_k456u")
+
+[node name="PanWaitTimer" type="Timer" parent="Camera2D"]
+
+[node name="GalacticCenter" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_ckex1")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -111.0
+offset_top = -111.0
+offset_right = 111.0
+offset_bottom = 111.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BlackHole" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_ikp86")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.75
+offset_top = -23.75
+offset_right = 23.75
+offset_bottom = 23.75
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="BlackHoleRing" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_ikp86")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="SpaceBackground" type="ColorRect" parent="CanvasLayer2"]
+material = SubResource("ShaderMaterial_28fq1")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="CRTOverlay" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_41bdo")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Starlanes" type="Node2D" parent="."]
+
+[node name="Chevrons" type="Node2D" parent="."]
+
+[node name="Stars" type="Node2D" parent="."]
+
+[node name="ShipTracker" type="Node2D" parent="."]
+position = Vector2(133.568, 235.083)
+
+[node name="Sprite2D" type="Sprite2D" parent="ShipTracker"]
+scale = Vector2(0.008, 0.008)
+texture = ExtResource("7_pxyjt")
+
+[node name="NegationZone" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_0d3cb")
+clip_contents = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -432.0
+offset_top = -432.0
+offset_right = 432.0
+offset_bottom = 432.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="NegationZoneEdge" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_7r7fl")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -432.0
+offset_top = -432.0
+offset_right = 432.0
+offset_bottom = 432.0
+grow_horizontal = 2
+grow_vertical = 2

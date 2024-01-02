@@ -1,0 +1,31 @@
+Join ExecutiveOfficer 0
+ExecutiveOfficer (Normal): Captain, the Negation Field is approaching the planet Atrokan IV and riots are breaking out. Martial law has been declared, but military forces are nearly overwhelmed and civil authority is collapsing.
+ExecutiveOfficer (Normal): The Atrokani governor is demanding passage on our ship. We have some space available.
+ExecutiveOfficer (Normal): What are your orders?
+
+	- Extend an official invitation to His Excellency, Mr Pressley, and prepare suitable quarters.[br](Gain {pop_reward_1} crew)
+		ExecutiveOfficer (Normal): Yes sir. I will prepare quarters that are appropriate for an official of His Excellency's standing.
+		set {chance} = range(1,100).pick_random()
+		# 75% chance
+		if {chance} >= 25:
+			ExecutiveOfficer (Normal): The Atrokani governor has brought a large amount of food from his personal stock planetside.
+			ExecutiveOfficer (Normal): We can siphon some of that for the rest of the crew without the governor noticing.
+			Leave ExecutiveOfficer
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "{food_reward_1}"]" single_use="true"]
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "{pop_reward_1}"]" single_use="true"]
+			[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["-{morale_cost_1}", "Atrokani governor's lavish quarters", "20", "true"]" single_use="true"]
+			Gained {food_reward_1} Food. Morale is down {morale_cost_1}% as the governor's lavish quarters are the envy of the crew.
+		else:
+			ExecutiveOfficer (Normal): The Atrokani governor has brought a large quantity of food from his personal stock planetside.
+			ExecutiveOfficer (Normal): He has offered to share it with us as thanks for granting him passage.
+			ExecutiveOfficer (Normal): His Excellency is a competent administrator and has made some improvements to our ship's work procedures.
+			ExecutiveOfficer (Normal): Our crew will work more effectively for the next few cycles.
+			Leave ExecutiveOfficer
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "{food_reward_2}"]" single_use="true"]
+			[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "{pop_reward_1}"]" single_use="true"]
+			[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["{morale_reward_2}", "Atrokani luxury food", "8", "true"]" single_use="true"]
+			Gained {food_reward_2} Food, Morale up {morale_reward_2}%.
+
+	- Tell His Excellency he can find another ship. We are not at his beck and call.
+		ExecutiveOfficer (Normal): Captain, the Atrokani governor did not take your message well, but we departed before he could detain our ship. We are away.
+[signal arg="end_event"]

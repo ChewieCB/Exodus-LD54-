@@ -2,23 +2,26 @@
 
 [ext_resource type="Script" path="res://src/buildings/building.gd" id="1_7mnwf"]
 [ext_resource type="Resource" uid="uid://bfedsax4b6dse" path="res://src/buildings/food/farm2.tres" id="2_vlruf"]
-[ext_resource type="Texture2D" uid="uid://cwfj12lst2m3s" path="res://assets/buildings/old/hydroponics_bay.png" id="3_kglxt"]
+[ext_resource type="Texture2D" uid="uid://bmrisjkpambuj" path="res://assets/buildings/food_2.png" id="3_ybi2l"]
 [ext_resource type="PackedScene" uid="uid://bp6x36xyoxhh2" path="res://src/ui/building_ui/BuildTimerUI.tscn" id="4_vmjxd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0tb0d"]
 size = Vector2(122, 122)
 
 [node name="Farm2" type="Node2D"]
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_7mnwf")
 data = ExtResource("2_vlruf")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(96, 64)
-texture = ExtResource("3_kglxt")
+texture = ExtResource("3_ybi2l")
 offset = Vector2(-96, -64)
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(-32, -32)
+collision_layer = 2
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(32, 32)

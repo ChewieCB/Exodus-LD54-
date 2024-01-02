@@ -1,14 +1,32 @@
-[gd_scene load_steps=14 format=3 uid="uid://cu7ivg1u3vbhl"]
+[gd_scene load_steps=23 format=3 uid="uid://cu7ivg1u3vbhl"]
 
 [ext_resource type="PackedScene" uid="uid://bdbib8np6c616" path="res://src/ui/main_screen/resources/ResourceUI.tscn" id="1_4u51x"]
 [ext_resource type="PackedScene" uid="uid://sjhl1wud5upl" path="res://src/ui/building_ui/BuildUI.tscn" id="1_hyvdy"]
 [ext_resource type="Script" path="res://src/ui/main_screen/main_ui.gd" id="1_xagyo"]
 [ext_resource type="PackedScene" uid="uid://bfhd8krrn8mx2" path="res://src/ui/game_over/GameOver.tscn" id="2_3v6ei"]
+[ext_resource type="Shader" path="res://src/ui/main_screen/resources/progress_bar_stripes.gdshader" id="2_jd6q3"]
+[ext_resource type="PackedScene" uid="uid://dcuhjw7qe51sg" path="res://src/ui/main_screen/resources/ResourceChangePopup.tscn" id="3_nq3mf"]
 [ext_resource type="PackedScene" uid="uid://bsqw1bcfuxbvr" path="res://src/ui/building_ui/TimeControlUI.tscn" id="4_2kxyh"]
 [ext_resource type="PackedScene" uid="uid://cnjv60xkxx8oq" path="res://src/ui/building_ui/NotEnoughWorkersPopup.tscn" id="4_eo2jl"]
-[ext_resource type="PackedScene" uid="uid://b2rwhkbjj7e4n" path="res://src/ui/main_screen/ResourceAlertsUI.tscn" id="7_njybl"]
-[ext_resource type="PackedScene" uid="uid://d2r3r36bru83h" path="res://src/ui/main_screen/BuildingAlert.tscn" id="7_r6nxt"]
-[ext_resource type="Script" path="res://src/ui/main_screen/events_debug/events_debug_menu.gd" id="9_e81ol"]
+[ext_resource type="Script" path="res://src/ui/main_screen/resources/morale_ui.gd" id="5_1rahp"]
+[ext_resource type="PackedScene" uid="uid://be20dl26vkt1d" path="res://src/ui/main_screen/resources/HorizontalBarUI.tscn" id="5_whypt"]
+[ext_resource type="PackedScene" uid="uid://b1xmgw2jwmunk" path="res://src/ui/command_screen/CommandScreen.tscn" id="6_hbhke"]
+[ext_resource type="Script" path="res://src/ui/main_screen/debug_event_dropdown.gd" id="7_my6e0"]
+[ext_resource type="PackedScene" uid="uid://dv3uxnkp8ekhg" path="res://src/ui/context_menu/BuildingInfoPanel.tscn" id="7_povcy"]
+[ext_resource type="PackedScene" uid="uid://y51y7b00sxwj" path="res://src/ui/main_screen/alerts/AlertBox.tscn" id="9_6d1xx"]
+[ext_resource type="PackedScene" uid="uid://cualluj64eim3" path="res://src/ui/main_screen/resources/MoraleDetailPopup.tscn" id="12_302xp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_juris"]
+resource_local_to_scene = true
+shader = ExtResource("2_jd6q3")
+shader_parameter/color_gap = Color(0.25, 0.25, 0.25, 0.25)
+shader_parameter/color_stripe = Color(1, 0.75, 0, 1)
+shader_parameter/divisions = 24.0
+shader_parameter/stripe_bias = 2.0
+shader_parameter/speed = 0.01
+shader_parameter/angle = 0.15
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ml1kt"]
 
 [sub_resource type="Animation" id="Animation_3toh5"]
 resource_name = "RESET"
@@ -54,6 +72,10 @@ tracks/1/keys = {
 "values": [Vector2(229, 17), Vector2(229, -100)]
 }
 
+[sub_resource type="Animation" id="Animation_18c0j"]
+resource_name = "hide_travel_screen"
+length = 0.4
+
 [sub_resource type="Animation" id="Animation_aef8j"]
 resource_name = "show_build_menu"
 length = 0.4
@@ -86,10 +108,11 @@ tracks/1/keys = {
 _data = {
 "RESET": SubResource("Animation_3toh5"),
 "hide_build_menu": SubResource("Animation_sektw"),
+"hide_travel_screen": SubResource("Animation_18c0j"),
 "show_build_menu": SubResource("Animation_aef8j")
 }
 
-[node name="MainUI" type="Control"]
+[node name="MainUI" type="Control" node_paths=PackedStringArray("command_screen")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -98,93 +121,308 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_xagyo")
+command_screen = NodePath("CommandScreen")
 
-[node name="BuildShowToggle" type="MarginContainer" parent="."]
+[node name="CommandScreen" parent="." instance=ExtResource("6_hbhke")]
+
+[node name="LowerBar" type="Control" parent="."]
 layout_mode = 1
-offset_right = 97.0
-offset_bottom = 40.0
-theme_override_constants/margin_left = 112
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 32
-theme_override_constants/margin_bottom = 32
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -130.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 1
 
-[node name="Button" type="Button" parent="BuildShowToggle"]
-custom_minimum_size = Vector2(0, 48)
-layout_mode = 2
-toggle_mode = true
-text = "Build Menu"
-
-[node name="ResourceUI" parent="." instance=ExtResource("1_4u51x")]
-layout_mode = 2
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_right = 1088.0
-offset_bottom = 648.0
-
-[node name="BuildingAlerts" parent="." instance=ExtResource("7_r6nxt")]
+[node name="MarginContainer" type="MarginContainer" parent="LowerBar"]
 layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LowerBar/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="MarginContainer" type="MarginContainer" parent="LowerBar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer2" type="MarginContainer" parent="LowerBar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_bottom = 64
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="ProgressBarUI" type="MarginContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = -16
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="DummyContainerForSizing" type="PanelContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/DummyContainerForSizing"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+alignment = 2
+
+[node name="DetailsContainer" type="MarginContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/DummyContainerForSizing/VBoxContainer"]
+modulate = Color(1, 1, 1, 0.898039)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_bottom = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/DummyContainerForSizing/VBoxContainer/DetailsContainer"]
+layout_mode = 2
+theme_override_constants/separation = -6
+
+[node name="BaseContainer" type="MarginContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/DummyContainerForSizing/VBoxContainer/DetailsContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="Label" type="Label" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/DummyContainerForSizing/VBoxContainer/DetailsContainer/VBoxContainer/BaseContainer"]
+layout_mode = 2
+text = "Base: +14"
+vertical_alignment = 1
+
+[node name="ModifiersContainer" type="MarginContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/DummyContainerForSizing/VBoxContainer/DetailsContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0.501961)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_right = -8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/DummyContainerForSizing/VBoxContainer/DetailsContainer/VBoxContainer/ModifiersContainer"]
+layout_mode = 2
+theme_override_constants/separation = -9
+
+[node name="MarginContainer1" type="MarginContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/DummyContainerForSizing/VBoxContainer/DetailsContainer/VBoxContainer/ModifiersContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="Label" type="Label" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/DummyContainerForSizing/VBoxContainer/DetailsContainer/VBoxContainer/ModifiersContainer/VBoxContainer/MarginContainer1"]
+layout_mode = 2
+text = "+23 for (EventID)"
+vertical_alignment = 1
+
+[node name="TotalContainer" type="MarginContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/DummyContainerForSizing/VBoxContainer/DetailsContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="Label" type="Label" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/DummyContainerForSizing/VBoxContainer/DetailsContainer/VBoxContainer/TotalContainer"]
+layout_mode = 2
+text = "Total: +25"
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/DummyContainerForSizing/VBoxContainer/DetailsContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/DummyContainerForSizing/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/DummyContainerForSizing/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/DummyContainerForSizing/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/DummyContainerForSizing/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "0%"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/DummyContainerForSizing/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = -12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 4
+
+[node name="ProgressBar" type="TextureProgressBar" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/DummyContainerForSizing/VBoxContainer/MarginContainer2"]
+material = SubResource("ShaderMaterial_juris")
+layout_mode = 2
+value = 100.0
+rounded = true
+nine_patch_stretch = true
+texture_progress = SubResource("CanvasTexture_ml1kt")
+
+[node name="VBoxContainer" type="HBoxContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 32
+
+[node name="MoraleUI" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/VBoxContainer" instance=ExtResource("5_whypt")]
+layout_mode = 2
+size_flags_vertical = 8
+mouse_filter = 1
+script = ExtResource("5_1rahp")
+label_text = "Morale"
+
+[node name="HullUI" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/VBoxContainer" instance=ExtResource("5_whypt")]
+layout_mode = 2
+size_flags_vertical = 8
+mouse_filter = 1
+label_text = "Hull"
+bar_max = 300
+
+[node name="ResourceUI" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer" instance=ExtResource("1_4u51x")]
+layout_mode = 2
+size_flags_horizontal = 4
+resource_change_popup = ExtResource("3_nq3mf")
+
+[node name="MarginContainer" type="MarginContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_top = 16
+
+[node name="MarginContainer3" type="MarginContainer" parent="LowerBar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_bottom = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer3/HBoxContainer"]
+layout_mode = 2
+
+[node name="DEBUG_BuildTag" type="MarginContainer" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer3/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer3/HBoxContainer/VBoxContainer/DEBUG_BuildTag"]
+modulate = Color(1, 1, 1, 0.207843)
+layout_mode = 2
+text = "v1.0.5.alpha.5"
+
+[node name="TimeControlUI" parent="LowerBar/MarginContainer/HBoxContainer/MarginContainer3/HBoxContainer/VBoxContainer" instance=ExtResource("4_2kxyh")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AlertBox" parent="." instance=ExtResource("9_6d1xx")]
+layout_mode = 1
+offset_top = 125.0
+offset_bottom = -445.0
 
 [node name="BuildMenu" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -32.0
-offset_right = 40.0
-offset_bottom = 32.0
+offset_top = -50.5
+offset_right = 66.0
+offset_bottom = 50.5
 grow_vertical = 2
 theme_override_constants/margin_left = -450
-theme_override_constants/margin_top = 64
 
 [node name="BuildingUI" parent="BuildMenu" instance=ExtResource("1_hyvdy")]
 layout_mode = 2
+mouse_force_pass_scroll_events = false
 
 [node name="MousePopup" parent="." instance=ExtResource("4_eo2jl")]
 
-[node name="TimeControlUI" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -384.0
-offset_top = -128.0
-grow_horizontal = 0
-grow_vertical = 0
-mouse_filter = 1
+[node name="MoraleDetailPopup" parent="." instance=ExtResource("12_302xp")]
 
-[node name="MarginContainer" parent="TimeControlUI" instance=ExtResource("4_2kxyh")]
-layout_mode = 1
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "RESET"
-libraries = {
-"": SubResource("AnimationLibrary_pifv8")
-}
-
-[node name="EventButton" type="Button" parent="."]
+[node name="BuildingInfoPanel" parent="." instance=ExtResource("7_povcy")]
 visible = false
-layout_mode = 0
-offset_left = 743.0
-offset_top = 15.0
-offset_right = 900.0
-offset_bottom = 46.0
-text = "Play Debug Event"
 
-[node name="FactButton" type="Button" parent="."]
+[node name="DebugEventsMenu" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -420.0
+offset_top = -309.0
+offset_right = -292.0
+offset_bottom = -269.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="DebugEventsMenu"]
+layout_mode = 0
+offset_left = -106.0
+offset_right = 160.0
+offset_bottom = 50.0
+
+[node name="PanelContainer" type="PanelContainer" parent="DebugEventsMenu/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DebugEventsMenu/MarginContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="DebugEventsMenu/MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Debug Events Menu"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="DebugEventsMenu/MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("7_my6e0")
+
+[node name="ChatCrewButton" type="Button" parent="."]
 layout_mode = 0
 offset_left = 918.0
 offset_top = 15.0
 offset_right = 1075.0
 offset_bottom = 46.0
 text = "Chat with crew"
-
-[node name="ResourceAlerts" parent="." instance=ExtResource("7_njybl")]
-layout_mode = 1
 
 [node name="GameOver" parent="." instance=ExtResource("2_3v6ei")]
 layout_mode = 1
@@ -202,45 +440,42 @@ autowrap_mode = 2
 [node name="BuildControlLabel" type="Label" parent="."]
 layout_mode = 0
 offset_left = 229.0
-offset_top = -100.0
+offset_top = -107.0
 offset_right = 472.0
-offset_bottom = -22.0
-text = "Q, E to rotate building.
+offset_bottom = -29.0
+text = "E to rotate building.
 Left-click to Build.
-Right-click to Destroy"
+Right-click to Deconstruct"
 autowrap_mode = 2
 
-[node name="DEBUGEventsTrigger" type="PanelContainer" parent="."]
-visible = false
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "RESET"
+libraries = {
+"": SubResource("AnimationLibrary_pifv8")
+}
+
+[node name="Morale" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 918.0
+offset_top = 565.0
+offset_right = 958.0
+offset_bottom = 605.0
+
+[node name="DEBUG_BuildVersionTag" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -436.0
-offset_top = 15.0
-offset_right = -277.0
-offset_bottom = 55.0
-grow_horizontal = 0
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 428.0
+offset_top = -139.0
+offset_right = 468.0
+offset_bottom = -99.0
+grow_horizontal = 2
+grow_vertical = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="DEBUGEventsTrigger"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="DEBUGEventsTrigger/VBoxContainer"]
-layout_mode = 2
-text = "Trigger Event"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="EventsOption" type="OptionButton" parent="DEBUGEventsTrigger/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-alignment = 1
-item_count = 1
-popup/item_0/text = "Mr Khan"
-popup/item_0/id = 0
-script = ExtResource("9_e81ol")
-
-[connection signal="pressed" from="BuildShowToggle/Button" to="." method="_on_build_button_pressed"]
-[connection signal="pressed" from="EventButton" to="." method="_on_play_dialog_pressed"]
-[connection signal="pressed" from="FactButton" to="." method="_on_listen_fact_pressed"]
-[connection signal="item_selected" from="DEBUGEventsTrigger/VBoxContainer/EventsOption" to="DEBUGEventsTrigger/VBoxContainer/EventsOption" method="_on_item_selected"]
+[connection signal="mouse_entered" from="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/VBoxContainer/MoraleUI" to="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/VBoxContainer/MoraleUI" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/VBoxContainer/MoraleUI" to="LowerBar/MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/ProgressBarUI/MarginContainer/VBoxContainer/MoraleUI" method="_on_mouse_exited"]
+[connection signal="item_selected" from="DebugEventsMenu/MarginContainer/PanelContainer/VBoxContainer/OptionButton" to="." method="_on_debug_event_menu_button_item_selected"]
+[connection signal="pressed" from="ChatCrewButton" to="." method="_on_chat_crew_pressed"]

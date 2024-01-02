@@ -1,0 +1,23 @@
+Join ExecutiveOfficer 0
+ExecutiveOfficer (Normal): Captain, we've received a message from a nearby friendly ship. They ask if we can trade some of our food, since they are running low.
+ExecutiveOfficer (Normal): They can give us some metal as payment. But it seem it not gonna be a lots though.
+
+- Give them {food_cost_1} Food in exchange for Metal.
+	ExecutiveOfficer (Normal): The other ship received our resources and sent back a little bit of metal. It's not much, but we should help each other.
+	[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "-{food_cost_1}"]" single_use="true"]
+	[call_node path="ResourceManager" method="change_resource_from_event" args="["metal", "{metal_reward_1}"]" single_use="true"]
+	[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["{morale_reward_1}", "Exchange resource with other ship", "8", "true"]" single_use="true"]
+	Gained {metal_reward_1} Metal
+
+- Give them {food_cost_1} Food but tell them keep the Metal.
+	ExecutiveOfficer (Normal): The other ship happily received our resources. It seem even though they are willing to exchange the metal, they still really need it.
+	ExecutiveOfficer (Normal): Although we don't gain anything, but it seem the mood of our ship improved.
+	[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "-{food_cost_1}"]" single_use="true"]
+	[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["{morale_reward_2}", "Generously share resource with other ship", "8", "true"]" single_use="true"]
+
+- We can't spare any resource now. Carry on, Mr Pressley.
+	ExecutiveOfficer (Normal): Understood Captain, we're moving on.
+	[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["-{morale_cost_1}", "Refuse to help a friendly ship", "4", "true"]" single_use="true"]
+
+Leave ExecutiveOfficer
+[signal arg="end_event"]

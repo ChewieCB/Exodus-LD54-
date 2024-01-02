@@ -1,0 +1,16 @@
+Join ExecutiveOfficer 0
+ExecutiveOfficer (Normal): We reached the final warp portal. Seem like there are other spaceships also try to escape like us.
+ExecutiveOfficer (Normal): Maybe we can't help all of them, but I suggest try to help some at least?
+Join IntercomGuy 4
+IntercomGuy (Normal): I don't know Pressley. It's may better to just go through the portal now. We need all the resources we can get.
+IntercomGuy (Normal): Call me bad guy if you want, but I'm just being realistic.
+IntercomGuy (Normal): Though, the final decision lie on you, Captain. I trust you will make the right choice.
+- Help them
+	ExecutiveOfficer (Normal): Yay, we helped them. +1 point for Captain.
+- Nah, let's goooo
+	IntercomGuy (Normal): Great, let's go and finish the mission.
+Leave ExecutiveOfficer
+Leave IntercomGuy
+[call_node path="EventManager" method="play_victory_event" single_use="true"]
+[signal arg="end_event"]
+

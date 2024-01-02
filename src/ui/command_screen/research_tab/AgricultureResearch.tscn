@@ -1,0 +1,181 @@
+[gd_scene load_steps=9 format=3 uid="uid://h5xuge7sdvl5"]
+
+[ext_resource type="PackedScene" uid="uid://duihto0qvkw2b" path="res://src/ui/command_screen/research_tab/TechUpgradeButton.tscn" id="1_gxvxn"]
+[ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="1_ooqt1"]
+[ext_resource type="Texture2D" uid="uid://b1j3jb7potb5d" path="res://assets/ui/upgrades/spacedust.png" id="2_kcv23"]
+[ext_resource type="Texture2D" uid="uid://b0iejd25d55tj" path="res://assets/ui/upgrades/plant_photosynthesis.png" id="3_jqdvi"]
+[ext_resource type="Texture2D" uid="uid://bpjbwv3e5ohdb" path="res://assets/ui/upgrades/plant_extract_water.png" id="4_r2a1e"]
+[ext_resource type="Texture2D" uid="uid://y78xxo035ys2" path="res://assets/ui/upgrades/harmonic_cycle.png" id="5_wviem"]
+[ext_resource type="Texture2D" uid="uid://dqka5of55fgy1" path="res://assets/ui/upgrades/plant_accel_growth.png" id="6_a41lq"]
+[ext_resource type="Texture2D" uid="uid://y28fijmf0i6a" path="res://assets/ui/upgrades/optimized_design.png" id="7_qerxr"]
+
+[node name="AgricultureResearch" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 451.0
+offset_bottom = 138.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0, 1, 0.32549, 0.0627451)
+layout_mode = 0
+offset_left = 7.0
+offset_top = 8.0
+offset_right = 446.0
+offset_bottom = 136.0
+texture = ExtResource("1_ooqt1")
+
+[node name="Line1-2" type="Line2D" parent="."]
+position = Vector2(10, 13)
+points = PackedVector2Array(37, 39, 126, 39)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line1-3" type="Line2D" parent="."]
+position = Vector2(10, 13)
+points = PackedVector2Array(39, 40, 39, 104, 127, 104)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line2-4" type="Line2D" parent="."]
+position = Vector2(10, 13)
+points = PackedVector2Array(125, 37, 215, 37)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line3-4" type="Line2D" parent="."]
+position = Vector2(21.0204, 13)
+points = PackedVector2Array(125, 104, 190.98, 104, 190.98, 38)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line4-5" type="Line2D" parent="."]
+position = Vector2(10, 13)
+points = PackedVector2Array(213, 38, 304, 38)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line4-6" type="Line2D" parent="."]
+position = Vector2(10, 13)
+points = PackedVector2Array(223, 41, 223, 105, 303, 105)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line5-7" type="Line2D" parent="."]
+position = Vector2(10, 13)
+points = PackedVector2Array(301, 37, 398, 37)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Line6-7" type="Line2D" parent="."]
+position = Vector2(10, 13)
+points = PackedVector2Array(305, 103, 397, 103, 397, 39)
+width = 5.0
+default_color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Upgrade1" parent="." node_paths=PackedStringArray("connection_lines") instance=ExtResource("1_gxvxn")]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 32.0
+offset_right = 60.0
+offset_bottom = 64.0
+upgrade_description = "Ultilize mineral-rich space dust to fertilize plants.
+Increased output of food by [color=green]25%[/color]."
+upgrade_id = 1
+upgrade_sprite = ExtResource("2_kcv23")
+connection_lines = [NodePath("../Line1-2"), NodePath("../Line1-3")]
+
+[node name="Upgrade2" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades", "conflict_one_of_these_upgrades") instance=ExtResource("1_gxvxn")]
+layout_mode = 0
+offset_left = 116.0
+offset_top = 31.0
+offset_right = 148.0
+offset_bottom = 63.0
+upgrade_name = "Hyperphotosynthesis"
+upgrade_description = "We do a little genetic modification which make plant created significantly more air.
+Food buildings now also output air by [color=green]25%[/color] of their food production."
+upgrade_id = 2
+upgrade_sprite = ExtResource("3_jqdvi")
+connection_lines = [NodePath("../Line2-4")]
+require_one_of_these_upgrades = [NodePath("../Upgrade1")]
+conflict_one_of_these_upgrades = [NodePath("../Upgrade3")]
+
+[node name="Upgrade3" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades", "conflict_one_of_these_upgrades") instance=ExtResource("1_gxvxn")]
+layout_mode = 0
+offset_left = 116.0
+offset_top = 92.0
+offset_right = 148.0
+offset_bottom = 124.0
+upgrade_name = "Fiber Extracted Fluid"
+upgrade_description = "Get a bit of water from vegetation.
+Food buildings now also output water by [color=green]25%[/color] of their food production."
+upgrade_id = 3
+upgrade_sprite = ExtResource("4_r2a1e")
+connection_lines = [NodePath("../Line3-4")]
+require_one_of_these_upgrades = [NodePath("../Upgrade1")]
+conflict_one_of_these_upgrades = [NodePath("../Upgrade2")]
+
+[node name="Upgrade4" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades") instance=ExtResource("1_gxvxn")]
+layout_mode = 0
+offset_left = 202.0
+offset_top = 31.0
+offset_right = 234.0
+offset_bottom = 63.0
+upgrade_name = "Enhanced Spacedust Fertilizer"
+upgrade_description = "Increased output of food buildings by another [color=green]50%[/color]."
+upgrade_id = 4
+upgrade_sprite = ExtResource("2_kcv23")
+connection_lines = [NodePath("../Line4-5"), NodePath("../Line4-6")]
+require_one_of_these_upgrades = [NodePath("../Upgrade2"), NodePath("../Upgrade3")]
+
+[node name="Upgrade5" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades", "conflict_one_of_these_upgrades") instance=ExtResource("1_gxvxn")]
+layout_mode = 0
+offset_left = 290.0
+offset_top = 31.0
+offset_right = 322.0
+offset_bottom = 63.0
+upgrade_name = "Harmonic Cycle"
+upgrade_description = "Food buildings now also output water and air by [color=green]25%[/color] of their food production."
+upgrade_id = 5
+upgrade_sprite = ExtResource("5_wviem")
+connection_lines = [NodePath("../Line5-7")]
+require_one_of_these_upgrades = [NodePath("../Upgrade4")]
+conflict_one_of_these_upgrades = [NodePath("../Upgrade6")]
+
+[node name="Upgrade6" parent="." node_paths=PackedStringArray("connection_lines", "require_one_of_these_upgrades", "conflict_one_of_these_upgrades") instance=ExtResource("1_gxvxn")]
+layout_mode = 0
+offset_left = 290.0
+offset_top = 94.0
+offset_right = 322.0
+offset_bottom = 126.0
+upgrade_name = "Accelerated Growth"
+upgrade_description = "Encourage plants to growth faster and stronger with harsher environment and increased fertilizer.
+[color=green]50%[/color] chance for double yield and [color=red]20%[/color] chance for no yield."
+upgrade_id = 6
+upgrade_sprite = ExtResource("6_a41lq")
+connection_lines = [NodePath("../Line6-7")]
+require_one_of_these_upgrades = [NodePath("../Upgrade4")]
+conflict_one_of_these_upgrades = [NodePath("../Upgrade5")]
+
+[node name="Upgrade7" parent="." node_paths=PackedStringArray("require_one_of_these_upgrades") instance=ExtResource("1_gxvxn")]
+layout_mode = 0
+offset_left = 386.0
+offset_top = 29.0
+offset_right = 418.0
+offset_bottom = 61.0
+upgrade_name = "Optimized Design"
+upgrade_description = "Unlock [color=green]tier IV[/color] buildings for food, water and air production buildings."
+upgrade_id = 7
+upgrade_sprite = ExtResource("7_qerxr")
+require_one_of_these_upgrades = [NodePath("../Upgrade6"), NodePath(".")]
+
+[node name="TreeLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -44.0
+offset_top = 8.0
+offset_right = 44.0
+offset_bottom = 27.0
+grow_horizontal = 2
+text = "Agriculture"

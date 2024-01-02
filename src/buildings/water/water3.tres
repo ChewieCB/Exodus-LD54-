@@ -1,19 +1,33 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://18c3v3njvlxg"]
+[gd_resource type="Resource" script_class="BuildingResource" load_steps=6 format=3 uid="uid://18c3v3njvlxg"]
 
 [ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_4t3np"]
-[ext_resource type="Texture2D" uid="uid://fpjlep711shg" path="res://assets/buildings/new/water_3.png" id="2_wogo1"]
+[ext_resource type="Script" path="res://src/common/resource_data.gd" id="1_8drh4"]
+[ext_resource type="Texture2D" uid="uid://fpjlep711shg" path="res://assets/buildings/water_3.png" id="2_l6etv"]
+
+[sub_resource type="Resource" id="Resource_b0yuy"]
+script = ExtResource("1_8drh4")
+food = 0
+water = 0
+air = 0
+metal = 95
+
+[sub_resource type="Resource" id="Resource_c44kw"]
+script = ExtResource("1_8drh4")
+food = 0
+water = 18
+air = 0
+metal = 0
 
 [resource]
 script = ExtResource("1_4t3np")
-name = "DesalinationPlant"
+name = "Desalination Plant"
 type = 2
-sprite = ExtResource("2_wogo1")
+sprite = ExtResource("2_l6etv")
+resource_prod = SubResource("Resource_c44kw")
 housing_prod = 0
-food_prod = 0
-water_prod = 10
-air_prod = 0
-resource_cost = 6
+storage_prod = 0
+resource_cost = SubResource("Resource_b0yuy")
 people_cost = 7
-refund_value = 0
+refund_population = 0
 construction_time = 8
-destruction_time = 0
+destruction_time = 4

@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="ExodusEvent" load_steps=2 format=3 uid="uid://cityiounuv3qd"]
+
+[ext_resource type="Script" path="res://src/events/event_resource.gd" id="1_l3f0b"]
+
+[resource]
+script = ExtResource("1_l3f0b")
+name = "Rich Planetoid"
+type = 1
+planet_type = 12
+active_screen = 2
+event_text_file = "res://src/events/space/rich_planetoid/rich_planetoid.txt"
+pop_reward_1 = 0
+food_reward_1 = 0
+water_reward_1 = 100
+air_reward_1 = 70
+metal_reward_1 = 0
+pop_reward_2 = 0
+food_reward_2 = 0
+water_reward_2 = 40
+air_reward_2 = 36
+metal_reward_2 = 0
+pop_reward_3 = 0
+food_reward_3 = 0
+water_reward_3 = 0
+air_reward_3 = 0
+metal_reward_3 = 0
+pop_reward_4 = 0
+food_reward_4 = 0
+water_reward_4 = 0
+air_reward_4 = 0
+metal_reward_4 = 0
+pop_cost_1 = 0
+food_cost_1 = 35
+water_cost_1 = 50
+air_cost_1 = 25
+metal_cost_1 = 0
+pop_cost_2 = 0
+food_cost_2 = 0
+water_cost_2 = 0
+air_cost_2 = 0
+metal_cost_2 = 0
+pop_cost_3 = 0
+food_cost_3 = 0
+water_cost_3 = 0
+air_cost_3 = 0
+metal_cost_3 = 0
+pop_cost_4 = 0
+food_cost_4 = 0
+water_cost_4 = 0
+air_cost_4 = 0
+metal_cost_4 = 0
+is_chain_event = false

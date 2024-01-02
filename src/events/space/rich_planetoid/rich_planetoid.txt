@@ -1,0 +1,24 @@
+Join ExecutiveOfficer 0
+ExecutiveOfficer (Normal): Captain, our scanners have picked up a planetoid. Probe survey has identified large deposits of oxygen and frozen water.
+ExecutiveOfficer (Normal): A slight course correction would have us intercept the planetoid, and we could mine the largest and most accessible surface deposits. What your order?
+- Chart a course, Pressley. We need those minerals.[br](Cost {food_cost_1} Food, {water_cost_1} Water and {air_cost_1} Oxygen) [if {food} >= {food_cost_1} and {water} >= {water_cost_1} and {air} >= {air_cost_1}]
+	[call_node path="ResourceManager" method="change_resource_from_event" args="["food", "-{food_cost_1}"]" single_use="true"]
+	[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "-{water_cost_1}"]" single_use="true"]
+	[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "-{air_cost_1}"]" single_use="true"]
+	You lost {food_cost_1} Food, {water_cost_1} Water, and {air_cost_1} Oxygen.
+	set {chance} = range(1,100).pick_random()
+	# 50% chance success
+	if {chance} >= 50:
+		ExecutiveOfficer (Normal): The planetoid was particularly rich, Captain. We found several high-density veins near the surface.
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{water_reward_1}"]" single_use="true"]
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "{air_reward_1}"]" single_use="true"]
+		You gained {water_reward_1} Water and {air_reward_1} Oxygen.
+	else:
+		ExecutiveOfficer (Normal): Our engineers know their stuff, Captain. We've managed to recover a healthy haul of resources from the planetoid.
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["water", "{water_reward_2}"]" single_use="true"]
+		[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "{air_reward_2}"]" single_use="true"]
+		You gained {water_reward_2} Water and {air_reward_2} Oxygen.
+- We have no time. Continue on our present course.
+	ExecutiveOfficer (Normal): Yes, Captain. I've passed the word onto navigation and we are holding course.
+Leave ExecutiveOfficer
+[signal arg="end_event"]

@@ -1,0 +1,10 @@
+Join ExecutiveOfficer 0
+[call_node path="EventManager" method="change_objective_label" args="["Survive"]" single_use="true"]
+ExecutiveOfficer (Normal): Greetings, Captain. Our food production is much improved, but we need more crew to make bigger upgrades to the ship. We need more crew habitation blocks.
+ExecutiveOfficer (Normal): Build two more habitation blocks so we can take on more crew.
+- Built two more crew habitation blocks.
+	[call_node path="EventManager" method="change_objective_label" args="["Build 2 Habitation building"]" single_use="true"]
+	[signal arg="open_build_screen"]
+	Leave ExecutiveOfficer
+	Similiar to the food production buildings, open the Build menu, navigate to first tab and choose either Hab Block or Dormitory.
+[signal arg="end_event_build"]

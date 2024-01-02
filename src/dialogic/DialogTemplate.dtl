@@ -1,11 +1,5 @@
-set {chance} = range(0,100).pick_random()
-set {air} -= 50
-if {food} >= 5 and {population} >= 3:
-	BBB
-else:
-	AAAA
-You received a signal after passed through an Earth-like planet. The signal need to be decrypted before you understand it.
-- Decrypt it (required 5 food and 3 people) [if {choice1_check} == "true"]
-	You decrypted it
-- Ignore and move on
-	You ignored the signal and move on.
+Join ExecutiveOfficer 0
+ExecutiveOfficer (Normal): Or, you can just wake them up earlier. The first group cryopods are located near the top of the ship, with green colors. \\n The second are blue cryopods near the middle, and the last group are pink cryopods near the bottom.
+ExecutiveOfficer: Pls select crewmate my man
+ 
+You send the chosen crewmates

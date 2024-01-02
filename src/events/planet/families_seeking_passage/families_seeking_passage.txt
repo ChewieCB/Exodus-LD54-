@@ -1,0 +1,15 @@
+Join ExecutiveOfficer 0
+ExecutiveOfficer (Normal): Captain, we've been approached by Faroq Khan, the leader of a group of families who are seeking passage. 
+ExecutiveOfficer (Normal): They come from a border colony world that was destroyed by the Negation Field.
+ExecutiveOfficer (Normal): What should we do?
+- Pass on my complements to Mr Khan. Give him our coordinates and prepare a docking tube.[br](Gain {pop_reward_1} crew.)
+	ExecutiveOfficer (Normal): Mr Khan and the other refugees have joined the crew. Reports from section leaders advise they are tough and willing to learn. 
+	Leave ExecutiveOfficer
+	[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "{pop_reward_1}"]" single_use="true"]
+	[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["{morale_reward_1}", "Took in refugees", "30", "true"]" single_use="true"]
+	You gained {pop_reward_1} Crew. Morale is up {morale_reward_1}%.
+- Tell Mr Khan we have no room. He'll have to look for another ship.
+	ExecutiveOfficer (Normal): Aye, Captain. We have departed the sector. The refugees will have to find someone else.
+	[call_node path="ResourceManager" method="add_morale_effect_from_event" args="["-{morale_cost_1}", "Turned away refugees", "15", "true"]" single_use="true"]
+	Morale is down {morale_reward_1}%.
+[signal arg="end_event"]

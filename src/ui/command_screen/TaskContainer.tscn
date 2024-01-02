@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3 uid="uid://dyp35m08s3ciy"]
+
+[ext_resource type="Script" path="res://src/ui/command_screen/task_container.gd" id="1_uur5j"]
+
+[node name="TaskContainer" type="MarginContainer"]
+script = ExtResource("1_uur5j")
+task_text = "Repair the hull"
+reward_text = "+1 Ship Hull"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TaskLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Task: Repair the hull"
+
+[node name="CostLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Cost: 10 Food, 15 Metal, 3 Air"
+
+[node name="RewardLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Reward: +1 Ship Hull"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+text = "Complete task
+"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

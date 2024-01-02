@@ -1,7 +1,34 @@
-[gd_scene load_steps=2 format=3 uid="uid://dvsjsr4ybusi6"]
+[gd_scene load_steps=24 format=3 uid="uid://dvsjsr4ybusi6"]
 
 [ext_resource type="Script" path="res://src/managers/event_manager/event_manager.gd" id="1_rqa4t"]
+[ext_resource type="Resource" uid="uid://ccl7foxs8yr7p" path="res://src/events/space/damaged_ship_aid/DamagedShipAid.tres" id="2_5tnsr"]
+[ext_resource type="Resource" uid="uid://bn1v4lhssxlnw" path="res://src/events/planet/families_seeking_passage/FamiliesSeekingPassageEvent.tres" id="3_br7fd"]
+[ext_resource type="Resource" uid="uid://yx5xsd5mk6gm" path="res://src/events/planet/governor_demands_passage/GovernerDemandsPassage.tres" id="4_yu5gg"]
+[ext_resource type="Resource" uid="uid://brhax8cbmue2v" path="res://src/events/planet/plague_quarantine/PlagueQuarantineEvent.tres" id="5_faeok"]
+[ext_resource type="Resource" uid="uid://c3gfqewuxdhg6" path="res://src/events/planet/planetary_customs/PlanetaryCustomsEvent.tres" id="6_m8sff"]
+[ext_resource type="Resource" uid="uid://7lfgm0asmag8" path="res://src/events/planet/science_team/ScienceTeamEvent.tres" id="7_r1ttf"]
+[ext_resource type="Resource" uid="uid://bj5cbfhucemij" path="res://src/events/space/asteroid_cluster/AsteroidClusterEvent.tres" id="8_v8dwe"]
+[ext_resource type="Resource" uid="uid://u5r2ypm555n4" path="res://src/events/space/distress_signal/DistressSignalEvent.tres" id="9_senqf"]
+[ext_resource type="Resource" uid="uid://cityiounuv3qd" path="res://src/events/space/rich_planetoid/RichPlanetoidEvent.tres" id="10_inr5h"]
+[ext_resource type="Resource" uid="uid://cwh07aayanmqd" path="res://src/events/self/hab_riot/HabRiotEvent.tres" id="11_fmdbt"]
+[ext_resource type="Resource" uid="uid://dyxlgp4cb5bao" path="res://src/events/debug/debug_menu/DebugMenuEvent.tres" id="12_itrw7"]
+[ext_resource type="Resource" uid="uid://cw4yhcxf18taw" path="res://src/events/space/ship_aid_resource/ShipAidResource.tres" id="12_s2chg"]
+[ext_resource type="Resource" uid="uid://ba2x7pp1asujo" path="res://src/events/primary_storyline/tutorial_0/Tutorial0Event.tres" id="13_7fx63"]
+[ext_resource type="Resource" uid="uid://0b1o3q1crong" path="res://src/events/primary_storyline/tutorial_1/Tutorial1Event.tres" id="14_l0y50"]
+[ext_resource type="Resource" uid="uid://b5j3oya8oyl14" path="res://src/events/primary_storyline/tutorial_2/Tutorial2Event.tres" id="15_aalwr"]
+[ext_resource type="Resource" uid="uid://boa1gdoqt6hmw" path="res://src/events/primary_storyline/tutorial_disabled/TutorialDisabledEvent.tres" id="16_emkvh"]
+[ext_resource type="Resource" uid="uid://8hjqhhog65gd" path="res://src/events/primary_storyline/warning_wakeup/WarningWakeupEvent.tres" id="17_pn8ue"]
+[ext_resource type="Resource" uid="uid://81ieo1fqyj3" path="res://src/events/primary_storyline/wakeup1/Wakeup1Event.tres" id="18_v74su"]
+[ext_resource type="Resource" uid="uid://ddg6fhlxpprsd" path="res://src/events/primary_storyline/wakeup2/Wakeup2Event.tres" id="19_agdfa"]
+[ext_resource type="Resource" uid="uid://bmmv0td6drhsn" path="res://src/events/primary_storyline/wakeup3/Wakeup3Event.tres" id="20_gv5g8"]
+[ext_resource type="Resource" uid="uid://x8g6r4wwijnc" path="res://src/events/primary_storyline/victory/VictoryEvent.tres" id="21_i47rd"]
+[ext_resource type="Resource" uid="uid://cmyeefe0b5iip" path="res://src/events/primary_storyline/before_warp_portal/BeforeWarpPortalEvent.tres" id="21_r1bf3"]
 
 [node name="EventManager" type="Node"]
 process_mode = 3
 script = ExtResource("1_rqa4t")
+encounter_events = Array[Resource("res://src/events/event_resource.gd")]([ExtResource("2_5tnsr"), ExtResource("3_br7fd"), ExtResource("4_yu5gg"), ExtResource("5_faeok"), ExtResource("6_m8sff"), ExtResource("7_r1ttf"), ExtResource("8_v8dwe"), ExtResource("9_senqf"), ExtResource("10_inr5h"), ExtResource("11_fmdbt"), ExtResource("12_s2chg")])
+debug_events = Array[Resource("res://src/events/event_resource.gd")]([ExtResource("12_itrw7")])
+tutorial_events = Array[Resource("res://src/events/event_resource.gd")]([ExtResource("13_7fx63"), ExtResource("14_l0y50"), ExtResource("15_aalwr"), ExtResource("16_emkvh")])
+primary_story_events = Array[Resource("res://src/events/event_resource.gd")]([ExtResource("17_pn8ue"), ExtResource("18_v74su"), ExtResource("19_agdfa"), ExtResource("20_gv5g8"), ExtResource("21_r1bf3")])
+victory_event = ExtResource("21_i47rd")

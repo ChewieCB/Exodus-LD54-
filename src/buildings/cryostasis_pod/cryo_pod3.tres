@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="BuildingResource" load_steps=6 format=3 uid="uid://3rhvvalfpcib"]
+
+[ext_resource type="Script" path="res://src/buildings/resource/building_resource.gd" id="1_d0kr1"]
+[ext_resource type="Script" path="res://src/common/resource_data.gd" id="1_tbdk6"]
+[ext_resource type="Texture2D" uid="uid://c080ev7smsnnd" path="res://assets/buildings/cryo_pod_3.png" id="2_lssb7"]
+
+[sub_resource type="Resource" id="Resource_8nprn"]
+script = ExtResource("1_tbdk6")
+food = 0
+water = 0
+air = 0
+metal = 0
+
+[sub_resource type="Resource" id="Resource_hx4of"]
+script = ExtResource("1_tbdk6")
+food = 0
+water = 0
+air = 0
+metal = 0
+
+[resource]
+script = ExtResource("1_d0kr1")
+name = "Cryostasis Pod Hub"
+type = 6
+sprite = ExtResource("2_lssb7")
+resource_prod = SubResource("Resource_hx4of")
+housing_prod = 0
+storage_prod = 0
+resource_cost = SubResource("Resource_8nprn")
+people_cost = 5
+refund_population = 10
+construction_time = 0
+destruction_time = 12
