@@ -56,7 +56,7 @@ extends Node2D
 				0, initial_negation_zone_radius,
 				0, 0.25
 			)
-@export_range(0, 5, 0.1) var NEGATION_ZONE_RATE: float = 3.0
+@export_range(0, 5, 0.1) var NEGATION_ZONE_RATE: float = 3.5
 @onready var initial_negation_zone_radius: float = negation_zone_radius
 var previous_negation_zone_radius: float
 # If we're within the debuff distance to the negation zone, 
@@ -96,7 +96,7 @@ var goal_point: Vector2
 const SHIP_MOVE_RATE: float = 1.0 # Default is 1.0
 var is_ship_travelling: bool = false
 
-var NEGATION_FIELD_SHRINK_RATE: float = 0.8
+var NEGATION_FIELD_SHRINK_RATE: float = 1.0
 @onready var mapped_negation_radius: float = 0.25
 
 enum ShapeType {CIRCLE, POLYGON}
@@ -713,7 +713,7 @@ func get_outer_stars(stars, min_distance=64, max_distance=128) -> Array:
 func get_inner_stars(stars):
 	var inner_stars = Array(stars).filter(
 		func(star): 
-			return star.distance_to(adjusted_center) < galactic_center_radius - 16
+			return star.distance_to(adjusted_center) < galactic_center_radius - 2
 	)
 	
 	return inner_stars
