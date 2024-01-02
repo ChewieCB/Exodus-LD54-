@@ -713,7 +713,7 @@ func get_outer_stars(stars, min_distance=64, max_distance=128) -> Array:
 func get_inner_stars(stars):
 	var inner_stars = Array(stars).filter(
 		func(star): 
-			return star.distance_to(adjusted_center) < galactic_center_radius - 2
+			return star.distance_to(adjusted_center) < galactic_center_radius - 24
 	)
 	
 	return inner_stars
