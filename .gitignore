@@ -3,6 +3,8 @@
 dist/
 .godot/
 build_html/
+build_win/
+build_linux/
 
 # Fmod
 addons/FMOD/editor/cache
