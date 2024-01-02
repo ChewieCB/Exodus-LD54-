@@ -35,7 +35,7 @@ func _on_fullscreen_button_pressed():
 
 func _on_music_volume_slider_value_changed(value):
 	# SoundManager.set_music_volume(value / 100)
-	# FmodManager.change_music_volume(value / 100)
+	FmodManager.change_music_volume(value / 100)
 	return
 
 

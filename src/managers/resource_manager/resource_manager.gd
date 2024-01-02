@@ -153,7 +153,7 @@ func _process(delta: float) -> void:
 
 	var lowest_ratio = min(food_ratio_left, water_ratio_left, air_ratio_left)
 	lowest_ratio = clampf(lowest_ratio / 10.0, 0, 1)
-	# FmodManager.update_dynamic_music(lowest_ratio)
+	FmodManager.update_dynamic_music(lowest_ratio)
  
  
 func update_resource_modifiers():
