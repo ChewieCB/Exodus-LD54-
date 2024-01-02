@@ -6,6 +6,7 @@ extends Node2D
 var is_ship_hover: bool = false
 @onready var ship_no_highlight: Color = Color(1.0, 1.0, 1.0, 1.0)
 @onready var ship_highlight: Color = Color(1.5, 1.5, 1.5, 1.0)
+@onready var ship_grid = $ShipSprite/ShipGrid
 
 # We don't use the same variable in EventManager to avoid race condition
 var n_hab_built = 0
@@ -25,6 +26,8 @@ func _ready():
 
 	ScreenTransitionManager.fade_in(1.5)
 	await ScreenTransitionManager.transitioned
+	var music = load("res://assets/audio/music/ld54-bgm-medley-no-alarms-1.1.mp3")
+	SoundManager.play_music(music, 0.2, "Music")
 
 	get_tree().paused = false
 	get_node("UI").visible = true
@@ -36,7 +39,7 @@ func _physics_process(_delta):
 	# instead of _input.
 	if Input.is_action_just_pressed("cancel_place_building"):
 		# Don't exit build view if we have a building preview active
-		if $ShipSprite/ShipGrid.current_building:
+		if ship_grid.current_building:
 			return
 		# Check if the mouse is over a building collider
 		var space = get_world_2d().direct_space_state

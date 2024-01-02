@@ -15,6 +15,9 @@ func _ready():
 	build_tag.text = EnumAutoload.BUILD_VERSION
 	ScreenTransitionManager.fade_in(0.8)
 	await ScreenTransitionManager.transitioned
+	var music = load("res://assets/audio/music/ld54-bgm-medley-no-alarms-1.1.mp3")
+	SoundManager.play_music(music, 0.2, "Music")
+	
 
 func _on_settings_button_pressed():
 	SoundManager.play_button_click_sfx()
