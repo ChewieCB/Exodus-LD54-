@@ -21,7 +21,7 @@ func add_building_alert(building_name: String) -> void:
     alert_container.add_child(new_alert)
     new_alert.visible = false
     new_alert.alert_text = text
-    new_alert.type = Alert.TYPE.WORKER
+    new_alert.type = EnumAutoload.AlertType.WORKER
     
     # Move it to the top so more recent events show at the top
     alert_container.move_child(new_alert, 0)

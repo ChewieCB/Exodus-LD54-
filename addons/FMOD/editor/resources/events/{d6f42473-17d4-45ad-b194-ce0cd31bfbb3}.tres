@@ -1,6 +1,17 @@
-[gd_resource type="EventAsset" load_steps=2 format=3 uid="uid://b8qhhcvtypmp4"]
+[gd_resource type="EventAsset" load_steps=4 format=3 uid="uid://cbax4bb86i7p6"]
 
-[sub_resource type="ParameterAsset" id="ParameterAsset_3p23w"]
+[sub_resource type="FMOD_STUDIO_PARAMETER_ID" id="FMOD_STUDIO_PARAMETER_ID_you8b"]
+data1 = 3913031957
+data2 = 1883467705
+
+[sub_resource type="FMOD_STUDIO_PARAMETER_DESCRIPTION" id="FMOD_STUDIO_PARAMETER_DESCRIPTION_qlmay"]
+name = "Food-Water-Air"
+id = SubResource("FMOD_STUDIO_PARAMETER_ID_you8b")
+maximum = 1.0
+guid = "{35240a11-fc6b-45fb-af73-c26daef6fb8d}"
+
+[sub_resource type="ParameterAsset" id="ParameterAsset_b8k1s"]
+parameter_description = SubResource("FMOD_STUDIO_PARAMETER_DESCRIPTION_qlmay")
 path = "parameter:/Food-Water-Air"
 guid = "{35240a11-fc6b-45fb-af73-c26daef6fb8d}"
 name = "Food-Water-Air"
@@ -9,7 +20,7 @@ name = "Food-Water-Air"
 min_distance = 1.0
 max_distance = 20.0
 parameters = {
-"{35240a11-fc6b-45fb-af73-c26daef6fb8d}": SubResource("ParameterAsset_3p23w")
+"{35240a11-fc6b-45fb-af73-c26daef6fb8d}": SubResource("ParameterAsset_b8k1s")
 }
 path = "event:/Dynamic Music - Track A-B"
 guid = "{d6f42473-17d4-45ad-b194-ce0cd31bfbb3}"

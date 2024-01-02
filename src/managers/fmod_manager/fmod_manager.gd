@@ -14,6 +14,7 @@ func _ready() -> void:
 	instance = FMODRuntime.create_instance(event)
 	instance.start()
 	bus = FMODStudioModule.get_studio_system().get_bus(bus_asset.path)
+	change_music_volume(1)
 
 func _notification(what: int) -> void:
 	match what:
