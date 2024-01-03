@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dvsjsr4ybusi6"]
+[gd_scene load_steps=26 format=3 uid="uid://dvsjsr4ybusi6"]
 
 [ext_resource type="Script" path="res://src/managers/event_manager/event_manager.gd" id="1_rqa4t"]
 [ext_resource type="Resource" uid="uid://ccl7foxs8yr7p" path="res://src/events/space/damaged_ship_aid/DamagedShipAid.tres" id="2_5tnsr"]
@@ -18,12 +18,11 @@
 [ext_resource type="Resource" uid="uid://8hjqhhog65gd" path="res://src/events/primary_storyline/warning_wakeup/WarningWakeupEvent.tres" id="17_pn8ue"]
 [ext_resource type="Resource" uid="uid://cq30t7nnay3d8" path="res://src/events/primary_storyline/tutorials/tutorial_2_food/Tutorial2.tres" id="17_wjswb"]
 [ext_resource type="Resource" uid="uid://1br2ku1ev1ut" path="res://src/events/primary_storyline/tutorials/tutorial_3_water/Tutorial3.tres" id="18_05452"]
+[ext_resource type="Resource" uid="uid://k1fx5mi54rce" path="res://src/events/primary_storyline/tutorials/tutorial_4_crew_research/Tutorial4.tres" id="18_jxabf"]
 [ext_resource type="Resource" uid="uid://81ieo1fqyj3" path="res://src/events/primary_storyline/wakeup1/Wakeup1Event.tres" id="18_v74su"]
-[ext_resource type="Resource" uid="uid://k1fx5mi54rce" path="res://src/events/primary_storyline/tutorials/tutorial_4_crew/Tutorial4.tres" id="18_y6b5u"]
 [ext_resource type="Resource" uid="uid://ddg6fhlxpprsd" path="res://src/events/primary_storyline/wakeup2/Wakeup2Event.tres" id="19_agdfa"]
-[ext_resource type="Resource" uid="uid://b15x3olpr1rsk" path="res://src/events/primary_storyline/tutorials/tutorial_5_research/Tutorial5.tres" id="19_bpdid"]
-[ext_resource type="Resource" uid="uid://nmq7pwfymqnv" path="res://src/events/primary_storyline/tutorials/tutorial_6_starmap_unlock/Tutorial6.tres" id="20_gavtc"]
 [ext_resource type="Resource" uid="uid://bmmv0td6drhsn" path="res://src/events/primary_storyline/wakeup3/Wakeup3Event.tres" id="20_gv5g8"]
+[ext_resource type="Resource" uid="uid://nmq7pwfymqnv" path="res://src/events/primary_storyline/tutorials/tutorial_5_starmap_unlock/Tutorial5.tres" id="20_k0fr0"]
 [ext_resource type="Resource" uid="uid://x8g6r4wwijnc" path="res://src/events/primary_storyline/victory/VictoryEvent.tres" id="21_i47rd"]
 [ext_resource type="Resource" uid="uid://cmyeefe0b5iip" path="res://src/events/primary_storyline/before_warp_portal/BeforeWarpPortalEvent.tres" id="21_r1bf3"]
 
@@ -32,6 +31,6 @@ process_mode = 3
 script = ExtResource("1_rqa4t")
 encounter_events = Array[Resource("res://src/events/event_resource.gd")]([ExtResource("2_5tnsr"), ExtResource("3_br7fd"), ExtResource("4_yu5gg"), ExtResource("5_faeok"), ExtResource("6_m8sff"), ExtResource("7_r1ttf"), ExtResource("8_v8dwe"), ExtResource("9_senqf"), ExtResource("10_inr5h"), ExtResource("11_fmdbt"), ExtResource("12_s2chg")])
 debug_events = Array[Resource("res://src/events/event_resource.gd")]([ExtResource("12_itrw7")])
-tutorial_events = Array[Resource("res://src/events/event_resource.gd")]([ExtResource("14_4nwva"), ExtResource("15_yfl6j"), ExtResource("17_wjswb"), ExtResource("18_05452"), ExtResource("18_y6b5u"), ExtResource("19_bpdid"), ExtResource("20_gavtc")])
+tutorial_events = Array[Resource("res://src/events/event_resource.gd")]([ExtResource("14_4nwva"), ExtResource("15_yfl6j"), ExtResource("17_wjswb"), ExtResource("18_05452"), ExtResource("18_jxabf"), ExtResource("20_k0fr0")])
 primary_story_events = Array[Resource("res://src/events/event_resource.gd")]([ExtResource("17_pn8ue"), ExtResource("18_v74su"), ExtResource("19_agdfa"), ExtResource("20_gv5g8"), ExtResource("21_r1bf3")])
 victory_event = ExtResource("21_i47rd")

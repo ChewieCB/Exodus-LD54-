@@ -22,7 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://doioc1jac620x" path="res://src/ui/command_screen/research_tab/ShipInfrastructureResearch.tscn" id="10_nmkce"]
 [ext_resource type="Texture2D" uid="uid://dqwcek01e0v4k" path="res://assets/character/sam_carter.png" id="10_t33dg"]
 [ext_resource type="Texture2D" uid="uid://dxsiqg3h4gm0" path="res://assets/character/mary_watney.png" id="12_cymej"]
-[ext_resource type="FontFile" uid="uid://4r5r4qviqq2k" path="res://assets/ui/fonts/Improbable.otf" id="13_r2xq4"]
+[ext_resource type="PackedScene" uid="uid://02jv7nxakwyl" path="res://src/ui/command_screen/star_map/docking_lock/DockingLockScreen.tscn" id="13_0ya46"]
 [ext_resource type="Texture2D" uid="uid://bfqerbgujnq0s" path="res://assets/character/dr_dorian.png" id="13_xdugs"]
 [ext_resource type="Script" path="res://src/ui/command_screen/status_tab/status_tab.gd" id="24_fwbaf"]
 
@@ -107,7 +107,6 @@ offset_bottom = 460.0
 mouse_filter = 2
 
 [node name="Research" type="TabBar" parent="DeviceFrame/TabContainer"]
-visible = false
 layout_mode = 2
 script = ExtResource("3_v75ll")
 
@@ -267,6 +266,7 @@ text = "[center]Cost: 30 food, 5 water, 5 metal, 5 air, 5 prefabs[/center]"
 one_shot = true
 
 [node name="Travel" type="TabBar" parent="DeviceFrame/TabContainer"]
+visible = false
 layout_mode = 2
 mouse_filter = 2
 
@@ -279,7 +279,7 @@ offset_bottom = 236.0
 mouse_filter = 2
 texture = ExtResource("2_tgm10")
 
-[node name="MarginContainer" type="SubViewportContainer" parent="DeviceFrame/TabContainer/Travel"]
+[node name="StarmapViewContainer" type="SubViewportContainer" parent="DeviceFrame/TabContainer/Travel"]
 visible = false
 clip_contents = true
 layout_mode = 1
@@ -298,13 +298,13 @@ focus_mode = 1
 mouse_filter = 2
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="DeviceFrame/TabContainer/Travel/MarginContainer"]
+[node name="SubViewport" type="SubViewport" parent="DeviceFrame/TabContainer/Travel/StarmapViewContainer"]
 handle_input_locally = false
 physics_object_picking = true
 size = Vector2i(450, 235)
 render_target_update_mode = 0
 
-[node name="StarMap" parent="DeviceFrame/TabContainer/Travel/MarginContainer/SubViewport" instance=ExtResource("3_jn7gj")]
+[node name="StarMap" parent="DeviceFrame/TabContainer/Travel/StarmapViewContainer/SubViewport" instance=ExtResource("3_jn7gj")]
 position = Vector2(1167.5, 224)
 
 [node name="StarmapInputArea" type="MarginContainer" parent="DeviceFrame/TabContainer/Travel"]
@@ -325,46 +325,8 @@ collision_mask = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeviceFrame/TabContainer/Travel/StarmapInputArea/Area2D"]
 shape = SubResource("RectangleShape2D_v161y")
 
-[node name="DockingLockScreen" type="MarginContainer" parent="DeviceFrame/TabContainer/Travel"]
+[node name="DockingLockScreen" parent="DeviceFrame/TabContainer/Travel" instance=ExtResource("13_0ya46")]
 layout_mode = 0
-offset_top = 5.0
-offset_right = 453.0
-offset_bottom = 240.0
-
-[node name="Background" type="TextureRect" parent="DeviceFrame/TabContainer/Travel/DockingLockScreen"]
-self_modulate = Color(0.0470588, 0.0392157, 0.0235294, 1)
-layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("4_hkjqs")
-
-[node name="MarginContainer2" type="MarginContainer" parent="DeviceFrame/TabContainer/Travel/DockingLockScreen"]
-layout_mode = 2
-theme_override_constants/margin_top = 42
-
-[node name="CenterContainer" type="CenterContainer" parent="DeviceFrame/TabContainer/Travel/DockingLockScreen/MarginContainer2"]
-layout_mode = 2
-
-[node name="DockingReleaseButton" type="Button" parent="DeviceFrame/TabContainer/Travel/DockingLockScreen/MarginContainer2/CenterContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("13_r2xq4")
-theme_override_font_sizes/font_size = 32
-text = "RELEASE"
-
-[node name="MarginContainer" type="MarginContainer" parent="DeviceFrame/TabContainer/Travel/DockingLockScreen/MarginContainer2"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/margin_bottom = 128
-
-[node name="Label" type="Label" parent="DeviceFrame/TabContainer/Travel/DockingLockScreen/MarginContainer2/MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_colors/font_color = Color(0.823529, 0, 0, 1)
-theme_override_fonts/font = ExtResource("13_r2xq4")
-theme_override_font_sizes/font_size = 24
-text = "Station Docking Clamps Engaged"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="PathChoiceView" type="Control" parent="DeviceFrame/TabContainer/Travel"]
 visible = false
@@ -782,7 +744,6 @@ libraries = {
 [connection signal="timeout" from="DeviceFrame/TabContainer/Research/NotEnoughResourceTimer" to="DeviceFrame/TabContainer/Research" method="_on_not_enough_resource_timer_timeout"]
 [connection signal="mouse_entered" from="DeviceFrame/TabContainer/Travel/StarmapInputArea/Area2D" to="." method="_on_starmap_area_mouse_entered"]
 [connection signal="mouse_exited" from="DeviceFrame/TabContainer/Travel/StarmapInputArea/Area2D" to="." method="_on_starmap_area_mouse_exited"]
-[connection signal="button_up" from="DeviceFrame/TabContainer/Travel/DockingLockScreen/MarginContainer2/CenterContainer/DockingReleaseButton" to="." method="_on_docking_release_button_button_up"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button" to="." method="_on_default_path_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button2" to="." method="_on_intergalatic_route_pressed"]
 [connection signal="pressed" from="DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button3" to="." method="_on_asteroid_field_pressed"]

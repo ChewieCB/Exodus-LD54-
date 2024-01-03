@@ -1,14 +1,14 @@
-[gd_resource type="Resource" script_class="ExodusEvent" load_steps=2 format=3 uid="uid://k1fx5mi54rce"]
+[gd_resource type="Resource" script_class="ExodusEvent" load_steps=2 format=3 uid="uid://nmq7pwfymqnv"]
 
-[ext_resource type="Script" path="res://src/events/event_resource.gd" id="1_5b3n8"]
+[ext_resource type="Script" path="res://src/events/event_resource.gd" id="1_ofp0l"]
 
 [resource]
-script = ExtResource("1_5b3n8")
-name = "Tutorial 4 - Crew"
+script = ExtResource("1_ofp0l")
+name = "Tutorial 5 - Starmap Unlock"
 type = 3
 planet_type = 0
 active_screen = 1
-event_text_file = "res://src/events/primary_storyline/tutorials/tutorial_4_crew/tutorial_4_crew.txt"
+event_text_file = "res://src/events/primary_storyline/tutorials/tutorial_5_starmap_unlock/tutorial_5_starmap_unlock.txt"
 pop_reward_1 = 0
 morale_reward_1 = 0
 food_reward_1 = 0

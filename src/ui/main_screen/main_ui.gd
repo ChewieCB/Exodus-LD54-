@@ -145,7 +145,7 @@ func _open_build_menu():
 func _on_start_event(event: ExodusEvent):
 	TickManager.stop_ticks()
 	tween = get_tree().create_tween()
-	command_screen.hide_screen()
+#	command_screen.hide_screen()
 
 	match event.active_screen:
 		ExodusEvent.ACTIVE_SCREEN.BUILD:

@@ -6,6 +6,8 @@ class_name CommandScreen
 @onready var tab_container: TabContainer = $DeviceFrame/TabContainer
 
 # Travel tab
+@onready var starmap_container = $DeviceFrame/TabContainer/Travel/StarmapViewContainer
+@onready var starmap_input_area = $DeviceFrame/TabContainer/Travel/StarmapInputArea
 @onready var desc_label: Label = $DeviceFrame/TabContainer/Travel/PathChoiceView/DescLabel
 @onready var default_path_button: Button = $DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button
 @onready var intergalatic_route_button: Button = $DeviceFrame/TabContainer/Travel/PathChoiceView/VBoxContainer/Button2
@@ -15,7 +17,6 @@ class_name CommandScreen
 @onready var change_path_button: Button = $DeviceFrame/TabContainer/Travel/ChangePathButton
 # Docking for tutorial
 @onready var docking_lock_screen = $DeviceFrame/TabContainer/Travel/DockingLockScreen
-@onready var docking_release_button: Button = $DeviceFrame/TabContainer/Travel/DockingLockScreen/MarginContainer2/CenterContainer/DockingReleaseButton
 
 # Officer tab
 @onready var officer_container = $DeviceFrame/TabContainer/Officers/OfficerListMC/ScrollContainer/MarginContainer/VBoxContainer
@@ -47,7 +48,8 @@ func _ready() -> void:
 
 	update_officer_list()
 	
-	docking_release_button.disabled = true
+	docking_lock_screen.docking_release_button.disabled = true
+	docking_lock_screen.docking_release_button.button_up.connect(_on_docking_release_button_button_up)
 	EventManager.unlock_travel_screen.connect(unlock_docking_release_button)
 	EventManager.change_command_tab.connect(change_tab)
 
@@ -59,7 +61,7 @@ func _input(event: InputEvent):
 			# Exception for panning so we can trigger the pan return if the mouse 
 			# moves out of the viewport when panning
 			(event is InputEventMouseButton and event.is_released() and event.button_index == MOUSE_BUTTON_MIDDLE):
-				$DeviceFrame/TabContainer/Travel/MarginContainer/SubViewport.push_input(event, false)
+				$DeviceFrame/TabContainer/Travel/StarmapViewContainer/SubViewport.push_input(event, false)
 
 func update_officer_list():
 	for child in officer_container.get_children():
@@ -140,14 +142,14 @@ func _on_show_hide_command_screen_toggled(button_pressed:bool) -> void:
 		animation_player.play("show")
 		is_travel_screen_open = true
 		show_hide_command_screen_button.button_pressed = button_pressed
-		$DeviceFrame/TabContainer/Travel/MarginContainer.grab_focus()
+		$DeviceFrame/TabContainer/Travel/StarmapViewContainer.grab_focus()
 		main_ui.hide_build_view()
 	else:
 		show_hide_command_screen_button.text = "Show command screen"
 		animation_player.play("hide")
 		is_travel_screen_open = false
 		show_hide_command_screen_button.button_pressed = button_pressed
-		$DeviceFrame/TabContainer/Travel/MarginContainer.release_focus()
+		$DeviceFrame/TabContainer/Travel/StarmapViewContainer.release_focus()
 
 func _on_tab_container_tab_changed(tab:int) -> void:
 	SoundManager.play_button_click_sfx()
@@ -173,9 +175,13 @@ func _on_starmap_area_mouse_exited():
 	is_mouse_over_starmap = false
 
 func unlock_docking_release_button():
-	docking_release_button.disabled = false
+	docking_lock_screen.docking_release_button.disabled = false
 
 func _on_docking_release_button_button_up():
 	is_starmap_locked = false
+	docking_lock_screen.anim_player.play("unlock")
+	await docking_lock_screen.anim_player.animation_finished
 	docking_lock_screen.visible = false
+	starmap_container.visible = true
+	starmap_input_area.visible = true
 	EventManager.emit_signal("docking_release")
