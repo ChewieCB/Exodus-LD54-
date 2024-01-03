@@ -1,0 +1,4 @@
+Join LifepodCrew 1
+LifepodCrew: Please help us, we're... we're almost out of air.
+Leave LifepodCrew
+[signal arg="end_event"]

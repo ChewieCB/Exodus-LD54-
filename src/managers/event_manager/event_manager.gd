@@ -37,11 +37,13 @@ signal proximity_alert(ticks_left)
 signal victory
 signal primary_story_id_changed
 signal star_arrived(star)
+signal star_event(star)
 signal focus_build_buttons(tab, button_indexes)
 signal unlock_build_buttons
 signal unlock_travel_screen
 signal docking_release
 signal change_command_tab(idx)
+signal tutorial_neighbor_star_event
 
 @export var encounter_events: Array[ExodusEvent]
 @export var debug_events: Array[ExodusEvent]
@@ -179,6 +181,10 @@ func check_tick_for_random_event():
 		play_event(get_random_event())
 
 
+func tutorial_add_neighbor_star_event():
+	emit_signal("tutorial_neighbor_star_event")
+
+
 func disable_tutorial():
 	tutorial_progress = -1
 	change_objective_label("Travel to the target star system near the galaxy center")
@@ -249,4 +255,8 @@ func reached_a_star(star: StarNode, is_goal: bool = false):
 	emit_signal("star_arrived", star)
 	if is_goal:
 		play_event(primary_story_events[-1])
+	elif star.has_signal:
+		star.has_signal = false
+		if star.connected_event:
+			play_event(star.connected_event)
 

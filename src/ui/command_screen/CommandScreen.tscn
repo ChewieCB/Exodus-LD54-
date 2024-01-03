@@ -306,6 +306,17 @@ render_target_update_mode = 0
 
 [node name="StarMap" parent="DeviceFrame/TabContainer/Travel/StarmapViewContainer/SubViewport" instance=ExtResource("3_jn7gj")]
 position = Vector2(1167.5, 224)
+retries = 30
+is_negation_zone_active = false
+NEGATION_ZONE_RATE = 3.5
+morale_debuff_min_distance = 0
+morale_debuff_max_distance = 75
+morale_debuff_min = -0.5
+morale_debuff_max = -10.0
+morale_buff_min_distance = 100
+morale_buff_max_distance = 400
+morale_buff_min = 0.5
+morale_buff_max = 4.0
 
 [node name="StarmapInputArea" type="MarginContainer" parent="DeviceFrame/TabContainer/Travel"]
 visible = false

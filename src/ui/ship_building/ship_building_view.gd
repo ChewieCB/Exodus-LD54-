@@ -107,10 +107,10 @@ func tutorial_tracker(trigger):
 		EventManager.play_event(EventManager.tutorial_events[5])
 		EventManager.tutorial_progress = 5
 	# Stage 6 - Starmap Navigation
-#	if EventManager.tutorial_progress == 5:
-#		await EventManager.docking_release
-#		EventManager.play_event(EventManager.tutorial_events[6])
-#		EventManager.tutorial_progress = 6
+	if EventManager.tutorial_progress == 5:
+		await EventManager.docking_release
+		EventManager.play_event(EventManager.tutorial_events[6])
+		EventManager.tutorial_progress = 6
 	
 	
 

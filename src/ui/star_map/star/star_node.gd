@@ -44,6 +44,11 @@ var has_signal: bool = false:
 		if star_instance != null:
 			star_instance._signal.visible = has_signal
 
+var connected_event: ExodusEvent:
+	set(value):
+		connected_event = value
+		has_signal = true
+
 
 func _ready():
 	var star_colour_idx = randi_range(0, 4)
