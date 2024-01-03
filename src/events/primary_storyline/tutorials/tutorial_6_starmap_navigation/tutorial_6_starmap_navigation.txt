@@ -25,5 +25,6 @@ ExecutiveOfficer (Normal): It's your call captain. Our metal reserves are low af
 - We have other duties, rebroadcast the signal and let another ship answer the call (Exit Tutorial).
 	ExecutiveOfficer (Normal): As you wish captain.
 	Leave ExecutiveOfficer
+	[call_node path="EventManager" method="_change_command_tab" args="["-1"]" single_use="true]
 	[call_node path="EventManager" method="disable_tutorial" single_use="true"]
 	[signal arg="end_event"]

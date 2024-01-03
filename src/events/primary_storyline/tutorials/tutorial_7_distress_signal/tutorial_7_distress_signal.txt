@@ -1,4 +1,22 @@
 Join LifepodCrew 1
+[call_node path="EventManager" method="_change_command_tab" args="["-1"]" single_use="true]
 LifepodCrew: Please help us, we're... we're almost out of air.
+- Send a shuttle to bring the survivors aboard (Gain {pop_reward_1} population)
+	LifepodCrew: We are forever grateful for your kindness.
+	LifepodCrew: With our ship destroyed, our obligation to the Rachagi Conglomerate has ended. We are capable miners and can help you extract precious resources on your travels.
+	LifepodCrew: We offer this dust compressor schematic for your fabricators as a sign of good faith. 
+	[call_node path="ResourceManager" method="change_resource_from_event" args="["population", "{pop_reward_1}"]" single_use="true"]
+- Donate some air supplies and rebroadcast the distress signal (Lose {air_cost_1} air)
+	LifepodCrew: Thank you, though I fear it may be some time until another ship comes by.
+	LifepodCrew: Please take this dust compressor schematic for your fabricators as a token of our thanks.
+	[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "-{air_cost_1}"]" single_use="true"]
 Leave LifepodCrew
-[signal arg="end_event"]
+Gained dust compressor schematics.
+Join ExecutiveOfficer 0
+ExecutiveOfficer (Normal): Captain, with these schematics we can construct modules to extract metals from passing gases and meteorites.
+ExecutiveOfficer (Normal): Metals are vital for the construction and improvement of ship modules.
+[signal arg="open_build_screen"]
+ExecutiveOfficer (Normal): As we've almsot exhausted our current supply, I suggest you construct some dust compressors to gather more for the journey ahead. 
+[call_node path="EventManager" method="change_objective_label" args="["Build 2 Dust Compressors"]" single_use="true"]
+[call_node path="EventManager" method="_focus_build_buttons" args="["METAL", "[0]"]" single_use="true]
+[signal arg="end_event_build"]

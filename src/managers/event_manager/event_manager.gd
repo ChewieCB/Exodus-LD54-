@@ -85,16 +85,17 @@ func _ready() -> void:
 	# Remove the debug event from the available array
 	available_events.pop_front()
 
-	if tutorial_progress == 0:
-		tick_to_event += 5
-
 func _on_dialogic_signal(arg: String):
 	emit_signal("finish_event", arg)
 
 # TUTORIAL signal emitter functions
 
 func _focus_build_buttons(tab_string: String, idx_string: String=""):
-	var tab = EnumAutoload.BuildingType.get(tab_string)
+	var tab: int
+	if tab_string == "-1":
+		tab = -1
+	else:
+		tab = EnumAutoload.BuildingType.get(tab_string)
 	var idx = str_to_var(idx_string)
 	emit_signal("focus_build_buttons", tab, idx)
 
@@ -190,6 +191,7 @@ func disable_tutorial():
 	change_objective_label("Travel to the target star system near the galaxy center")
 	emit_signal("trigger_negation_zone", true)
 	emit_signal("unlock_travel_screen")
+	ResourceManager.set_is_resource_tick_disabled("false")
 
 
 func play_victory_event():

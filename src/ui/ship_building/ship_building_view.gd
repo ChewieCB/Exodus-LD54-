@@ -8,11 +8,14 @@ var is_ship_hover: bool = false
 @onready var ship_highlight: Color = Color(1.5, 1.5, 1.5, 1.0)
 @onready var ship_grid = $ShipSprite/ShipGrid
 
+@onready var resource_low_1_sfx = preload("res://assets/audio/sfx/Resource_Low_1.mp3")
+
 # We don't use the same variable in EventManager to avoid race condition
 var n_hab_built = 0
 var n_air_built = 0
 var n_food_built = 0
 var n_water_built = 0
+var n_metal_built = 0
 
 var bgm_audio_player: AudioStreamPlayer
 var bgm_music
@@ -83,6 +86,8 @@ func tutorial_tracker(trigger):
 				n_air_built += 1
 			EnumAutoload.BuildingType.WATER:
 				n_water_built += 1
+			EnumAutoload.BuildingType.METAL:
+				n_metal_built += 1
 	
 	# Stage 1 - Habs
 	# Stage 2 - Air
@@ -111,6 +116,12 @@ func tutorial_tracker(trigger):
 		await EventManager.docking_release
 		EventManager.play_event(EventManager.tutorial_events[6])
 		EventManager.tutorial_progress = 6
+	# Stage 7 - Distress Signal & Metals
+	# This is triggered by the event linked to the assigned distress signal star
+	# Stage 8 - Negation Zone
+	elif n_metal_built == 2 and EventManager.tutorial_progress == 6:
+		EventManager.emit_signal("proximity_alert", 3)
+		EventManager.play_event(EventManager.tutorial_events[8])
 	
 	
 

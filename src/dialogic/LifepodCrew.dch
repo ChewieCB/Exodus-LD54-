@@ -8,8 +8,8 @@
 "style": ""
 },
 "default_portrait": "_alien_portrait_1",
-"description": "",
-"display_name": "LifepodCrew",
+"description": "LifepodCrew",
+"display_name": "Survivor",
 "mirror": false,
 "nicknames": [""],
 "offset": Vector2(-148, 19),

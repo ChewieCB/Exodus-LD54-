@@ -1,5 +1,5 @@
 [call_node path="EventManager" method="change_objective_label" args="[""]" single_use="true"]
-[call_node path="EventManager" method="_focus_build_buttons" single_use="true]
+[call_node path="EventManager" method="_focus_build_buttons" args="["-1", "[]"]" single_use="true]
 Join IntercomGuy 4
 IntercomGuy (Normal): Captain, our crew from the shipyard have boarded and are settling into their quarters.
 Join ExecutiveOfficer 0

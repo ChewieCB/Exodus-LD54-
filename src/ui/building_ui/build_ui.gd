@@ -36,6 +36,11 @@ func _ready():
 
 
 func tutorial_focus_buttons(tab: EnumAutoload.BuildingType, button_indexes: Array=[]):
+	# If we don't pass a valid tab, disable everything
+	if tab == -1:
+		set_buttons_state(true)
+		return
+	
 	# Disable all buttons that aren't the type we want
 	var _exceptions = button_containers[tab].get_children()
 	if button_indexes:
