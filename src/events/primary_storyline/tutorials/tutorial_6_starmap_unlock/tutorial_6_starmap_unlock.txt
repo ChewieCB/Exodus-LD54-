@@ -1,0 +1,9 @@
+Join IntercomGuy 4
+IntercomGuy (Normal): Tightbeam communications online captain, crew checked and station dock ready to disengage.
+Leave IntercomGuy
+Join ExecutiveOfficer 0
+[call_node path="EventManager" method="_change_command_tab" args="["1"]" single_use="true]
+ExecutiveOfficer (Normal): Releasing the docking clamps on your order captain.
+[call_node path="EventManager" method="_unlock_travel_screen" single_use="true]
+Leave ExecutiveOfficer
+[signal arg="end_event"]

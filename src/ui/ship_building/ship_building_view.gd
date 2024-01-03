@@ -10,7 +10,11 @@ var is_ship_hover: bool = false
 
 # We don't use the same variable in EventManager to avoid race condition
 var n_hab_built = 0
+var n_air_built = 0
 var n_food_built = 0
+var n_water_built = 0
+var is_crew_boarded: bool = false
+
 var bgm_audio_player: AudioStreamPlayer
 var bgm_music
 
@@ -21,6 +25,7 @@ signal ship_deselected
 func _ready():
 	TickManager.tick_changed.connect(_update_star_particles)
 	BuildingManager.building_finished.connect(tutorial_tracker)
+	ResourceManager.research_completed.connect(tutorial_tracker)
 	if tutorial_disabled:
 		EventManager.tutorial_progress = -1
 
@@ -65,24 +70,57 @@ func _input(event):
 				$ShipSprite.modulate = ship_no_highlight
 
 
-func tutorial_tracker(type: EnumAutoload.BuildingType):
-	if EventManager.tutorial_progress >= 2 or EventManager.tutorial_progress <= -1 :
+func tutorial_tracker(trigger):
+	if EventManager.tutorial_progress == -1:
 		return
-
-	match type:
-		EnumAutoload.BuildingType.HABITATION:
-			n_hab_built += 1
-		EnumAutoload.BuildingType.FOOD:
-			n_food_built += 1
-
-	if n_food_built >= 2 and EventManager.tutorial_progress == 0:
-		EventManager.play_event(EventManager.tutorial_events[1])
-		EventManager.tutorial_progress = 1
-		return
-	if n_hab_built >= 2:
-		if EventManager.tutorial_progress == 1:
-			EventManager.play_event(EventManager.tutorial_events[2])
-			EventManager.tutorial_progress = 2
+	
+	if trigger is EnumAutoload.BuildingType:
+		match trigger:
+			EnumAutoload.BuildingType.HABITATION:
+				n_hab_built += 1
+			EnumAutoload.BuildingType.FOOD:
+				n_food_built += 1
+			EnumAutoload.BuildingType.AIR:
+				n_air_built += 1
+			EnumAutoload.BuildingType.WATER:
+				n_water_built += 1
+	
+	# Stage 1 - Habs
+	# Stage 2 - Air
+	if n_hab_built == 3:
+		if EventManager.tutorial_progress == 0:
+			EventManager.play_event(EventManager.tutorial_events[1])
+			EventManager.tutorial_progress = 1
+	# Stage 3 - Food
+	if n_air_built == 2 and EventManager.tutorial_progress == 1:
+		EventManager.play_event(EventManager.tutorial_events[2])
+		EventManager.tutorial_progress = 2
+	# Stage 4 - Water
+	if n_food_built == 2 and EventManager.tutorial_progress == 2:
+		EventManager.play_event(EventManager.tutorial_events[3])
+		EventManager.tutorial_progress = 3
+	# Stage 5 - Crew
+	if n_water_built == 2 and EventManager.tutorial_progress == 3:
+		EventManager.play_event(EventManager.tutorial_events[4])
+		EventManager.tutorial_progress = 4
+		await EventManager.finish_event
+		is_crew_boarded = true
+	# Stage 6 - Research
+	if is_crew_boarded and EventManager.tutorial_progress == 4:
+		EventManager.play_event(EventManager.tutorial_events[5])
+		EventManager.tutorial_progress = 5
+	# Stage 7 - Starmap Unlock
+	if ResourceManager.has_upgrade(EnumAutoload.UpgradeId.SHIP_INFRA_TIGHTBEAM_COMM) \
+	and EventManager.tutorial_progress == 5:
+		EventManager.play_event(EventManager.tutorial_events[6])
+		EventManager.tutorial_progress = 6
+	# Stage 8 - Starmap Navigation
+#	if EventManager.tutorial_progress == 6:
+#		await EventManager.docking_release
+#		EventManager.play_event(EventManager.tutorial_events[7])
+#		EventManager.tutorial_progress = 7
+	
+	
 
 
 func _update_star_particles(tick_speed, is_paused):

@@ -1,0 +1,14 @@
+Join ExecutiveOfficer 0
+[call_node path="EventManager" method="change_objective_label" args="[""]" single_use="true"]
+ExecutiveOfficer (Normal): Nicely done, captain. we now have suitable accommodation for our crew.
+ExecutiveOfficer (Normal): Crew members will quickly lose morale if we don't have enough housing for them to live their lives comfortably aboard the ship. 
+ExecutiveOfficer (Normal): If ship morale stays at 0% for too long, you could end up with a mutiny on your hands. Best to keep everyone well fed and comfortable on our journey.
+ExecutiveOfficer (Normal): Building more housing is a surefire way to improve crew morale, everyone appreciates a little breathing room. 
+ExecutiveOfficer (Normal): We have some supplies stored aboard for our journey, but we'll need life support systems up and running before we run out.
+- Build CO2 scrubbers
+	[call_node path="EventManager" method="change_objective_label" args="["Build 2 CO2 Scrubbers"]" single_use="true"]
+	[call_node path="EventManager" method="_focus_build_buttons" args="["AIR", "[0]"]" single_use="true]
+	ExecutiveOfficer (Normal): Our databanks have schematics for CO2 Scrubbers to recirculate our air supply, build two to support our current crew.
+	[signal arg="open_build_screen"]
+	Leave ExecutiveOfficer
+	[signal arg="end_event_build"]

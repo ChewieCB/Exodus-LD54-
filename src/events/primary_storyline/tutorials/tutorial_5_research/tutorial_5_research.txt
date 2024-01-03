@@ -1,0 +1,7 @@
+Join ExecutiveOfficer 0
+ExecutiveOfficer (Normal): Before we can leave the dock we need to get our tightbeam array back online, this aids our navigation as well as enables us to send rapid communications over stellar distances with minimal delay.
+ExecutiveOfficer (Normal): One of our crew is a research specialist, we can direct them to focus on the tightbeam project in the research screen.
+[call_node path="EventManager" method="_change_command_tab" args="["0"]" single_use="true]
+ExecutiveOfficer (Normal): 
+Leave ExecutiveOfficer
+[signal arg="end_event"]

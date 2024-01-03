@@ -39,6 +39,9 @@ signal primary_story_id_changed
 signal star_arrived(star)
 signal focus_build_buttons(tab, button_indexes)
 signal unlock_build_buttons
+signal unlock_travel_screen
+signal docking_release
+signal change_command_tab(idx)
 
 @export var encounter_events: Array[ExodusEvent]
 @export var debug_events: Array[ExodusEvent]
@@ -86,15 +89,23 @@ func _ready() -> void:
 func _on_dialogic_signal(arg: String):
 	emit_signal("finish_event", arg)
 
+# TUTORIAL signal emitter functions
 
 func _focus_build_buttons(tab_string: String, idx_string: String=""):
 	var tab = EnumAutoload.BuildingType.get(tab_string)
 	var idx = str_to_var(idx_string)
 	emit_signal("focus_build_buttons", tab, idx)
 
-
 func _unlock_build_buttons():
 	emit_signal("unlock_build_buttons")
+
+
+func _unlock_travel_screen():
+	emit_signal("unlock_travel_screen")
+
+
+func _change_command_tab(idx):
+	emit_signal("change_command_tab", str_to_var(idx))
 
 
 func get_random_event():
@@ -138,6 +149,9 @@ func change_objective_label(text: String):
 
 
 func check_tick_for_random_event():
+	# Don't fire events during the tutorial
+	if tutorial_progress != -1:
+		return
 	# Tick equal days passed
 	tick_since_last_event += 1
 	tick_passed_total += 1

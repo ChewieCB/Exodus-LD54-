@@ -16,6 +16,7 @@ var previous_crewmate_name = ""
 
 func _ready() -> void:
 	TickManager.tick.connect(func (): do_update_thoughts = true)
+	show_crewmate_data(CrewmateManager.current_crewmates[0])
 
 
 func reset_stuff_on_tab() -> void:
