@@ -50,10 +50,12 @@ signal focus_build_buttons(tab, button_indexes)
 signal unlock_build_buttons
 # Command view
 signal enable_command_view(state)
+signal change_command_tab(idx)
+# - Research
+signal show_research_tree(idx)
+# - Starmap
 signal unlock_travel_screen
 signal docking_release
-signal change_command_tab(idx)
-
 
 @export var encounter_events: Array[ExodusEvent]
 @export var debug_events: Array[ExodusEvent]
@@ -118,6 +120,12 @@ func _focus_build_buttons(tab_string: String, idx_string: String=""):
 		tab = EnumAutoload.BuildingType.get(tab_string)
 	var idx = str_to_var(idx_string)
 	emit_signal("focus_build_buttons", tab, idx)
+
+
+func _show_research_tree(idx_string: String):
+	var idx = str_to_var(idx_string)
+	emit_signal("show_research_tree", idx)
+
 
 func _unlock_build_buttons():
 	emit_signal("unlock_build_buttons")

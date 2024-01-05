@@ -5,6 +5,7 @@ class_name ResearchTab
 @onready var cost_label: RichTextLabel = $ResearchGraphView/CostLabel
 @onready var upgrade_button: Button = $ResearchGraphView/UpgradeButton
 @onready var choose_tech_view = $ChooseTech
+@onready var research_buttons = $ChooseTech/GeneralResearch
 @onready var research_graph_view = $ResearchGraphView
 @onready var research_graph_holder = $ResearchGraphView/ResearchGraphHolder
 @onready var not_enough_resource_timer: Timer = $NotEnoughResourceTimer
@@ -19,6 +20,7 @@ var current_research_graph = null
 
 func _ready() -> void:
 	TickManager.tick.connect(_on_tick)
+	EventManager.show_research_tree.connect(_open_research_graph_by_idx)
 
 func _on_tick():
 	if researching_upgrade == null:
@@ -157,14 +159,12 @@ func open_research_graph(research_scene: PackedScene):
 	choose_tech_view.visible = false
 	research_graph_view.visible = true
 
-
 func _on_back_button_pressed() -> void:
 	SoundManager.play_button_click_sfx()
 	research_graph_view.visible = false
 	choose_tech_view.visible = true
 	current_research_graph = null
 	reset_stuff_on_tab()
-
 
 func update_all_specialist_research_graph_buttons():
 	for child in choose_tech_view.get_node("SpecialistResearch").get_children():
@@ -179,3 +179,7 @@ func update_all_specialist_research_graph_buttons():
 
 func _on_not_enough_resource_timer_timeout() -> void:
 	cost_label.text = cost_label_prev_text
+
+func _open_research_graph_by_idx(idx: int):
+	var research_button = research_buttons.get_child(idx)
+	open_research_graph(research_button.research_graph_scene)
