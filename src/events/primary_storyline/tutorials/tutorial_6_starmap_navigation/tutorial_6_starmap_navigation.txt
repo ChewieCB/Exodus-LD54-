@@ -1,3 +1,5 @@
+[call_node path="EventManager" method="_enable_build_view" args="["false"]" single_use="true]
+[call_node path="EventManager" method="_enable_command_view" args="["true"]" single_use="true]
 Join ExecutiveOfficer 0
 [call_node path="EventManager" method="change_objective_label" args="[""]" single_use="true"]
 ExecutiveOfficer (Normal): This is your starmap, it shows all of the systems and starlanes of the galaxy.

@@ -26,24 +26,34 @@ var primary_story_id = 0:
 	set(value):
 		primary_story_id = value
 		emit_signal("primary_story_id_changed")
-
+# General event markers
 signal start_event
 signal finish_event
+# Event UI updates
 signal request_change_event_image
 signal request_change_objective_label
+# Negation zone
 signal negation_zone
 signal trigger_negation_zone(flag)
 signal proximity_alert(ticks_left)
+# Win state
 signal victory
+# 
 signal primary_story_id_changed
+# Starmap travel events
 signal star_arrived(star)
 signal star_event(star)
+signal tutorial_neighbor_star_event
+# Build view
+signal enable_build_view(state)
 signal focus_build_buttons(tab, button_indexes)
 signal unlock_build_buttons
+# Command view
+signal enable_command_view(state)
 signal unlock_travel_screen
 signal docking_release
 signal change_command_tab(idx)
-signal tutorial_neighbor_star_event
+
 
 @export var encounter_events: Array[ExodusEvent]
 @export var debug_events: Array[ExodusEvent]
@@ -87,6 +97,16 @@ func _ready() -> void:
 
 func _on_dialogic_signal(arg: String):
 	emit_signal("finish_event", arg)
+
+
+func _enable_command_view(state_string: String):
+	var state = str_to_var(state_string)
+	emit_signal("enable_command_view", state)
+
+
+func _enable_build_view(state_string: String):
+	var state = str_to_var(state_string)
+	emit_signal("enable_build_view", state)
 
 # TUTORIAL signal emitter functions
 
@@ -192,6 +212,8 @@ func disable_tutorial():
 	emit_signal("trigger_negation_zone", true)
 	emit_signal("unlock_travel_screen")
 	ResourceManager.set_is_resource_tick_disabled("false")
+	_enable_command_view("true")
+	_enable_build_view("true")
 
 
 func play_victory_event():

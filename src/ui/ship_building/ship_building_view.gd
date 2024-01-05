@@ -8,6 +8,8 @@ var is_ship_hover: bool = false
 @onready var ship_highlight: Color = Color(1.5, 1.5, 1.5, 1.0)
 @onready var ship_grid = $ShipSprite/ShipGrid
 
+@onready var ship_select = $ShipSelectArea
+
 @onready var resource_low_1_sfx = preload("res://assets/audio/sfx/Resource_Low_1.mp3")
 
 # We don't use the same variable in EventManager to avoid race condition
@@ -30,6 +32,8 @@ func _ready():
 	ResourceManager.research_completed.connect(tutorial_tracker)
 	if tutorial_disabled:
 		EventManager.tutorial_progress = -1
+	
+	EventManager.enable_build_view.connect(_enable_build_view)
 
 	ScreenTransitionManager.fade_in(1.5)
 	await ScreenTransitionManager.transitioned
@@ -122,8 +126,6 @@ func tutorial_tracker(trigger):
 	elif n_metal_built == 2 and EventManager.tutorial_progress == 6:
 		EventManager.emit_signal("proximity_alert", 3)
 		EventManager.play_event(EventManager.tutorial_events[8])
-	
-	
 
 
 func _update_star_particles(tick_speed, is_paused):
@@ -153,6 +155,10 @@ func _on_start_tutorial_timer_timeout() -> void:
 
 func play_bgm_again():
 	bgm_audio_player = SoundManager.play_music(bgm_music, 0.2, "Music")
+
+
+func _enable_build_view(state: bool):
+	ship_select.input_pickable = state
 
 
 func _on_ship_select_area_mouse_entered():

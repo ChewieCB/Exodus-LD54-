@@ -1,3 +1,5 @@
+[call_node path="EventManager" method="_enable_build_view" args="["false"]" single_use="true]
+[call_node path="EventManager" method="_enable_command_view" args="["true"]" single_use="true]
 Join ExecutiveOfficer 0
 ExecutiveOfficer (Normal): Captain, sensors report the negation zone is closing in on our current location!
 [call_node path="EventManager" method="_change_command_tab" args="["1"]" single_use="true]

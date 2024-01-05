@@ -1,3 +1,5 @@
+[call_node path="EventManager" method="_enable_build_view" args="["false"]" single_use="true]
+[call_node path="EventManager" method="_enable_command_view" args="["false"]" single_use="true]
 A Negation Field has simultaneously surrounded the galaxy. The field is creeping in and swallowing asteroids, nebula, planets, stars and even black holes.
 - Play Intro
 	No probe returns or transmits once it passes the field's event horizon. Ships, space stations and entire systems go dark every week.
@@ -16,6 +18,7 @@ A Negation Field has simultaneously surrounded the galaxy. The field is creeping
 		[call_node path="EventManager" method="_focus_build_buttons" args="["HABITATION", "[0]"]" single_use="true]
 		[signal arg="open_build_screen"]
 		Leave ExecutiveOfficer
+		[call_node path="EventManager" method="_enable_build_view" args="["true"]" single_use="true]
 		You can left click on the ship to enter the build menu. Right clicking will exit the build menu.
 		The number next to the crew icon shows the amount of crew needed to construct a building. 
 		The number next to clock icon shows how many days it will take to complete construction.

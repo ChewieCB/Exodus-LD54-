@@ -1,3 +1,5 @@
+[call_node path="EventManager" method="_enable_build_view" args="["false"]" single_use="true]
+[call_node path="EventManager" method="_enable_command_view" args="["true"]" single_use="true]
 Join LifepodCrew 1
 [call_node path="EventManager" method="_change_command_tab" args="["-1"]" single_use="true]
 LifepodCrew: Please help us, we're... we're almost out of air.
@@ -15,6 +17,8 @@ Gained dust compressor schematics.
 Join ExecutiveOfficer 0
 ExecutiveOfficer (Normal): Captain, with these schematics we can construct modules to extract metals from passing gases and meteorites.
 ExecutiveOfficer (Normal): Metals are vital for the construction and improvement of ship modules.
+[call_node path="EventManager" method="_enable_build_view" args="["true"]" single_use="true]
+[call_node path="EventManager" method="_enable_command_view" args="["false"]" single_use="true]
 [signal arg="open_build_screen"]
 ExecutiveOfficer (Normal): As we've almsot exhausted our current supply, I suggest you construct some dust compressors to gather more for the journey ahead. 
 [call_node path="EventManager" method="change_objective_label" args="["Build 2 Dust Compressors"]" single_use="true"]

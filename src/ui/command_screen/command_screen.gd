@@ -48,6 +48,8 @@ func _ready() -> void:
 
 	update_officer_list()
 	
+	EventManager.enable_command_view.connect(_enable_command_button)
+	
 	docking_lock_screen.docking_release_button.disabled = true
 	docking_lock_screen.docking_release_button.button_up.connect(_on_docking_release_button_button_up)
 	EventManager.unlock_travel_screen.connect(unlock_docking_release_button)
@@ -78,6 +80,10 @@ func change_tab(idx: int):
 	else:
 		tab_container.current_tab = idx
 		show_screen()
+
+
+func _enable_command_button(state: bool):
+	show_hide_command_screen_button.disabled = !state
 
 
 func _on_default_path_pressed() -> void:

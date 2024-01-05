@@ -1,3 +1,5 @@
+[call_node path="EventManager" method="_enable_build_view" args="["false"]" single_use="true]
+[call_node path="EventManager" method="_enable_command_view" args="["true"]" single_use="true]
 Join IntercomGuy 4
 IntercomGuy (Normal): Tightbeam communications online captain, crew checked and station dock ready to disengage.
 Leave IntercomGuy
