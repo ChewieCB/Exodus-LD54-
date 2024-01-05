@@ -500,6 +500,14 @@ func reset_state():
 	update_specialist_bonus()
 
 
+func _show_morale_detail(state_str: String):
+	var state = str_to_var(state_str)
+	if state:
+		emit_signal("morale_detail_show")
+	else:
+		emit_signal("morale_detail_hide")
+
+
 # RESOURCE SETTERS
 
 func set_is_resource_tick_disabled(value: String):

@@ -20,6 +20,7 @@
 [node name="BuildingUI" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+mouse_filter = 1
 script = ExtResource("1_pbqqm")
 
 [node name="MarginContainer2" type="MarginContainer" parent="."]
@@ -35,12 +36,12 @@ offset_right = 224.0
 offset_bottom = 256.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_right = 32
 
 [node name="TabContainer" type="TabContainer" parent="MarginContainer2"]
 layout_mode = 2
+mouse_filter = 0
 
 [node name="Facility" type="TabBar" parent="MarginContainer2/TabContainer"]
 layout_mode = 2

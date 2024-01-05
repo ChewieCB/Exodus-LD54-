@@ -45,9 +45,9 @@ func _ready():
 	if placed and building_complete:
 		_setup_scan_for_nearby_bonus()
 
-func _process(delta):
-	# TODO: Optimize this
-	if Input.is_action_just_pressed("cancel_place_building"):
+
+func _unhandled_input(event):
+	if event.is_action_released("cancel_place_building"):
 		if data.type == EnumAutoload.BuildingType.SECTOR:
 			return
 		if is_hover and can_delete and not preview:
@@ -57,6 +57,8 @@ func _process(delta):
 				cancel_deconstruction()
 			else:
 				set_building_remove()
+
+func _process(delta):
 	if not placed and preview:
 		if collider.has_overlapping_areas() or collider.has_overlapping_bodies() or outside_gridmap:
 			color_sprite(1, 0, 0, 0.5)

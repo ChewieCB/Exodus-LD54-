@@ -28,14 +28,6 @@ func _ready():
 
 
 func _process(delta):
-	# DEBUG - animate the bars
-#	if progress_bar.value == bar_max or progress_bar.value == bar_min:
-#		direction_flip = !direction_flip
-#	if direction_flip:
-#		progress_bar.value -= 1
-#	else:
-#		progress_bar.value += 1
-	
 	# Update the bar colour based on its current value
 	var colors = _map_value_to_colour(progress_bar.value)
 	var current_color = colors[0]
