@@ -154,7 +154,6 @@ func _on_start_event(event: ExodusEvent):
 			tween.parallel().tween_property(camera, "global_position", ship_sprite.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 			ship_grid.visible = true
 			ship_build_frame.visible = true
-#			build_show_toggle.visible = true
 			build_menu.visible = true
 		ExodusEvent.ACTIVE_SCREEN.NAV:
 			if build_menu_open:
@@ -164,7 +163,6 @@ func _on_start_event(event: ExodusEvent):
 			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 			ship_grid.visible = false
 			ship_build_frame.visible = false
-#			build_show_toggle.visible = true
 			build_menu.visible = false
 		ExodusEvent.ACTIVE_SCREEN.EVENT:
 			if build_menu_open:
@@ -175,11 +173,10 @@ func _on_start_event(event: ExodusEvent):
 			tween.parallel().tween_property(event_image_holder, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 			ship_grid.visible = false
 			ship_build_frame.visible = false
-#			build_show_toggle.visible = false
 			build_menu.visible = false
 
 	chat_crew_button.disabled = true
-	time_control_ui.disabled_buttons()
+	time_control_ui.disable_buttons()
 
 
 func _on_dialogic_signal(arg: String):
@@ -218,6 +215,7 @@ func _on_dialogic_signal(arg: String):
 			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(command_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 			build_menu.visible = true
+			time_control_ui.enable_buttons()
 			time_control_ui._on_speed_1_button_pressed()
 			chat_crew_button.disabled = false
 			ResourceManager.check_if_all_crew_died()
@@ -232,6 +230,8 @@ func _on_dialogic_signal(arg: String):
 			build_menu.visible = true
 			chat_crew_button.disabled = false
 			ResourceManager.check_if_all_crew_died()
+			time_control_ui.enable_buttons()
+			time_control_ui._on_pause_button_pressed()
 			EventManager.is_in_event = false
 
 		"open_build_screen":
