@@ -22,6 +22,8 @@ A Negation Field has simultaneously surrounded the galaxy. The field is creeping
 		You can left click on the ship to enter the build menu. Right clicking will exit the build menu.
 		The number next to the crew icon shows the amount of crew needed to construct a building. 
 		The number next to clock icon shows how many days it will take to complete construction.
+		You can use the time control UI on lower right screen to pause/unpause/fast-forward time. You can also press 1, 2, 3 for shortcuts.
+		[signal arg="end_event_build"]
 	
 	- No, I can handle things myself (skip tutorial)
 		ExecutiveOfficer (Normal): As you wish captain.
