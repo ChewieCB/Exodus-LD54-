@@ -45,6 +45,16 @@ func _ready():
 	if placed and building_complete:
 		_setup_scan_for_nearby_bonus()
 
+	# Setup shader material for buildings
+	var pulse_mat = ShaderMaterial.new()
+	pulse_mat.shader = pulse_shader
+	if sprite.get_child_count() > 0:
+		for _sprite in sprite.get_children():
+			_sprite.material = pulse_mat
+			_sprite.material.set_shader_parameter("mode", 0)
+	else:
+		sprite.material = pulse_mat
+		sprite.material.set_shader_parameter("mode", 0)
 
 func _unhandled_input(event):
 	if event.is_action_released("cancel_place_building"):
@@ -93,9 +103,6 @@ func construct_in_progress():
 	# Update the building to show it's under construction
 	var pulse_colour = Color("#ffd4a3")
 	pulse_colour.a = 0.5
-	var pulse_mat = ShaderMaterial.new()
-	pulse_mat.shader = pulse_shader
-	sprite.material = pulse_mat
 	sprite.material.set_shader_parameter("shine_color", pulse_colour)
 	sprite.material.set_shader_parameter("full_pulse_cycle", true)
 	sprite.material.set_shader_parameter("mode", 1)
@@ -106,9 +113,6 @@ func construct_in_progress():
 func deconstruct_in_progress():
 	var deconstruct_colour: Color = Color("#853519")
 	deconstruct_colour.a = 0.5
-	var deconstruct_mat = ShaderMaterial.new()
-	deconstruct_mat.shader = pulse_shader
-	sprite.material = deconstruct_mat
 	sprite.material.set_shader_parameter("shine_color", deconstruct_colour)
 	sprite.material.set_shader_parameter("full_pulse_cycle", true)
 	sprite.material.set_shader_parameter("mode", 1)
@@ -270,20 +274,19 @@ func on_predelete() -> void:
 
 
 func _on_area_2d_mouse_entered():
+	if EventManager.is_in_event:
+		return
+
 	BuildingManager.selected_building_queue.append(self)
 	# print(self.data.name + " selected")
 	var pulse_colour = Color("#ffffff")
 	pulse_colour.a = 0.5
-	var pulse_mat = ShaderMaterial.new()
-	pulse_mat.shader = pulse_shader
 	if sprite.get_child_count() > 0:
 		for _sprite in sprite.get_children():
-			_sprite.material = pulse_mat
 			_sprite.material.set_shader_parameter("shine_color", pulse_colour)
 			_sprite.material.set_shader_parameter("full_pulse_cycle", true)
 			_sprite.material.set_shader_parameter("mode", 1)
 	else:
-		sprite.material = pulse_mat
 		sprite.material.set_shader_parameter("shine_color", pulse_colour)
 		sprite.material.set_shader_parameter("full_pulse_cycle", true)
 		sprite.material.set_shader_parameter("mode", 1)

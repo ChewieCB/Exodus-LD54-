@@ -34,7 +34,7 @@ const EVENT_CAMERA_ZOOM = Vector2(0.15, 0.15)
 
 func _ready() -> void:
 	EventManager.start_event.connect(_on_start_event)
-	EventManager.finish_event.connect(_on_finish_event)
+	EventManager.dialogic_signal.connect(_on_dialogic_signal)
 	EventManager.request_change_objective_label.connect(change_objective_label)
 	EventManager.request_change_event_image.connect(change_event_image)
 	if event_image_holder:
@@ -145,6 +145,7 @@ func _open_build_menu():
 func _on_start_event(event: ExodusEvent):
 	TickManager.stop_ticks()
 	tween = get_tree().create_tween()
+	EventManager.is_in_event = true
 #	command_screen.hide_screen()
 
 	match event.active_screen:
@@ -181,7 +182,7 @@ func _on_start_event(event: ExodusEvent):
 	time_control_ui.disabled_buttons()
 
 
-func _on_finish_event(arg: String):
+func _on_dialogic_signal(arg: String):
 	match arg:
 		"change_to_build_screen":
 			tween = get_tree().create_tween()
@@ -208,7 +209,6 @@ func _on_finish_event(arg: String):
 			tween.parallel().tween_property(event_image_holder, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 			ship_grid.visible = false
 			ship_build_frame.visible = false
-#			build_show_toggle.visible = false
 			build_menu.visible = false
 		"end_event":
 			tween = get_tree().create_tween()
@@ -217,16 +217,11 @@ func _on_finish_event(arg: String):
 			tween.parallel().tween_property(camera, "zoom", SHIP_CAMERA_ZOOM, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(camera, "global_position", mid_view_marker.global_position, 0.5).set_trans(Tween.TRANS_LINEAR)
 			tween.parallel().tween_property(command_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
-
-#			build_show_toggle.visible = true
 			build_menu.visible = true
-
 			time_control_ui._on_speed_1_button_pressed()
 			chat_crew_button.disabled = false
-
 			ResourceManager.check_if_all_crew_died()
-			TickManager.start_ticks()
-
+			EventManager.is_in_event = false
 
 		# Hack to end an event with the build menu open for tutorials and such
 		"end_event_build":
@@ -234,15 +229,10 @@ func _on_finish_event(arg: String):
 			tween.tween_property(command_screen, "modulate:a", 1, 1.0).set_trans(Tween.TRANS_LINEAR)
 			if event_image_holder:
 				tween.tween_property(event_image_holder, "modulate:a", 0, 1.0).set_trans(Tween.TRANS_LINEAR)
-
-#			build_show_toggle.visible = true
 			build_menu.visible = true
-
-			time_control_ui._on_speed_1_button_pressed()
 			chat_crew_button.disabled = false
-
 			ResourceManager.check_if_all_crew_died()
-			TickManager.start_ticks()
+			EventManager.is_in_event = false
 
 		"open_build_screen":
 			_open_build_menu()

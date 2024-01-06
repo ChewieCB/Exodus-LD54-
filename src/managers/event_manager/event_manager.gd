@@ -28,7 +28,7 @@ var primary_story_id = 0:
 		emit_signal("primary_story_id_changed")
 # General event markers
 signal start_event
-signal finish_event
+signal dialogic_signal
 # Event UI updates
 signal request_change_event_image
 signal request_change_objective_label
@@ -68,6 +68,7 @@ var previous_background: Texture2D = null
 @onready var available_events: Array[ExodusEvent] = encounter_events.duplicate()
 var completed_events: Array[ExodusEvent]
 var event_dict = {} # Dictionary, format int : ExodusEvent (example: {0: tutorial_event_0}). Use in debug event dropdown
+var is_in_event = false
 
 @onready var planets = {
 	ExodusEvent.PlanetType.WET_TERRAIN: preload("res://addons/pixel_planet_generator/Planets/Rivers/Rivers.tscn"),
@@ -98,7 +99,7 @@ func _ready() -> void:
 	available_events.pop_front()
 
 func _on_dialogic_signal(arg: String):
-	emit_signal("finish_event", arg)
+	emit_signal("dialogic_signal", arg)
 
 
 func _enable_command_view(state_string: String):
@@ -168,6 +169,7 @@ func play_event_by_name(event_name: String) -> Node:
 		return play_event(event)
 	return null
 
+# Currently not in use
 func play_event_legacy(event_name: String) -> Node:
 	return call(event_name)
 
