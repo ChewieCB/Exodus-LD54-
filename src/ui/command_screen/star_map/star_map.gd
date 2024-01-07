@@ -167,6 +167,9 @@ func _ready():
 	).front()
 	# Move ship to start point
 	$ShipTracker.global_position = start_star.global_position
+	# Move camera
+	camera.ship_node = $ShipTracker
+	camera.current_target = $ShipTracker
 	
 	EventManager.tutorial_neighbor_star_event.connect(set_tutorial_distress_signal)
 	
@@ -940,6 +943,9 @@ func set_tutorial_distress_signal() -> StarNode:
 	var neighbors = get_star_connected_neighbors(start_star)
 	var distress_star = neighbors.front()
 	distress_star.connected_event = EventManager.tutorial_events[7]
+	
+	camera.focus_on_node(distress_star)
+	
 	return distress_star
 
 
