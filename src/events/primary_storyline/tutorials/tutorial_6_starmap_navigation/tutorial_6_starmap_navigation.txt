@@ -29,4 +29,4 @@ ExecutiveOfficer (Normal): It's your call captain. Our metal reserves are low af
 	Leave ExecutiveOfficer
 	[call_node path="EventManager" method="_change_command_tab" args="["-1"]" single_use="true]
 	[call_node path="EventManager" method="disable_tutorial" single_use="true"]
-	[signal arg="end_event"]
+[signal arg="end_event"]
