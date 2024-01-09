@@ -949,9 +949,11 @@ func set_tutorial_distress_signal() -> StarNode:
 	tutorial_star = distress_star
 	distress_star.connected_event = EventManager.tutorial_events[7]
 	
+	camera.is_input_disabled = true
 	camera.focus_on_node(distress_star, -1.0)
 	await EventManager.dialogic_signal
 	camera.release_focus()
+	camera.is_input_disabled = false
 	
 	return distress_star
 

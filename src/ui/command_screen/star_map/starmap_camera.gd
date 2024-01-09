@@ -12,6 +12,11 @@ var ship_node: Node
 const PAN_RETURN_RATE: float = 2.5
 var pan_wait: float = 1.6
 var is_pan_returning: bool = false
+var is_input_disabled: bool = false:
+	set(value):
+		is_input_disabled = value
+		pan_wait_timer.stop()
+		is_pan_returning = true
 
 var negation_zone_camera_limit_buffer: int = 32
 @onready var negation_zone_radius = get_parent().negation_zone_radius
@@ -45,6 +50,8 @@ func _physics_process(delta):
 
 
 func _input(event: InputEvent) -> void:
+	if is_input_disabled:
+		return
 	if event is InputEventMouseMotion:
 		if event.button_mask == MOUSE_BUTTON_MASK_MIDDLE:
 			position -= event.relative / zoom * 0.35
