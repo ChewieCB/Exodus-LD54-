@@ -161,7 +161,6 @@ func _ready():
 			> b.global_position.distance_to(start_star.global_position)
 	)
 	goal_star = inner_stars.front()
-	goal_star.is_goal = true
 	
 	# DEBUG
 	print("Start point distance = ", negation_zone_radius - start_star.global_position.distance_to(adjusted_center))
@@ -176,6 +175,9 @@ func _ready():
 	
 	EventManager.tutorial_neighbor_star_event.connect(set_tutorial_distress_signal)
 	EventManager.end_tutorial_star_event.connect(cancel_tutorial_distress_signal)
+	EventManager.focus_negation_zone.connect(focus_negation_zone)
+	EventManager.focus_goal.connect(focus_goal_star)
+#	EventManager.tutorial_ended.connect(focus_goal_star)
 	
 	# Connect negation zone radius to tick
 	TickManager.tick.connect(_on_tick)
@@ -943,17 +945,39 @@ func handle_negated_starlanes():
 			starlanes_in_negation_zone.erase(_lane)
 
 
+func focus_goal_star() -> void:
+	goal_star.is_goal = true
+	var original_zoom = camera.zoom.x
+	camera.focus_on_node(goal_star, camera.MIN_ZOOM, -1.0, true)
+	await EventManager.dialogic_signal
+	camera.release_focus(original_zoom, true)
+
+
+func focus_negation_zone() -> void:
+	var original_zoom = camera.zoom.x
+	# Get closest point on negation zone to player
+	var ship_position = _screen_to_viewport($ShipTracker.global_position)
+	var direction_to_center = ship_position.direction_to(negation_zone_center)
+	var closest_negation_zone_point = -direction_to_center * negation_zone_radius
+	# Instance a Marker2D there that we can focus on
+	var focus_point = Marker2D.new()
+	focus_point.global_position = closest_negation_zone_point
+	add_child(focus_point)
+	# Move Camera
+	camera.focus_on_node(focus_point, original_zoom, -1, true)
+	await EventManager.dialogic_signal
+	camera.release_focus(original_zoom, true)
+
+
 func set_tutorial_distress_signal() -> StarNode:
 	var neighbors = get_star_connected_neighbors(start_star)
 	var distress_star = neighbors.front()
 	tutorial_star = distress_star
 	distress_star.connected_event = EventManager.tutorial_events[7]
 	
-	camera.is_input_disabled = true
-	camera.focus_on_node(distress_star, -1.0)
+	camera.focus_on_node(distress_star, -1.0, true)
 	await EventManager.dialogic_signal
-	camera.release_focus()
-	camera.is_input_disabled = false
+	camera.release_focus(true)
 	
 	return distress_star
 

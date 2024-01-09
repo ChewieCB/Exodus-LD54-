@@ -40,6 +40,7 @@ signal proximity_alert(ticks_left)
 signal victory
 # 
 signal primary_story_id_changed
+signal tutorial_ended
 # Starmap travel events
 signal star_arrived(star)
 signal star_event(star)
@@ -57,6 +58,8 @@ signal show_research_tree(idx)
 # - Starmap
 signal unlock_travel_screen
 signal docking_release
+signal focus_negation_zone
+signal focus_goal
 
 @export var encounter_events: Array[ExodusEvent]
 @export var debug_events: Array[ExodusEvent]
@@ -217,6 +220,14 @@ func tutorial_add_neighbor_star_event():
 	emit_signal("tutorial_neighbor_star_event")
 
 
+func tutorial_focus_negation_zone():
+	emit_signal("focus_negation_zone")
+
+
+func tutorial_focus_goal():
+	emit_signal("focus_goal")
+
+
 func disable_tutorial():
 	tutorial_progress = -1
 	emit_signal("end_tutorial_star_event")
@@ -226,6 +237,7 @@ func disable_tutorial():
 	ResourceManager.set_is_resource_tick_disabled("false")
 	_enable_command_view("true")
 	_enable_build_view("true")
+	emit_signal("tutorial_ended")
 
 
 func play_victory_event():

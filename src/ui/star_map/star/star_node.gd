@@ -30,6 +30,7 @@ var star_timespeed: float = 0.3
 var is_goal: bool = false: # For checking game end
 	set(value):
 		is_goal = value
+		has_signal = is_goal
 
 var pickable: bool = false:
 	set(value):

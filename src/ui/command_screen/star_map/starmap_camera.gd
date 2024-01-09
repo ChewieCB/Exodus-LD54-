@@ -41,7 +41,7 @@ func _physics_process(delta):
 			var distance_from_target = global_position.distance_to(
 				current_target.global_position
 			)
-			var pan_distance_multiplier = remap(distance_from_target, 0, 600, 1, 2)
+			var pan_distance_multiplier = remap(distance_from_target, 0, 300, 1, 2)
 			global_position = lerp(
 				global_position, 
 				current_target.global_position,
@@ -85,18 +85,31 @@ func zoom_in() -> void:
 	_target_zoom = min(_target_zoom + ZOOM_INCREMENT, MAX_ZOOM)
 
 
-func focus_on_node(node: Node, time_to_release: float = 5.0) -> void:
+func focus_on_node(node: Node, _zoom: float = self.zoom.x, 
+	time_to_release: float = 5.0, disable_control: bool = false
+) -> void:
 	current_target = node
+	# Starmap controls
+	if disable_control:
+		is_input_disabled = true
+	# Camera movement
 	pan_wait_timer.stop()
 	is_pan_returning = true
+	_target_zoom = _zoom
+	# Auto release
 	if time_to_release > 0:
 		await get_tree().create_timer(time_to_release).timeout
-		release_focus()
+		release_focus(_zoom, disable_control)
 
 
-func release_focus() -> void:
+func release_focus(_zoom: float = self.zoom.x, disabled_input: bool = false) -> void:
 	if ship_node:
 		current_target = ship_node 
+	#
 	pan_wait_timer.stop()
 	is_pan_returning = true
+	_target_zoom = _zoom
+	#
+	if disabled_input:
+		is_input_disabled = false
 
