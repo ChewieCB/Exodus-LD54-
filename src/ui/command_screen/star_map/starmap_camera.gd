@@ -80,8 +80,9 @@ func zoom_in() -> void:
 
 func focus_on_node(node: Node, time_to_release: float = 5.0) -> void:
 	current_target = node
-	await get_tree().create_timer(time_to_release).timeout
-#	release_focus()
+	if time_to_release > 0:
+		await get_tree().create_timer(time_to_release).timeout
+		release_focus()
 
 
 func release_focus() -> void:
