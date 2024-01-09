@@ -106,7 +106,7 @@ func _on_visible_on_screen_notifier_2d_screen_entered():
 	
 #	get_parent().get_parent().star_shaders_visible += 1
 	add_child(star_instance)
-	has_signal = is_goal
+	star_instance._signal.visible = has_signal
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited():

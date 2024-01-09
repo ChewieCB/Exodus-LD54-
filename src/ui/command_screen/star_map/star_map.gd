@@ -95,6 +95,9 @@ var start_star: StarNode
 var goal_star: StarNode
 var goal_point: Vector2
 
+# TODO - refactor this to be non-hardcoded
+var tutorial_star: StarNode
+
 const SHIP_MOVE_RATE: float = 1.0 # Default is 1.0
 var is_ship_travelling: bool = false
 
@@ -172,6 +175,7 @@ func _ready():
 	camera.current_target = $ShipTracker
 	
 	EventManager.tutorial_neighbor_star_event.connect(set_tutorial_distress_signal)
+	EventManager.end_tutorial_star_event.connect(cancel_tutorial_distress_signal)
 	
 	# Connect negation zone radius to tick
 	TickManager.tick.connect(_on_tick)
@@ -942,12 +946,21 @@ func handle_negated_starlanes():
 func set_tutorial_distress_signal() -> StarNode:
 	var neighbors = get_star_connected_neighbors(start_star)
 	var distress_star = neighbors.front()
+	tutorial_star = distress_star
 	distress_star.connected_event = EventManager.tutorial_events[7]
 	
-	camera.focus_on_node(distress_star)
-#	await EventManager.dialogic_signal
+	camera.focus_on_node(distress_star, -1.0)
+	await EventManager.dialogic_signal
+	camera.release_focus()
 	
 	return distress_star
+
+
+func cancel_tutorial_distress_signal() -> void:
+	camera.release_focus()
+	if tutorial_star:
+		tutorial_star.has_signal = false
+		tutorial_star = null
 
 
 func _on_tick():

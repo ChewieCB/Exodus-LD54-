@@ -44,6 +44,7 @@ signal primary_story_id_changed
 signal star_arrived(star)
 signal star_event(star)
 signal tutorial_neighbor_star_event
+signal end_tutorial_star_event
 # Build view
 signal enable_build_view(state)
 signal focus_build_buttons(tab, button_indexes)
@@ -218,6 +219,7 @@ func tutorial_add_neighbor_star_event():
 
 func disable_tutorial():
 	tutorial_progress = -1
+	emit_signal("end_tutorial_star_event")
 	change_objective_label("Travel to the target star system near the galaxy center")
 	emit_signal("trigger_negation_zone", true)
 	emit_signal("unlock_travel_screen")

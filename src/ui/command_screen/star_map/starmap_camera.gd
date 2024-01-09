@@ -80,6 +80,8 @@ func zoom_in() -> void:
 
 func focus_on_node(node: Node, time_to_release: float = 5.0) -> void:
 	current_target = node
+	pan_wait_timer.stop()
+	is_pan_returning = true
 	if time_to_release > 0:
 		await get_tree().create_timer(time_to_release).timeout
 		release_focus()
@@ -88,4 +90,6 @@ func focus_on_node(node: Node, time_to_release: float = 5.0) -> void:
 func release_focus() -> void:
 	if ship_node:
 		current_target = ship_node 
+	pan_wait_timer.stop()
+	is_pan_returning = true
 
