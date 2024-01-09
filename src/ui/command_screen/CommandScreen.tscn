@@ -107,6 +107,7 @@ offset_bottom = 460.0
 mouse_filter = 2
 
 [node name="Research" type="TabBar" parent="DeviceFrame/TabContainer"]
+visible = false
 layout_mode = 2
 script = ExtResource("3_v75ll")
 
@@ -408,7 +409,6 @@ toggle_mode = true
 text = "Change path"
 
 [node name="Crewmates" type="TabBar" parent="DeviceFrame/TabContainer"]
-visible = false
 layout_mode = 2
 script = ExtResource("3_ffkt0")
 crewmate_button = ExtResource("4_vsvdc")

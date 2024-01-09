@@ -58,6 +58,7 @@ func show_crewmate_data(crewmate_data: CrewmateData):
 	random_thought.text = "[center]" + crewmate_data.random_thought + "[/center]"
 	selected_crewmate_name = crewmate_data.crewmate_name
 
+
 func refresh_button_list():
 	for child in button_container.get_children():
 		child.queue_free()
@@ -68,6 +69,9 @@ func refresh_button_list():
 		cb.crewmate_data = CrewmateManager.current_crewmates[i]
 		cb.crewmate_tab = self
 		cb.update_label()
+	
+	var first_button = button_container.get_child(0)
+	first_button._on_pressed()
 
 
 func reset_yeet_decision():
