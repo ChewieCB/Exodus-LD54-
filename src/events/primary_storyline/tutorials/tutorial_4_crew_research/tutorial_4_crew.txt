@@ -14,7 +14,7 @@ ExecutiveOfficer (Normal): Remove them from the ship, if times are dire.
 ExecutiveOfficer (Normal): ...
 ExecutiveOfficer (Normal): Moving on.
 [call_node path="EventManager" method="_change_command_tab" args="["0"]" single_use="true]
-ExecutiveOfficer (Normal): Before we can leave the dock we need to get our tightbeam array back online, this aids our navigation as well as enables us to send rapid communications over stellar distances with minimal delay.
+ExecutiveOfficer (Normal): Before we can leave the dock we need to get our tightbeam array back online, this aids our navigation as well as enabling us to send rapid communications over stellar distances with minimal delay.
 ExecutiveOfficer (Normal): One of our crew is a research specialist, we can direct them to focus on the tightbeam project in the research screen.
 [call_node path="EventManager" method="change_objective_label" args="["Research Tighbeam Communication"]" single_use="true"]
 [call_node path="EventManager" method="_show_research_tree" args="["4"]" single_use="true]

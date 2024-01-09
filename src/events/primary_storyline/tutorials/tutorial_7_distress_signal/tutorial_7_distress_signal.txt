@@ -12,6 +12,11 @@ LifepodCrew: Please help us, we're... we're almost out of air.
 	LifepodCrew: Thank you, though I fear it may be some time until another ship comes by.
 	LifepodCrew: Please take this dust compressor schematic for your fabricators as a token of our thanks.
 	[call_node path="ResourceManager" method="change_resource_from_event" args="["air", "-{air_cost_1}"]" single_use="true"]
+- Leave the survivors to their fate (Exit Tutorial)
+	LifepodCrew: ...
+	Leave LifepodCrew
+	[call_node path="EventManager" method="disable_tutorial" single_use="true"]
+	[signal arg="end_event"]
 Leave LifepodCrew
 Gained dust compressor schematics.
 Join ExecutiveOfficer 0

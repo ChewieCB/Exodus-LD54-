@@ -9,7 +9,7 @@ var _target_zoom: float = 8.0
 var current_target: Node
 var ship_node: Node
 
-const PAN_RETURN_RATE: float = 2.5
+const PAN_RETURN_RATE: float = 1.0
 var pan_wait: float = 1.6
 var is_pan_returning: bool = false
 var is_input_disabled: bool = false:

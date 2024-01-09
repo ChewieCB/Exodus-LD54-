@@ -970,14 +970,15 @@ func focus_negation_zone() -> void:
 
 
 func set_tutorial_distress_signal() -> StarNode:
+	var original_zoom = camera.zoom.x
 	var neighbors = get_star_connected_neighbors(start_star)
 	var distress_star = neighbors.front()
 	tutorial_star = distress_star
 	distress_star.connected_event = EventManager.tutorial_events[7]
 	
-	camera.focus_on_node(distress_star, -1.0, true)
+	camera.focus_on_node(distress_star, original_zoom, -1.0, true)
 	await EventManager.dialogic_signal
-	camera.release_focus(true)
+	camera.release_focus(original_zoom, true)
 	
 	return distress_star
 
