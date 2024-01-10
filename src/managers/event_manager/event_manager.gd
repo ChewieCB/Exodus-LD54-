@@ -237,6 +237,7 @@ func disable_tutorial():
 	ResourceManager.set_is_resource_tick_disabled("false")
 	_enable_command_view("true")
 	_enable_build_view("true")
+	_unlock_build_buttons()
 
 
 func play_victory_event():
