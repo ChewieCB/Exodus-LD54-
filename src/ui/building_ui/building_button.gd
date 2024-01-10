@@ -43,7 +43,8 @@ func _ready():
 	building_icon.texture = building.data.sprite
 
 	if not Engine.is_editor_hint():
-		ResourceManager.workers_changed.connect(_update_status)
+		# I think just let the player build and got the "not enough workers" is more intuitive
+		# ResourceManager.workers_changed.connect(_update_status)
 		ResourceManager.upgrade_acquired.connect(_update_info_after_upgrade)
 
 	_update_info_after_upgrade()
