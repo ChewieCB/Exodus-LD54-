@@ -1,0 +1,189 @@
+[gd_scene load_steps=7 format=3 uid="uid://02jv7nxakwyl"]
+
+[ext_resource type="Script" path="res://src/ui/command_screen/star_map/docking_lock/docking_lock.gd" id="1_mtkb1"]
+[ext_resource type="Texture2D" uid="uid://d65nfli1chn0" path="res://assets/sprite/square.png" id="1_ncmpf"]
+[ext_resource type="FontFile" uid="uid://4r5r4qviqq2k" path="res://assets/ui/fonts/Improbable.otf" id="2_f615m"]
+
+[sub_resource type="Animation" id="Animation_xyjko"]
+resource_name = "default"
+length = 0.1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MarginContainer/Position:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(0.297302),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MarginContainer/Position/MarginContainer2/MarginContainer/LabelLocked:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MarginContainer/Position/MarginContainer2/MarginContainer/LabelUnlocked:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MarginContainer/Position/MarginContainer2/CenterContainer/DockingReleaseButton:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_82det"]
+resource_name = "unlock"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MarginContainer/Position:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.35, 1),
+"transitions": PackedFloat32Array(0.297302, 1.18921, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 240)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MarginContainer/Position/MarginContainer2/MarginContainer/LabelLocked:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MarginContainer/Position/MarginContainer2/MarginContainer/LabelUnlocked:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MarginContainer/Position/MarginContainer2/CenterContainer/DockingReleaseButton:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7i8m2"]
+_data = {
+"default": SubResource("Animation_xyjko"),
+"unlock": SubResource("Animation_82det")
+}
+
+[node name="DockingLockScreen" type="MarginContainer"]
+clip_contents = true
+offset_right = 453.0
+offset_bottom = 240.0
+mouse_filter = 2
+script = ExtResource("1_mtkb1")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+clip_contents = true
+layout_mode = 2
+
+[node name="Position" type="Node2D" parent="MarginContainer"]
+
+[node name="Background" type="TextureRect" parent="MarginContainer/Position"]
+self_modulate = Color(0.0470588, 0.0392157, 0.0235294, 1)
+offset_right = 453.0
+offset_bottom = 240.0
+mouse_filter = 2
+texture = ExtResource("1_ncmpf")
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/Position"]
+clip_contents = true
+offset_right = 453.0
+offset_bottom = 240.0
+mouse_filter = 2
+theme_override_constants/margin_top = 42
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/Position/MarginContainer2"]
+clip_contents = true
+layout_mode = 2
+mouse_filter = 2
+
+[node name="DockingReleaseButton" type="Button" parent="MarginContainer/Position/MarginContainer2/CenterContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_f615m")
+theme_override_font_sizes/font_size = 32
+text = "RELEASE"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Position/MarginContainer2"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/margin_bottom = 128
+
+[node name="LabelLocked" type="Label" parent="MarginContainer/Position/MarginContainer2/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.823529, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_f615m")
+theme_override_font_sizes/font_size = 24
+text = "Docking Clamps Engaged"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelUnlocked" type="Label" parent="MarginContainer/Position/MarginContainer2/MarginContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0.733333, 0.258824, 1)
+theme_override_fonts/font = ExtResource("2_f615m")
+theme_override_font_sizes/font_size = 24
+text = "Docking Clamps Disengaged"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "default"
+libraries = {
+"": SubResource("AnimationLibrary_7i8m2")
+}

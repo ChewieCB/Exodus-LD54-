@@ -8,9 +8,17 @@ var is_ship_hover: bool = false
 @onready var ship_highlight: Color = Color(1.5, 1.5, 1.5, 1.0)
 @onready var ship_grid = $ShipSprite/ShipGrid
 
+@onready var ship_select = $ShipSelectArea
+
+@onready var resource_low_1_sfx = preload("res://assets/audio/sfx/Resource_Low_1.mp3")
+
 # We don't use the same variable in EventManager to avoid race condition
 var n_hab_built = 0
+var n_air_built = 0
 var n_food_built = 0
+var n_water_built = 0
+var n_metal_built = 0
+
 var bgm_audio_player: AudioStreamPlayer
 var bgm_music
 
@@ -21,8 +29,11 @@ signal ship_deselected
 func _ready():
 	TickManager.tick_changed.connect(_update_star_particles)
 	BuildingManager.building_finished.connect(tutorial_tracker)
+	ResourceManager.research_completed.connect(tutorial_tracker)
 	if tutorial_disabled:
 		EventManager.tutorial_progress = -1
+	
+	EventManager.enable_build_view.connect(_enable_build_view)
 
 	ScreenTransitionManager.fade_in(1.5)
 	await ScreenTransitionManager.transitioned
@@ -65,24 +76,56 @@ func _input(event):
 				$ShipSprite.modulate = ship_no_highlight
 
 
-func tutorial_tracker(type: EnumAutoload.BuildingType):
-	if EventManager.tutorial_progress >= 2 or EventManager.tutorial_progress <= -1 :
+func tutorial_tracker(trigger):
+	if EventManager.tutorial_progress == -1:
 		return
-
-	match type:
-		EnumAutoload.BuildingType.HABITATION:
-			n_hab_built += 1
-		EnumAutoload.BuildingType.FOOD:
-			n_food_built += 1
-
-	if n_food_built >= 2 and EventManager.tutorial_progress == 0:
-		EventManager.play_event(EventManager.tutorial_events[1])
-		EventManager.tutorial_progress = 1
-		return
-	if n_hab_built >= 2:
-		if EventManager.tutorial_progress == 1:
-			EventManager.play_event(EventManager.tutorial_events[2])
-			EventManager.tutorial_progress = 2
+	
+	if trigger is EnumAutoload.BuildingType:
+		match trigger:
+			EnumAutoload.BuildingType.HABITATION:
+				n_hab_built += 1
+			EnumAutoload.BuildingType.FOOD:
+				n_food_built += 1
+			EnumAutoload.BuildingType.AIR:
+				n_air_built += 1
+			EnumAutoload.BuildingType.WATER:
+				n_water_built += 1
+			EnumAutoload.BuildingType.METAL:
+				n_metal_built += 1
+	
+	# Stage 1 - Habs
+	# Stage 2 - Air
+	if n_hab_built == 3 and EventManager.tutorial_progress == 0:
+			EventManager.play_event(EventManager.tutorial_events[1])
+			EventManager.tutorial_progress = 1
+	# Stage 3 - Food
+	elif n_air_built == 2 and EventManager.tutorial_progress == 1:
+		EventManager.play_event(EventManager.tutorial_events[2])
+		EventManager.tutorial_progress = 2
+	# Stage 4 - Water
+	elif n_food_built == 2 and EventManager.tutorial_progress == 2:
+		EventManager.play_event(EventManager.tutorial_events[3])
+		EventManager.tutorial_progress = 3
+	# Stage 5 - Crew & Research
+	elif n_water_built == 2 and EventManager.tutorial_progress == 3:
+		EventManager.play_event(EventManager.tutorial_events[4])
+		EventManager.tutorial_progress = 4
+	# Stage 5 - Starmap Unlock
+	elif ResourceManager.has_upgrade(EnumAutoload.UpgradeId.SHIP_INFRA_TIGHTBEAM_COMM) \
+	and EventManager.tutorial_progress == 4:
+		EventManager.play_event(EventManager.tutorial_events[5])
+		EventManager.tutorial_progress = 5
+	# Stage 6 - Starmap Navigation
+	if EventManager.tutorial_progress == 5:
+		await EventManager.docking_release
+		EventManager.play_event(EventManager.tutorial_events[6])
+		EventManager.tutorial_progress = 6
+	# Stage 7 - Distress Signal & Metals
+	# This is triggered by the event linked to the assigned distress signal star
+	# Stage 8 - Negation Zone
+	elif n_metal_built == 2 and EventManager.tutorial_progress == 6:
+		EventManager.emit_signal("proximity_alert", 3)
+		EventManager.play_event(EventManager.tutorial_events[8])
 
 
 func _update_star_particles(tick_speed, is_paused):
@@ -112,6 +155,10 @@ func _on_start_tutorial_timer_timeout() -> void:
 
 func play_bgm_again():
 	bgm_audio_player = SoundManager.play_music(bgm_music, 0.2, "Music")
+
+
+func _enable_build_view(state: bool):
+	ship_select.input_pickable = state
 
 
 func _on_ship_select_area_mouse_entered():

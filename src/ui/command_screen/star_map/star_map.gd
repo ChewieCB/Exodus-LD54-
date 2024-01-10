@@ -76,7 +76,7 @@ var previous_negation_zone_radius: float
 var points_to_draw: PackedVector2Array
 var edges_to_draw = []
 #
-var stars: Array
+var active_stars: Array = []
 var starmap_graph: Graph
 #
 var available_spawn_lanes = []
@@ -91,7 +91,12 @@ var queued_stars: Array = []
 var chevrons_instance: Line2D
 var queued_chevrons: Array = []
 
+var start_star: StarNode
+var goal_star: StarNode
 var goal_point: Vector2
+
+# TODO - refactor this to be non-hardcoded
+var tutorial_star: StarNode
 
 const SHIP_MOVE_RATE: float = 1.0 # Default is 1.0
 var is_ship_travelling: bool = false
@@ -142,31 +147,37 @@ func _ready():
 	EventManager.trigger_negation_zone.connect(set_is_negation_zone_active)
 	
 	# Add star shaders
-	var star_positions = generate_stars(stars)
+	active_stars = generate_stars(active_stars)
+	
 	# Pick an outer star and place the ship tracker there
-	var outer_stars = get_outer_stars(star_positions)
-	var start_point = outer_stars[randi_range(0, outer_stars.size() - 1)]
+	var outer_stars = get_outer_stars(active_stars)
+	start_star = outer_stars[randi_range(0, outer_stars.size() - 1)]
+	
 	# Pick a star near the center of the galaxy and set the goal there
-	var inner_stars: Array = get_inner_stars(star_positions)
+	var inner_stars: Array = get_inner_stars(active_stars)
 	inner_stars.sort_custom(
 		func(a, b):
-			return a.distance_to(start_point) > b.distance_to(start_point)
+			return a.global_position.distance_to(start_star.global_position) \
+			> b.global_position.distance_to(start_star.global_position)
 	)
-	goal_point = inner_stars.front()
-	var goal_idx = star_positions.find(goal_point)
-	var goal_star = stars[goal_idx]
-	goal_star.is_goal = true
+	goal_star = inner_stars.front()
 	
 	# DEBUG
-	print("Start point distance = ", negation_zone_radius - start_point.distance_to(adjusted_center))
-	previous_star = stars.filter(
-		func(star): return star.global_position == start_point
+	print("Start point distance = ", negation_zone_radius - start_star.global_position.distance_to(adjusted_center))
+	previous_star = active_stars.filter(
+		func(star): return star == start_star
 	).front()
 	# Move ship to start point
-	$ShipTracker.global_position = start_point
-	# TODO Pick a destination point
-	# var inner_stars 
-	# var goal_point
+	$ShipTracker.global_position = start_star.global_position
+	# Move camera
+	camera.ship_node = $ShipTracker
+	camera.current_target = $ShipTracker
+	
+	EventManager.tutorial_neighbor_star_event.connect(set_tutorial_distress_signal)
+	EventManager.end_tutorial_star_event.connect(cancel_tutorial_distress_signal)
+	EventManager.focus_negation_zone.connect(focus_negation_zone)
+	EventManager.focus_goal.connect(focus_goal_star)
+#	EventManager.tutorial_ended.connect(focus_goal_star)
 	
 	# Connect negation zone radius to tick
 	TickManager.tick.connect(_on_tick)
@@ -315,6 +326,24 @@ func is_star_connected(destination_star: StarNode, starting_star: StarNode) -> b
 				return true
 	
 	return false
+
+
+func get_star_connected_neighbors(star: StarNode) -> Array:
+	var neighbors = []
+	var _connected_lanes = get_connected_starlanes(_screen_to_viewport(star.global_position))
+	for lane in _connected_lanes:
+		var valid_point = lane.filter(
+			func(item):
+				return item is Vector2 \
+				and not item.is_equal_approx(star.position)
+		)[0]
+		var neighbor_star = active_stars.filter(
+			func(star):
+				return _screen_to_viewport(star.global_position).is_equal_approx(valid_point)
+		)
+		neighbors.append(neighbor_star[0])
+	return neighbors
+	
 
 
 func select_star_to_travel_to(star: StarNode):
@@ -676,13 +705,13 @@ func generate_starlanes() -> void:
 			starlanes_parent.add_child(starlane_instance)
 
 
-func generate_stars(stars) -> Array:
-	for _star in stars:
+func generate_stars(stars_array: Array) -> Array:
+	# Remove any pre-existing stars before we regenerate the map
+	for _star in stars_array:
 		_star.queue_free()
-		stars.erase(_star)
+		stars_array.erase(_star)
 	
 	var star_node = load("res://src/ui/star_map/star/StarNode.tscn")
-	var star_positions = []
 	for _point in points_to_draw:
 		if Geometry2D.is_point_in_circle(_point, negation_zone_center, negation_zone_radius):
 			var star_instance = star_node.instantiate()
@@ -691,9 +720,7 @@ func generate_stars(stars) -> Array:
 			star_instance.queue_star_selected.connect(add_star_to_travel_queue)
 			star_instance.global_position = _point
 			stars_parent.add_child(star_instance)
-			stars.append(star_instance)
-			star_positions.append(star_instance.global_position)
-	return star_positions
+	return stars_parent.get_children()
 
 
 func get_outer_stars(stars, min_distance=64, max_distance=128) -> Array:
@@ -701,7 +728,7 @@ func get_outer_stars(stars, min_distance=64, max_distance=128) -> Array:
 	# for when we run it as a SubViewport within the UI
 	var outer_stars = Array(stars).filter(
 		func(star): 
-			var _star_distance = star.distance_to(adjusted_center)
+			var _star_distance = star.global_position.distance_to(adjusted_center)
 			var _distance_to_negation_zone = negation_zone_radius + 1 - _star_distance
 			return _distance_to_negation_zone > min_distance and \
 			_distance_to_negation_zone < max_distance 
@@ -710,10 +737,10 @@ func get_outer_stars(stars, min_distance=64, max_distance=128) -> Array:
 	return outer_stars
 
 
-func get_inner_stars(stars):
+func get_inner_stars(stars) -> Array:
 	var inner_stars = Array(stars).filter(
 		func(star): 
-			return star.distance_to(adjusted_center) < galactic_center_radius - 24
+			return star.global_position.distance_to(adjusted_center) < galactic_center_radius - 24
 	)
 	
 	return inner_stars
@@ -850,7 +877,7 @@ func clear_chevrons(start_idx: int = 0, end_idx: int = 0x7FFFFFFF):
 
 func clear_negated_stars():
 	# Find any stars that are inside the negation zone
-	var negated_stars = Array(stars).filter(
+	var negated_stars = Array(active_stars).filter(
 		func(star):
 			return star.global_position.distance_to(adjusted_center) >= negation_zone_radius - 1
 	)
@@ -869,7 +896,7 @@ func clear_negated_stars():
 				clear_chevrons(star_idx)
 				queued_stars = queued_stars.slice(0, star_idx)
 		# Remove the star as it is negated
-		stars.erase(_star)
+		active_stars.erase(_star)
 		_star.queue_free()
 
 
@@ -916,6 +943,51 @@ func handle_negated_starlanes():
 		and _lane.cached_original_points[1].distance_to(negation_zone_center) >= negation_zone_radius:
 			_lane.queue_free()
 			starlanes_in_negation_zone.erase(_lane)
+
+
+func focus_goal_star() -> void:
+	goal_star.is_goal = true
+	var original_zoom = camera.zoom.x
+	camera.focus_on_node(goal_star, camera.MIN_ZOOM, -1.0, true)
+	await EventManager.dialogic_signal
+	camera.release_focus(original_zoom, true)
+
+
+func focus_negation_zone() -> void:
+	var original_zoom = camera.zoom.x
+	# Get closest point on negation zone to player
+	var ship_position = _screen_to_viewport($ShipTracker.global_position)
+	var direction_to_center = ship_position.direction_to(negation_zone_center)
+	var closest_negation_zone_point = -direction_to_center * negation_zone_radius
+	# Instance a Marker2D there that we can focus on
+	var focus_point = Marker2D.new()
+	focus_point.global_position = closest_negation_zone_point
+	add_child(focus_point)
+	# Move Camera
+	camera.focus_on_node(focus_point, original_zoom, -1, true)
+	await EventManager.dialogic_signal
+	camera.release_focus(original_zoom, true)
+
+
+func set_tutorial_distress_signal() -> StarNode:
+	var original_zoom = camera.zoom.x
+	var neighbors = get_star_connected_neighbors(start_star)
+	var distress_star = neighbors.front()
+	tutorial_star = distress_star
+	distress_star.connected_event = EventManager.tutorial_events[7]
+	
+	camera.focus_on_node(distress_star, original_zoom, -1.0, true)
+	await EventManager.dialogic_signal
+	camera.release_focus(original_zoom, true)
+	
+	return distress_star
+
+
+func cancel_tutorial_distress_signal() -> void:
+	camera.release_focus()
+	if tutorial_star:
+		tutorial_star.has_signal = false
+		tutorial_star = null
 
 
 func _on_tick():

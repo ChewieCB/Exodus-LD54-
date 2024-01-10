@@ -26,17 +26,40 @@ var primary_story_id = 0:
 	set(value):
 		primary_story_id = value
 		emit_signal("primary_story_id_changed")
-
+# General event markers
 signal start_event
-signal finish_event
+signal dialogic_signal
+# Event UI updates
 signal request_change_event_image
 signal request_change_objective_label
+# Negation zone
 signal negation_zone
 signal trigger_negation_zone(flag)
 signal proximity_alert(ticks_left)
+# Win state
 signal victory
+# 
 signal primary_story_id_changed
+signal tutorial_ended
+# Starmap travel events
 signal star_arrived(star)
+signal star_event(star)
+signal tutorial_neighbor_star_event
+signal end_tutorial_star_event
+# Build view
+signal enable_build_view(state)
+signal focus_build_buttons(tab, button_indexes)
+signal unlock_build_buttons
+# Command view
+signal enable_command_view(state)
+signal change_command_tab(idx)
+# - Research
+signal show_research_tree(idx)
+# - Starmap
+signal unlock_travel_screen
+signal docking_release
+signal focus_negation_zone
+signal focus_goal
 
 @export var encounter_events: Array[ExodusEvent]
 @export var debug_events: Array[ExodusEvent]
@@ -49,6 +72,7 @@ var previous_background: Texture2D = null
 @onready var available_events: Array[ExodusEvent] = encounter_events.duplicate()
 var completed_events: Array[ExodusEvent]
 var event_dict = {} # Dictionary, format int : ExodusEvent (example: {0: tutorial_event_0}). Use in debug event dropdown
+var is_in_event = false
 
 @onready var planets = {
 	ExodusEvent.PlanetType.WET_TERRAIN: preload("res://addons/pixel_planet_generator/Planets/Rivers/Rivers.tscn"),
@@ -78,11 +102,46 @@ func _ready() -> void:
 	# Remove the debug event from the available array
 	available_events.pop_front()
 
-	if tutorial_progress == 0:
-		tick_to_event += 5
-
 func _on_dialogic_signal(arg: String):
-	emit_signal("finish_event", arg)
+	emit_signal("dialogic_signal", arg)
+
+
+func _enable_command_view(state_string: String):
+	var state = str_to_var(state_string)
+	emit_signal("enable_command_view", state)
+
+
+func _enable_build_view(state_string: String):
+	var state = str_to_var(state_string)
+	emit_signal("enable_build_view", state)
+
+# TUTORIAL signal emitter functions
+
+func _focus_build_buttons(tab_string: String, idx_string: String=""):
+	var tab: int
+	if tab_string == "-1":
+		tab = -1
+	else:
+		tab = EnumAutoload.BuildingType.get(tab_string)
+	var idx = str_to_var(idx_string)
+	emit_signal("focus_build_buttons", tab, idx)
+
+
+func _show_research_tree(idx_string: String):
+	var idx = str_to_var(idx_string)
+	emit_signal("show_research_tree", idx)
+
+
+func _unlock_build_buttons():
+	emit_signal("unlock_build_buttons")
+
+
+func _unlock_travel_screen():
+	emit_signal("unlock_travel_screen")
+
+
+func _change_command_tab(idx):
+	emit_signal("change_command_tab", str_to_var(idx))
 
 
 func get_random_event():
@@ -114,6 +173,7 @@ func play_event_by_name(event_name: String) -> Node:
 		return play_event(event)
 	return null
 
+# Currently not in use
 func play_event_legacy(event_name: String) -> Node:
 	return call(event_name)
 
@@ -126,6 +186,9 @@ func change_objective_label(text: String):
 
 
 func check_tick_for_random_event():
+	# Don't fire events during the tutorial
+	if tutorial_progress != -1:
+		return
 	# Tick equal days passed
 	tick_since_last_event += 1
 	tick_passed_total += 1
@@ -153,10 +216,28 @@ func check_tick_for_random_event():
 		play_event(get_random_event())
 
 
+func tutorial_add_neighbor_star_event():
+	emit_signal("tutorial_neighbor_star_event")
+
+
+func tutorial_focus_negation_zone():
+	emit_signal("focus_negation_zone")
+
+
+func tutorial_focus_goal():
+	emit_signal("focus_goal")
+
+
 func disable_tutorial():
 	tutorial_progress = -1
+	emit_signal("end_tutorial_star_event")
 	change_objective_label("Travel to the target star system near the galaxy center")
 	emit_signal("trigger_negation_zone", true)
+	emit_signal("unlock_travel_screen")
+	ResourceManager.set_is_resource_tick_disabled("false")
+	_enable_command_view("true")
+	_enable_build_view("true")
+	_unlock_build_buttons()
 
 
 func play_victory_event():
@@ -222,4 +303,8 @@ func reached_a_star(star: StarNode, is_goal: bool = false):
 	emit_signal("star_arrived", star)
 	if is_goal:
 		play_event(primary_story_events[-1])
+	elif star.has_signal:
+		star.has_signal = false
+		if star.connected_event:
+			play_event(star.connected_event)
 

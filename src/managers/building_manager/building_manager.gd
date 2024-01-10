@@ -24,7 +24,8 @@ var selected_building_queue: Array[Building] = []
 func _input(event):
 	if event.is_action_pressed("left_click"):
 		if len(selected_building_queue) > 0 and not selected_building_queue[0].preview:
-			show_building_info_panel(selected_building_queue[0].global_position, selected_building_queue[0])
+			if not EventManager.is_in_event:
+				show_building_info_panel(selected_building_queue[0].global_position, selected_building_queue[0])
 
 
 func start_building(building_scene):

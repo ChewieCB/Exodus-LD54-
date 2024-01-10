@@ -72,6 +72,9 @@ var current_officers = [EnumAutoload.Officer.PRESSLEY, EnumAutoload.Officer.TORG
 var current_upgrades = []
 
 # Resources to be managed
+
+var is_resource_tick_disabled = false: set = set_is_resource_tick_disabled
+
 # Pop/Worker
 var population_amount: int: 
 	get: return get_population_amount()
@@ -239,6 +242,8 @@ func calculate_habitability_score() -> int:
 
 
 func update_resources_with_modifier() -> void:
+	if is_resource_tick_disabled:
+		return
 	# When we receive a tick signal from the GameTickManager
 	# we update our resource levels.
 	food_amount = clamp(food_amount + current_food_modifier, 0, storage_resource_amount.food)
@@ -455,6 +460,10 @@ func calculate_storage_with_upgrade(base_storage: int) -> int:
 	return ceil(base_storage * multiplier)
 
 
+func has_upgrade(upgrade: EnumAutoload.UpgradeId):
+	return upgrade in current_upgrades
+
+
 func reset_state():
 	# TODO - load initial values from file for difficulty settings
 	# Update the pop without changing morale
@@ -491,7 +500,19 @@ func reset_state():
 	update_specialist_bonus()
 
 
+func _show_morale_detail(state_str: String):
+	var state = str_to_var(state_str)
+	if state:
+		emit_signal("morale_detail_show")
+	else:
+		emit_signal("morale_detail_hide")
+
+
 # RESOURCE SETTERS
+
+func set_is_resource_tick_disabled(value: String):
+	# We declare this so we can call it in Dialogic events
+	is_resource_tick_disabled = str_to_var(value)
 
 # POPULATION/CREW-RELATED RESOURCES
 

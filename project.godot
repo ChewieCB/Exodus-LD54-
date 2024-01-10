@@ -68,7 +68,8 @@ text/autopauses={}
 glossary/default_case_sensitive=true
 layout/styles={
 "Default": {
-"inherits": ""
+"inherits": "",
+"layout": "res://addons/dialogic/Modules/DefaultLayouts/Default/DialogicDefaultLayout.tscn"
 },
 "Duped Default": {
 "export_overrides": {
