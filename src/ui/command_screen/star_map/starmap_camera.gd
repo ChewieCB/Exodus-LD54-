@@ -6,9 +6,17 @@ const ZOOM_INCREMENT: float = 0.1
 const ZOOM_RATE: float = 16.0
 var _target_zoom: float = 8.0
 
-const PAN_RETURN_RATE: float = 2.5
+var current_target: Node
+var ship_node: Node
+
+const PAN_RETURN_RATE: float = 1.0
 var pan_wait: float = 1.6
 var is_pan_returning: bool = false
+var is_input_disabled: bool = false:
+	set(value):
+		is_input_disabled = value
+		pan_wait_timer.stop()
+		is_pan_returning = true
 
 var negation_zone_camera_limit_buffer: int = 32
 @onready var negation_zone_radius = get_parent().negation_zone_radius
@@ -16,9 +24,6 @@ var negation_zone_camera_limit_buffer: int = 32
 
 
 func _ready():
-	await get_parent().ready
-	self.global_position = get_parent().goal_point
-	await get_tree().create_timer(1.2).timeout
 	is_pan_returning = true
 
 
@@ -31,20 +36,22 @@ func _physics_process(delta):
 	var new_sprite_scale = 0.008 * remap(zoom.x, MIN_ZOOM, MAX_ZOOM, 2, 1)
 	ship_sprite.scale = Vector2(new_sprite_scale, new_sprite_scale)
 	if is_pan_returning:
-		if self.global_position != get_parent().get_node("ShipTracker").global_position:
+		if self.global_position != current_target.global_position:
 			# We want to pan faster the further away from the ship we are
-			var distance_from_ship = global_position.distance_to(
-				get_parent().get_node("ShipTracker").global_position
+			var distance_from_target = global_position.distance_to(
+				current_target.global_position
 			)
-			var pan_distance_multiplier = remap(distance_from_ship, 0, 600, 1, 2)
+			var pan_distance_multiplier = remap(distance_from_target, 0, 300, 1, 2)
 			global_position = lerp(
 				global_position, 
-				get_parent().get_node("ShipTracker").global_position,
+				current_target.global_position,
 				PAN_RETURN_RATE * pan_distance_multiplier * delta
 			)
 
 
 func _input(event: InputEvent) -> void:
+	if is_input_disabled:
+		return
 	if event is InputEventMouseMotion:
 		if event.button_mask == MOUSE_BUTTON_MASK_MIDDLE:
 			position -= event.relative / zoom * 0.35
@@ -76,4 +83,33 @@ func zoom_out() -> void:
 
 func zoom_in() -> void:
 	_target_zoom = min(_target_zoom + ZOOM_INCREMENT, MAX_ZOOM)
+
+
+func focus_on_node(node: Node, _zoom: float = self.zoom.x, 
+	time_to_release: float = 5.0, disable_control: bool = false
+) -> void:
+	current_target = node
+	# Starmap controls
+	if disable_control:
+		is_input_disabled = true
+	# Camera movement
+	pan_wait_timer.stop()
+	is_pan_returning = true
+	_target_zoom = _zoom
+	# Auto release
+	if time_to_release > 0:
+		await get_tree().create_timer(time_to_release).timeout
+		release_focus(_zoom, disable_control)
+
+
+func release_focus(_zoom: float = self.zoom.x, disabled_input: bool = false) -> void:
+	if ship_node:
+		current_target = ship_node 
+	#
+	pan_wait_timer.stop()
+	is_pan_returning = true
+	_target_zoom = _zoom
+	#
+	if disabled_input:
+		is_input_disabled = false
 

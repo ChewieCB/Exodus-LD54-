@@ -1,50 +1,58 @@
-[gd_resource type="Resource" script_class="ExodusEvent" load_steps=2 format=3 uid="uid://0b1o3q1crong"]
+[gd_resource type="Resource" script_class="ExodusEvent" load_steps=2 format=3 uid="uid://nmq7pwfymqnv"]
 
-[ext_resource type="Script" path="res://src/events/event_resource.gd" id="1_qj013"]
+[ext_resource type="Script" path="res://src/events/event_resource.gd" id="1_ofp0l"]
 
 [resource]
-script = ExtResource("1_qj013")
-name = "Tutorial 1"
+script = ExtResource("1_ofp0l")
+name = "Tutorial 5 - Starmap Unlock"
 type = 3
 planet_type = 0
 active_screen = 1
-event_text_file = "res://src/events/primary_storyline/tutorial_1/tutorial_1.txt"
+event_text_file = "res://src/events/primary_storyline/tutorials/tutorial_5_starmap_unlock/tutorial_5_starmap_unlock.txt"
 pop_reward_1 = 0
+morale_reward_1 = 0
 food_reward_1 = 0
 water_reward_1 = 0
 air_reward_1 = 0
 metal_reward_1 = 0
 pop_reward_2 = 0
+morale_reward_2 = 0
 food_reward_2 = 0
 water_reward_2 = 0
 air_reward_2 = 0
 metal_reward_2 = 0
 pop_reward_3 = 0
+morale_reward_3 = 0
 food_reward_3 = 0
 water_reward_3 = 0
 air_reward_3 = 0
 metal_reward_3 = 0
 pop_reward_4 = 0
+morale_reward_4 = 0
 food_reward_4 = 0
 water_reward_4 = 0
 air_reward_4 = 0
 metal_reward_4 = 0
 pop_cost_1 = 0
+morale_cost_1 = 0
 food_cost_1 = 0
 water_cost_1 = 0
 air_cost_1 = 0
 metal_cost_1 = 0
 pop_cost_2 = 0
+morale_cost_2 = 0
 food_cost_2 = 0
 water_cost_2 = 0
 air_cost_2 = 0
 metal_cost_2 = 0
 pop_cost_3 = 0
+morale_cost_3 = 0
 food_cost_3 = 0
 water_cost_3 = 0
 air_cost_3 = 0
 metal_cost_3 = 0
 pop_cost_4 = 0
+morale_cost_4 = 0
 food_cost_4 = 0
 water_cost_4 = 0
 air_cost_4 = 0

@@ -1,0 +1,83 @@
+{
+"@path": "res://addons/dialogic/Resources/character.gd",
+"@subpath": NodePath(""),
+"color": Color(1, 1, 1, 1),
+"custom_info": {
+"sound_mood_default": "",
+"sound_moods": {},
+"style": ""
+},
+"default_portrait": "_alien_portrait_1",
+"description": "LifepodCrew",
+"display_name": "Survivor",
+"mirror": false,
+"nicknames": [""],
+"offset": Vector2(-148, 19),
+"portraits": {
+"Normal": {
+"image": "",
+"mirror": false,
+"offset": Vector2(-7, 19),
+"scale": 0.5,
+"scene": ""
+},
+"_alien_portrait_1": {
+"ignore_char_scale": false,
+"image": "res://assets/character/_alien_portrait_1.png",
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1.0,
+"scene": ""
+},
+"dr_dorian": {
+"image": "res://assets/character/dr_dorian.png",
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"faroq_khan": {
+"image": "res://assets/character/faroq_khan.png",
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"governor_jerrerod": {
+"image": "res://assets/character/governor_jerrerod.png",
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"mary_watney": {
+"image": "res://assets/character/mary_watney.png",
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"pressley": {
+"image": "res://assets/character/pressley.png",
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"sam_carter": {
+"image": "res://assets/character/sam_carter.png",
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"torgon": {
+"image": "res://assets/character/torgon.png",
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+}
+},
+"scale": 0.5
+}

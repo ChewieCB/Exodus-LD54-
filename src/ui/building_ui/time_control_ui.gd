@@ -52,13 +52,21 @@ func _physics_process(delta):
 	tick_progress_bar.value = saved_progress + tick_progress
 
 
-func disabled_buttons():
+func disable_buttons():
 	pause_button.disabled = true
 	pause_texture.modulate = Color.GRAY
 	normal_button.disabled = true
 	normal_texture.modulate = Color.GRAY
 	fast_button.disabled = true
 	fast_texture.modulate = Color.GRAY
+
+func enable_buttons():
+	pause_button.disabled = false
+	pause_texture.modulate = Color.WHITE
+	normal_button.disabled = false
+	normal_texture.modulate = Color.WHITE
+	fast_button.disabled = false
+	fast_texture.modulate = Color.WHITE
 
 func _update_day_counter():
 	current_day += 1
@@ -70,6 +78,8 @@ func _update_day_counter():
 
 
 func _on_pause_button_pressed():
+	if pause_button.disabled:
+		return
 	SoundManager.play_button_click_sfx()
 	pause_button.disabled = true
 	pause_texture.modulate = Color.GRAY
@@ -84,6 +94,8 @@ func _on_pause_button_pressed():
 
 
 func _on_speed_1_button_pressed():
+	if normal_button.disabled:
+		return
 	SoundManager.play_button_click_sfx()
 	normal_button.disabled = true
 	normal_texture.modulate = Color.GRAY
@@ -99,6 +111,8 @@ func _on_speed_1_button_pressed():
 
 
 func _on_speed_2_button_pressed():
+	if fast_button.disabled:
+		return
 	SoundManager.play_button_click_sfx()
 	fast_button.disabled = true
 	fast_texture.modulate = Color.GRAY

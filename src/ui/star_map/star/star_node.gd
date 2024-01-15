@@ -30,6 +30,7 @@ var star_timespeed: float = 0.3
 var is_goal: bool = false: # For checking game end
 	set(value):
 		is_goal = value
+		has_signal = is_goal
 
 var pickable: bool = false:
 	set(value):
@@ -43,6 +44,11 @@ var has_signal: bool = false:
 		has_signal = value
 		if star_instance != null:
 			star_instance._signal.visible = has_signal
+
+var connected_event: ExodusEvent:
+	set(value):
+		connected_event = value
+		has_signal = true
 
 
 func _ready():
@@ -101,7 +107,7 @@ func _on_visible_on_screen_notifier_2d_screen_entered():
 	
 #	get_parent().get_parent().star_shaders_visible += 1
 	add_child(star_instance)
-	has_signal = is_goal
+	star_instance._signal.visible = has_signal
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited():

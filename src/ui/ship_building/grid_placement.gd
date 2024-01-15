@@ -50,6 +50,20 @@ func get_new_building():
 	current_building.enable_improved_preview()
 
 
+func _unhandled_input(event):
+	if current_building != null:
+		if event.is_action_released("cancel_place_building"):
+			current_building.queue_free()
+			current_building = null
+		elif event.is_action_released("place_building"):
+			if not current_building.collider.has_overlapping_areas():
+				if not is_in_blocked_tile(original_placement_coord):
+					if current_building.placeable:
+						place_building()
+			else:
+				SoundManager.play_sound(cant_place_sfx, "SFX")
+
+
 func _physics_process(_delta):
 	if building_prefab == null or current_building == null:
 		return
@@ -71,18 +85,6 @@ func _physics_process(_delta):
 		current_building.outside_gridmap = is_outside_gridmap(original_placement_coord)
 		current_building.visible = !current_building.outside_gridmap
 		current_building.global_position = preview_pos
-
-		if Input.is_action_just_pressed("cancel_place_building"):
-			current_building.queue_free()
-			current_building = null
-
-		if Input.is_action_just_pressed("place_building"):
-			if not current_building.collider.has_overlapping_areas():
-				if not is_in_blocked_tile(original_placement_coord):
-					if current_building.placeable:
-						place_building()
-			else:
-				SoundManager.play_sound(cant_place_sfx, "SFX")
 
 		if Input.is_action_just_pressed("rotate_cw"):
 			current_building.rotation += PI/2
