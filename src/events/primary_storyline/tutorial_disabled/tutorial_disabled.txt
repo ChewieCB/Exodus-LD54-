@@ -1,3 +1,5 @@
+[call_node path="EventManager" method="_enable_build_view" args="["true"]" single_use="true]
+[call_node path="EventManager" method="_enable_command_view" args="["true"]" single_use="true]
 Join ExecutiveOfficer 0
 ExecutiveOfficer (Normal): Welcome back, Captain.
 Leave ExecutiveOfficer

@@ -1,0 +1,12 @@
+[call_node path="EventManager" method="_enable_build_view" args="["false"]" single_use="true]
+[call_node path="EventManager" method="_enable_command_view" args="["true"]" single_use="true]
+Join ExecutiveOfficer 0
+[call_node path="EventManager" method="_change_command_tab" args="["1"]" single_use="true]
+[call_node path="EventManager" method="tutorial_focus_negation_zone" single_use="true]
+ExecutiveOfficer (Normal): Captain, sensors report the negation zone is closing in on our current location!
+ExecutiveOfficer (Normal): We don't know what's beyond the zone, but any ships or star systems that the zone covers go dark. We don't want to stick around and find out what's in there.
+[call_node path="EventManager" method="tutorial_focus_goal" single_use="true]
+ExecutiveOfficer (Normal): We need to keep moving, the portal is being constructed in one of the inner systems - its marked on your starmap.
+ExecutiveOfficer (Normal): We're in your hands now sir, godspeed.
+[call_node path="EventManager" method="disable_tutorial" single_use="true"]
+[signal arg="end_event"]

@@ -124,6 +124,8 @@ script = ExtResource("1_xagyo")
 command_screen = NodePath("CommandScreen")
 
 [node name="CommandScreen" parent="." instance=ExtResource("6_hbhke")]
+offset_top = -96.0
+offset_bottom = -96.0
 
 [node name="LowerBar" type="Control" parent="."]
 layout_mode = 1
