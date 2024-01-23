@@ -219,6 +219,7 @@ func _on_dialogic_signal(arg: String):
 			time_control_ui._on_speed_1_button_pressed()
 			chat_crew_button.disabled = false
 			ResourceManager.check_if_all_crew_died()
+			EventManager.stop_current_vo()
 			EventManager.is_in_event = false
 
 		# Hack to end an event with the build menu open for tutorials and such
@@ -232,6 +233,7 @@ func _on_dialogic_signal(arg: String):
 			ResourceManager.check_if_all_crew_died()
 			time_control_ui.enable_buttons()
 			time_control_ui._on_pause_button_pressed()
+			EventManager.stop_current_vo()
 			EventManager.is_in_event = false
 
 		"open_build_screen":

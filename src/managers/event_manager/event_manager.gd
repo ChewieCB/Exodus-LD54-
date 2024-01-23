@@ -147,14 +147,17 @@ func _change_command_tab(idx):
 
 
 func _play_event_voice(audio_path: String):
-	if active_vo_audio_player:
-		active_vo_audio_player.stop()
+	stop_current_vo()
 	active_vo_audio_player = SoundManager.play_sound(load(audio_path), "VO")
 	# Do we want to auto-advance on VO audio finish?
 #	await get_tree().create_timer(0.1).timeout
 #	active_vo_audio_player.finished.connect(func():
 #		Dialogic.Text.input_handler.emit_signal("autoadvance")
 #	)
+
+func stop_current_vo():
+	if active_vo_audio_player:
+		active_vo_audio_player.stop()
 
 
 func get_random_event():
