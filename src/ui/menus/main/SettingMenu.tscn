@@ -91,6 +91,24 @@ theme_override_constants/margin_top = -4
 layout_mode = 2
 tick_count = 10
 
+[node name="VoiceLabelContainer" type="MarginContainer" parent="ButtonsContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = -4
+
+[node name="Label" type="Label" parent="ButtonsContainer/PanelContainer/VBoxContainer/VoiceLabelContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Voiceover"
+
+[node name="VoiceSliderContainer" type="MarginContainer" parent="ButtonsContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = -4
+
+[node name="HSlider" type="HSlider" parent="ButtonsContainer/PanelContainer/VBoxContainer/VoiceSliderContainer"]
+layout_mode = 2
+tick_count = 10
+
 [node name="UILabelContainer" type="MarginContainer" parent="ButtonsContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_top = 8
@@ -126,6 +144,8 @@ text = "Back
 [connection signal="value_changed" from="ButtonsContainer/PanelContainer/VBoxContainer/MusicSliderContainer/HSlider" to="." method="_on_music_volume_slider_value_changed"]
 [connection signal="changed" from="ButtonsContainer/PanelContainer/VBoxContainer/SFXSliderContainer/HSlider" to="." method="_on_sfx_slider_changed"]
 [connection signal="value_changed" from="ButtonsContainer/PanelContainer/VBoxContainer/SFXSliderContainer/HSlider" to="." method="_on_sfx_volume_slider_value_changed"]
+[connection signal="changed" from="ButtonsContainer/PanelContainer/VBoxContainer/VoiceSliderContainer/HSlider" to="." method="_on_vo_slider_changed"]
+[connection signal="value_changed" from="ButtonsContainer/PanelContainer/VBoxContainer/VoiceSliderContainer/HSlider" to="." method="_on_vo_slider_value_changed"]
 [connection signal="changed" from="ButtonsContainer/PanelContainer/VBoxContainer/UISliderLabelContainer/HSlider" to="." method="_on_ui_sfx_slider_changed"]
 [connection signal="value_changed" from="ButtonsContainer/PanelContainer/VBoxContainer/UISliderLabelContainer/HSlider" to="." method="_on_ui_sfx_slider_value_changed"]
 [connection signal="pressed" from="ButtonsContainer/PanelContainer/VBoxContainer/BackButtonContainer/Button" to="." method="_on_back_button_pressed"]
