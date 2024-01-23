@@ -2,6 +2,7 @@
 [call_node path="EventManager" method="_enable_command_view" args="["false"]" single_use="true]
 Join ExecutiveOfficer 0
 - Build two vertical farms
+	[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/3_food_0.mp3"]" single_use="true"]
 	ExecutiveOfficer (Normal): Vertical farms can be built to grow food, build two to support our current crew.
 	[call_node path="EventManager" method="change_objective_label" args="["Build 2 Vertical Farms"]" single_use="true"]
 	[call_node path="EventManager" method="_focus_build_buttons" args="["FOOD", "[0]"]" single_use="true]

@@ -2,22 +2,28 @@
 [call_node path="EventManager" method="_enable_command_view" args="["true"]" single_use="true]
 Join ExecutiveOfficer 0
 [call_node path="EventManager" method="change_objective_label" args="[""]" single_use="true"]
+[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/7_starmap_nav_0.mp3"]" single_use="true"]
 ExecutiveOfficer (Normal): This is your starmap, it shows all of the systems and starlanes of the galaxy.
 Leave ExecutiveOfficer
 Hold the MMB and drag to pan around the starmap and get a better look at things. You can scroll to zoom in and out.
 Join ExecutiveOfficer 0
 [call_node path="EventManager" method="_change_command_tab" args="["1"]" single_use="true]
 [call_node path="EventManager" method="tutorial_add_neighbor_star_event" single_use="true"]
+[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/7_starmap_nav_1.mp3"]" single_use="true"]
 ExecutiveOfficer (Normal): Looks like we're already getting a signal over the tighbeam comms, patching it through to you now captain.
 Leave ExecutiveOfficer
 Join LifepodCrew 1
+[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/7_starmap_nav_2.mp3"]" single_use="true"]
 LifepodCrew: This is Lifepod XZ-4745BS of the RCO Galari, our mining ship has suffered a critical reactor failure. 
-LifepodCrew: We require immediate assistance, there are {pop_reward_1} of us on board and our oxygen is running low.
+[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/7_starmap_nav_3.mp3"]" single_use="true"]
+LifepodCrew: We require immediate assistance, our oxygen is running low.
 Leave LifepodCrew
 Join ExecutiveOfficer 0
 
-ExecutiveOfficer (Normal): It's your call captain. Our metal reserves are low after all that construction. Not only would we be saving lives, we'd gain useful crew to extract metals on our journey.
+[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/7_starmap_nav_4.mp3"]" single_use="true"]
+ExecutiveOfficer (Normal): It's your call captain, but our metal reserves are low after all that construction. Not only would we be saving lives, we'd gain useful crew to extract metals on our journey.
 - Chart a course, we need to save those miners.
+	[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/7_starmap_nav_5a.mp3"]" single_use="true"]
 	ExecutiveOfficer (Normal): Aye captain.
 	Leave ExecutiveOfficer
 	[call_node path="EventManager" method="change_objective_label" args="["Travel to distress signal"]" single_use="true"]
@@ -25,6 +31,7 @@ ExecutiveOfficer (Normal): It's your call captain. Our metal reserves are low af
 	Use Shift+LMB to queue stars to travel to. Each star in the queue must be connected to the previous one.
 	Use RMB to stop moving and remove any queued stars.
 - We have other duties, rebroadcast the signal and let another ship answer the call (Exit Tutorial).
+	[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/7_starmap_nav_5b.mp3"]" single_use="true"]
 	ExecutiveOfficer (Normal): As you wish captain.
 	Leave ExecutiveOfficer
 	[call_node path="EventManager" method="disable_tutorial" single_use="true"]
