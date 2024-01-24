@@ -141,6 +141,16 @@ position = Vector2(175.999, 271.999)
 placed = true
 building_complete = true
 
+[node name="SettingsUI" type="CanvasLayer" parent="."]
+layer = 3
+
+[node name="SettingMenu" parent="SettingsUI" instance=ExtResource("11_t4hll")]
+visible = false
+offset_left = -237.0
+offset_top = -275.0
+offset_right = 304.0
+offset_bottom = 250.0
+
 [node name="UI" type="CanvasLayer" parent="."]
 visible = false
 
@@ -153,13 +163,6 @@ mid_view_marker = NodePath("../../MidViewMarker")
 far_view_marker = NodePath("../../FarViewMarker")
 space_background = NodePath("../../Space")
 event_image_holder = NodePath("../../EventImageHolder")
-
-[node name="SettingMenu" parent="UI" instance=ExtResource("11_t4hll")]
-visible = false
-offset_left = -237.0
-offset_top = -275.0
-offset_right = 304.0
-offset_bottom = 250.0
 
 [node name="StartTutorialTimer" type="Timer" parent="."]
 one_shot = true

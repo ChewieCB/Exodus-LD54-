@@ -1,11 +1,13 @@
 [call_node path="EventManager" method="_enable_build_view" args="["false"]" single_use="true]
 [call_node path="EventManager" method="_enable_command_view" args="["true"]" single_use="true]
 Join IntercomGuy 4
+[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/6_starmap_unlock_0.mp3"]" single_use="true"]
 IntercomGuy (Normal): Tightbeam communications online captain, crew checked and station dock ready to disengage.
 Leave IntercomGuy
 Join ExecutiveOfficer 0
 [call_node path="EventManager" method="_change_command_tab" args="["1"]" single_use="true]
 [call_node path="EventManager" method="change_objective_label" args="["Release docking clamps"]" single_use="true"]
+[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/6_starmap_unlock_1.mp3"]" single_use="true"]
 ExecutiveOfficer (Normal): Releasing the docking clamps on your order captain.
 [call_node path="EventManager" method="_unlock_travel_screen" single_use="true]
 Leave ExecutiveOfficer
