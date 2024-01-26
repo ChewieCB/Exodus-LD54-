@@ -55,6 +55,7 @@ jobs:
           generateReleaseNotes: true
           tag: ${{ steps.bump_tag.outputs.tag }}
           artifacts: ${{ steps.export.outputs.archive_directory }}/*
+	  prerelease: true
   release_testing_html:
     runs-on: ubuntu-latest
     needs: export_game
