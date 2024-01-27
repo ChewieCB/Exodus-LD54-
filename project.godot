@@ -68,12 +68,17 @@ text/autopauses={}
 glossary/default_case_sensitive=true
 layout/styles={
 "Default": {
+"export_overrides": {
+"box_animation_new_text": "0",
+"box_animation_out": "2"
+},
 "inherits": "",
 "layout": "res://addons/dialogic/Modules/DefaultLayouts/Default/DialogicDefaultLayout.tscn"
 },
 "Duped Default": {
 "export_overrides": {
 "box_animation_in": "2",
+"box_animation_new_text": "0",
 "box_animation_out": "2",
 "box_modulate": "Color(0.317647, 0.317647, 0.317647, 0.733333)",
 "name_label_box_modulate": "Color(0, 0, 0, 0.682353)",

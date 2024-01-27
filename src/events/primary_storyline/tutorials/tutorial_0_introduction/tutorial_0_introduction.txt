@@ -6,13 +6,20 @@ A Negation Field has simultaneously surrounded the galaxy. The field is creeping
 	Astronomic calculations have pinpointed the field is shrinking down to a single spot - a backwater system far from most space lanes. The galaxy's greatest scientists have constructed a portal that will take us to another galaxy, beyond the Negation Field's reach.
 	You are the seasoned captain of an old supply ship, requisitioned by The Concordiat to ferry cryogenically frozen colonists from the edge of the galaxy through the portal system, hoping to save yourself and your crew from certain death in the process.
 	Join ExecutiveOfficer 0
+	[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/0_intro_0.mp3"]" single_use="true"]
 	ExecutiveOfficer (Normal): Welcome captain, my name is Pressley, your executive officer. My job is to assist you manage this Galanthir-class hauler. 
+	[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/0_intro_1.mp3"]" single_use="true"]
 	ExecutiveOfficer (Normal): This is a highly modular and adaptable ship, the shipyards here at Ursa Majoris have finished the refit to your specifications and our cryogenic cargo is loaded and ready to go.
+	[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/0_intro_2.mp3"]" single_use="true"]
 	ExecutiveOfficer (Normal): The ship's current crew capacity is three, these hired hands from the station have been chartered to assist you with any repairs or modifications we may require. 
+	[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/0_intro_3.mp3"]" single_use="true"]
 	ExecutiveOfficer (Normal): The station is waiting on you to requisition the life support modules, would you like some help?
+	
 	- Yes, walk me through it
 		[call_node path="ResourceManager" method="set_is_resource_tick_disabled" args="["true"]" single_use="true"]
+		[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/0_intro_4a.mp3"]" single_use="true"]
 		ExecutiveOfficer (Normal): Certainly sir.
+		[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/0_intro_5a.mp3"]" single_use="true"]
 		ExecutiveOfficer (Normal): First we'll need to construct some habitation blocks for the crew, we have the schematics for a single berth design in our databanks. Build 3 hab blocks to house our current crew.
 		[call_node path="EventManager" method="change_objective_label" args="["Build 3 Hab Blocks"]" single_use="true"]
 		[call_node path="EventManager" method="_focus_build_buttons" args="["HABITATION", "[0]"]" single_use="true]
@@ -26,6 +33,7 @@ A Negation Field has simultaneously surrounded the galaxy. The field is creeping
 		[signal arg="end_event_build"]
 	
 	- No, I can handle things myself (skip tutorial)
+		[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/0_intro_4b.mp3"]" single_use="true"]
 		ExecutiveOfficer (Normal): As you wish captain.
 		Leave ExecutiveOfficer
 		[call_node path="EventManager" method="disable_tutorial" single_use="true"]

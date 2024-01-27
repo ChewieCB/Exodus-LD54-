@@ -2,22 +2,31 @@
 [call_node path="EventManager" method="change_objective_label" args="[""]" single_use="true"]
 [call_node path="EventManager" method="_focus_build_buttons" args="["-1", "[]"]" single_use="true]
 Join IntercomGuy 4
+[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/5_crew_0.mp3"]" single_use="true"]
 IntercomGuy (Normal): Captain, our crew from the shipyard have boarded and are settling into their quarters.
 Join ExecutiveOfficer 0
+[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/5_crew_1.mp3"]" single_use="true"]
 ExecutiveOfficer (Normal): Ah, lets review the crew roster and see what we're working with.
 Leave IntercomGuy
 [call_node path="EventManager" method="_change_command_tab" args="["2"]" single_use="true]
 [call_node path="EventManager" method="_enable_command_view" args="["true"]" single_use="true]
+[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/5_crew_2.mp3"]" single_use="true"]
 ExecutiveOfficer (Normal): Here we can see our active crew members and their details.
+[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/5_crew_3.mp3"]" single_use="true"]
 ExecutiveOfficer (Normal): And, if it comes to it...
-ExecutiveOfficer (Normal): Remove them from the ship, if times are dire.
+[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/5_crew_4.mp3"]" single_use="true"]
+ExecutiveOfficer (Normal): Jettison them from the ship, if times are dire.
 ExecutiveOfficer (Normal): ...
+[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/5_crew_5.mp3"]" single_use="true"]
 ExecutiveOfficer (Normal): Moving on.
 [call_node path="EventManager" method="_change_command_tab" args="["0"]" single_use="true]
+[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/5_crew_6.mp3"]" single_use="true"]
 ExecutiveOfficer (Normal): Before we can leave the dock we need to get our tightbeam array back online, this aids our navigation as well as enabling us to send rapid communications over stellar distances with minimal delay.
+[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/5_crew_7.mp3"]" single_use="true"]
 ExecutiveOfficer (Normal): One of our crew is a research specialist, we can direct them to focus on the tightbeam project in the research screen.
 [call_node path="EventManager" method="change_objective_label" args="["Research Tighbeam Communication"]" single_use="true"]
 [call_node path="EventManager" method="_show_research_tree" args="["4"]" single_use="true]
+[call_node path="EventManager" method="_play_event_voice" args="["res://assets/event/voice/tutorial_vo/5_crew_8.mp3"]" single_use="true"]
 ExecutiveOfficer (Normal): You'll find the tighbeam research project under the Ship Infrastructure section.
 Leave ExecutiveOfficer
 [signal arg="end_event"]
