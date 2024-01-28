@@ -119,6 +119,8 @@ enum UpgradeId {
 
 # FIXME - find a better place to store this
 var BUILD_VERSION: String
+# Flag to enable all buildings from start for debugging
+var debug_buildings: bool = false
 
 func _ready():
 	var file = FileAccess.open("res://build_tag.cfg", FileAccess.READ)
