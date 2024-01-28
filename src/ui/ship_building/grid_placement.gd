@@ -8,7 +8,11 @@ var mouse_pos: Vector2
 var placement_coord: Vector2 # Will be modified to make preview fit better
 var original_placement_coord: Vector2 # Actual tile the mouse pointer is on
 var preview_pos: Vector2
-var current_building: Node
+var current_building: Node:
+	set(value):
+		current_building = value
+		# Reset rotation on placement
+		rotate_counter = 0
 var previous_rotation = 0
 var rotate_counter = 0
 
@@ -67,17 +71,20 @@ func _unhandled_input(event):
 func _physics_process(_delta):
 	if building_prefab == null or current_building == null:
 		return
-
 	mouse_pos = get_global_mouse_position()
 	mouse_pos = tilemap.to_local(mouse_pos)
 	placement_coord = tilemap.local_to_map(mouse_pos)
 	original_placement_coord = placement_coord
+	
+	# Offset the placement depending on the current rotation of the building
+	# We always want to keep the top-left tile of the building under the mouse
 	if abs(rotate_counter) % 4 == 1:
 		placement_coord.x = original_placement_coord.x - 1
 	elif abs(rotate_counter) % 4 == 2:
 		placement_coord = original_placement_coord - Vector2(1, 1)
 	elif abs(rotate_counter) % 4 == 3:
 		placement_coord.y = original_placement_coord.y - 1
+	
 	preview_pos = tilemap.map_to_local(placement_coord) + GRID_OFFSET
 	preview_pos = tilemap.to_global(preview_pos)
 
