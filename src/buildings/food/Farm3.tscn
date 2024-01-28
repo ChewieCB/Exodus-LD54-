@@ -17,12 +17,12 @@ script = ExtResource("1_1wyhc")
 data = ExtResource("2_e2tte")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(64, 96)
+position = Vector2(128, 96)
 texture = ExtResource("3_e53ta")
 offset = Vector2(-96, -64)
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(-32, -32)
+position = Vector2(32, -32)
 collision_layer = 2
 collision_mask = 3
 
