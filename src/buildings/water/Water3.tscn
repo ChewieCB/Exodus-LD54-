@@ -27,12 +27,12 @@ data = ExtResource("2_ltpv4")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_l6u3g")
-position = Vector2(192, 64)
+position = Vector2(64, 64)
 texture = ExtResource("4_akyeg")
 offset = Vector2(-96, -64)
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(96, -32)
+position = Vector2(-32, -32)
 collision_layer = 2
 collision_mask = 3
 
@@ -52,7 +52,8 @@ position = Vector2(-128, 63)
 shape = SubResource("RectangleShape2D_h83i0")
 
 [node name="BuildTimerUI" parent="." instance=ExtResource("5_pu5q4")]
-offset_right = 256.0
+offset_left = -192.0
+offset_right = 128.0
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
