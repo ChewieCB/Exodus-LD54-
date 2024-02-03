@@ -108,7 +108,7 @@ func _update_info_after_upgrade():
 		non_prod_string = "+" + non_prod_string
 	prod_rtl.text = "[center]" + prod_string + non_prod_string + "[/center]"
 
-	if not Engine.is_editor_hint():
+	if not Engine.is_editor_hint() and not EnumAutoload.debug_buildings:
 		if require_upgrade_id == EnumAutoload.UpgradeId.NONE || \
 			require_upgrade_id in ResourceManager.current_upgrades:
 			visible = true
