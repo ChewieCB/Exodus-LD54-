@@ -8,9 +8,14 @@ var mouse_pos: Vector2
 var placement_coord: Vector2 # Will be modified to make preview fit better
 var original_placement_coord: Vector2 # Actual tile the mouse pointer is on
 var preview_pos: Vector2
-var current_building: Node
 var previous_rotation = 0
 var rotate_counter = 0
+var current_building: Node:
+	set(value):
+		current_building = value
+		rotate_counter = 0
+		if current_building:
+			current_building.rotation = 0
 
 @onready var cant_place_sfx = preload("res://assets/audio/sfx/Cant_Place_Building_There.mp3")
 
@@ -48,7 +53,7 @@ func get_new_building():
 	add_child(new_building)
 	current_building = new_building
 	current_building.enable_improved_preview()
-	current_building.rotation = 0
+#	current_building.rotation = 0
 
 
 func _unhandled_input(event):
@@ -56,12 +61,12 @@ func _unhandled_input(event):
 		if event.is_action_released("cancel_place_building"):
 			current_building.queue_free()
 			current_building = null
-			rotate_counter = 0
+#			rotate_counter = 0
 		elif event.is_action_released("place_building"):
 			if not current_building.collider.has_overlapping_areas():
 				if not is_in_blocked_tile(original_placement_coord):
 					if current_building.placeable:
-						rotate_counter = 0
+#						rotate_counter = 0
 						place_building()
 			else:
 				SoundManager.play_sound(cant_place_sfx, "SFX")
@@ -87,7 +92,7 @@ func _physics_process(_delta):
 	
 	preview_pos = tilemap.map_to_local(placement_coord) + GRID_OFFSET
 	preview_pos = tilemap.to_global(preview_pos)
-	print("Rotation counter ", rotate_counter)
+
 
 
 	if current_building != null:
