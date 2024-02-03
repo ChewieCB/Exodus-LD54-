@@ -8,9 +8,14 @@ var mouse_pos: Vector2
 var placement_coord: Vector2 # Will be modified to make preview fit better
 var original_placement_coord: Vector2 # Actual tile the mouse pointer is on
 var preview_pos: Vector2
-var current_building: Node
 var previous_rotation = 0
 var rotate_counter = 0
+var current_building: Node:
+	set(value):
+		current_building = value
+		rotate_counter = 0
+		if current_building:
+			current_building.rotation = 0
 
 @onready var cant_place_sfx = preload("res://assets/audio/sfx/Cant_Place_Building_There.mp3")
 
@@ -48,6 +53,7 @@ func get_new_building():
 	add_child(new_building)
 	current_building = new_building
 	current_building.enable_improved_preview()
+#	current_building.rotation = 0
 
 
 func _unhandled_input(event):
@@ -55,10 +61,12 @@ func _unhandled_input(event):
 		if event.is_action_released("cancel_place_building"):
 			current_building.queue_free()
 			current_building = null
+#			rotate_counter = 0
 		elif event.is_action_released("place_building"):
 			if not current_building.collider.has_overlapping_areas():
 				if not is_in_blocked_tile(original_placement_coord):
 					if current_building.placeable:
+#						rotate_counter = 0
 						place_building()
 			else:
 				SoundManager.play_sound(cant_place_sfx, "SFX")
@@ -72,14 +80,20 @@ func _physics_process(_delta):
 	mouse_pos = tilemap.to_local(mouse_pos)
 	placement_coord = tilemap.local_to_map(mouse_pos)
 	original_placement_coord = placement_coord
+	
+	# Offset the placement depending on the current rotation of the building
+	# We always want to keep the top-left tile of the building under the mouse
 	if abs(rotate_counter) % 4 == 1:
 		placement_coord.x = original_placement_coord.x - 1
 	elif abs(rotate_counter) % 4 == 2:
 		placement_coord = original_placement_coord - Vector2(1, 1)
 	elif abs(rotate_counter) % 4 == 3:
 		placement_coord.y = original_placement_coord.y - 1
+	
 	preview_pos = tilemap.map_to_local(placement_coord) + GRID_OFFSET
 	preview_pos = tilemap.to_global(preview_pos)
+
+
 
 	if current_building != null:
 		current_building.outside_gridmap = is_outside_gridmap(original_placement_coord)
@@ -87,8 +101,8 @@ func _physics_process(_delta):
 		current_building.global_position = preview_pos
 
 		if Input.is_action_just_pressed("rotate_cw"):
-			current_building.rotation += PI/2
 			rotate_counter += 1
+			current_building.rotation = rotate_counter * (PI/2)
 
 
 func is_outside_gridmap(coord: Vector2) -> bool:
@@ -132,6 +146,7 @@ func stop_building_preview():
 
 
 func _building_button_pressed(_building: PackedScene):
+	rotate_counter = 0
 	building_prefab = _building
 	stop_building_preview()
 	get_new_building()
